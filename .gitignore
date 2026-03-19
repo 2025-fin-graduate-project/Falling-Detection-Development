@@ -12,3 +12,8 @@ wheels/
 # Local datasets and generated database files
 dataset/*
 !dataset/.gitkeep
+
+# Google Drive / Windows metadata files
+Desktop.ini
+desktop.ini
+Thumbs.db
