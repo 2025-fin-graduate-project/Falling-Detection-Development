@@ -384,6 +384,22 @@ class SparseBinaryRecall(tf.keras.metrics.Metric):
         self.false_negatives.assign(0.0)
 
 
+class SparseBinaryAUC(tf.keras.metrics.AUC):
+    def update_state(self, y_true, y_pred, sample_weight=None):
+        y_true = tf.cast(tf.reshape(y_true, [-1]), self.dtype)
+        y_pred = tf.convert_to_tensor(y_pred)
+
+        if y_pred.shape.rank is not None and y_pred.shape.rank > 1:
+            if y_pred.shape[-1] == 1:
+                y_pred = tf.reshape(y_pred, [-1])
+            else:
+                y_pred = y_pred[:, 1]
+        else:
+            y_pred = tf.reshape(y_pred, [-1])
+
+        return super().update_state(y_true, tf.cast(y_pred, self.dtype), sample_weight=sample_weight)
+
+
 def residual_tcn_block(
     x: tf.Tensor,
     filters: int,
@@ -462,7 +478,7 @@ def compile_model(model: tf.keras.Model, learning_rate: float) -> tf.keras.Model
             tf.keras.metrics.SparseCategoricalAccuracy(name="accuracy"),
             SparseBinaryPrecision(name="precision"),
             SparseBinaryRecall(name="recall"),
-            tf.keras.metrics.AUC(curve="PR", name="pr_auc"),
+            SparseBinaryAUC(curve="PR", name="pr_auc"),
         ],
     )
     return model
