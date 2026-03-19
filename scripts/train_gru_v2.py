@@ -9,9 +9,9 @@ import tensorflow as tf
 
 from scripts.train_tcn_v2 import (
     build_clip_dataset,
+    build_split_metrics,
     class_weight_from_labels,
     compile_model,
-    evaluate_model,
     export_tflite_artifacts,
     load_source_frame,
     log,
@@ -43,6 +43,8 @@ class GruTrainConfig:
     dropout_rate: float
     hidden_sizes: list[int]
     export_tflite: bool
+    decision_threshold: float | None
+    min_val_recall: float
 
 
 def parse_args() -> argparse.Namespace:
@@ -63,11 +65,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dropout-rate", type=float, default=0.15)
     parser.add_argument("--hidden-sizes", default="64,32")
     parser.add_argument("--export-tflite", action="store_true")
+    parser.add_argument("--decision-threshold", type=float, default=None)
+    parser.add_argument("--min-val-recall", type=float, default=0.80)
     return parser.parse_args()
 
 
 def make_config(args: argparse.Namespace) -> GruTrainConfig:
     hidden_sizes = parse_int_list(args.hidden_sizes)
+    if args.decision_threshold is not None and not 0.0 <= args.decision_threshold <= 1.0:
+        raise ValueError("--decision-threshold must be between 0 and 1.")
+    if not 0.0 <= args.min_val_recall <= 1.0:
+        raise ValueError("--min-val-recall must be between 0 and 1.")
     return GruTrainConfig(
         input_format=args.input_format,
         csv_path=args.csv_path,
@@ -85,6 +93,8 @@ def make_config(args: argparse.Namespace) -> GruTrainConfig:
         dropout_rate=args.dropout_rate,
         hidden_sizes=hidden_sizes,
         export_tflite=args.export_tflite,
+        decision_threshold=args.decision_threshold,
+        min_val_recall=args.min_val_recall,
     )
 
 
@@ -155,11 +165,17 @@ def main() -> None:
     model.save(keras_path)
     log(f"saved keras model to {keras_path}")
 
-    metrics = {
-        "train": evaluate_model(model, x_train, y_train, "train"),
-        "val": evaluate_model(model, x_val, y_val, "val"),
-        "test": evaluate_model(model, x_test, y_test, "test"),
-    }
+    metrics = build_split_metrics(
+        model=model,
+        x_train=x_train,
+        y_train=y_train,
+        x_val=x_val,
+        y_val=y_val,
+        x_test=x_test,
+        y_test=y_test,
+        decision_threshold=config.decision_threshold,
+        min_val_recall=config.min_val_recall,
+    )
 
     export_paths = {"keras": str(keras_path)}
     if config.export_tflite:
