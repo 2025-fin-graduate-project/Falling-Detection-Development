@@ -282,6 +282,60 @@ def class_weight_from_labels(y: np.ndarray) -> dict[int, float]:
     }
 
 
+class SparseBinaryPrecision(tf.keras.metrics.Metric):
+    def __init__(self, name: str = "precision", **kwargs):
+        super().__init__(name=name, **kwargs)
+        self.true_positives = self.add_weight(name="tp", initializer="zeros")
+        self.false_positives = self.add_weight(name="fp", initializer="zeros")
+
+    def update_state(self, y_true, y_pred, sample_weight=None):
+        y_true = tf.cast(tf.reshape(y_true, [-1]), tf.int32)
+        y_pred = tf.argmax(y_pred, axis=-1, output_type=tf.int32)
+
+        positive_true = tf.equal(y_true, 1)
+        positive_pred = tf.equal(y_pred, 1)
+
+        tp = tf.reduce_sum(tf.cast(tf.logical_and(positive_true, positive_pred), self.dtype))
+        fp = tf.reduce_sum(tf.cast(tf.logical_and(tf.logical_not(positive_true), positive_pred), self.dtype))
+
+        self.true_positives.assign_add(tp)
+        self.false_positives.assign_add(fp)
+
+    def result(self):
+        return tf.math.divide_no_nan(self.true_positives, self.true_positives + self.false_positives)
+
+    def reset_state(self):
+        self.true_positives.assign(0.0)
+        self.false_positives.assign(0.0)
+
+
+class SparseBinaryRecall(tf.keras.metrics.Metric):
+    def __init__(self, name: str = "recall", **kwargs):
+        super().__init__(name=name, **kwargs)
+        self.true_positives = self.add_weight(name="tp", initializer="zeros")
+        self.false_negatives = self.add_weight(name="fn", initializer="zeros")
+
+    def update_state(self, y_true, y_pred, sample_weight=None):
+        y_true = tf.cast(tf.reshape(y_true, [-1]), tf.int32)
+        y_pred = tf.argmax(y_pred, axis=-1, output_type=tf.int32)
+
+        positive_true = tf.equal(y_true, 1)
+        positive_pred = tf.equal(y_pred, 1)
+
+        tp = tf.reduce_sum(tf.cast(tf.logical_and(positive_true, positive_pred), self.dtype))
+        fn = tf.reduce_sum(tf.cast(tf.logical_and(positive_true, tf.logical_not(positive_pred)), self.dtype))
+
+        self.true_positives.assign_add(tp)
+        self.false_negatives.assign_add(fn)
+
+    def result(self):
+        return tf.math.divide_no_nan(self.true_positives, self.true_positives + self.false_negatives)
+
+    def reset_state(self):
+        self.true_positives.assign(0.0)
+        self.false_negatives.assign(0.0)
+
+
 def residual_tcn_block(
     x: tf.Tensor,
     filters: int,
@@ -358,8 +412,8 @@ def compile_model(model: tf.keras.Model, learning_rate: float) -> tf.keras.Model
         loss="sparse_categorical_crossentropy",
         metrics=[
             tf.keras.metrics.SparseCategoricalAccuracy(name="accuracy"),
-            tf.keras.metrics.Precision(name="precision"),
-            tf.keras.metrics.Recall(name="recall"),
+            SparseBinaryPrecision(name="precision"),
+            SparseBinaryRecall(name="recall"),
         ],
     )
     return model
