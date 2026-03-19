@@ -49,8 +49,8 @@ class TcnV25TrainConfig:
     train_positive_stride: int
     train_negative_stride: int
     eval_stride: int
-    decision_threshold: float | None
-    min_val_recall: float
+    decision_threshold: float | None = None
+    min_val_recall: float = 0.80
 
 
 def parse_int_list(raw: str) -> list[int]:
