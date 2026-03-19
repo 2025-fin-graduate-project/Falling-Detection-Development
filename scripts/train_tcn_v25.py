@@ -11,10 +11,10 @@ import tensorflow as tf
 from sklearn.model_selection import GroupShuffleSplit
 
 from scripts.train_tcn_v2 import (
+    build_split_metrics,
     build_tcn_v2_model,
     class_weight_from_labels,
     compile_model,
-    evaluate_model,
     export_tflite_artifacts,
     load_source_frame,
     log,
@@ -49,6 +49,8 @@ class TcnV25TrainConfig:
     train_positive_stride: int
     train_negative_stride: int
     eval_stride: int
+    decision_threshold: float | None
+    min_val_recall: float
 
 
 def parse_int_list(raw: str) -> list[int]:
@@ -81,6 +83,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--train-negative-stride", type=int, default=5)
     parser.add_argument("--eval-stride", type=int, default=1)
     parser.add_argument("--export-tflite", action="store_true")
+    parser.add_argument("--decision-threshold", type=float, default=None)
+    parser.add_argument("--min-val-recall", type=float, default=0.80)
     return parser.parse_args()
 
 
@@ -91,6 +95,10 @@ def make_config(args: argparse.Namespace) -> TcnV25TrainConfig:
         raise ValueError("--dilations and --channels must have the same length.")
     if args.train_positive_stride < 1 or args.train_negative_stride < 1 or args.eval_stride < 1:
         raise ValueError("Stride values must be >= 1.")
+    if args.decision_threshold is not None and not 0.0 <= args.decision_threshold <= 1.0:
+        raise ValueError("--decision-threshold must be between 0 and 1.")
+    if not 0.0 <= args.min_val_recall <= 1.0:
+        raise ValueError("--min-val-recall must be between 0 and 1.")
 
     return TcnV25TrainConfig(
         input_format=args.input_format,
@@ -114,6 +122,8 @@ def make_config(args: argparse.Namespace) -> TcnV25TrainConfig:
         train_positive_stride=args.train_positive_stride,
         train_negative_stride=args.train_negative_stride,
         eval_stride=args.eval_stride,
+        decision_threshold=args.decision_threshold,
+        min_val_recall=args.min_val_recall,
     )
 
 
@@ -313,13 +323,14 @@ def main() -> None:
 
     callbacks = [
         tf.keras.callbacks.EarlyStopping(
-            monitor="val_recall",
+            monitor="val_pr_auc",
             mode="max",
             patience=6,
             restore_best_weights=True,
         ),
         tf.keras.callbacks.ReduceLROnPlateau(
-            monitor="val_loss",
+            monitor="val_pr_auc",
+            mode="max",
             factor=0.5,
             patience=3,
             min_lr=1e-5,
@@ -340,11 +351,17 @@ def main() -> None:
     model.save(keras_path)
     log(f"saved keras model to {keras_path}")
 
-    metrics = {
-        "train": evaluate_model(model, x_train, y_train, "train"),
-        "val": evaluate_model(model, x_val, y_val, "val"),
-        "test": evaluate_model(model, x_test, y_test, "test"),
-    }
+    metrics = build_split_metrics(
+        model=model,
+        x_train=x_train,
+        y_train=y_train,
+        x_val=x_val,
+        y_val=y_val,
+        x_test=x_test,
+        y_test=y_test,
+        decision_threshold=config.decision_threshold,
+        min_val_recall=config.min_val_recall,
+    )
 
     export_paths = {"keras": str(keras_path)}
     if config.export_tflite:

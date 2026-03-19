@@ -10,7 +10,19 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from sklearn.metrics import classification_report, confusion_matrix, f1_score, precision_score, recall_score
+from sklearn.metrics import (
+    average_precision_score,
+    balanced_accuracy_score,
+    classification_report,
+    confusion_matrix,
+    f1_score,
+    matthews_corrcoef,
+    precision_recall_curve,
+    precision_score,
+    recall_score,
+    roc_auc_score,
+    roc_curve,
+)
 from sklearn.model_selection import GroupShuffleSplit
 
 
@@ -39,6 +51,8 @@ class TrainConfig:
     dilations: list[int]
     channels: list[int]
     export_tflite: bool
+    decision_threshold: float | None
+    min_val_recall: float
 
 
 def parse_args() -> argparse.Namespace:
@@ -61,6 +75,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dilations", default="1,2,4,8")
     parser.add_argument("--channels", default="32,32,64,96")
     parser.add_argument("--export-tflite", action="store_true")
+    parser.add_argument("--decision-threshold", type=float, default=None)
+    parser.add_argument("--min-val-recall", type=float, default=0.80)
     return parser.parse_args()
 
 
@@ -81,6 +97,10 @@ def make_config(args: argparse.Namespace) -> TrainConfig:
     channels = parse_int_list(args.channels)
     if len(dilations) != len(channels):
         raise ValueError("--dilations and --channels must have the same length.")
+    if args.decision_threshold is not None and not 0.0 <= args.decision_threshold <= 1.0:
+        raise ValueError("--decision-threshold must be between 0 and 1.")
+    if not 0.0 <= args.min_val_recall <= 1.0:
+        raise ValueError("--min-val-recall must be between 0 and 1.")
 
     return TrainConfig(
         input_format=args.input_format,
@@ -101,6 +121,8 @@ def make_config(args: argparse.Namespace) -> TrainConfig:
         dilations=dilations,
         channels=channels,
         export_tflite=args.export_tflite,
+        decision_threshold=args.decision_threshold,
+        min_val_recall=args.min_val_recall,
     )
 
 
@@ -282,6 +304,32 @@ def class_weight_from_labels(y: np.ndarray) -> dict[int, float]:
     }
 
 
+def _safe_metric(metric_fn) -> float | None:
+    try:
+        return float(metric_fn())
+    except ValueError:
+        return None
+
+
+def _safe_curve(curve_fn, y_true: np.ndarray, y_score: np.ndarray) -> dict[str, list[float]] | None:
+    try:
+        curve_values = curve_fn(y_true, y_score)
+    except ValueError:
+        return None
+
+    if len(curve_values) == 3:
+        x_values, y_values, thresholds = curve_values
+    else:
+        x_values, y_values = curve_values
+        thresholds = np.array([], dtype=np.float32)
+
+    return {
+        "x": np.asarray(x_values, dtype=np.float32).tolist(),
+        "y": np.asarray(y_values, dtype=np.float32).tolist(),
+        "thresholds": np.asarray(thresholds, dtype=np.float32).tolist(),
+    }
+
+
 class SparseBinaryPrecision(tf.keras.metrics.Metric):
     def __init__(self, name: str = "precision", **kwargs):
         super().__init__(name=name, **kwargs)
@@ -414,6 +462,7 @@ def compile_model(model: tf.keras.Model, learning_rate: float) -> tf.keras.Model
             tf.keras.metrics.SparseCategoricalAccuracy(name="accuracy"),
             SparseBinaryPrecision(name="precision"),
             SparseBinaryRecall(name="recall"),
+            tf.keras.metrics.AUC(curve="PR", name="pr_auc"),
         ],
     )
     return model
@@ -428,13 +477,14 @@ def train_model(
 ) -> tf.keras.callbacks.History:
     callbacks = [
         tf.keras.callbacks.EarlyStopping(
-            monitor="val_recall",
+            monitor="val_pr_auc",
             mode="max",
             patience=6,
             restore_best_weights=True,
         ),
         tf.keras.callbacks.ReduceLROnPlateau(
-            monitor="val_loss",
+            monitor="val_pr_auc",
+            mode="max",
             factor=0.5,
             patience=3,
             min_lr=1e-5,
@@ -450,17 +500,244 @@ def train_model(
     )
 
 
-def evaluate_model(model: tf.keras.Model, x: np.ndarray, y: np.ndarray, split_name: str) -> dict[str, object]:
+def select_decision_threshold(
+    y_true: np.ndarray,
+    positive_scores: np.ndarray,
+    min_recall: float,
+) -> dict[str, float]:
+    thresholds = np.unique(np.concatenate([positive_scores.astype(np.float32), np.array([0.5], dtype=np.float32)]))
+    best_any: dict[str, float] | None = None
+    best_with_floor: dict[str, float] | None = None
+
+    for threshold in thresholds:
+        pred = (positive_scores >= threshold).astype(np.int32)
+        precision = float(precision_score(y_true, pred, zero_division=0))
+        recall = float(recall_score(y_true, pred, zero_division=0))
+        macro_f1 = float(f1_score(y_true, pred, average="macro", zero_division=0))
+        candidate = {
+            "threshold": float(threshold),
+            "precision": precision,
+            "recall": recall,
+            "macro_f1": macro_f1,
+        }
+        if best_any is None or candidate["macro_f1"] > best_any["macro_f1"]:
+            best_any = candidate
+        if recall >= min_recall and (best_with_floor is None or candidate["macro_f1"] > best_with_floor["macro_f1"]):
+            best_with_floor = candidate
+
+    selected = best_with_floor or best_any
+    if selected is None:
+        return {
+            "threshold": 0.5,
+            "precision": 0.0,
+            "recall": 0.0,
+            "macro_f1": 0.0,
+        }
+    return selected
+
+
+def evaluate_model(
+    model: tf.keras.Model,
+    x: np.ndarray,
+    y: np.ndarray,
+    split_name: str,
+    threshold: float = 0.5,
+) -> dict[str, object]:
     prob = model.predict(x, verbose=0)
-    pred = prob.argmax(axis=1)
+    positive_scores = prob[:, 1]
+    pred = (positive_scores >= threshold).astype(np.int32)
+    cm = confusion_matrix(y, pred, labels=[0, 1])
+    tn, fp, fn, tp = cm.ravel()
+    specificity = float(tn / max(tn + fp, 1))
+    false_positive_rate = float(fp / max(fp + tn, 1))
+    false_negative_rate = float(fn / max(fn + tp, 1))
+
     return {
         "split": split_name,
         "accuracy": float((pred == y).mean()),
+        "balanced_accuracy": _safe_metric(lambda: balanced_accuracy_score(y, pred)),
         "precision": float(precision_score(y, pred, zero_division=0)),
         "recall": float(recall_score(y, pred, zero_division=0)),
         "macro_f1": float(f1_score(y, pred, average="macro", zero_division=0)),
-        "confusion_matrix": confusion_matrix(y, pred).tolist(),
+        "specificity": specificity,
+        "false_positive_rate": false_positive_rate,
+        "false_negative_rate": false_negative_rate,
+        "mcc": _safe_metric(lambda: matthews_corrcoef(y, pred)),
+        "roc_auc": _safe_metric(lambda: roc_auc_score(y, positive_scores)),
+        "pr_auc": _safe_metric(lambda: average_precision_score(y, positive_scores)),
+        "positive_support": int((y == 1).sum()),
+        "negative_support": int((y == 0).sum()),
+        "predicted_positive_rate": float((pred == 1).mean()),
+        "mean_positive_score": float(np.mean(positive_scores)),
+        "decision_threshold": float(threshold),
+        "confusion_matrix": cm.tolist(),
+        "roc_curve": _safe_curve(roc_curve, y, positive_scores),
+        "pr_curve": _safe_curve(precision_recall_curve, y, positive_scores),
         "classification_report": classification_report(y, pred, digits=4, zero_division=0),
+    }
+
+
+def build_split_metrics(
+    model: tf.keras.Model,
+    x_train: np.ndarray,
+    y_train: np.ndarray,
+    x_val: np.ndarray,
+    y_val: np.ndarray,
+    x_test: np.ndarray,
+    y_test: np.ndarray,
+    decision_threshold: float | None,
+    min_val_recall: float,
+) -> dict[str, dict[str, object]]:
+    selected_threshold = decision_threshold
+    threshold_source = "cli"
+    threshold_payload: dict[str, float] | None = None
+
+    if selected_threshold is None:
+        val_prob = model.predict(x_val, verbose=0)
+        threshold_payload = select_decision_threshold(y_val, val_prob[:, 1], min_val_recall)
+        selected_threshold = threshold_payload["threshold"]
+        threshold_source = "validation_search"
+        log(
+            "selected decision threshold "
+            f"threshold={selected_threshold:.4f} "
+            f"precision={threshold_payload['precision']:.4f} "
+            f"recall={threshold_payload['recall']:.4f} "
+            f"macro_f1={threshold_payload['macro_f1']:.4f}"
+        )
+    else:
+        log(f"using fixed decision threshold threshold={selected_threshold:.4f}")
+
+    metrics = {
+        "train": evaluate_model(model, x_train, y_train, "train", threshold=selected_threshold),
+        "val": evaluate_model(model, x_val, y_val, "val", threshold=selected_threshold),
+        "test": evaluate_model(model, x_test, y_test, "test", threshold=selected_threshold),
+        "threshold_selection": {
+            "source": threshold_source,
+            "selected_threshold": float(selected_threshold),
+            "min_val_recall": float(min_val_recall),
+        },
+    }
+    if threshold_payload is not None:
+        metrics["threshold_selection"]["val_search_metrics"] = threshold_payload
+    return metrics
+
+
+def save_visualization_artifacts(
+    output_dir: Path,
+    history: tf.keras.callbacks.History,
+    metrics: dict[str, dict[str, object]],
+) -> dict[str, str]:
+    import matplotlib.pyplot as plt
+
+    history_path = output_dir / "training_history.png"
+    summary_path = output_dir / "evaluation_dashboard.png"
+
+    history_df = pd.DataFrame(history.history)
+    fig, axes = plt.subplots(2, 2, figsize=(14, 9))
+
+    if {"loss", "val_loss"}.issubset(history_df.columns):
+        history_df[["loss", "val_loss"]].plot(ax=axes[0, 0], marker="o")
+        axes[0, 0].set_title("Loss")
+        axes[0, 0].set_xlabel("Epoch")
+        axes[0, 0].grid(True, alpha=0.3)
+    else:
+        axes[0, 0].axis("off")
+
+    acc_cols = [col for col in ["accuracy", "val_accuracy"] if col in history_df.columns]
+    if acc_cols:
+        history_df[acc_cols].plot(ax=axes[0, 1], marker="o")
+        axes[0, 1].set_title("Accuracy")
+        axes[0, 1].set_xlabel("Epoch")
+        axes[0, 1].grid(True, alpha=0.3)
+    else:
+        axes[0, 1].axis("off")
+
+    pr_cols = [col for col in ["precision", "val_precision", "recall", "val_recall"] if col in history_df.columns]
+    if pr_cols:
+        history_df[pr_cols].plot(ax=axes[1, 0], marker="o")
+        axes[1, 0].set_title("Precision / Recall")
+        axes[1, 0].set_xlabel("Epoch")
+        axes[1, 0].grid(True, alpha=0.3)
+    else:
+        axes[1, 0].axis("off")
+
+    lr_cols = [col for col in ["learning_rate", "lr"] if col in history_df.columns]
+    if lr_cols:
+        history_df[lr_cols].plot(ax=axes[1, 1], marker="o", color="darkorange")
+        axes[1, 1].set_title("Learning Rate")
+        axes[1, 1].set_xlabel("Epoch")
+        axes[1, 1].grid(True, alpha=0.3)
+    else:
+        axes[1, 1].axis("off")
+
+    fig.tight_layout()
+    fig.savefig(history_path, dpi=160, bbox_inches="tight")
+    plt.close(fig)
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    summary_rows = []
+    for split_name in ["train", "val", "test"]:
+        split_metrics = metrics[split_name]
+        summary_rows.append(
+            {
+                "split": split_name,
+                "accuracy": split_metrics["accuracy"],
+                "precision": split_metrics["precision"],
+                "recall": split_metrics["recall"],
+                "specificity": split_metrics["specificity"],
+                "macro_f1": split_metrics["macro_f1"],
+                "roc_auc": split_metrics["roc_auc"] or np.nan,
+                "pr_auc": split_metrics["pr_auc"] or np.nan,
+            }
+        )
+    summary_df = pd.DataFrame(summary_rows).set_index("split")
+    summary_df.plot(kind="bar", ax=axes[0, 0])
+    axes[0, 0].set_title("Split Metrics")
+    axes[0, 0].set_ylim(0.0, 1.05)
+    axes[0, 0].grid(True, axis="y", alpha=0.3)
+    axes[0, 0].tick_params(axis="x", rotation=0)
+
+    test_cm = np.asarray(metrics["test"]["confusion_matrix"])
+    im = axes[0, 1].imshow(test_cm, cmap="Blues")
+    axes[0, 1].set_title("Test Confusion Matrix")
+    axes[0, 1].set_xlabel("Predicted")
+    axes[0, 1].set_ylabel("Actual")
+    axes[0, 1].set_xticks([0, 1], ["Normal", "Fall"])
+    axes[0, 1].set_yticks([0, 1], ["Normal", "Fall"])
+    for row_idx in range(test_cm.shape[0]):
+        for col_idx in range(test_cm.shape[1]):
+            axes[0, 1].text(col_idx, row_idx, int(test_cm[row_idx, col_idx]), ha="center", va="center", color="black")
+    fig.colorbar(im, ax=axes[0, 1], fraction=0.046, pad=0.04)
+
+    for split_name in ["train", "val", "test"]:
+        roc_payload = metrics[split_name].get("roc_curve")
+        if roc_payload:
+            axes[1, 0].plot(roc_payload["x"], roc_payload["y"], label=f"{split_name} (AUC={metrics[split_name]['roc_auc']:.3f})")
+    axes[1, 0].plot([0, 1], [0, 1], linestyle="--", color="gray", alpha=0.7)
+    axes[1, 0].set_title("ROC Curve")
+    axes[1, 0].set_xlabel("False Positive Rate")
+    axes[1, 0].set_ylabel("True Positive Rate")
+    axes[1, 0].grid(True, alpha=0.3)
+    axes[1, 0].legend()
+
+    for split_name in ["train", "val", "test"]:
+        pr_payload = metrics[split_name].get("pr_curve")
+        if pr_payload:
+            axes[1, 1].plot(pr_payload["x"], pr_payload["y"], label=f"{split_name} (AP={metrics[split_name]['pr_auc']:.3f})")
+    axes[1, 1].set_title("Precision-Recall Curve")
+    axes[1, 1].set_xlabel("Recall")
+    axes[1, 1].set_ylabel("Precision")
+    axes[1, 1].grid(True, alpha=0.3)
+    axes[1, 1].legend()
+
+    fig.tight_layout()
+    fig.savefig(summary_path, dpi=160, bbox_inches="tight")
+    plt.close(fig)
+
+    return {
+        "training_history_plot": str(history_path),
+        "evaluation_dashboard_plot": str(summary_path),
     }
 
 
@@ -575,17 +852,24 @@ def main() -> None:
     model.save(keras_path)
     log(f"saved keras model to {keras_path}")
 
-    metrics = {
-        "train": evaluate_model(model, x_train, y_train, "train"),
-        "val": evaluate_model(model, x_val, y_val, "val"),
-        "test": evaluate_model(model, x_test, y_test, "test"),
-    }
+    metrics = build_split_metrics(
+        model=model,
+        x_train=x_train,
+        y_train=y_train,
+        x_val=x_val,
+        y_val=y_val,
+        x_test=x_test,
+        y_test=y_test,
+        decision_threshold=config.decision_threshold,
+        min_val_recall=config.min_val_recall,
+    )
 
     export_paths = {"keras": str(keras_path)}
     if config.export_tflite:
         log("tflite export start")
         export_paths.update(export_tflite_artifacts(model, x_train, output_dir, "tcn_v2"))
         log("tflite export done")
+    export_paths.update(save_visualization_artifacts(output_dir, history, metrics))
 
     metadata_path = save_run_metadata(
         config=config,
