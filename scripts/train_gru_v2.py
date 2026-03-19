@@ -43,8 +43,8 @@ class GruTrainConfig:
     dropout_rate: float
     hidden_sizes: list[int]
     export_tflite: bool
-    decision_threshold: float | None
-    min_val_recall: float
+    decision_threshold: float | None = None
+    min_val_recall: float = 0.80
 
 
 def parse_args() -> argparse.Namespace:

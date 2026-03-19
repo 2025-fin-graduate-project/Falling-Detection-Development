@@ -51,8 +51,8 @@ class TrainConfig:
     dilations: list[int]
     channels: list[int]
     export_tflite: bool
-    decision_threshold: float | None
-    min_val_recall: float
+    decision_threshold: float | None = None
+    min_val_recall: float = 0.80
 
 
 def parse_args() -> argparse.Namespace:
