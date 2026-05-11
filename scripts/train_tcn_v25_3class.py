@@ -9,13 +9,10 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from sklearn.model_selection import GroupShuffleSplit
+from sklearn.metrics import accuracy_score, classification_report
 
 from scripts.train_tcn_v2 import (
-    build_split_metrics,
     build_tcn_v2_model,
-    class_weight_from_labels,
-    compile_model,
-    export_tflite_artifacts,
     load_source_frame,
     log,
     make_tf_dataset,
@@ -23,8 +20,8 @@ from scripts.train_tcn_v2 import (
     save_run_metadata,
     save_visualization_artifacts,
     set_seed,
+    parse_int_list,
 )
-
 
 @dataclass
 class TcnV25TrainConfig:
@@ -49,26 +46,19 @@ class TcnV25TrainConfig:
     train_positive_stride: int
     train_negative_stride: int
     eval_stride: int
-    negative_class_weight: float = 1.0
-    positive_class_weight: float = 5.0
+    class_weight_0: float = 1.0
+    class_weight_1: float = 2.0
+    class_weight_2: float = 5.0
     decision_threshold: float | None = None
     min_val_recall: float = 0.80
 
-
-def parse_int_list(raw: str) -> list[int]:
-    values = [int(part.strip()) for part in raw.split(",") if part.strip()]
-    if not values:
-        raise ValueError("Expected at least one integer value.")
-    return values
-
-
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Train TCN v2.5 with sliding-window supervision.")
+    parser = argparse.ArgumentParser(description="Train TCN v2.5 with 3-class sliding-window supervision.")
     parser.add_argument("--input-format", choices=["csv", "sqlite"], default="csv")
-    parser.add_argument("--csv-path", default="dataset/final_dataset.csv")
+    parser.add_argument("--csv-path", default="dataset/final_dataset_3class.csv")
     parser.add_argument("--sqlite-path", default="dataset/final_dataset.sqlite")
     parser.add_argument("--sqlite-table", default="fall_frames")
-    parser.add_argument("--output-dir", default="artifacts/tcn_v25")
+    parser.add_argument("--output-dir", default="artifacts/tcn_v25_3class")
     parser.add_argument("--monitor-start-sec", type=float, default=4.0)
     parser.add_argument("--monitor-end-sec", type=float, default=10.0)
     parser.add_argument("--target-steps", type=int, default=60)
@@ -85,27 +75,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--train-negative-stride", type=int, default=1)
     parser.add_argument("--eval-stride", type=int, default=1)
     parser.add_argument("--export-tflite", action="store_true")
-    parser.add_argument("--negative-class-weight", type=float, default=1.0)
-    parser.add_argument("--positive-class-weight", type=float, default=5.0)
+    parser.add_argument("--class-weight-0", type=float, default=1.0)
+    parser.add_argument("--class-weight-1", type=float, default=2.0)
+    parser.add_argument("--class-weight-2", type=float, default=5.0)
     parser.add_argument("--decision-threshold", type=float, default=None)
     parser.add_argument("--min-val-recall", type=float, default=0.80)
     return parser.parse_args()
 
-
 def make_config(args: argparse.Namespace) -> TcnV25TrainConfig:
     dilations = parse_int_list(args.dilations)
     channels = parse_int_list(args.channels)
-    if len(dilations) != len(channels):
-        raise ValueError("--dilations and --channels must have the same length.")
-    if args.train_positive_stride < 1 or args.train_negative_stride < 1 or args.eval_stride < 1:
-        raise ValueError("Stride values must be >= 1.")
-    if args.negative_class_weight <= 0.0 or args.positive_class_weight <= 0.0:
-        raise ValueError("Class weights must be > 0.")
-    if args.decision_threshold is not None and not 0.0 <= args.decision_threshold <= 1.0:
-        raise ValueError("--decision-threshold must be between 0 and 1.")
-    if not 0.0 <= args.min_val_recall <= 1.0:
-        raise ValueError("--min-val-recall must be between 0 and 1.")
-
     return TcnV25TrainConfig(
         input_format=args.input_format,
         csv_path=args.csv_path,
@@ -128,12 +107,12 @@ def make_config(args: argparse.Namespace) -> TcnV25TrainConfig:
         train_positive_stride=args.train_positive_stride,
         train_negative_stride=args.train_negative_stride,
         eval_stride=args.eval_stride,
-        negative_class_weight=args.negative_class_weight,
-        positive_class_weight=args.positive_class_weight,
+        class_weight_0=args.class_weight_0,
+        class_weight_1=args.class_weight_1,
+        class_weight_2=args.class_weight_2,
         decision_threshold=args.decision_threshold,
         min_val_recall=args.min_val_recall,
     )
-
 
 def _window_label(labels: np.ndarray, mode: str) -> int:
     if mode == "segment_max":
@@ -142,6 +121,19 @@ def _window_label(labels: np.ndarray, mode: str) -> int:
         return int(labels[-1])
     raise ValueError(f"Unsupported label_mode: {mode}")
 
+def load_from_csv_3class(config: TcnV25TrainConfig) -> tuple[pd.DataFrame, list[str]]:
+    csv_path = Path(config.csv_path)
+    if not csv_path.exists():
+        raise FileNotFoundError(f"CSV not found: {csv_path}")
+
+    log(f"loading csv source from {csv_path} (3-class)")
+    df = pd.read_csv(csv_path)
+    from scripts.train_tcn_v2 import get_feature_columns
+    feature_cols = get_feature_columns(df.columns.tolist())
+    keep_cols = ["video_id", "frame", "time_sec", "label_3class"] + feature_cols
+    df = df[keep_cols].rename(columns={"label_3class": "label"})
+    log(f"csv rows loaded={len(df)} feature_count={len(feature_cols)}")
+    return df, feature_cols
 
 def build_monitoring_segments(
     df: pd.DataFrame,
@@ -169,11 +161,7 @@ def build_monitoring_segments(
                 "segment_label": int(labels.max()),
             }
         )
-
-    if not segments:
-        raise ValueError("No monitoring segments were created. Check time window and input source.")
     return segments
-
 
 def split_segments(segments: list[dict[str, object]], random_state: int) -> dict[str, list[dict[str, object]]]:
     video_ids = np.asarray([segment["video_id"] for segment in segments])
@@ -189,14 +177,11 @@ def split_segments(segments: list[dict[str, object]], random_state: int) -> dict
     inner = GroupShuffleSplit(n_splits=1, test_size=0.1764705882, random_state=random_state)
     train_idx_rel, val_idx_rel = next(inner.split(indexes[train_val_idx], inner_labels, inner_groups))
 
-    train_idx = train_val_idx[train_idx_rel]
-    val_idx = train_val_idx[val_idx_rel]
     return {
-        "train": [segments[idx] for idx in train_idx],
-        "val": [segments[idx] for idx in val_idx],
+        "train": [segments[idx] for idx in train_val_idx[train_idx_rel]],
+        "val": [segments[idx] for idx in train_val_idx[val_idx_rel]],
         "test": [segments[idx] for idx in test_idx],
     }
-
 
 def build_sliding_window_dataset(
     segments: list[dict[str, object]],
@@ -223,7 +208,7 @@ def build_sliding_window_dataset(
         for start_idx in range(0, len(values) - target_steps + 1):
             label = _window_label(frame_labels[start_idx : start_idx + target_steps], label_mode)
             if training:
-                stride = positive_stride if label == 1 else negative_stride
+                stride = positive_stride if label > 0 else negative_stride
                 if start_idx % stride != 0:
                     continue
             elif start_idx % eval_stride != 0:
@@ -233,73 +218,38 @@ def build_sliding_window_dataset(
             labels.append(label)
             groups.append(video_id)
 
-    if not windows:
-        raise ValueError("No sliding windows were created. Check target_steps and monitoring range.")
-
     return (
         np.stack(windows).astype(np.float32),
         np.asarray(labels, dtype=np.int32),
         np.asarray(groups),
     )
 
-
 def describe_window_split(name: str, y: np.ndarray, groups: np.ndarray) -> str:
-    positives = int((y == 1).sum())
-    negatives = int((y == 0).sum())
-    return (
-        f"{name} windows={len(y)} videos={len(np.unique(groups))} "
-        f"positives={positives} negatives={negatives}"
-    )
+    c0, c1, c2 = (y == 0).sum(), (y == 1).sum(), (y == 2).sum()
+    return f"{name} windows={len(y)} videos={len(np.unique(groups))} 0={c0} 1={c1} 2={c2}"
 
+def multiclass_compile_model(model: tf.keras.Model, learning_rate: float) -> tf.keras.Model:
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+        loss="sparse_categorical_crossentropy",
+        metrics=[tf.keras.metrics.SparseCategoricalAccuracy(name="accuracy")],
+    )
+    return model
 
 def main() -> None:
     args = parse_args()
     config = make_config(args)
     set_seed(config.random_state)
 
-    log(
-        "tcn v2.5 training start "
-        f"input_format={config.input_format} target_steps={config.target_steps} "
-        f"dilations={config.dilations} channels={config.channels} "
-        f"strides(train_pos={config.train_positive_stride}, train_neg={config.train_negative_stride}, eval={config.eval_stride})"
-    )
+    log(f"tcn v2.5 3-class start steps={config.target_steps} channels={config.channels}")
 
-    df, feature_cols = load_source_frame(config)
-    segments = build_monitoring_segments(
-        df=df,
-        feature_cols=feature_cols,
-        monitor_start_sec=config.monitor_start_sec,
-        monitor_end_sec=config.monitor_end_sec,
-    )
-    split_segments_map = split_segments(segments, config.random_state)
+    df, feature_cols = load_from_csv_3class(config)
+    segments = build_monitoring_segments(df, feature_cols, config.monitor_start_sec, config.monitor_end_sec)
+    split_map = split_segments(segments, config.random_state)
 
-    x_train, y_train, train_groups = build_sliding_window_dataset(
-        split_segments_map["train"],
-        config.target_steps,
-        config.label_mode,
-        training=True,
-        positive_stride=config.train_positive_stride,
-        negative_stride=config.train_negative_stride,
-        eval_stride=config.eval_stride,
-    )
-    x_val, y_val, val_groups = build_sliding_window_dataset(
-        split_segments_map["val"],
-        config.target_steps,
-        config.label_mode,
-        training=False,
-        positive_stride=config.train_positive_stride,
-        negative_stride=config.train_negative_stride,
-        eval_stride=config.eval_stride,
-    )
-    x_test, y_test, test_groups = build_sliding_window_dataset(
-        split_segments_map["test"],
-        config.target_steps,
-        config.label_mode,
-        training=False,
-        positive_stride=config.train_positive_stride,
-        negative_stride=config.train_negative_stride,
-        eval_stride=config.eval_stride,
-    )
+    x_train, y_train, train_groups = build_sliding_window_dataset(split_map["train"], config.target_steps, config.label_mode, training=True, positive_stride=config.train_positive_stride, negative_stride=config.train_negative_stride, eval_stride=config.eval_stride)
+    x_val, y_val, val_groups = build_sliding_window_dataset(split_map["val"], config.target_steps, config.label_mode, training=False, positive_stride=config.train_positive_stride, negative_stride=config.train_negative_stride, eval_stride=config.eval_stride)
+    x_test, y_test, test_groups = build_sliding_window_dataset(split_map["test"], config.target_steps, config.label_mode, training=False, positive_stride=config.train_positive_stride, negative_stride=config.train_negative_stride, eval_stride=config.eval_stride)
 
     log(describe_window_split("train", y_train, train_groups))
     log(describe_window_split("val", y_val, val_groups))
@@ -307,105 +257,24 @@ def main() -> None:
 
     x_train, x_val, x_test, mean, std = normalize_splits(x_train, x_val, x_test)
 
-    split_sizes = {
-        "train_windows": int(len(y_train)),
-        "val_windows": int(len(y_val)),
-        "test_windows": int(len(y_test)),
-        "train_videos": int(len(np.unique(train_groups))),
-        "val_videos": int(len(np.unique(val_groups))),
-        "test_videos": int(len(np.unique(test_groups))),
-    }
-    log(
-        "video split sizes "
-        f"train={split_sizes['train_videos']} val={split_sizes['val_videos']} test={split_sizes['test_videos']}"
-    )
-
     train_ds = make_tf_dataset(x_train, y_train, config.batch_size, training=True)
     val_ds = make_tf_dataset(x_val, y_val, config.batch_size, training=False)
-    auto_class_weight = class_weight_from_labels(y_train)
-    class_weight = {
-        0: float(config.negative_class_weight),
-        1: float(config.positive_class_weight),
-    }
-    log(f"auto class weights={auto_class_weight}")
+    
+    class_weight = {0: float(config.class_weight_0), 1: float(config.class_weight_1), 2: float(config.class_weight_2)}
     log(f"class weights={class_weight}")
 
-    model = build_tcn_v2_model(config, input_shape=(config.target_steps, len(feature_cols)))
-    model = compile_model(model, config.learning_rate)
-    model.summary(print_fn=lambda line: log(f"model {line}"))
+    model = build_tcn_v2_model(config, input_shape=(config.target_steps, len(feature_cols)), num_classes=3)
+    model = multiclass_compile_model(model, config.learning_rate)
 
-    callbacks = [
-        tf.keras.callbacks.EarlyStopping(
-            monitor="val_pr_auc",
-            mode="max",
-            patience=6,
-            restore_best_weights=True,
-        ),
-        tf.keras.callbacks.ReduceLROnPlateau(
-            monitor="val_pr_auc",
-            mode="max",
-            factor=0.5,
-            patience=3,
-            min_lr=1e-5,
-        ),
-    ]
-    history = model.fit(
-        train_ds,
-        validation_data=val_ds,
-        epochs=config.epochs,
-        class_weight=class_weight,
-        callbacks=callbacks,
-        verbose=1,
-    )
+    history = model.fit(train_ds, validation_data=val_ds, epochs=config.epochs, class_weight=class_weight, verbose=1, callbacks=[tf.keras.callbacks.EarlyStopping(monitor="val_accuracy", patience=6, restore_best_weights=True)])
 
     output_dir = Path(config.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    keras_path = output_dir / "tcn_v25.keras"
-    model.save(keras_path)
-    log(f"saved keras model to {keras_path}")
-
-    metrics = build_split_metrics(
-        model=model,
-        x_train=x_train,
-        y_train=y_train,
-        x_val=x_val,
-        y_val=y_val,
-        x_test=x_test,
-        y_test=y_test,
-        decision_threshold=config.decision_threshold,
-        min_val_recall=config.min_val_recall,
-    )
-
-    export_paths = {"keras": str(keras_path)}
-    if config.export_tflite:
-        log("tflite export start")
-        export_paths.update(export_tflite_artifacts(model, x_train, output_dir, "tcn_v25"))
-        log("tflite export done")
-    export_paths.update(save_visualization_artifacts(output_dir, history, metrics))
-
-    metadata_path = save_run_metadata(
-        config=config,
-        feature_cols=feature_cols,
-        mean=mean,
-        std=std,
-        split_sizes=split_sizes,
-        metrics=metrics,
-        history=history,
-        export_paths=export_paths,
-    )
-
-    for split_name in ["train", "val", "test"]:
-        split_metrics = metrics[split_name]
-        log(
-            f"{split_name} accuracy={split_metrics['accuracy']:.4f} "
-            f"precision={split_metrics['precision']:.4f} "
-            f"recall={split_metrics['recall']:.4f} "
-            f"macro_f1={split_metrics['macro_f1']:.4f}"
-        )
-
-    log(f"metadata written to {metadata_path}")
-    log(f"config snapshot keys={list(asdict(config).keys())}")
-
+    model.save(output_dir / "tcn_v25_3class.keras")
+    
+    y_test_pred = np.argmax(model.predict(x_test), axis=-1)
+    log(f"test accuracy={accuracy_score(y_test, y_test_pred):.4f}")
+    print(classification_report(y_test, y_test_pred))
 
 if __name__ == "__main__":
     main()

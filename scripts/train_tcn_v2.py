@@ -397,7 +397,10 @@ class SparseBinaryAUC(tf.keras.metrics.AUC):
         else:
             y_pred = tf.reshape(y_pred, [-1])
 
-        return super().update_state(y_true, tf.cast(y_pred, self.dtype), sample_weight=sample_weight)
+        # Keras can expand class_weight-derived sample weights in a way that does not
+        # match the reduced positive-class score shape used here, so keep weighting on
+        # the training loss and compute this monitoring metric unweighted.
+        return super().update_state(y_true, tf.cast(y_pred, self.dtype), sample_weight=None)
 
 
 def residual_tcn_block(
@@ -447,7 +450,7 @@ def residual_tcn_block(
     return out
 
 
-def build_tcn_v2_model(config: TrainConfig, input_shape: tuple[int, int]) -> tf.keras.Model:
+def build_tcn_v2_model(config: TrainConfig, input_shape: tuple[int, int], num_classes: int = 2) -> tf.keras.Model:
     inputs = tf.keras.Input(shape=input_shape, name="pose_sequence")
     x = inputs
 
@@ -466,7 +469,7 @@ def build_tcn_v2_model(config: TrainConfig, input_shape: tuple[int, int]) -> tf.
     x = tf.keras.layers.Concatenate(name="pool_concat")([avg_pool, max_pool])
     x = tf.keras.layers.Dense(config.channels[-1], activation="relu", name="head_dense")(x)
     x = tf.keras.layers.Dropout(config.dropout_rate, name="head_drop")(x)
-    outputs = tf.keras.layers.Dense(2, activation="softmax", name="classifier")(x)
+    outputs = tf.keras.layers.Dense(num_classes, activation="softmax", name="classifier")(x)
     return tf.keras.Model(inputs=inputs, outputs=outputs, name="stm32_tcn_v2_classifier")
 
 
@@ -775,10 +778,22 @@ def export_tflite_artifacts(
 
     model.save(keras_path)
 
-    fp32_converter = tf.lite.TFLiteConverter.from_keras_model(model)
+    # Use a concrete function with training=False so that dropout's stateful RNG
+    # ops (VAR_HANDLE, READ_VARIABLE, ASSIGN_VARIABLE, CALL_ONCE) are not included
+    # in the converted graph, which would block stedgeai conversion.
+    # Static batch=1 also eliminates Shape→Expand patterns from GRU hidden-state init.
+    static_input_shape = (1,) + tuple(model.input_shape[1:])
+
+    @tf.function(input_signature=[tf.TensorSpec(shape=static_input_shape, dtype=tf.float32)])
+    def _infer(x: tf.Tensor) -> tf.Tensor:
+        return model(x, training=False)
+
+    concrete_func = _infer.get_concrete_function()
+
+    fp32_converter = tf.lite.TFLiteConverter.from_concrete_functions([concrete_func], model)
     fp32_path.write_bytes(fp32_converter.convert())
 
-    int8_converter = tf.lite.TFLiteConverter.from_keras_model(model)
+    int8_converter = tf.lite.TFLiteConverter.from_concrete_functions([concrete_func], model)
     int8_converter.optimizations = [tf.lite.Optimize.DEFAULT]
     int8_converter.representative_dataset = lambda: representative_dataset(x_calib)
     int8_converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
