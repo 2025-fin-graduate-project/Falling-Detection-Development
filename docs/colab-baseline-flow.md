@@ -22,7 +22,7 @@ Use one fixed notebook per assigned baseline:
 - `colab/baselines/gru_raw_baseline.ipynb`
 - `colab/baselines/gru_filtered_baseline.ipynb`
 
-Each notebook runs one fixed experiment and writes to `results/baselines_phase0/{experiment_id}/`.
+Each notebook runs one fixed experiment on the cleaned split CSVs in `dataset/splits/` and writes to `results/baselines_phase0/{experiment_id}/`.
 The direct CLI equivalent is:
 
 ```bash

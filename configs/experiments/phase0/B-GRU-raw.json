@@ -2,12 +2,14 @@
   "experiment_id": "B-GRU-raw",
   "model_type": "gru",
   "preprocessing": "raw",
-  "source_csv": "dataset/final_dataset.csv",
+  "source_csv": "",
   "split_dir": "dataset/splits",
   "output_root": "results/baselines_phase0",
   "feature_set": "kp12",
   "label_column": "label",
-  "positive_labels": [1],
+  "positive_labels": [
+    1
+  ],
   "label_mode": "segment_max",
   "data_scope": "no_by",
   "window_start_sec": 5.0,
@@ -19,5 +21,6 @@
   "batch_size": 64,
   "epochs": 100,
   "learning_rate": 0.001,
-  "seed": 42
+  "seed": 42,
+  "input_mode": "split_csv"
 }
