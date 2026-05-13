@@ -22,13 +22,16 @@ Use one fixed notebook per assigned baseline:
 - `colab/baselines/gru_raw_baseline.ipynb`
 - `colab/baselines/gru_filtered_baseline.ipynb`
 
-Each notebook runs one fixed experiment on the cleaned split CSVs declared by `train_csv`, `val_csv`, and `test_csv` in its config, then writes to `results/baselines_phase0/{experiment_id}/`.
-The current baseline configs point to `dataset/train.csv`, `dataset/val.csv`, and `dataset/test.csv`.
+Each notebook runs one fixed experiment on the cleaned split CSVs declared directly in the notebook as `TRAIN_CSV`, `VAL_CSV`, and `TEST_CSV`, then writes to `results/baselines_phase0/{experiment_id}/`.
+The current notebooks point to `dataset/train.csv`, `dataset/val.csv`, and `dataset/test.csv`.
 The direct CLI equivalent is:
 
 ```bash
 python3 scripts/train_baseline.py \
-  --config configs/experiments/phase0/B-TCN-D.json
+  --config configs/experiments/phase0/B-TCN-D.json \
+  --train-csv dataset/train.csv \
+  --val-csv dataset/val.csv \
+  --test-csv dataset/test.csv
 ```
 
 Run a smoke test:
@@ -36,6 +39,9 @@ Run a smoke test:
 ```bash
 python3 scripts/train_baseline.py \
   --config configs/experiments/phase0/B-TCN-D.json \
+  --train-csv dataset/train.csv \
+  --val-csv dataset/val.csv \
+  --test-csv dataset/test.csv \
   --smoke
 ```
 
