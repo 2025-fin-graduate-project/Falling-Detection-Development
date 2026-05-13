@@ -244,6 +244,17 @@ def run(args: argparse.Namespace) -> None:
     df_out = pd.concat(results, ignore_index=True)
     df_out = df_out.sort_values(["video_id", "time_sec"]).reset_index(drop=True)
 
+    # label_3class 생성: 0=normal, 1=falling, 2=fallen
+    # 각 비디오에서 마지막 label=1 프레임 이후를 2(fallen)로 표시
+    if "label" in df_out.columns:
+        df_out["label_3class"] = df_out["label"].copy()
+        for vid, grp in df_out.groupby("video_id"):
+            fall_idx = grp.index[grp["label"] == 1]
+            if len(fall_idx) > 0:
+                last_fall = fall_idx.max()
+                after_fall = grp.index[grp.index > last_fall]
+                df_out.loc[after_fall, "label_3class"] = 2
+
     # 컬럼 순서 정리
     meta   = [c for c in ["video_id", "frame", "time_sec"] if c in df_out.columns]
     kp     = [c for c in df_out.columns if c.startswith("kp")]
