@@ -28,20 +28,35 @@ The direct CLI equivalent is:
 
 ```bash
 python3 scripts/train_baseline.py \
-  --config configs/experiments/phase0/B-TCN-D.json \
+  --experiment-id B-TCN-D \
+  --model-type tcn \
+  --preprocessing filtered \
+  --input-mode split_csv \
   --train-csv dataset/train.csv \
   --val-csv dataset/val.csv \
-  --test-csv dataset/test.csv
+  --test-csv dataset/test.csv \
+  --feature-set kp12 \
+  --data-scope no_by \
+  --window-start-sec 5.0 \
+  --window-end-sec 9.0 \
+  --target-steps 60 \
+  --batch-size 64 \
+  --epochs 100 \
+  --learning-rate 0.001
 ```
 
 Run a smoke test:
 
 ```bash
 python3 scripts/train_baseline.py \
-  --config configs/experiments/phase0/B-TCN-D.json \
+  --experiment-id B-TCN-D \
+  --model-type tcn \
+  --preprocessing filtered \
+  --input-mode split_csv \
   --train-csv dataset/train.csv \
   --val-csv dataset/val.csv \
   --test-csv dataset/test.csv \
+  --feature-set kp12 \
   --smoke
 ```
 

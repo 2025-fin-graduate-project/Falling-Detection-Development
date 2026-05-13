@@ -131,14 +131,28 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--feature-set", choices=sorted(FEATURE_SETS))
     parser.add_argument("--label-column")
     parser.add_argument("--positive-labels")
+    parser.add_argument("--label-mode", choices=["segment_max", "last_frame"])
     parser.add_argument("--data-scope", choices=["all", "no_by"], default=None)
     parser.add_argument("--window-start-sec", type=float)
     parser.add_argument("--window-end-sec", type=float)
     parser.add_argument("--target-steps", type=int)
+    parser.add_argument("--train-positive-stride", type=int)
+    parser.add_argument("--train-negative-stride", type=int)
+    parser.add_argument("--eval-stride", type=int)
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--batch-size", type=int)
     parser.add_argument("--learning-rate", type=float)
     parser.add_argument("--seed", type=int)
+    parser.add_argument("--dropout-rate", type=float)
+    parser.add_argument("--early-stop-patience", type=int)
+    parser.add_argument("--threshold-count", type=int)
+    parser.add_argument("--min-val-recall", type=float)
+    parser.add_argument("--tcn-channels")
+    parser.add_argument("--tcn-dilations")
+    parser.add_argument("--tcn-kernel-size", type=int)
+    parser.add_argument("--gru-units")
+    parser.add_argument("--representative-samples", type=int)
+    parser.add_argument("--quant-eval-max-windows", type=int)
     parser.add_argument("--export-tflite", action=argparse.BooleanOptionalAction)
     parser.add_argument("--quantize-int8", action=argparse.BooleanOptionalAction)
     parser.add_argument("--smoke", action="store_true", help="Use small limits for a Colab/local smoke run.")
@@ -162,14 +176,25 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         "output_root": args.output_root,
         "feature_set": args.feature_set,
         "label_column": args.label_column,
+        "label_mode": args.label_mode,
         "data_scope": args.data_scope,
         "window_start_sec": args.window_start_sec,
         "window_end_sec": args.window_end_sec,
         "target_steps": args.target_steps,
+        "train_positive_stride": args.train_positive_stride,
+        "train_negative_stride": args.train_negative_stride,
+        "eval_stride": args.eval_stride,
         "epochs": args.epochs,
         "batch_size": args.batch_size,
         "learning_rate": args.learning_rate,
         "seed": args.seed,
+        "dropout_rate": args.dropout_rate,
+        "early_stop_patience": args.early_stop_patience,
+        "threshold_count": args.threshold_count,
+        "min_val_recall": args.min_val_recall,
+        "tcn_kernel_size": args.tcn_kernel_size,
+        "representative_samples": args.representative_samples,
+        "quant_eval_max_windows": args.quant_eval_max_windows,
         "max_rows": args.max_rows,
         "max_windows_per_split": args.max_windows_per_split,
     }
@@ -178,6 +203,12 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
             payload[key] = value
     if args.positive_labels is not None:
         payload["positive_labels"] = parse_csv_ints(args.positive_labels)
+    if args.tcn_channels is not None:
+        payload["tcn_channels"] = parse_csv_ints(args.tcn_channels)
+    if args.tcn_dilations is not None:
+        payload["tcn_dilations"] = parse_csv_ints(args.tcn_dilations)
+    if args.gru_units is not None:
+        payload["gru_units"] = parse_csv_ints(args.gru_units)
     if args.export_tflite is not None:
         payload["export_tflite"] = args.export_tflite
     if args.quantize_int8 is not None:
