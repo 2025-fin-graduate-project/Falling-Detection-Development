@@ -15,7 +15,15 @@ Set `PROJECT_ROOT_OVERRIDE` in the notebook when the shared folder uses another 
 
 ## Phase 0
 
-Run one experiment:
+Use one fixed notebook per assigned baseline:
+
+- `colab/baselines/tcn_raw_baseline.ipynb`
+- `colab/baselines/tcn_filtered_baseline.ipynb`
+- `colab/baselines/gru_raw_baseline.ipynb`
+- `colab/baselines/gru_filtered_baseline.ipynb`
+
+Each notebook runs one fixed experiment and writes to `results/baselines_phase0/{experiment_id}/`.
+The direct CLI equivalent is:
 
 ```bash
 python3 scripts/train_baseline.py \
@@ -51,6 +59,9 @@ Each experiment writes to `results/baselines_phase0/{experiment_id}/`:
 - `confusion_matrix.png`
 - `roc_curve.png`
 - `pr_curve.png`
+- `int8_confusion_matrix.png`
+- `int8_roc_curve.png`
+- `int8_pr_curve.png`
 - `model.keras`
 - `model_fp32.tflite`
 - `model_int8.tflite`
