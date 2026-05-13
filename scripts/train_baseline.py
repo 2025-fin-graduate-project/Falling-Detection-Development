@@ -68,7 +68,8 @@ class BaselineConfig:
     experiment_id: str
     model_type: str
     preprocessing: str
-    source_csv: str
+    source_csv: str = ""
+    input_mode: str = "split_csv"
     split_dir: str = "dataset/splits"
     output_root: str = "results/baselines_phase0"
     feature_set: str = "kp12"
@@ -119,6 +120,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-type", choices=["tcn", "gru"])
     parser.add_argument("--preprocessing", choices=["raw", "filtered"])
     parser.add_argument("--source-csv")
+    parser.add_argument("--input-mode", choices=["split_csv", "source_csv"])
     parser.add_argument("--split-dir")
     parser.add_argument("--feature-set", choices=sorted(FEATURE_SETS))
     parser.add_argument("--label-column")
@@ -146,6 +148,7 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         "model_type": args.model_type,
         "preprocessing": args.preprocessing,
         "source_csv": args.source_csv,
+        "input_mode": args.input_mode,
         "split_dir": args.split_dir,
         "output_root": args.output_root,
         "feature_set": args.feature_set,
@@ -176,7 +179,9 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         payload["representative_samples"] = min(int(payload.get("representative_samples", 64)), 64)
         payload["quant_eval_max_windows"] = min(int(payload.get("quant_eval_max_windows", 256)), 256)
 
-    required = ["experiment_id", "model_type", "preprocessing", "source_csv"]
+    required = ["experiment_id", "model_type", "preprocessing"]
+    if payload.get("input_mode", "split_csv") == "source_csv":
+        required.append("source_csv")
     missing = [key for key in required if not payload.get(key)]
     if missing:
         raise ValueError(f"Missing required config fields: {missing}")
@@ -186,6 +191,8 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         raise ValueError("--model-type must be tcn or gru.")
     if config.preprocessing not in {"raw", "filtered"}:
         raise ValueError("--preprocessing must be raw or filtered.")
+    if config.input_mode not in {"split_csv", "source_csv"}:
+        raise ValueError("--input-mode must be split_csv or source_csv.")
     if config.feature_set not in FEATURE_SETS:
         raise ValueError(f"Unknown feature_set={config.feature_set}.")
     return config
@@ -234,6 +241,32 @@ def load_split_video_ids(split_dir: Path) -> dict[str, set[str]]:
     return split_ids
 
 
+def normalize_source_frame(df: pd.DataFrame, config: BaselineConfig) -> tuple[pd.DataFrame, list[str]]:
+    if config.label_column not in df.columns:
+        raise ValueError(f"Missing label column: {config.label_column}")
+    required = {"video_id", "frame", "time_sec"}
+    missing = required - set(df.columns)
+    if missing:
+        raise ValueError(f"Missing required columns: {sorted(missing)}")
+    cols = feature_columns(df.columns.tolist(), config.feature_set, config.preprocessing)
+    keep_cols = ["video_id", "frame", "time_sec", config.label_column] + cols
+    if "direction" in df.columns:
+        keep_cols.append("direction")
+    df = df[keep_cols].replace([np.inf, -np.inf], np.nan)
+    df = df.rename(columns={config.label_column: "source_label"})
+    df["video_id"] = df["video_id"].astype(str)
+    if "direction" not in df.columns:
+        df["direction"] = df["video_id"].map(infer_direction)
+    else:
+        df["direction"] = df["direction"].astype(str)
+    if config.data_scope == "no_by":
+        df = df[df["direction"] != "BY"].copy()
+    df["label"] = df["source_label"].isin(config.positive_labels).astype(np.int32)
+    if df[cols].isna().any().any():
+        df[cols] = df[cols].fillna(0.0)
+    return df[["video_id", "frame", "time_sec", "direction", "label"] + cols], cols
+
+
 def load_source_frame(config: BaselineConfig, project_root: Path, data_root: Path | None) -> tuple[pd.DataFrame, list[str]]:
     source_path = resolve_path(project_root, data_root, config.source_csv)
     if not source_path.exists():
@@ -243,28 +276,44 @@ def load_source_frame(config: BaselineConfig, project_root: Path, data_root: Pat
         read_kwargs["nrows"] = config.max_rows
     log(f"loading source={source_path}")
     df = pd.read_csv(source_path, **read_kwargs)
-    if config.label_column not in df.columns:
-        raise ValueError(f"Missing label column: {config.label_column}")
-    required = {"video_id", "frame", "time_sec"}
-    missing = required - set(df.columns)
-    if missing:
-        raise ValueError(f"Missing required columns: {sorted(missing)}")
-    cols = feature_columns(df.columns.tolist(), config.feature_set, config.preprocessing)
-    keep_cols = ["video_id", "frame", "time_sec", config.label_column] + cols
-    df = df[keep_cols].replace([np.inf, -np.inf], np.nan)
-    df = df.rename(columns={config.label_column: "source_label"})
-    df["video_id"] = df["video_id"].astype(str)
-    df["direction"] = df["video_id"].map(infer_direction)
-    if config.data_scope == "no_by":
-        df = df[df["direction"] != "BY"].copy()
-    df["label"] = df["source_label"].isin(config.positive_labels).astype(np.int32)
-    if df[cols].isna().any().any():
-        df[cols] = df[cols].fillna(0.0)
+    df, cols = normalize_source_frame(df, config)
     log(
         f"rows={len(df):,} videos={df['video_id'].nunique():,} "
         f"features={len(cols)} data_scope={config.data_scope}"
     )
     return df[["video_id", "frame", "time_sec", "direction", "label"] + cols], cols
+
+
+def load_split_frames(
+    config: BaselineConfig,
+    project_root: Path,
+    data_root: Path | None,
+) -> tuple[dict[str, pd.DataFrame], list[str]]:
+    split_dir = resolve_path(project_root, data_root, config.split_dir)
+    frames: dict[str, pd.DataFrame] = {}
+    feature_cols: list[str] | None = None
+    for split in ["train", "val", "test"]:
+        path = split_dir / f"{split}.csv"
+        if not path.exists():
+            raise FileNotFoundError(f"Split CSV not found: {path}")
+        read_kwargs: dict[str, Any] = {"low_memory": False}
+        if config.max_rows is not None:
+            read_kwargs["nrows"] = config.max_rows
+        log(f"loading {split} split={path}")
+        df = pd.read_csv(path, **read_kwargs)
+        normalized, cols = normalize_source_frame(df, config)
+        if feature_cols is None:
+            feature_cols = cols
+        elif feature_cols != cols:
+            raise ValueError(f"Feature columns differ in split {split}.")
+        frames[split] = normalized
+        log(
+            f"{split} rows={len(normalized):,} videos={normalized['video_id'].nunique():,} "
+            f"features={len(cols)} data_scope={config.data_scope}"
+        )
+    if feature_cols is None:
+        raise ValueError("No split frames were loaded.")
+    return frames, feature_cols
 
 
 def window_label(labels: np.ndarray, mode: str) -> int:
@@ -357,14 +406,18 @@ def prepare_data(
     project_root: Path,
     data_root: Path | None,
 ) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray], list[str], np.ndarray, np.ndarray, pd.DataFrame]:
-    df, cols = load_source_frame(config, project_root, data_root)
-    split_dir = resolve_path(project_root, data_root, config.split_dir)
-    split_ids = load_split_video_ids(split_dir)
+    if config.input_mode == "split_csv":
+        split_frames, cols = load_split_frames(config, project_root, data_root)
+    else:
+        df, cols = load_source_frame(config, project_root, data_root)
+        split_dir = resolve_path(project_root, data_root, config.split_dir)
+        split_ids = load_split_video_ids(split_dir)
+        split_frames = {split: df[df["video_id"].isin(split_ids[split])] for split in ["train", "val", "test"]}
     built = {}
     for split in ["train", "val", "test"]:
         built[split] = build_windows_for_split(
-            df,
-            split_ids[split],
+            split_frames[split],
+            set(split_frames[split]["video_id"].unique().tolist()),
             cols,
             config,
             training=(split == "train"),
