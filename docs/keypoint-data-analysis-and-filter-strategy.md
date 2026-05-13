@@ -299,8 +299,37 @@ uv run python scripts/build_filtered_dataset.py \
 | 메타데이터 | 3 | video_id, frame, time_sec |
 | 필터 적용 KP | 51 | kp*_y, kp*_x, kp*_s (17×3) |
 | 파생 피처 | 6 | HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x |
-| 라벨 | 1-2 | label (+ label_3class) |
-| **합계** | **61/62** | |
+| 라벨 | 2 | label (binary), label_3class |
+| **합계** | **62** | |
+
+### label_3class 생성 방식
+
+원본 `label` (binary: 0/1)에서 **비디오별로** 다음 규칙으로 생성된다.
+
+| label_3class | 의미 | 조건 |
+|---|---|---|
+| 0 | normal | 낙상 동작 시작 전 프레임 |
+| 1 | falling | 원본 `label=1` 구간 (낙상 동작 중) |
+| 2 | fallen | 마지막 `label=1` 프레임 **이후** 모든 프레임 |
+
+```
+time →  [0 0 0 0 | 1 1 1 1 1 | 0 0 0 0 0]   ← 원본 label
+                 ↓
+        [0 0 0 0 | 1 1 1 1 1 | 2 2 2 2 2]   ← label_3class
+         normal    falling      fallen
+```
+
+**근거**: 낙상 동작(falling)이 끝난 후 쓰러진 상태(fallen)는 정상(normal)과 자세가 전혀 다르므로 구분이 필요하다. 원본 label은 falling 구간만 1로 표기하고 fallen 구간을 다시 0으로 복귀시키는데, 이를 그대로 학습에 쓰면 fallen이 normal로 오학습된다.
+
+**실제 데이터 분포** (final_dataset.csv 기준):
+
+| 클래스 | 프레임 수 |
+|---|---|
+| 0 (normal) | 2,393,506 (58.5%) |
+| 1 (falling) | 314,740 (7.7%) |
+| 2 (fallen) | 1,385,374 (33.8%) |
+
+`build_filtered_dataset.py`에서 Pipeline D 처리 후 자동으로 `label_3class` 컬럼이 생성된다.
 
 ### 학습 스크립트 수정 사항
 
