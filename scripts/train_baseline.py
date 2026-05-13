@@ -497,6 +497,24 @@ def select_threshold(y_true: np.ndarray, y_score: np.ndarray, config: BaselineCo
     return {"threshold": float(chosen["threshold"]), "sweep": rows}
 
 
+def save_threshold_sweep(threshold_payload: dict[str, Any], output_dir: Path) -> None:
+    sweep = pd.DataFrame(threshold_payload["sweep"])
+    sweep.to_csv(output_dir / "threshold_sweep.csv", index=False)
+    fig, ax = plt.subplots(figsize=(8, 4))
+    for col in ["precision", "recall", "f1", "accuracy"]:
+        ax.plot(sweep["threshold"], sweep[col], marker="o", linewidth=1.4, label=col)
+    ax.axvline(float(threshold_payload["threshold"]), color="black", linestyle="--", linewidth=1.2, label="selected")
+    ax.set_xlabel("Threshold")
+    ax.set_ylabel("Score")
+    ax.set_ylim(0.0, 1.0)
+    ax.set_title("Validation threshold sweep")
+    ax.grid(alpha=0.3)
+    ax.legend()
+    fig.tight_layout()
+    fig.savefig(output_dir / "threshold_sweep.png", dpi=160)
+    plt.close(fig)
+
+
 def metrics_for(y_true: np.ndarray, y_score: np.ndarray, threshold: float, split: str, directions: np.ndarray | None = None) -> dict[str, Any]:
     pred = (y_score >= threshold).astype(np.int32)
     cm = confusion_matrix(y_true, pred, labels=[0, 1])
@@ -689,6 +707,7 @@ def main() -> None:
 
     scores = {split: model.predict(x[split], batch_size=config.batch_size, verbose=0)[:, 1] for split in ["train", "val", "test"]}
     threshold_payload = select_threshold(y["val"], scores["val"], config)
+    save_threshold_sweep(threshold_payload, output_dir)
     threshold = float(threshold_payload["threshold"])
     metrics = {
         f"{split}_float": metrics_for(y[split], scores[split], threshold, split, directions[split])
