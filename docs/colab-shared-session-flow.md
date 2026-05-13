@@ -10,7 +10,7 @@
 
 ## Session Rule
 
-각 인원은 자기 노트북 상단에서 아래 값을 고유하게 바꾼다.
+각 인원은 자기 노트북 상단의 Colab Form (`# @param`)에서 아래 값을 고유하게 바꾼다.
 
 ```python
 SESSION_ID = "tcn_01_yourname"
@@ -18,6 +18,15 @@ OWNER = "yourname"
 PREPROCESSING = "filtered"  # raw, filtered, both
 SMOKE = True
 ```
+
+노트북 Form에서 바로 바꿀 수 있는 주요 항목:
+
+- `PREPROCESSING`: `raw`, `filtered`, `both`
+- `FEATURE_SET`: `kp12`, `kp8`, `kp7`, `minimal`, `all`
+- `DATA_SCOPE`: `no_by`, `all`
+- `SMOKE`, `EXPORT_TFLITE`
+- `EPOCHS_OVERRIDE`, `BATCH_SIZE_OVERRIDE`
+- `WINDOW_START_SEC`, `WINDOW_END_SEC`, `TARGET_STEPS`
 
 산출물은 다음 위치에 저장된다.
 
@@ -35,6 +44,9 @@ results/shared_sessions/{model_type}/{SESSION_ID}/
     confusion_matrix.png
     roc_curve.png
     pr_curve.png
+    int8_confusion_matrix.png
+    int8_roc_curve.png
+    int8_pr_curve.png
   common/
     phase0_summary.csv
     compare_f1_bar.png

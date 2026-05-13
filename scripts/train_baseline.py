@@ -629,7 +629,15 @@ def plot_history(history: tf.keras.callbacks.History, path: Path) -> None:
     plt.close(fig)
 
 
-def plot_confusion_curve(y_true: np.ndarray, y_score: np.ndarray, threshold: float, output_dir: Path) -> None:
+def plot_confusion_curve(
+    y_true: np.ndarray,
+    y_score: np.ndarray,
+    threshold: float,
+    output_dir: Path,
+    *,
+    prefix: str = "",
+    title_prefix: str = "Float",
+) -> None:
     pred = (y_score >= threshold).astype(np.int32)
     fig, ax = plt.subplots(figsize=(5, 4))
     ConfusionMatrixDisplay.from_predictions(
@@ -642,23 +650,26 @@ def plot_confusion_curve(y_true: np.ndarray, y_score: np.ndarray, threshold: flo
         values_format="d",
         ax=ax,
     )
+    ax.set_title(f"{title_prefix} confusion matrix")
     fig.tight_layout()
-    fig.savefig(output_dir / "confusion_matrix.png", dpi=160)
+    fig.savefig(output_dir / f"{prefix}confusion_matrix.png", dpi=160)
     plt.close(fig)
 
     if len(np.unique(y_true)) == 2:
         fig, ax = plt.subplots(figsize=(5, 4))
-        RocCurveDisplay.from_predictions(y_true, y_score, ax=ax)
+        RocCurveDisplay.from_predictions(y_true, y_score, ax=ax, name=title_prefix)
+        ax.set_title(f"{title_prefix} ROC curve")
         ax.grid(alpha=0.3)
         fig.tight_layout()
-        fig.savefig(output_dir / "roc_curve.png", dpi=160)
+        fig.savefig(output_dir / f"{prefix}roc_curve.png", dpi=160)
         plt.close(fig)
 
         fig, ax = plt.subplots(figsize=(5, 4))
-        PrecisionRecallDisplay.from_predictions(y_true, y_score, ax=ax)
+        PrecisionRecallDisplay.from_predictions(y_true, y_score, ax=ax, name=title_prefix)
+        ax.set_title(f"{title_prefix} PR curve")
         ax.grid(alpha=0.3)
         fig.tight_layout()
-        fig.savefig(output_dir / "pr_curve.png", dpi=160)
+        fig.savefig(output_dir / f"{prefix}pr_curve.png", dpi=160)
         plt.close(fig)
 
 
@@ -722,6 +733,14 @@ def main() -> None:
         q_score = predict_tflite(Path(export_paths["model_int8_tflite"]), x["test"][:eval_count])
         q_metrics = metrics_for(y["test"][:eval_count], q_score, threshold, "test_int8", directions["test"][:eval_count])
         metrics["test_int8"] = q_metrics
+        plot_confusion_curve(
+            y["test"][:eval_count],
+            q_score,
+            threshold,
+            output_dir,
+            prefix="int8_",
+            title_prefix="INT8",
+        )
         quant_report["runtime"]["test_int8"] = q_metrics
         quant_report["runtime"]["delta_f1"] = (
             None if metrics["test_float"]["f1"] is None else float(metrics["test_float"]["f1"] - q_metrics["f1"])
