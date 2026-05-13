@@ -41,6 +41,8 @@ Bidirectional GRU, attention, CNN-GRU는 논문 비교용으로는 쓸 수 있�
 python3 scripts/train_filtered_gru_suite.py \
   --csv-path dataset/final_dataset_filtered.csv \
   --output-dir artifacts/filtered_gru_suite \
+  --label-column label \
+  --positive-labels 1 \
   --models all \
   --epochs 40 \
   --batch-size 64 \
@@ -53,6 +55,8 @@ python3 scripts/train_filtered_gru_suite.py \
 python3 scripts/train_filtered_gru_suite.py \
   --csv-path dataset/final_dataset_filtered.csv \
   --output-dir artifacts/filtered_gru_suite_smoke \
+  --label-column label \
+  --positive-labels 1 \
   --models gru_64_32 \
   --epochs 1 \
   --max-rows 20000 \
@@ -64,8 +68,23 @@ STM32/TFLite export를 건너뛰고 학습 비교만 하려면:
 ```bash
 python3 scripts/train_filtered_gru_suite.py \
   --csv-path dataset/final_dataset_filtered.csv \
+  --label-column label \
+  --positive-labels 1 \
   --skip-stm32-export
 ```
+
+## 레이블링 버전
+
+Colab 원격 실행 노트북은 아래 네 가지 실험을 분리해서 실행한다.
+
+| 버전 | 입력 라벨 컬럼 | positive 변환 | window label | 목적 |
+|---|---|---|---|---|
+| `v30_binary_segment` | `label` | `1 -> fall` | `segment_max` | 윈도우 안에 낙상 프레임이 하나라도 있으면 낙상 |
+| `v31_binary_last` | `label` | `1 -> fall` | `last_frame` | STM32 frame-by-frame 출력 시점과 가장 가까운 라벨링 |
+| `v32_3class_fall_any` | `label_3class` | `1,2 -> fall` | `segment_max` | falling/fallen을 모두 낙상으로 통합 |
+| `v33_3class_falling_only` | `label_3class` | `1 -> fall` | `last_frame` | 실제 낙상 진행 순간(`Falling`) 탐지에 집중 |
+
+노트북: `colab/filtered_gru_remote_suite.ipynb`
 
 ## 공통 평가 방식
 
