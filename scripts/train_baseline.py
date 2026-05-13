@@ -71,6 +71,9 @@ class BaselineConfig:
     source_csv: str = ""
     input_mode: str = "split_csv"
     split_dir: str = "dataset/splits"
+    train_csv: str = ""
+    val_csv: str = ""
+    test_csv: str = ""
     output_root: str = "results/baselines_phase0"
     feature_set: str = "kp12"
     label_column: str = "label"
@@ -122,6 +125,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--source-csv")
     parser.add_argument("--input-mode", choices=["split_csv", "source_csv"])
     parser.add_argument("--split-dir")
+    parser.add_argument("--train-csv")
+    parser.add_argument("--val-csv")
+    parser.add_argument("--test-csv")
     parser.add_argument("--feature-set", choices=sorted(FEATURE_SETS))
     parser.add_argument("--label-column")
     parser.add_argument("--positive-labels")
@@ -150,6 +156,9 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         "source_csv": args.source_csv,
         "input_mode": args.input_mode,
         "split_dir": args.split_dir,
+        "train_csv": args.train_csv,
+        "val_csv": args.val_csv,
+        "test_csv": args.test_csv,
         "output_root": args.output_root,
         "feature_set": args.feature_set,
         "label_column": args.label_column,
@@ -290,10 +299,15 @@ def load_split_frames(
     data_root: Path | None,
 ) -> tuple[dict[str, pd.DataFrame], list[str]]:
     split_dir = resolve_path(project_root, data_root, config.split_dir)
+    split_paths = {
+        "train": config.train_csv,
+        "val": config.val_csv,
+        "test": config.test_csv,
+    }
     frames: dict[str, pd.DataFrame] = {}
     feature_cols: list[str] | None = None
     for split in ["train", "val", "test"]:
-        path = split_dir / f"{split}.csv"
+        path = resolve_path(project_root, data_root, split_paths[split]) if split_paths[split] else split_dir / f"{split}.csv"
         if not path.exists():
             raise FileNotFoundError(f"Split CSV not found: {path}")
         read_kwargs: dict[str, Any] = {"low_memory": False}
