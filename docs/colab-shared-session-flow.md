@@ -1,7 +1,8 @@
 # Colab Baseline Assignment Flow
 
 Phase 0 기준점 모델은 **실험 조합별 독립 노트북**을 기준으로 공유 Drive에서 실행한다.
-입력 데이터는 정제된 split CSV인 `dataset/splits/train.csv`, `val.csv`, `test.csv`를 직접 사용한다.
+입력 데이터는 각 config에 명시된 `train_csv`, `val_csv`, `test_csv`를 직접 사용한다.
+현재 기준 경로는 `dataset/train.csv`, `dataset/val.csv`, `dataset/test.csv`다.
 각 노트북은 하나의 고정 config만 실행하므로 `SESSION_ID`나 선택형 config 생성 단계가 필요 없다.
 
 ## Notebooks
