@@ -72,6 +72,8 @@ class FilteredGruSuiteConfig:
     monitor_start_sec: float
     monitor_end_sec: float
     target_steps: int
+    label_column: str
+    positive_labels: list[int]
     label_mode: str
     batch_size: int
     epochs: int
@@ -116,6 +118,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--monitor-start-sec", type=float, default=0.0)
     parser.add_argument("--monitor-end-sec", type=float, default=10.0)
     parser.add_argument("--target-steps", type=int, default=60)
+    parser.add_argument("--label-column", default="label")
+    parser.add_argument(
+        "--positive-labels",
+        default="1",
+        help="Comma-separated source label values mapped to binary fall=1. Examples: 1 or 1,2.",
+    )
     parser.add_argument("--label-mode", choices=["segment_max", "last_frame"], default="segment_max")
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--epochs", type=int, default=40)
@@ -154,6 +162,8 @@ def make_config(args: argparse.Namespace) -> FilteredGruSuiteConfig:
         monitor_start_sec=args.monitor_start_sec,
         monitor_end_sec=args.monitor_end_sec,
         target_steps=args.target_steps,
+        label_column=args.label_column,
+        positive_labels=parse_int_list(args.positive_labels),
         label_mode=args.label_mode,
         batch_size=args.batch_size,
         epochs=args.epochs,
@@ -200,22 +210,30 @@ def load_filtered_frame(config: FilteredGruSuiteConfig) -> tuple[pd.DataFrame, l
         read_kwargs["nrows"] = config.max_rows
     df = pd.read_csv(csv_path, **read_kwargs)
 
-    required_cols = {"video_id", "frame", "time_sec", "label"}
+    required_cols = {"video_id", "frame", "time_sec", config.label_column}
     missing = required_cols - set(df.columns)
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
 
     feature_cols = get_feature_columns(df.columns.tolist())
-    keep_cols = ["video_id", "frame", "time_sec", "label"] + feature_cols
+    keep_cols = ["video_id", "frame", "time_sec", config.label_column] + feature_cols
     df = df[keep_cols].replace([np.inf, -np.inf], np.nan)
+    df = df.rename(columns={config.label_column: "source_label"})
+    df["label"] = df["source_label"].isin(config.positive_labels).astype(np.int32)
     if df[feature_cols].isna().any().any():
         nan_counts = df[feature_cols].isna().sum()
         bad = nan_counts[nan_counts > 0].sort_values(ascending=False).head(10).to_dict()
         log(f"warning filling feature NaN values with train-time neutral 0.0, top columns={bad}")
         df[feature_cols] = df[feature_cols].fillna(0.0)
 
-    log(f"filtered rows loaded={len(df):,} feature_count={len(feature_cols)}")
-    return df, feature_cols
+    label_dist = df["source_label"].value_counts().sort_index().to_dict()
+    binary_dist = df["label"].value_counts().sort_index().to_dict()
+    log(
+        f"filtered rows loaded={len(df):,} feature_count={len(feature_cols)} "
+        f"label_column={config.label_column} positive_labels={config.positive_labels}"
+    )
+    log(f"source label distribution={label_dist} binary distribution={binary_dist}")
+    return df[["video_id", "frame", "time_sec", "label"] + feature_cols], feature_cols
 
 
 def window_label(labels: np.ndarray, mode: str) -> int:
