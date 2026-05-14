@@ -1,26 +1,28 @@
 #!/usr/bin/env bash
-# Start codex/04 deployable GRU experiments in tmux.
+# Start codex/05 overnight candidate sweep in tmux.
 
 set -euo pipefail
 
-OUTROOT="${OUTROOT:-results/gru_codex04_deploy}"
+OUTROOT="${OUTROOT:-results/codex05_overnight_candidates}"
 TARGET_MIN_PRECISION="${TARGET_MIN_PRECISION:-0.92}"
 REPORT_INTERVAL_SECONDS="${REPORT_INTERVAL_SECONDS:-900}"
+TIME_BUDGET_SECONDS="${TIME_BUDGET_SECONDS:-21600}"
+PER_EXP_TIMEOUT_SECONDS="${PER_EXP_TIMEOUT_SECONDS:-5400}"
 TRAIN_DEVICE="${TRAIN_DEVICE:-cpu}"
-TMUX_SESSION="${TMUX_SESSION:-gru_codex04_deploy}"
-TMUX_REPORT_SESSION="${TMUX_REPORT_SESSION:-gru_codex04_deploy_report}"
+TMUX_SESSION="${TMUX_SESSION:-codex05_overnight}"
+TMUX_REPORT_SESSION="${TMUX_REPORT_SESSION:-codex05_overnight_report}"
 RUN_LOG="$OUTROOT/nohup.log"
 REPORT_LOG="$OUTROOT/reports.log"
 
 mkdir -p "$OUTROOT"
 
 if tmux has-session -t "$TMUX_SESSION" 2>/dev/null; then
-    echo "deploy runner already active: session=$TMUX_SESSION"
+    echo "overnight runner already active: session=$TMUX_SESSION"
     exit 0
 fi
 
 tmux new-session -d -s "$TMUX_SESSION" -c "$PWD" \
-    "env OUTROOT='$OUTROOT' TARGET_MIN_PRECISION='$TARGET_MIN_PRECISION' TRAIN_DEVICE='$TRAIN_DEVICE' bash scripts/run_gru_codex04_deploy.sh > '$RUN_LOG' 2>&1"
+    "env OUTROOT='$OUTROOT' TARGET_MIN_PRECISION='$TARGET_MIN_PRECISION' TRAIN_DEVICE='$TRAIN_DEVICE' TIME_BUDGET_SECONDS='$TIME_BUDGET_SECONDS' PER_EXP_TIMEOUT_SECONDS='$PER_EXP_TIMEOUT_SECONDS' bash scripts/run_codex05_overnight_candidates.sh > '$RUN_LOG' 2>&1"
 
 if tmux has-session -t "$TMUX_REPORT_SESSION" 2>/dev/null; then
     tmux kill-session -t "$TMUX_REPORT_SESSION"
@@ -33,3 +35,5 @@ echo "runner session: $TMUX_SESSION"
 echo "report session: $TMUX_REPORT_SESSION"
 echo "run log: $RUN_LOG"
 echo "reports: $REPORT_LOG"
+echo "budget seconds: $TIME_BUDGET_SECONDS"
+echo "device: $TRAIN_DEVICE"

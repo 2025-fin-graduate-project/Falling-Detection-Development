@@ -41,6 +41,15 @@ DEPLOY_EXPERIMENTS = {
     "C4D-v05": "30f-kp7-ce-128x64",
 }
 
+OVERNIGHT_EXPERIMENTS = {
+    "C5O-v01": "gru-30f-kp7-128x64",
+    "C5O-v02": "gru-30f-kp7-96x48",
+    "C5O-v03": "gru-40f-kp7-128x64",
+    "C5O-v04": "tcn-30f-kp7-light",
+    "C5O-v05": "tcn-30f-minimal-light",
+    "C5O-v06": "tcn-40f-kp7-light",
+}
+
 
 def load_json(path: Path) -> dict[str, Any] | None:
     try:
@@ -87,7 +96,9 @@ def main() -> int:
     args = parser.parse_args()
 
     output_root = args.output_root
-    if "deploy" in output_root.name:
+    if "overnight" in output_root.name:
+        experiments = OVERNIGHT_EXPERIMENTS
+    elif "deploy" in output_root.name:
         experiments = DEPLOY_EXPERIMENTS
     elif "screen" in output_root.name:
         experiments = SCREEN_EXPERIMENTS
