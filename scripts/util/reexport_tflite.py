@@ -18,9 +18,16 @@ os.environ["CUDA_VISIBLE_DEVICES"] = ""
 import argparse
 import json
 import shutil
+import sys
 from pathlib import Path
 
 import numpy as np
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from scripts.train_baseline import SparseFocalLoss, TemporalAttention
 
 
 def representative_dataset(x_calib: np.ndarray, max_samples: int):
@@ -40,7 +47,14 @@ def reexport(exp_dir: Path, representative_samples: int = 256) -> dict:
         return {"status": "skip", "reason": "model.keras not found"}
 
     print(f"  Loading {keras_path.name} ...", flush=True)
-    model = tf.keras.models.load_model(str(keras_path))
+    model = tf.keras.models.load_model(
+        str(keras_path),
+        custom_objects={
+            "SparseFocalLoss": SparseFocalLoss,
+            "TemporalAttention": TemporalAttention,
+        },
+        compile=False,
+    )
 
     # Build a small representative dataset from normalization stats (unit box)
     norm = json.loads(norm_path.read_text()) if norm_path.exists() else None
