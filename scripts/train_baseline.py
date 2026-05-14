@@ -665,9 +665,9 @@ def build_tcn(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.keras.
     # Use explicit 1D pooling so TFLite maps to pooling ops instead of generic
     # reduce ops, which are less deployment-friendly on ST Edge AI targets.
     avg = tf.keras.layers.AveragePooling1D(pool_size=input_shape[0], name="gap_pool")(x)
-    avg = tf.keras.layers.Flatten(name="gap_flatten")(avg)
+    avg = tf.keras.layers.Reshape((config.tcn_channels[-1],), name="gap_reshape")(avg)
     mx = tf.keras.layers.MaxPooling1D(pool_size=input_shape[0], name="gmp_pool")(x)
-    mx = tf.keras.layers.Flatten(name="gmp_flatten")(mx)
+    mx = tf.keras.layers.Reshape((config.tcn_channels[-1],), name="gmp_reshape")(mx)
     x = tf.keras.layers.Concatenate(name="pool_concat")([avg, mx])
     x = tf.keras.layers.Dense(config.tcn_channels[-1], activation="relu", name="head_dense")(x)
     x = tf.keras.layers.Dropout(config.dropout_rate, name="head_drop")(x)
@@ -900,6 +900,8 @@ def export_tflite(model: tf.keras.Model, x_train: np.ndarray, output_dir: Path, 
     # Concrete function forces training=False, preventing GPU-only ops (CudnnRNNV3)
     # from being embedded in the exported graph.
     input_shape: tuple[int, ...] = x_train.shape[1:]
+    model.trainable = False
+    _ = model(x_train[:1], training=False)
     try:
         concrete_fn = _make_serving_fn(model, input_shape)
     except Exception as exc:
@@ -917,9 +919,10 @@ def export_tflite(model: tf.keras.Model, x_train: np.ndarray, output_dir: Path, 
     if config.quantize_int8:
         try:
             int8_path = output_dir / "model_int8.tflite"
-            # Rebuild concrete_fn for int8 converter (each converter needs its own reference)
-            concrete_fn_q = _make_serving_fn(model, input_shape)
-            converter = tf.lite.TFLiteConverter.from_concrete_functions([concrete_fn_q], model)
+            # Full integer quantization is more reliable from the tracked Keras
+            # model. The concrete-function path can leave resource variables
+            # unresolved during representative-dataset invocation.
+            converter = tf.lite.TFLiteConverter.from_keras_model(model)
             converter.optimizations = [tf.lite.Optimize.DEFAULT]
             converter.representative_dataset = lambda: representative_dataset(x_train, config.representative_samples)
             converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
@@ -928,6 +931,7 @@ def export_tflite(model: tf.keras.Model, x_train: np.ndarray, output_dir: Path, 
             int8_path.write_bytes(converter.convert())
             paths["model_int8_tflite"] = str(int8_path)
             paths["model_int8_size_kb"] = round(int8_path.stat().st_size / 1024.0, 3)
+            paths["int8_export_method"] = "from_keras_model"
         except Exception as exc:
             paths["int8_export_error"] = repr(exc)
 
