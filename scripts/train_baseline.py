@@ -150,7 +150,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--label-column")
     parser.add_argument("--positive-labels")
-    parser.add_argument("--label-mode", choices=["segment_max", "last_frame"])
+    parser.add_argument("--label-mode", choices=["segment_max", "last_frame", "falling_priority"])
     parser.add_argument("--data-scope", choices=["all", "no_by"], default=None)
     parser.add_argument("--window-start-sec", type=float)
     parser.add_argument("--window-end-sec", type=float)
@@ -429,6 +429,15 @@ def window_label(labels: np.ndarray, mode: str) -> int:
         return int(labels.max())
     if mode == "last_frame":
         return int(labels[-1])
+    if mode == "falling_priority":
+        # LB-3 event labels are ordinal-looking but semantic: 1=falling event,
+        # 2=post-fall fallen state. Event detection must not let class 2
+        # override a falling frame inside the same 60-frame window.
+        if np.any(labels == 1):
+            return 1
+        if np.any(labels == 2):
+            return 2
+        return 0
     raise ValueError(f"Unsupported label_mode={mode}")
 
 

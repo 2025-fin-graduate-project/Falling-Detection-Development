@@ -64,6 +64,14 @@ Deployment safety tiers:
 
 Stage 2 applies variables using the best completed architecture from Stage 1.
 
+LB-3 event-detection rule:
+
+- `label_3class=0`: normal.
+- `label_3class=1`: falling event frames.
+- `label_3class=2`: post-fall fallen state.
+- Train the 3-class auxiliary state head with `--label-mode falling_priority`: a 60-frame window is class 1 if it contains any falling frame; otherwise it is class 2 only if it contains fallen frames.
+- Evaluate new fall alarms with `--positive-labels 1`. Class 2 may be used as post-event context or alarm hold state, but it must not be the sole trigger for a new fall event alarm.
+
 Primary selection metric:
 
 - Maximize `min(fall precision, non-fall precision)` on `test_video`.

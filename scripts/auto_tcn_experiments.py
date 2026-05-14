@@ -60,8 +60,9 @@ DATASETS = {
             "--val-csv", "dataset/lb3_v2/val.csv",
             "--test-csv", "dataset/lb3_v2/test.csv",
             "--label-column", "label_3class",
-            "--positive-labels", "1,2",
+            "--positive-labels", "1",
             "--num-classes", "3",
+            "--label-mode", "falling_priority",
         ],
     },
     "filtered_lb3": {
@@ -78,8 +79,9 @@ DATASETS = {
             "--val-csv", "dataset/splits_v2_filtered/val.csv",
             "--test-csv", "dataset/splits_v2_filtered/test.csv",
             "--label-column", "label_3class",
-            "--positive-labels", "1,2",
+            "--positive-labels", "1",
             "--num-classes", "3",
+            "--label-mode", "falling_priority",
         ],
     },
 }
