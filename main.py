@@ -1,4 +1,4 @@
-from scripts.csv_to_sqlite_local import main as csv_to_sqlite_main
+from scripts.util.csv_to_sqlite_local import main as csv_to_sqlite_main
 
 
 def main():
