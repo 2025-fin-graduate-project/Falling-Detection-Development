@@ -188,6 +188,42 @@ def architecture_queue() -> list[Experiment]:
             "wider temporal kernel without dilation",
             ["--tcn-kernel-size", "5"],
         ),
+        Experiment(
+            "TCN-EMB-v01",
+            "raw_lb2",
+            "safe baseline plus linear temporal embedding",
+            ["--temporal-features", "linear"],
+        ),
+        Experiment(
+            "TCN-EMB-v02",
+            "raw_lb2",
+            "safe baseline plus quadratic temporal embedding",
+            ["--temporal-features", "linear_quad"],
+        ),
+        Experiment(
+            "TCN-EMB-v03",
+            "raw_lb2",
+            "safe baseline plus one-cycle temporal embedding",
+            ["--temporal-features", "fourier1"],
+        ),
+        Experiment(
+            "TCN-CPU-v01",
+            "raw_lb2",
+            "CPU/C-portable dilated receptive field 1,2,4,8",
+            ["--tcn-dilations", "1,2,4,8"],
+        ),
+        Experiment(
+            "TCN-CPU-v02",
+            "raw_lb2",
+            "CPU/C-portable dilated receptive field with temporal embedding",
+            ["--tcn-dilations", "1,2,4,8", "--temporal-features", "linear_quad"],
+        ),
+        Experiment(
+            "TCN-CPU-v03",
+            "raw_lb2",
+            "CPU/C-portable deeper dilated stack",
+            ["--tcn-channels", "32,32,64,64,96", "--tcn-dilations", "1,2,4,8,16"],
+        ),
     ]
 
 

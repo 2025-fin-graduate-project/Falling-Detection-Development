@@ -2,7 +2,7 @@
 
 ## Goal
 
-Build a reproducible TCN baseline flow for STM32N6 fall detection. The flow first searches for a stronger ST Edge AI/TFLite INT8-safe TCN layer baseline on `splits_v2` raw LB-2, then applies preprocessing and label-schema variables only after a baseline architecture is selected.
+Build a reproducible TCN baseline flow for STM32N6 fall detection. The flow first searches for a stronger ST Edge AI/TFLite INT8-safe TCN layer baseline on `splits_v2` raw LB-2, then includes CPU/C-portable variants when an operator is useful but not ideal for NPU allocation. Preprocessing and label-schema variables are applied only after a baseline architecture is selected.
 
 ## Data Policy
 
@@ -39,10 +39,12 @@ Build a reproducible TCN baseline flow for STM32N6 fall detection. The flow firs
 
 Stage 1 searches TCN layer variants on `raw + LB-2 + kp12`.
 
-Deployment safety rules:
+Deployment safety tiers:
 
-- Do not use temporal dilation greater than 1. ST Edge AI TFLite `CONV_2D` supports int8, but dilation factors different from 1 are not supported for int8 models.
-- Do not add custom/Lambda layers, adaptive graph ops, dynamic shape ops, or attention blocks until a generated `.tflite` passes ST Edge AI validation.
+- `TCN-SAFE-*`: NPU/ST Edge AI-first. Do not use temporal dilation greater than 1. ST Edge AI TFLite `CONV_2D` supports int8, but dilation factors different from 1 are not supported for int8 models.
+- `TCN-EMB-*`: NPU/ST Edge AI-first with fixed temporal input features. The temporal embedding is generated as extra input columns before inference, so it adds no model operator risk.
+- `TCN-CPU-*`: CPU/C-portable fallback. These may use dilated temporal convolution because it is simple to implement in C, but they are not assumed to be NPU-allocated.
+- Avoid custom/Lambda layers, adaptive graph ops, dynamic shape ops, or attention blocks until a generated `.tflite` passes ST Edge AI validation.
 - Prefer Conv/BatchNorm/ReLU/Add/Concat/Reshape/Dense/Pooling operators.
 - Use explicit pooling layers instead of generic reduce-based global pooling where possible.
 
@@ -53,6 +55,12 @@ Deployment safety rules:
 | `TCN-SAFE-v03` | channels `32,64,96,128`, dilations `1,1,1,1` | Capacity ceiling |
 | `TCN-SAFE-v04` | channels `32,32,64,64,96`, dilations `1,1,1,1,1` | Deeper non-dilated temporal stack |
 | `TCN-SAFE-v05` | kernel `5`, dilations `1,1,1,1` | Wider local temporal receptive field |
+| `TCN-EMB-v01` | `TCN-SAFE-v01` + `temporal_t` | Fixed linear time embedding |
+| `TCN-EMB-v02` | `TCN-SAFE-v01` + `temporal_t, temporal_t2` | Fixed quadratic time embedding |
+| `TCN-EMB-v03` | `TCN-SAFE-v01` + one-cycle sin/cos time features | Fixed periodic time embedding |
+| `TCN-CPU-v01` | channels `32,32,64,96`, dilations `1,2,4,8` | CPU/C-portable receptive field baseline |
+| `TCN-CPU-v02` | `TCN-CPU-v01` + quadratic time embedding | Dilated CPU fallback with timing context |
+| `TCN-CPU-v03` | channels `32,32,64,64,96`, dilations `1,2,4,8,16` | Deeper CPU/C-portable receptive field |
 
 Stage 2 applies variables using the best completed architecture from Stage 1.
 

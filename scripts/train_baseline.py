@@ -76,6 +76,7 @@ class BaselineConfig:
     test_csv: str = ""
     output_root: str = "results/baselines_phase0"
     feature_set: str = "kp12"
+    temporal_features: str = "none"
     label_column: str = "label"
     positive_labels: list[int] = field(default_factory=lambda: [1])
     label_mode: str = "segment_max"
@@ -142,6 +143,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--val-csv")
     parser.add_argument("--test-csv")
     parser.add_argument("--feature-set", choices=sorted(FEATURE_SETS))
+    parser.add_argument(
+        "--temporal-features",
+        choices=["none", "linear", "linear_quad", "fourier1"],
+        help="Append fixed per-frame time features to each input window.",
+    )
     parser.add_argument("--label-column")
     parser.add_argument("--positive-labels")
     parser.add_argument("--label-mode", choices=["segment_max", "last_frame"])
@@ -201,6 +207,7 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         "test_csv": args.test_csv,
         "output_root": args.output_root,
         "feature_set": args.feature_set,
+        "temporal_features": args.temporal_features,
         "label_column": args.label_column,
         "label_mode": args.label_mode,
         "data_scope": args.data_scope,
@@ -283,6 +290,8 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         raise ValueError("--input-mode must be split_csv or source_csv.")
     if config.feature_set not in FEATURE_SETS:
         raise ValueError(f"Unknown feature_set={config.feature_set}.")
+    if config.temporal_features not in {"none", "linear", "linear_quad", "fourier1"}:
+        raise ValueError(f"Unknown temporal_features={config.temporal_features}.")
     return config
 
 
@@ -506,6 +515,50 @@ def minmax_normalize(
     )
 
 
+def temporal_feature_matrix(mode: str, steps: int) -> tuple[np.ndarray, list[str]]:
+    if mode == "none":
+        return np.empty((steps, 0), dtype=np.float32), []
+    t = np.linspace(0.0, 1.0, steps, dtype=np.float32)
+    if mode == "linear":
+        return t[:, None], ["temporal_t"]
+    if mode == "linear_quad":
+        return np.stack([t, t * t], axis=1).astype(np.float32), ["temporal_t", "temporal_t2"]
+    if mode == "fourier1":
+        return np.stack(
+            [t, np.sin(2.0 * np.pi * t), np.cos(2.0 * np.pi * t)],
+            axis=1,
+        ).astype(np.float32), ["temporal_t", "temporal_sin1", "temporal_cos1"]
+    raise ValueError(f"Unsupported temporal_features={mode}")
+
+
+def append_temporal_features(
+    x: dict[str, np.ndarray],
+    feature_cols: list[str],
+    min_v: np.ndarray,
+    scale: np.ndarray,
+    config: BaselineConfig,
+) -> tuple[dict[str, np.ndarray], list[str], np.ndarray, np.ndarray]:
+    temporal, names = temporal_feature_matrix(config.temporal_features, config.target_steps)
+    if not names:
+        return x, feature_cols, min_v, scale
+    tiled = {
+        split: np.broadcast_to(temporal, (values.shape[0], *temporal.shape)).astype(np.float32)
+        for split, values in x.items()
+    }
+    augmented = {
+        split: np.concatenate([values, tiled[split]], axis=2).astype(np.float32)
+        for split, values in x.items()
+    }
+    extra_min = np.zeros((1, 1, len(names)), dtype=np.float32)
+    extra_scale = np.ones((1, 1, len(names)), dtype=np.float32)
+    return (
+        augmented,
+        [*feature_cols, *names],
+        np.concatenate([min_v, extra_min], axis=2),
+        np.concatenate([scale, extra_scale], axis=2),
+    )
+
+
 def prepare_data(
     config: BaselineConfig,
     project_root: Path,
@@ -534,6 +587,7 @@ def prepare_data(
         )
     x_train, x_val, x_test, min_v, scale = minmax_normalize(built["train"][0], built["val"][0], built["test"][0])
     x      = {"train": x_train, "val": x_val, "test": x_test}
+    x, cols, min_v, scale = append_temporal_features(x, cols, min_v, scale, config)
     y      = {split: built[split][1] for split in ["train", "val", "test"]}  # multi-class (model training)
     y_eval = {split: built[split][2] for split in ["train", "val", "test"]}  # binary     (evaluation)
     groups     = {split: built[split][3] for split in ["train", "val", "test"]}
