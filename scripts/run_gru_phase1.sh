@@ -26,6 +26,13 @@
 
 set -uo pipefail
 
+# ── GPU: expose nvidia pip-package CUDA libs to TensorFlow ───────────────────
+_SITE=$(uv run python3 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
+if [[ -n "$_SITE" ]]; then
+    export LD_LIBRARY_PATH="${_SITE}/nvidia/cudnn/lib:${_SITE}/nvidia/cufft/lib:${_SITE}/nvidia/cusolver/lib:/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+fi
+# ─────────────────────────────────────────────────────────────────────────────
+
 OUTROOT="results/gru_baseline_phase1"
 SUMMARY="$OUTROOT/summary.log"
 mkdir -p "$OUTROOT"
