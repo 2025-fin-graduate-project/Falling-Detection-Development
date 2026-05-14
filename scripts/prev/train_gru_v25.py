@@ -5,8 +5,8 @@ import argparse
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from scripts.train_gru_v2 import build_gru_v2_model
-from scripts.train_tcn_v2 import (
+from scripts.prev.train_gru_v2 import build_gru_v2_model
+from scripts.prev.train_tcn_v2 import (
     class_weight_from_labels,
     compile_model,
     evaluate_model,
@@ -20,7 +20,7 @@ from scripts.train_tcn_v2 import (
     set_seed,
     train_model,
 )
-from scripts.train_tcn_v25 import (
+from scripts.prev.train_tcn_v25 import (
     build_monitoring_segments,
     build_sliding_window_dataset,
     describe_window_split,

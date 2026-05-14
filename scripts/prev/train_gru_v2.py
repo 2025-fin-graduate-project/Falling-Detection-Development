@@ -7,7 +7,7 @@ from pathlib import Path
 
 import tensorflow as tf
 
-from scripts.train_tcn_v2 import (
+from scripts.prev.train_tcn_v2 import (
     build_clip_dataset,
     class_weight_from_labels,
     compile_model,

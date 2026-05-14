@@ -10,7 +10,7 @@ import pandas as pd
 import tensorflow as tf
 from sklearn.model_selection import GroupShuffleSplit
 
-from scripts.train_tcn_v2 import (
+from scripts.prev.train_tcn_v2 import (
     build_tcn_v2_model,
     class_weight_from_labels,
     compile_model,
