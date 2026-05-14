@@ -2,7 +2,7 @@
 
 ## Goal
 
-Build a reproducible TCN baseline flow for STM32N6 fall detection. The flow first searches for a stronger TCN layer baseline on `splits_v2` raw LB-2, then applies preprocessing and label-schema variables only after a baseline architecture is selected.
+Build a reproducible TCN baseline flow for STM32N6 fall detection. The flow first searches for a stronger ST Edge AI/TFLite INT8-safe TCN layer baseline on `splits_v2` raw LB-2, then applies preprocessing and label-schema variables only after a baseline architecture is selected.
 
 ## Data Policy
 
@@ -37,15 +37,22 @@ Build a reproducible TCN baseline flow for STM32N6 fall detection. The flow firs
 
 ## Experiment Policy
 
-Stage 1 searches TCN layer variants on `raw + LB-2 + kp12`:
+Stage 1 searches TCN layer variants on `raw + LB-2 + kp12`.
+
+Deployment safety rules:
+
+- Do not use temporal dilation greater than 1. ST Edge AI TFLite `CONV_2D` supports int8, but dilation factors different from 1 are not supported for int8 models.
+- Do not add custom/Lambda layers, adaptive graph ops, dynamic shape ops, or attention blocks until a generated `.tflite` passes ST Edge AI validation.
+- Prefer Conv/BatchNorm/ReLU/Add/Concat/Reshape/Dense/Pooling operators.
+- Use explicit pooling layers instead of generic reduce-based global pooling where possible.
 
 | ID | Layer variant | Purpose |
 |---|---|---|
-| `TCN-ARCH-v01` | channels `32,32,64,96`, dilations `1,2,4,8`, kernel `3` | Existing baseline shape |
-| `TCN-ARCH-v02` | channels `24,24,48,64` | Smaller INT8-friendly shape |
-| `TCN-ARCH-v03` | channels `32,64,96,128` | Capacity ceiling |
-| `TCN-ARCH-v04` | channels `32,32,64,64,96`, dilations `1,2,4,8,16` | Deeper temporal context |
-| `TCN-ARCH-v05` | kernel `5` | Wider local temporal receptive field |
+| `TCN-SAFE-v01` | channels `32,32,64,96`, dilations `1,1,1,1`, kernel `3` | Existing baseline capacity without dilation |
+| `TCN-SAFE-v02` | channels `24,24,48,64`, dilations `1,1,1,1` | Smaller INT8-friendly shape |
+| `TCN-SAFE-v03` | channels `32,64,96,128`, dilations `1,1,1,1` | Capacity ceiling |
+| `TCN-SAFE-v04` | channels `32,32,64,64,96`, dilations `1,1,1,1,1` | Deeper non-dilated temporal stack |
+| `TCN-SAFE-v05` | kernel `5`, dilations `1,1,1,1` | Wider local temporal receptive field |
 
 Stage 2 applies variables using the best completed architecture from Stage 1.
 

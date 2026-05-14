@@ -87,7 +87,7 @@ DATASETS = {
 BASE_ARGS = [
     "--model-type", "tcn",
     "--tcn-channels", "32,32,64,96",
-    "--tcn-dilations", "1,2,4,8",
+    "--tcn-dilations", "1,1,1,1",
     "--tcn-kernel-size", "3",
     "--feature-set", "kp12",
     "--data-scope", "all",
@@ -163,29 +163,29 @@ def missing_files(project_root: Path, dataset_key: str) -> list[str]:
 
 def architecture_queue() -> list[Experiment]:
     return [
-        Experiment("TCN-ARCH-v01", "raw_lb2", "baseline channels 32,32,64,96"),
+        Experiment("TCN-SAFE-v01", "raw_lb2", "safe baseline channels 32,32,64,96"),
         Experiment(
-            "TCN-ARCH-v02",
+            "TCN-SAFE-v02",
             "raw_lb2",
             "compact channels 24,24,48,64 for INT8 stability",
             ["--tcn-channels", "24,24,48,64"],
         ),
         Experiment(
-            "TCN-ARCH-v03",
+            "TCN-SAFE-v03",
             "raw_lb2",
             "wide channels 32,64,96,128 for capacity ceiling",
             ["--tcn-channels", "32,64,96,128"],
         ),
         Experiment(
-            "TCN-ARCH-v04",
+            "TCN-SAFE-v04",
             "raw_lb2",
-            "deeper dilation stack 1,2,4,8,16",
-            ["--tcn-channels", "32,32,64,64,96", "--tcn-dilations", "1,2,4,8,16"],
+            "deeper non-dilated stack",
+            ["--tcn-channels", "32,32,64,64,96", "--tcn-dilations", "1,1,1,1,1"],
         ),
         Experiment(
-            "TCN-ARCH-v05",
+            "TCN-SAFE-v05",
             "raw_lb2",
-            "wider temporal kernel",
+            "wider temporal kernel without dilation",
             ["--tcn-kernel-size", "5"],
         ),
     ]

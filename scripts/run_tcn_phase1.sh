@@ -64,7 +64,7 @@ run_exp() {
 COMMON=(
     --model-type tcn
     --tcn-channels 32,32,64,96
-    --tcn-dilations 1,2,4,8
+    --tcn-dilations 1,1,1,1
     --tcn-kernel-size 3
     --feature-set kp12
     --data-scope all

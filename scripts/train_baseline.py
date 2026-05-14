@@ -608,8 +608,12 @@ def build_tcn(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.keras.
     x = inputs
     for idx, (channels, dilation) in enumerate(zip(config.tcn_channels, config.tcn_dilations), start=1):
         x = residual_tcn_block(x, channels, config.tcn_kernel_size, dilation, config.dropout_rate, f"tcn_block_{idx}")
-    avg = tf.keras.layers.GlobalAveragePooling1D(name="gap")(x)
-    mx = tf.keras.layers.GlobalMaxPooling1D(name="gmp")(x)
+    # Use explicit 1D pooling so TFLite maps to pooling ops instead of generic
+    # reduce ops, which are less deployment-friendly on ST Edge AI targets.
+    avg = tf.keras.layers.AveragePooling1D(pool_size=input_shape[0], name="gap_pool")(x)
+    avg = tf.keras.layers.Flatten(name="gap_flatten")(avg)
+    mx = tf.keras.layers.MaxPooling1D(pool_size=input_shape[0], name="gmp_pool")(x)
+    mx = tf.keras.layers.Flatten(name="gmp_flatten")(mx)
     x = tf.keras.layers.Concatenate(name="pool_concat")([avg, mx])
     x = tf.keras.layers.Dense(config.tcn_channels[-1], activation="relu", name="head_dense")(x)
     x = tf.keras.layers.Dropout(config.dropout_rate, name="head_drop")(x)
