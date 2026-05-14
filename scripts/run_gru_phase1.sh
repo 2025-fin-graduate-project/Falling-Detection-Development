@@ -186,9 +186,9 @@ log "All Phase 1 experiments complete."
 echo "" | tee -a "$SUMMARY"
 echo "=== PHASE 1 RESULTS ===" | tee -a "$SUMMARY"
 
-printf "%-10s %-4s %-4s %-12s %7s %7s %8s %6s %6s\n" \
-    "ID" "PP" "LB" "Arch" "testF1" "Rec" "FallPrec" "valF1" "mincn" | tee -a "$SUMMARY"
-echo "-----------------------------------------------------------------------" | tee -a "$SUMMARY"
+printf "%-10s %-4s %-4s %-12s %7s %7s %8s %8s %8s %6s %6s\n" \
+    "ID" "PP" "LB" "Arch" "testF1" "Rec" "FallPrec" "NFallPrc" "MinPrec" "valF1" "mincn" | tee -a "$SUMMARY"
+echo "-------------------------------------------------------------------------------" | tee -a "$SUMMARY"
 
 declare -A PP_MAP=([P1-v01]=raw [P1-v02]=raw [P1-v03]=raw [P1-v04]=raw
                    [P1-v05]=raw [P1-v06]=raw [P1-v07]=raw [P1-v08]=raw
@@ -213,9 +213,12 @@ m = json.load(open('$mfile'))
 tv = m['metrics'].get('test_video', {})
 vv = m['metrics'].get('val_video', {})
 ts = m.get('threshold_selection', {})
-print(f'%-10s %-4s %-4s %-12s %7.4f %7.4f %8.4f %6.4f %6d' % (
+fall_p  = tv.get('precision', 0)
+nfall_p = tv.get('nfall_precision', float('nan'))
+min_p   = tv.get('min_precision', fall_p)
+print(f'%-10s %-4s %-4s %-12s %7.4f %7.4f %8.4f %8.4f %8.4f %6.4f %6d' % (
     '$id', '${PP_MAP[$id]}', '${LB_MAP[$id]}', '${ARCH_MAP[$id]}',
-    tv.get('f1', 0), tv.get('recall', 0), tv.get('precision', 0),
+    tv.get('f1', 0), tv.get('recall', 0), fall_p, nfall_p, min_p,
     vv.get('f1', 0), ts.get('min_consecutive', 1)
 ))
 " 2>/dev/null || echo "$id  (parse error)"
