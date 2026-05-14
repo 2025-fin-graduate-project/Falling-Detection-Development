@@ -3,24 +3,25 @@
 #
 # Reference: docs/analysis/dataset_analysis_report.md § 3. 키포인트 선정
 #
-# 3-Tier keypoint sets (from analysis):
-#   minimal (5개): kp{0,5,6,11,12} — 코·양어깨·양골반  (최소, 가장 경량)
-#   kp7     (7개): kp{0,5,6,7,8,11,12} — minimal + 팔꿈치  (권장 균형점)
-#   kp12   (13개): kp{0..12}            — 현재 기준선 (baseline)
-#
-# 제거 이유:
-#   kp8  (손목 kp9,10 포함)   → 신뢰도 최하 ~0.33, 낙상 중 노이즈
-#   all  (무릎·발목 kp13-16)  → VHSSC 상관 < 0.05, 낙상 예측 기여 없음
+# Keypoint sets:
+#   minimal (5개): kp{0,5,6,11,12}          — 코·양어깨·양골반 (최소, 경량)
+#   kp7     (7개): kp{0,5,6,7,8,11,12}      — minimal + 팔꿈치 (권장 균형점)
+#   kp12   (13개): kp{0..12}                 — 현재 기준 세트
+#   all    (17개): kp{0..16}                 — 전체 (무릎·발목 포함)
 #
 # kp12 baselines already exist:
 #   60f: P2-v06  F1=0.9253  MinP=0.9044
 #   30f: P3-v07  (see Phase 3 results)
 #
-# New experiments (4개):
+# Experiments (8개): minimal / kp7 / kp12 / all × 60f / 30f
 #   P4-v01: 60f, minimal
 #   P4-v02: 60f, kp7
-#   P4-v03: 30f, minimal
-#   P4-v04: 30f, kp7
+#   P4-v03: 60f, kp12
+#   P4-v04: 60f, all
+#   P4-v05: 30f, minimal
+#   P4-v06: 30f, kp7
+#   P4-v07: 30f, kp12
+#   P4-v08: 30f, all
 
 set -uo pipefail
 
@@ -76,16 +77,20 @@ WIN60=(--target-steps 60 --window-start-sec 5.0 --window-end-sec 9.0)
 WIN30=(--target-steps 30 --window-start-sec 3.0 --window-end-sec 9.0)
 
 # ════════════════════════════════════════════════════════════════════════════════
-log "=== GROUP A: 60f window (baseline P2-v06 kp12: F1=0.9253 MinP=0.9044) ==="
+log "=== GROUP A: 60f window ==="
 
 run_exp P4-v01 "${BASE[@]}" "${WIN60[@]}" --feature-set minimal
 run_exp P4-v02 "${BASE[@]}" "${WIN60[@]}" --feature-set kp7
+run_exp P4-v03 "${BASE[@]}" "${WIN60[@]}" --feature-set kp12
+run_exp P4-v04 "${BASE[@]}" "${WIN60[@]}" --feature-set all
 
 # ════════════════════════════════════════════════════════════════════════════════
-log "=== GROUP B: 30f window (baseline P3-v07 kp12: see Phase3 results) ==="
+log "=== GROUP B: 30f window ==="
 
-run_exp P4-v03 "${BASE[@]}" "${WIN30[@]}" --feature-set minimal
-run_exp P4-v04 "${BASE[@]}" "${WIN30[@]}" --feature-set kp7
+run_exp P4-v05 "${BASE[@]}" "${WIN30[@]}" --feature-set minimal
+run_exp P4-v06 "${BASE[@]}" "${WIN30[@]}" --feature-set kp7
+run_exp P4-v07 "${BASE[@]}" "${WIN30[@]}" --feature-set kp12
+run_exp P4-v08 "${BASE[@]}" "${WIN30[@]}" --feature-set all
 
 # ════════════════════════════════════════════════════════════════════════════════
 log "All Phase 4 experiments complete."
@@ -95,15 +100,14 @@ printf "%-8s %5s %-8s %3s %7s %7s %8s %8s %6s\n" \
     "ID" "Win" "KP" "nKP" "testF1" "Rec" "FallP" "NFallP" "MinP" | tee -a "$SUMMARY"
 echo "-------------------------------------------------------------------" | tee -a "$SUMMARY"
 
-# Baselines
-echo "P2-v06   60f  kp12      13  0.9253  0.9332  0.9044  0.9048  0.9044  [60f baseline]" | tee -a "$SUMMARY"
-echo "P3-v07   30f  kp12      13  (see Phase 3 results)                    [30f baseline]" | tee -a "$SUMMARY"
+declare -A WIN_MAP=([P4-v01]=60 [P4-v02]=60 [P4-v03]=60 [P4-v04]=60
+                    [P4-v05]=30 [P4-v06]=30 [P4-v07]=30 [P4-v08]=30)
+declare -A KP_MAP=([P4-v01]=minimal [P4-v02]=kp7 [P4-v03]=kp12 [P4-v04]=all
+                   [P4-v05]=minimal [P4-v06]=kp7 [P4-v07]=kp12 [P4-v08]=all)
+declare -A NKP_MAP=([P4-v01]=5 [P4-v02]=7 [P4-v03]=13 [P4-v04]=17
+                    [P4-v05]=5 [P4-v06]=7 [P4-v07]=13 [P4-v08]=17)
 
-declare -A WIN_MAP=([P4-v01]=60 [P4-v02]=60 [P4-v03]=30 [P4-v04]=30)
-declare -A KP_MAP=([P4-v01]=minimal [P4-v02]=kp7 [P4-v03]=minimal [P4-v04]=kp7)
-declare -A NKP_MAP=([P4-v01]=5 [P4-v02]=7 [P4-v03]=5 [P4-v04]=7)
-
-for id in P4-v01 P4-v02 P4-v03 P4-v04; do
+for id in P4-v01 P4-v02 P4-v03 P4-v04 P4-v05 P4-v06 P4-v07 P4-v08; do
     mfile="$OUTROOT/$id/metrics.json"
     if [[ -f "$mfile" ]]; then
         python3 -c "
