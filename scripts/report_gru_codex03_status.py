@@ -22,6 +22,17 @@ EXPERIMENTS = {
     "C3-v10": "30f-last-frame",
 }
 
+SCREEN_EXPERIMENTS = {
+    "C3S-v01": "30f-kp7-small",
+    "C3S-v02": "30f-kp7-large",
+    "C3S-v03": "40f-kp7-small",
+    "C3S-v04": "30f-minimal",
+    "C3S-v05": "30f-low-alpha",
+    "C3S-v06": "60f-kp7-small",
+    "C3S-v07": "30f-attn",
+    "C3S-v08": "30f-last-frame",
+}
+
 
 def load_json(path: Path) -> dict[str, Any] | None:
     try:
@@ -33,18 +44,18 @@ def load_json(path: Path) -> dict[str, Any] | None:
         return None
 
 
-def metric_row(exp_id: str, output_root: Path, target: float) -> tuple[str, float, float]:
+def metric_row(exp_id: str, label: str, output_root: Path, target: float) -> tuple[str, float, float]:
     metrics = load_json(output_root / exp_id / "metrics.json")
     if not metrics:
         state = "RUNNING" if (output_root / f"{exp_id}.log").exists() else "PENDING"
-        return f"{exp_id:8s} {EXPERIMENTS[exp_id]:22s} {state:>8s}", -1.0, -1.0
+        return f"{exp_id:8s} {label:22s} {state:>8s}", -1.0, -1.0
 
     tv = metrics.get("metrics", {}).get("test_video", {})
     minp = float(tv.get("min_precision", 0.0))
     f1 = float(tv.get("f1", 0.0))
     passed = "YES" if minp >= target else "NO"
     line = (
-        f"{exp_id:8s} {EXPERIMENTS[exp_id]:22s} "
+        f"{exp_id:8s} {label:22s} "
         f"F1={f1:.4f} Rec={float(tv.get('recall', 0.0)):.4f} "
         f"FallP={float(tv.get('precision', 0.0)):.4f} "
         f"NFallP={float(tv.get('nfall_precision', 0.0)):.4f} "
@@ -68,17 +79,18 @@ def main() -> int:
     args = parser.parse_args()
 
     output_root = args.output_root
+    experiments = SCREEN_EXPERIMENTS if "screen" in output_root.name else EXPERIMENTS
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print("")
     print(f"[{now}] codex/03 GRU status")
     print(f"output_root={output_root} target_min_precision={args.target_min_precision:.4f}")
 
     completed = sorted(Path(p).parent.name for p in glob.glob(str(output_root / "C3-v*" / "metrics.json")))
-    print(f"completed={len(completed)}/{len(EXPERIMENTS)}")
+    print(f"completed={len(completed)}/{len(experiments)}")
 
     best: tuple[float, float, str] | None = None
-    for exp_id in EXPERIMENTS:
-        line, minp, f1 = metric_row(exp_id, output_root, args.target_min_precision)
+    for exp_id, label in experiments.items():
+        line, minp, f1 = metric_row(exp_id, label, output_root, args.target_min_precision)
         print(line)
         if minp >= 0.0 and (best is None or (minp, f1) > (best[0], best[1])):
             best = (minp, f1, exp_id)
