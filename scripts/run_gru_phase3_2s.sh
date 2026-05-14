@@ -81,6 +81,13 @@ GRU=(
     --bidirectional
 )
 
+# v05~v08: unidirectional (stateful 배포 호환)
+GRU_UNI=(
+    --model-type gru
+    --gru-units 256,128
+    --conv-pre-layers 2 --conv-pre-filters 64 --conv-pre-kernel 5
+)
+
 LB2=(
     --label-column label
 )
@@ -107,17 +114,17 @@ run_exp P3-v02 "${BASE[@]}" "${GRU[@]}" "${LB2[@]}" --target-steps 40
 run_exp P3-v03 "${BASE[@]}" "${GRU[@]}" "${LB3[@]}" --target-steps 30
 run_exp P3-v04 "${BASE[@]}" "${GRU[@]}" "${LB3[@]}" --target-steps 40
 
-# ── Architecture + focal variants at W=30 ─────────────────────────────────
-run_exp P3-v05 "${BASE[@]}" "${GRU[@]}" "${LB2[@]}" --target-steps 30 \
+# ── Architecture + focal variants at W=30 (unidirectional — stateful 배포 호환) ──
+run_exp P3-v05 "${BASE[@]}" "${GRU_UNI[@]}" "${LB2[@]}" --target-steps 30 \
     --temporal-attention
 
-run_exp P3-v06 "${BASE[@]}" "${GRU[@]}" "${LB3[@]}" --target-steps 30 \
+run_exp P3-v06 "${BASE[@]}" "${GRU_UNI[@]}" "${LB3[@]}" --target-steps 30 \
     --temporal-attention
 
-run_exp P3-v07 "${BASE[@]}" "${GRU[@]}" "${LB2[@]}" --target-steps 30 \
+run_exp P3-v07 "${BASE[@]}" "${GRU_UNI[@]}" "${LB2[@]}" --target-steps 30 \
     "${FOCAL[@]}"
 
-run_exp P3-v08 "${BASE[@]}" "${GRU[@]}" "${LB3[@]}" --target-steps 30 \
+run_exp P3-v08 "${BASE[@]}" "${GRU_UNI[@]}" "${LB3[@]}" --target-steps 30 \
     "${FOCAL[@]}"
 
 # ════════════════════════════════════════════════════════════════════════════════
@@ -133,10 +140,10 @@ declare -A LB_MAP=(
     [P3-v05]=2 [P3-v06]=3 [P3-v07]=2 [P3-v08]=3
 )
 declare -A ARCH_MAP=(
-    [P3-v01]="bidir"       [P3-v02]="bidir"
-    [P3-v03]="bidir"       [P3-v04]="bidir"
-    [P3-v05]="bidir+attn"  [P3-v06]="bidir+attn"
-    [P3-v07]="bidir+focal" [P3-v08]="bidir+focal"
+    [P3-v01]="bidir"      [P3-v02]="bidir"
+    [P3-v03]="bidir"      [P3-v04]="bidir"
+    [P3-v05]="uni+attn"   [P3-v06]="uni+attn"
+    [P3-v07]="uni+focal"  [P3-v08]="uni+focal"
 )
 declare -A WIN_MAP=(
     [P3-v01]=30 [P3-v02]=40 [P3-v03]=30 [P3-v04]=40
