@@ -767,7 +767,7 @@ def save_threshold_sweep(threshold_payload: dict[str, Any], output_dir: Path) ->
     sweep = pd.DataFrame(threshold_payload["sweep"])
     sweep.to_csv(output_dir / "threshold_sweep.csv", index=False)
     # Plot the best row per threshold (max F1 across min_consecutive values)
-    best = sweep.groupby("threshold").apply(lambda g: g.loc[g["f1"].idxmax()]).reset_index(drop=True)
+    best = sweep.loc[sweep.groupby("threshold")["f1"].idxmax()].reset_index(drop=True)
     sel_thresh = float(threshold_payload["threshold"])
     sel_consec = int(threshold_payload.get("min_consecutive", 1))
     fig, ax = plt.subplots(figsize=(8, 4))
