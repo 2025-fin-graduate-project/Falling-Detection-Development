@@ -101,6 +101,7 @@ class BaselineConfig:
     tcn_dilations: list[int] = field(default_factory=lambda: [1, 2, 4, 8])
     tcn_kernel_size: int = 3
     gru_units: list[int] = field(default_factory=lambda: [64, 32])
+    gru_unroll: bool = False
     conv_pre_layers: int = 0
     conv_pre_filters: int = 64
     conv_pre_kernel: int = 5
@@ -167,6 +168,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tcn-dilations")
     parser.add_argument("--tcn-kernel-size", type=int)
     parser.add_argument("--gru-units")
+    parser.add_argument("--gru-unroll", action=argparse.BooleanOptionalAction, help="Unroll GRU over the fixed time axis for static TFLite conversion checks. Final STM32 runtime should still use explicit-state step export.")
     parser.add_argument("--conv-pre-layers", type=int)
     parser.add_argument("--conv-pre-filters", type=int)
     parser.add_argument("--conv-pre-kernel", type=int)
@@ -240,6 +242,8 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         payload["tcn_dilations"] = parse_csv_ints(args.tcn_dilations)
     if args.gru_units is not None:
         payload["gru_units"] = parse_csv_ints(args.gru_units)
+    if args.gru_unroll is not None:
+        payload["gru_unroll"] = args.gru_unroll
     if args.export_tflite is not None:
         payload["export_tflite"] = args.export_tflite
     if args.quantize_int8 is not None:
@@ -663,6 +667,7 @@ def build_gru(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.keras.
             dropout=config.dropout_rate,
             recurrent_dropout=0.0,
             reset_after=True,
+            unroll=config.gru_unroll,
             name=f"gru_{idx}",
         )
         if config.bidirectional:
@@ -1256,6 +1261,22 @@ def main() -> None:
         q_score = predict_tflite(Path(export_paths["model_int8_tflite"]), x["test"][:eval_count], config.positive_labels)
         q_metrics = metrics_for(y_eval["test"][:eval_count], q_score, threshold, "test_int8", directions["test"][:eval_count])
         metrics["test_int8"] = q_metrics
+        if eval_count == len(x["test"]):
+            q_v_true, q_v_score, q_v_pred = video_level_eval(
+                y_eval["test"],
+                q_score,
+                groups["test"],
+                threshold,
+                min_consecutive,
+            )
+            q_v_metrics = metrics_for(q_v_true, q_v_score, threshold, "test_int8_video", y_pred=q_v_pred)
+            metrics["test_int8_video"] = q_v_metrics
+            log(
+                f"video-level test_int8: videos={len(q_v_true)} "
+                f"f1={q_v_metrics['f1']:.4f} recall={q_v_metrics['recall']:.4f} "
+                f"fall_prec={q_v_metrics['precision']:.4f} nfall_prec={q_v_metrics['nfall_precision']:.4f} "
+                f"min_prec={q_v_metrics['min_precision']:.4f} min_consecutive={min_consecutive}"
+            )
         plot_confusion_curve(
             y_eval["test"][:eval_count],
             q_score,
@@ -1266,6 +1287,8 @@ def main() -> None:
         )
         plot_class_metrics_bar(q_metrics, output_dir, prefix="int8_", title_prefix="INT8")
         quant_report["runtime"]["test_int8"] = q_metrics
+        if "test_int8_video" in metrics:
+            quant_report["runtime"]["test_int8_video"] = metrics["test_int8_video"]
         quant_report["runtime"]["delta_f1"] = (
             None if metrics["test_float"]["f1"] is None else float(metrics["test_float"]["f1"] - q_metrics["f1"])
         )

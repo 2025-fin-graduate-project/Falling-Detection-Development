@@ -33,6 +33,14 @@ SCREEN_EXPERIMENTS = {
     "C3S-v08": "30f-last-frame",
 }
 
+DEPLOY_EXPERIMENTS = {
+    "C4D-v01": "30f-kp7-128x64",
+    "C4D-v02": "30f-kp7-96x48",
+    "C4D-v03": "30f-minimal-128x64",
+    "C4D-v04": "40f-kp7-128x64",
+    "C4D-v05": "30f-kp7-ce-128x64",
+}
+
 
 def load_json(path: Path) -> dict[str, Any] | None:
     try:
@@ -79,7 +87,12 @@ def main() -> int:
     args = parser.parse_args()
 
     output_root = args.output_root
-    experiments = SCREEN_EXPERIMENTS if "screen" in output_root.name else EXPERIMENTS
+    if "deploy" in output_root.name:
+        experiments = DEPLOY_EXPERIMENTS
+    elif "screen" in output_root.name:
+        experiments = SCREEN_EXPERIMENTS
+    else:
+        experiments = EXPERIMENTS
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print("")
     print(f"[{now}] codex/03 GRU status")
@@ -92,6 +105,16 @@ def main() -> int:
     for exp_id, label in experiments.items():
         line, minp, f1 = metric_row(exp_id, label, output_root, args.target_min_precision)
         print(line)
+        metrics = load_json(output_root / exp_id / "metrics.json")
+        if metrics and "test_int8_video" in metrics.get("metrics", {}):
+            qv = metrics["metrics"]["test_int8_video"]
+            print(
+                f"{'':8s} {'INT8 video':22s} "
+                f"F1={float(qv.get('f1', 0.0)):.4f} Rec={float(qv.get('recall', 0.0)):.4f} "
+                f"FallP={float(qv.get('precision', 0.0)):.4f} "
+                f"NFallP={float(qv.get('nfall_precision', 0.0)):.4f} "
+                f"MinP={float(qv.get('min_precision', 0.0)):.4f}"
+            )
         if minp >= 0.0 and (best is None or (minp, f1) > (best[0], best[1])):
             best = (minp, f1, exp_id)
 
