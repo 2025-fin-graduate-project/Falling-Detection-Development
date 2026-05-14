@@ -85,7 +85,7 @@ def main() -> int:
     print(f"[{now}] codex/03 GRU status")
     print(f"output_root={output_root} target_min_precision={args.target_min_precision:.4f}")
 
-    completed = sorted(Path(p).parent.name for p in glob.glob(str(output_root / "C3-v*" / "metrics.json")))
+    completed = sorted(exp_id for exp_id in experiments if (output_root / exp_id / "metrics.json").exists())
     print(f"completed={len(completed)}/{len(experiments)}")
 
     best: tuple[float, float, str] | None = None
