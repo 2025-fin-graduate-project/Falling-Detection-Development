@@ -17,3 +17,7 @@ dataset/*
 Desktop.ini
 desktop.ini
 Thumbs.db
+
+# Experiment results and model artifacts
+results/
+artifacts/
