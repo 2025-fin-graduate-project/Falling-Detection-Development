@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -767,7 +768,7 @@ def save_threshold_sweep(threshold_payload: dict[str, Any], output_dir: Path) ->
     sweep = pd.DataFrame(threshold_payload["sweep"])
     sweep.to_csv(output_dir / "threshold_sweep.csv", index=False)
     # Plot the best row per threshold (max F1 across min_consecutive values)
-    best = sweep.groupby("threshold").apply(lambda g: g.loc[g["f1"].idxmax()]).reset_index(drop=True)
+    best = sweep.loc[sweep.groupby("threshold")["f1"].idxmax()].reset_index(drop=True)
     sel_thresh = float(threshold_payload["threshold"])
     sel_consec = int(threshold_payload.get("min_consecutive", 1))
     fig, ax = plt.subplots(figsize=(8, 4))
@@ -795,11 +796,16 @@ def metrics_for(
 ) -> dict[str, Any]:
     pred = y_pred if y_pred is not None else (y_score >= threshold).astype(np.int32)
     cm = confusion_matrix(y_true, pred, labels=[0, 1])
+    tn, fp, fn, tp = int(cm[0, 0]), int(cm[0, 1]), int(cm[1, 0]), int(cm[1, 1])
+    fall_prec  = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+    nfall_prec = tn / (tn + fn) if (tn + fn) > 0 else 0.0
     result = {
         "split": split,
         "threshold": threshold,
         "accuracy": float(accuracy_score(y_true, pred)),
-        "precision": float(precision_score(y_true, pred, zero_division=0)),
+        "precision": fall_prec,
+        "nfall_precision": nfall_prec,
+        "min_precision": min(fall_prec, nfall_prec),
         "recall": float(recall_score(y_true, pred, zero_division=0)),
         "f1": float(f1_score(y_true, pred, zero_division=0)),
         "auc_roc": float(roc_auc_score(y_true, y_score)) if len(np.unique(y_true)) == 2 else None,
@@ -824,53 +830,44 @@ def representative_dataset(x_calib: np.ndarray, max_samples: int):
         yield [x_calib[idx : idx + 1].astype(np.float32)]
 
 
-def _make_serving_fn(model: tf.keras.Model, input_shape: tuple[int, ...]) -> Any:
-    """Return a concrete function with training=False to avoid CudnnRNNV3 ops."""
-    @tf.function(input_signature=[tf.TensorSpec(shape=[None, *input_shape], dtype=tf.float32)])
-    def serving_fn(x: tf.Tensor) -> tf.Tensor:
-        return model(x, training=False)
-
-    return serving_fn.get_concrete_function()
-
 
 def export_tflite(model: tf.keras.Model, x_train: np.ndarray, output_dir: Path, config: BaselineConfig) -> dict[str, Any]:
     paths: dict[str, Any] = {}
     if not config.export_tflite:
         return paths
 
-    # Concrete function forces training=False, preventing GPU-only ops (CudnnRNNV3)
-    # from being embedded in the exported graph.
-    input_shape: tuple[int, ...] = x_train.shape[1:]
+    # GPU-trained GRU models embed CudnnRNNV3 ops which TFLite cannot convert.
+    # Solution: run conversion in a subprocess with CUDA_VISIBLE_DEVICES="" so
+    # TF uses the CPU GRU kernel (no CudnnRNNV3) when loading the saved model.
+    import subprocess
+    import sys
+    reexport_script = Path(__file__).resolve().parent / "util" / "reexport_tflite.py"
     try:
-        concrete_fn = _make_serving_fn(model, input_shape)
+        env = {**os.environ, "CUDA_VISIBLE_DEVICES": "", "REEXPORT_UPDATE_METRICS": "0"}
+        result = subprocess.run(
+            [sys.executable, str(reexport_script),
+             "--output-root", str(output_dir.parent),
+             "--ids", output_dir.name,
+             "--representative-samples", str(config.representative_samples)],
+            capture_output=True, text=True, timeout=300, env=env,
+        )
+        log(f"tflite export subprocess exit={result.returncode}")
+        if result.stdout:
+            for line in result.stdout.strip().splitlines():
+                log(f"  [tflite] {line}")
+        if result.stderr and result.returncode != 0:
+            log(f"  [tflite stderr] {result.stderr[-500:]}")
     except Exception as exc:
-        paths["serving_fn_error"] = repr(exc)
-        return paths
+        log(f"tflite export subprocess failed: {exc}")
 
-    try:
-        fp32_path = output_dir / "model_fp32.tflite"
-        converter = tf.lite.TFLiteConverter.from_concrete_functions([concrete_fn], model)
-        fp32_path.write_bytes(converter.convert())
+    # Check which files the subprocess produced
+    fp32_path = output_dir / "model_fp32.tflite"
+    int8_path  = output_dir / "model_int8.tflite"
+    if fp32_path.exists():
         paths["model_fp32_tflite"] = str(fp32_path)
-    except Exception as exc:
-        paths["fp32_export_error"] = repr(exc)
-
-    if config.quantize_int8:
-        try:
-            int8_path = output_dir / "model_int8.tflite"
-            # Rebuild concrete_fn for int8 converter (each converter needs its own reference)
-            concrete_fn_q = _make_serving_fn(model, input_shape)
-            converter = tf.lite.TFLiteConverter.from_concrete_functions([concrete_fn_q], model)
-            converter.optimizations = [tf.lite.Optimize.DEFAULT]
-            converter.representative_dataset = lambda: representative_dataset(x_train, config.representative_samples)
-            converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
-            converter.inference_input_type = tf.int8
-            converter.inference_output_type = tf.int8
-            int8_path.write_bytes(converter.convert())
-            paths["model_int8_tflite"] = str(int8_path)
-            paths["model_int8_size_kb"] = round(int8_path.stat().st_size / 1024.0, 3)
-        except Exception as exc:
-            paths["int8_export_error"] = repr(exc)
+    if int8_path.exists():
+        paths["model_int8_tflite"] = str(int8_path)
+        paths["model_int8_size_kb"] = round(int8_path.stat().st_size / 1024.0, 3)
 
     return paths
 
@@ -1234,7 +1231,8 @@ def main() -> None:
         log(
             f"video-level {split_name}: videos={len(v_true)} "
             f"f1={v_metrics['f1']:.4f} recall={v_metrics['recall']:.4f} "
-            f"precision={v_metrics['precision']:.4f} min_consecutive={min_consecutive}"
+            f"fall_prec={v_metrics['precision']:.4f} nfall_prec={v_metrics['nfall_precision']:.4f} "
+            f"min_prec={v_metrics['min_precision']:.4f} min_consecutive={min_consecutive}"
         )
         plot_confusion_curve(v_true, v_score, threshold, output_dir,
                              prefix=f"video_{split_name}_",
@@ -1294,6 +1292,7 @@ def main() -> None:
         f"done {config.experiment_id} "
         f"val_f1={metrics['val_float']['f1']:.4f} (video={metrics['val_video']['f1']:.4f}) "
         f"test_f1={metrics['test_float']['f1']:.4f} (video={metrics['test_video']['f1']:.4f}) "
+        f"test_min_prec={metrics['test_video']['min_precision']:.4f} "
         f"threshold={threshold:.3f} min_consecutive={min_consecutive}"
     )
 
