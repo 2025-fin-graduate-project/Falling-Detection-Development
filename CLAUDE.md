@@ -3,294 +3,161 @@
 ## Project Overview
 
 Fall detection model targeting **STM32N6** deployment.
-- Input: MoveNet 17-keypoint pose sequences (15 fps, 4-second window = 60 frames)
-- Architecture: GRU (primary) / TCN — **unidirectional, STM32/STedgeAI portable, INT8 quantizable**
-- Output: binary fall/non-fall alarm triggered by consecutive-window post-processing
-- Performance target (video-level, post consecutive rule):
-  - Float (after training): MinP ≥ 0.93~0.95
-  - INT8 (after STedgeAI quantization): MinP ≥ 0.90~0.91
-  - **MinP = min(FallPrecision, NFallPrecision)** — primary metric
-
-## Environment Versions
-
-| Component | Version | Notes |
-|---|---|---|
-| Python (training) | 3.12+ (uv managed) | `uv run python` |
-| TensorFlow | 2.21.0 | `tensorflow>=2.21.0` in pyproject.toml |
-| Keras | 3.13.2 | bundled with TF 2.21 |
-| CUDA | 12.x | nvidia-*-cu12 packages via uv |
-| cuDNN | 9.x | nvidia-cudnn-cu12 |
-| STedgeAI | 4.0 | `/home/min/app/ST/STEdgeAI/4.0/` |
-| STedgeAI Python | 3.9 (internal) | `/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/python` |
-| STedgeAI TF | 2.18.0 (internal) | bundled inside STedgeAI 4.0 |
-| STedgeAI Keras | **3.7.0** (internal) | **Keras 3.10+ fields are incompatible** — see compat note below |
-
-### Keras compatibility note (training env vs STedgeAI)
-Training produces `.keras` files with Keras 3.13 format. STedgeAI 4.0 uses Keras 3.7 internally and **fails** on `quantization_config` field added in Keras 3.10+.
-
-**Fix** (`scripts/util/export_stedgeai.py`): strip `quantization_config` from `config.json` inside the `.keras` zip before passing to STedgeAI. Run with STedgeAI's own Python:
-```bash
-/path/to/STEdgeAI/4.0/Utilities/linux/python scripts/util/export_stedgeai.py \
-    --exp-dir results/gru_phase7_quant/Q7-v01 --target stm32n6
-```
-
-### TFLite export note
-All GRU models (uni- and bidirectional) use `TensorListReserve` internally. TFLite cannot lower it with dynamic element_shape. Fix: rebuild model with `unroll=True` before conversion (`scripts/util/reexport_tflite.py`). Side-effect: TFLite file size ≈ weights × timesteps (not representative of deployment size). STedgeAI keeps the RNN as a loop → actual Flash is ~3–5× smaller than TFLite file.
+- Input: MoveNet 17-keypoint pose sequences (15 fps); window size 30~40 frames
+- Architecture: **Unidirectional GRU** — STedgeAI INT8 quantizable, stateful streaming compatible
+- Output: binary fall/non-fall, triggered by consecutive-window post-processing
+- **MinP = min(FallPrecision, NFallPrecision)** — primary metric
+  - Float target: MinP ≥ 0.93; INT8 target: MinP ≥ 0.90
 
 ---
 
-## Deployment Constraints (STM32N6)
+## Environment
 
-**Target hardware**: STM32N6 Cortex-M55 CPU (no NPU required for GRU)
+| Component | Version |
+|---|---|
+| Python | 3.12+ (`uv run python`) |
+| TensorFlow / Keras | **2.21.0 / 3.13.2** |
+| CUDA / cuDNN | 12.x / 9.x (nvidia-*-cu12 via uv) |
+| STedgeAI | 4.0 — `/home/min/app/ST/STEdgeAI/4.0/` |
+| STedgeAI internal TF / Keras | **2.18.0 / 3.7.0** |
 
-**Conversion tool**: STedgeAI (X-CUBE-AI) — imports `.keras` directly, generates optimized C code
-- STedgeAI does channel-wise INT8 PTQ natively → lower accuracy loss than TFLite PTQ
-- GRU and Conv1D are both natively supported
-- STedgeAI analyze result written to `metrics.json` under `"stedgeai"` key
+**Keras compat**: Training emits `.keras` with Keras 3.13 format; STedgeAI 4.0 uses Keras 3.7 and rejects `quantization_config` (added in 3.10). Fix: `scripts/util/export_stedgeai.py` strips the field from the zip before analysis. Must run with STedgeAI's own Python.
 
-**Model requirements**:
-- **Unidirectional GRU only** — bidirectional GRU requires future frames, incompatible with stateful streaming
-- Stateless training → stateful inference conversion via `set_weights()` (weights copy directly)
-- On fall alarm: call `network_reset()` to zero hidden state
-- Model size target: **weight INT8 < 512 KiB** (STM32N6 Flash budget)
+**TFLite GRU export**: All GRU models use `TensorListReserve` internally — TFLite requires `unroll=True` rebuild (`scripts/util/reexport_tflite.py`). TFLite file size is inflated (≈ weights × timesteps); actual Flash via STedgeAI is 3–5× smaller.
 
-**Known Flash sizes (STedgeAI INT8, stm32n6)**:
-| Config | Flash (KiB) | RAM (KiB) | Budget? |
+---
+
+## STM32N6 Deployment
+
+**Target**: STM32N6 Cortex-M55 CPU; STedgeAI imports `.keras` → channel-wise INT8 PTQ → C code
+- Flash budget: **< 512 KiB** (weights INT8)
+- GRU and Conv1D natively supported; bidirectional GRU is **incompatible** (requires future frames)
+- Stateless training → stateful inference via `set_weights()`; reset hidden state on alarm
+
+**Known Flash sizes (STedgeAI INT8, stm32n6 target)**:
+| Config | Flash (KiB) | RAM (KiB) | OK? |
 |---|---|---|---|
-| GRU(128,64) kp7 40f | ~537 | ~40 | ✗ slightly over |
 | GRU(128,64) kp7 30f | ~403 | ~30 | ✓ |
+| GRU(128,64) kp7 40f | ~537 | ~40 | ✗ over |
 | GRU(256,128) any | >1000 | >80 | ✗ too large |
 
-**Preferred architecture** (for new experiments): unidirectional GRU, `--gru-units 128,64`, focal loss, 30f window
-- GRU(256,128) exceeds Flash budget — do not use for new STM32N6-targeted experiments
+**Preferred architecture**: `--gru-units 128,64`, unidirectional, focal loss, 30f window.
+GRU(256,128) exceeds budget — do not use for new STM32N6-targeted experiments.
+
+STedgeAI analyze results written to `metrics.json["stedgeai"]["analyze"]` (weights_kib, activations_kib, analyze_ok).
 
 ---
 
 ## Dataset
 
-### Canonical training dataset: `dataset/splits_v2/`
-- **This is the only dataset used for training.** Top-level `dataset/*.csv` files are unrefined originals — do not use them.
-- 9,066 videos, ~1.27M rows (train split)
-- Cameras C5~C8 only (C1~C4 removed — low confidence)
-- Video-level outlier removal applied (conf threshold + z-score)
-- Pre-split: `train.csv` / `val.csv` / `test.csv`
+Canonical: `dataset/splits_v2/` — 9,066 videos, ~1.27M rows (train). Cameras C5~C8 only; outlier-removed; pre-split.
+**Do not use** top-level `dataset/*.csv` (unrefined originals).
 
-### Derived datasets (built from splits_v2)
 | Path | Description | Build script |
 |---|---|---|
-| `dataset/splits_v2/` | Raw kp + HSSC/VHSSC/RWHC features | `build_v2_dataset.py` |
-| `dataset/splits_v2_filtered/` | PP-D filtered: One-Euro+EMA applied to raw kp, features recomputed from scratch | `build_filtered_v2_splits.py` |
-| `dataset/lb3_v2/` | splits_v2 + `label_3class` column (0=normal, 1=falling, 2=fallen) | `build_lb3_dataset.py --source splits_v2` |
+| `dataset/splits_v2/` | Raw kp + HSSC/VHSSC/RWHC | `build_v2_dataset.py` |
+| `dataset/splits_v2_filtered/` | One-Euro+EMA on kp, AHSSC/AHSSC_x recomputed | `build_filtered_v2_splits.py` |
+| `dataset/lb3_v2/` | splits_v2 + `label_3class` (0=normal,1=falling,2=fallen) | `build_lb3_dataset.py --source splits_v2` |
 
-> `splits_v2_filtered` is generated by **discarding all pre-computed features** from splits_v2, applying One-Euro filter to raw kp coordinates, then computing HSSC_y/HSSC_x/RWHC/VHSSC/AHSSC/AHSSC_x fresh from filtered kp.
+Fresh setup: splits_v2 already exists. Run lb3 build then filtered build (filtered includes label_3class).
 
 ---
 
-## Fixed Parameters (never vary across experiments)
+## Fixed Training Parameters
 
-| Parameter | Value | Reason |
+| Parameter | Value |
+|---|---|
+| `--data-scope` | `all` |
+| `--min-val-precision` | `0.90` |
+| `--early-stop-patience` | `15` |
+| `--epochs` | `100` |
+| `--dropout-rate` | `0.3` |
+| `--noise-std` | `0.02` |
+| `--train-negative-stride` | `2` |
+| Post-processing sweep | `--min-consecutive-values 1,3,5` (default) |
+
+---
+
+## Experiment Axes
+
+| Axis | Options | Flag |
 |---|---|---|
-| Dataset | `splits_v2` (or filtered/lb3 variants) | Only clean dataset |
-| `--data-scope` | `all` | No direction filtering — all fall directions must be covered |
-| `--feature-set` | `kp12` (default) | Unless KP reduction is the variable under test |
-| Post-processing | consecutive+threshold sweep [1,3,5] | Applied by default |
-| Model family | GRU (primary focus) | STedgeAI INT8 quantizable; unidirectional required for stateful deployment |
-| `--min-val-precision` | `0.90` | Dual-precision constraint |
-| `--early-stop-patience` | `15` | Standard across all runs |
-| `--epochs` | `100` | Max epochs |
-| `--noise-std` | `0.02` | Augmentation |
-| `--dropout-rate` | `0.3` | Regularization |
-| `--train-negative-stride` | `2` | Negative sample density |
+| Preprocessing | `raw` (splits_v2) / `filtered` (splits_v2_filtered) | `--preprocessing` |
+| Label | LB-2: `label` / LB-3: `label_3class --num-classes 3 --positive-labels 1,2` | `--label-column` |
+| GRU units | **`128,64`** (target) / `256,128` (over Flash budget) | `--gru-units` |
+| Feature set | `kp7` (27f) / `kp12` (45f, default) / `kp8` / `all` | `--feature-set` |
+| Window | 30f (`--target-steps 30`) / 40f | `--target-steps` |
+
+Bidirectional (`--bidirectional`) and attention (`--temporal-attention`) were explored in earlier phases but are STM32-incompatible or lower-priority — do not use for new deployment-targeted runs.
 
 ---
 
-## Variable Parameters (experiment axes)
-
-### PP — Preprocessing
-| Value | `--preprocessing` | Dataset | Extra features |
-|---|---|---|---|
-| PP-raw | `raw` | `splits_v2/` | HSSC_y, HSSC_x, RWHC, VHSSC |
-| PP-D | `filtered` | `splits_v2_filtered/` | + AHSSC, AHSSC_x |
-
-### LB — Label schema
-| Value | `--label-column` | `--num-classes` | `--positive-labels` | Dataset |
-|---|---|---|---|---|
-| LB-2 | `label` | `2` (default) | `1` (default) | splits_v2 or splits_v2_filtered |
-| LB-3 | `label_3class` | `3` | `1,2` | lb3_v2 (raw) or splits_v2_filtered (filtered) |
-
-### Arch — Model architecture
-| Value | Flags |
-|---|---|
-| base | (none) |
-| bidir | `--bidirectional` |
-| attn | `--temporal-attention` |
-| bidir+attn | `--bidirectional --temporal-attention` |
-
-### GRU units
-| Value | `--gru-units` |
-|---|---|
-| small | `128,64` |
-| large | `256,128` (best from phase0) |
-
-### Keypoint set (when KP is the variable)
-| Value | `--feature-set` |
-|---|---|
-| kp12 | `kp12` (default, kp0–kp12) |
-| kp8 | `kp8` |
-| kp7 | `kp7` |
-| all | `all` (kp0–kp16) |
-
----
-
-## Experiment Runner: `scripts/train_baseline.py`
+## Runner: `scripts/train_baseline.py`
 
 ```bash
 uv run python scripts/train_baseline.py \
-  --experiment-id  P1-v01 \
-  --output-root    results/gru_baseline_phase1 \
-  --model-type     gru \
-  --preprocessing  raw \
-  --gru-units      256,128 \
+  --experiment-id Q7-v01 --output-root results/gru_phase7_quant \
+  --model-type gru --gru-units 128,64 \
   --conv-pre-layers 2 --conv-pre-filters 64 --conv-pre-kernel 5 \
-  --feature-set    kp12 \
-  --data-scope     all \
-  --train-csv      dataset/splits_v2/train.csv \
-  --val-csv        dataset/splits_v2/val.csv \
-  --test-csv       dataset/splits_v2/test.csv \
-  --label-column   label \
-  --dropout-rate   0.3 --noise-std 0.02 \
-  --train-negative-stride 2 \
-  --early-stop-patience 15 --epochs 100 \
-  --min-val-precision 0.90 \
-  --quiet
+  --focal-loss --focal-gamma 2.0 --focal-alpha 0.25 \
+  --preprocessing filtered --feature-set kp12 \
+  --train-csv dataset/splits_v2_filtered/train.csv \
+  --val-csv   dataset/splits_v2_filtered/val.csv \
+  --test-csv  dataset/splits_v2_filtered/test.csv \
+  --label-column label --data-scope all \
+  --target-steps 30 --window-start-sec 3.0 --window-end-sec 9.0 \
+  --dropout-rate 0.3 --noise-std 0.02 --train-negative-stride 2 \
+  --early-stop-patience 15 --epochs 100 --min-val-precision 0.90 --quiet
 ```
 
-Key flags:
-- `--bidirectional` — Bidirectional GRU wrapper
-- `--temporal-attention` — Additive temporal attention pooling (TFLite INT8 compatible)
-- `--num-classes 3 --positive-labels 1,2` — LB-3 mode
-- `--min-consecutive-values 1,3,5` — Post-processing consecutive sweep (default)
+Output per experiment (`{output-root}/{id}/`): `metrics.json`, `model.keras`, `model_fp32.tflite`, `model_int8.tflite`, `run_config.resolved.json`, `threshold_sweep.csv`.
 
-Each experiment writes to `{output-root}/{experiment-id}/`:
-- `metrics.json` — all metrics including video-level F1/Recall/Precision and selected (threshold, min_consecutive)
-- `threshold_sweep.csv` — full 2D (threshold × min_consecutive) sweep at video level
-- `model.keras`, `model_fp32.tflite`, `model_int8.tflite`
-- `run_config.resolved.json` — full config snapshot
+`run_exp` in runner scripts skips if `metrics.json` already exists — safe to re-run after failure.
 
 ---
 
-## Phase 1 Experiment Grid (`results/gru_baseline_phase1/`)
-
-Runner: `scripts/run_gru_phase1.sh`
-
-2 × 2 × 4 factorial — PP × LB × Arch:
-
-| ID | PP | LB | Arch |
-|---|---|---|---|
-| P1-v01 | raw | 2 | base |
-| P1-v02 | raw | 2 | bidir |
-| P1-v03 | raw | 2 | attn |
-| P1-v04 | raw | 2 | bidir+attn |
-| P1-v05 | raw | 3 | base |
-| P1-v06 | raw | 3 | bidir |
-| P1-v07 | raw | 3 | attn |
-| P1-v08 | raw | 3 | bidir+attn |
-| P1-v09 | filtered | 2 | base |
-| P1-v10 | filtered | 2 | bidir |
-| P1-v11 | filtered | 2 | attn |
-| P1-v12 | filtered | 2 | bidir+attn |
-| P1-v13 | filtered | 3 | base |
-| P1-v14 | filtered | 3 | bidir |
-| P1-v15 | filtered | 3 | attn |
-| P1-v16 | filtered | 3 | bidir+attn |
-
----
-
-## Running Parallel Experiments with Multiple Agents
-
-Each agent works on its **own git branch** with its **own output root**, so results never collide.
-
-### Branch naming convention
-```
-experiment/{model}-{variable}-{phase}
-# Examples:
-experiment/tcn-arch-phase1
-experiment/gru-kp-ablation
-experiment/gru-lb3-attn
-```
-
-### Per-agent workflow
-1. Create branch from `dev`: `git checkout -b experiment/tcn-phase1 dev`
-2. Write or modify a runner script under `scripts/`
-3. Set a **unique** `--output-root` (e.g., `results/tcn_phase1/`)
-4. Launch with `nohup bash scripts/run_tcn_phase1.sh > results/tcn_phase1/nohup.log 2>&1 &`
-5. When done: commit results summary + script, open PR to `dev`
-
-### What agents MUST NOT change
-- `dataset/splits_v2/` contents — read-only ground truth
-- `--data-scope all` — fixed
-- `scripts/train_baseline.py` — shared runner (coordinate changes via PR)
-
-### What agents CAN vary independently
-- `--preprocessing raw | filtered`
-- `--model-type gru | tcn`
-- `--gru-units` / `--tcn-channels`
-- `--feature-set kp12 | kp8 | kp7 | all`
-- `--num-classes` / `--label-column` / `--positive-labels`
-- `--bidirectional` / `--temporal-attention`
-- `--conv-pre-layers` / `--conv-pre-filters` / `--conv-pre-kernel`
-- `--dropout-rate` / `--noise-std`
-- `--output-root` (must be unique per agent)
-
-### Checking skip logic
-`run_exp` in all runner scripts skips an experiment if `{output-root}/{id}/metrics.json` already exists. Safe to re-run after partial failure.
-
----
-
-## Evaluation Methodology
-
-### Video-level evaluation (primary metric)
-Window predictions for each video are aggregated:
-1. Apply threshold → binary window predictions
-2. Apply consecutive rule (min_consecutive windows) → filtered predictions
-3. Video is fall if **any** filtered window is positive
-
-The (threshold, min_consecutive) pair is selected by 2D sweep on the **validation set** optimising F1 subject to `precision ≥ 0.90` for both fall and non-fall classes.
-
-### Metrics hierarchy
-1. **`test_video`** — primary (video-level with consecutive rule)
-2. `val_video` — used for threshold selection
-3. `test_float` / `val_float` — window-level (diagnostic only, ~0.10 higher than video-level)
-4. `test_int8` — TFLite INT8 quantized (deployment target)
-
-### Key fields in `metrics.json`
-```json
-{
-  "threshold_selection": {
-    "threshold": 0.45,
-    "min_consecutive": 3
-  },
-  "metrics": {
-    "test_video": { "f1": 0.91, "recall": 0.95, "precision": 0.87 },
-    "val_video":  { "f1": 0.92, ... },
-    "test_float": { "f1": 0.86, ... }
-  }
-}
-```
-
----
-
-## Dataset Build Order (for a fresh setup)
+## STedgeAI Analysis
 
 ```bash
-# 1. splits_v2 already exists — do not rebuild unless intentional
-# 2. Build LB-3 labels on top of splits_v2
-uv run python scripts/util/build_lb3_dataset.py --source splits_v2
-
-# 3. Build PP-D filtered version of splits_v2
-uv run python scripts/util/build_filtered_v2_splits.py
-# (splits_v2_filtered includes label_3class — no separate lb3 build needed)
+# Run with STedgeAI's internal Python (Keras 3.7 env)
+/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/python \
+    scripts/util/export_stedgeai.py \
+    --exp-dir results/gru_phase7_quant/Q7-v01 --target stm32n6
 ```
+
+Updates `metrics.json["stedgeai"]` with analyze results. Compat `.keras` is created and deleted automatically.
+
+---
+
+## Experiment Phases (summary)
+
+| Phase | Script | Focus | Status |
+|---|---|---|---|
+| 1 | `run_gru_phase1.sh` | PP × LB × Arch grid (GRU 256,128) | done |
+| 2 | `run_gru_phase2_arch.sh` | Architecture variants | done |
+| 3 | `run_gru_phase3_2s.sh` | 30f window (2s) variants | done |
+| 4 | `run_gru_phase4_uni_kp.sh` | Unidirectional + KP ablation | done |
+| 5 | `run_gru_phase5_compact.sh` | GRU(128,64) compact + focal | done |
+| 7 | `run_gru_phase7.sh` | STM32N6 Flash verify + Q7 training | **in progress** |
+
+Best models (MinP ≥ 0.93, unidirectional): P5-v02 (0.9495), P4-v05 (0.9513), P4-v02 (0.9469).
+
+---
+
+## Evaluation
+
+Video-level: threshold → binary windows → consecutive rule → fall if any positive window.
+(threshold, min_consecutive) selected by 2D val-set sweep maximising F1 subject to precision ≥ 0.90.
+
+**Metrics hierarchy**: `test_video` (primary) > `val_video` > `test_float` > `test_int8`.
+
+Key `metrics.json` fields: `threshold_selection.{threshold,min_consecutive}`, `metrics.test_video.{f1,recall,min_precision}`, `stedgeai.analyze.{weights_kib,activations_kib,analyze_ok}`.
+
+---
+
+## Multi-Agent Workflow
+
+Each agent: own branch (`experiment/{model}-{focus}-{phase}`) + own `--output-root`. Never modify `dataset/splits_v2/`, `--data-scope all`, or `scripts/train_baseline.py` without PR coordination. Merge to `dev` when done.
 
 ---
 
@@ -298,13 +165,8 @@ uv run python scripts/util/build_filtered_v2_splits.py
 
 | Term | Meaning |
 |---|---|
-| PP-raw | No filtering applied to kp; use HSSC/VHSSC/RWHC from raw kp |
-| PP-D | One-Euro + EMA filter on kp; AHSSC/AHSSC_x computed from filtered kp |
-| LB-2 | Binary label: 0=normal, 1=fall |
-| LB-3 | 3-class: 0=normal, 1=falling, 2=fallen (frames after last falling frame) |
-| KP-12 | Keypoints 0–12 (head + upper body); default |
-| KP-8 | Reduced set, head + shoulders + hips |
-| Attn | Temporal attention pooling (additive, TFLite INT8 safe) |
-| Bidir | Bidirectional GRU |
-| consecutive rule | Require ≥ K consecutive positive windows before alarm |
-| video-level | Aggregate all windows of a video → one prediction |
+| MinP | min(FallPrecision, NFallPrecision) |
+| PP-raw / PP-D | raw kp / One-Euro+EMA filtered kp |
+| LB-2 / LB-3 | binary / 3-class (normal, falling, fallen) |
+| kp7/kp12 | 27/45 features (keypoint subsets) |
+| consecutive rule | ≥ K consecutive positive windows before alarm |
