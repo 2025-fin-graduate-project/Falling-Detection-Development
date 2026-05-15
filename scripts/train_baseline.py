@@ -96,6 +96,7 @@ class BaselineConfig:
     threshold_count: int = 19
     min_val_recall: float = 0.0
     min_val_precision: float = 0.0
+    min_val_min_pr: float = 0.0
     min_consecutive_values: list[int] = field(default_factory=lambda: [1, 3, 5])
     tcn_channels: list[int] = field(default_factory=lambda: [32, 32, 64, 96])
     tcn_dilations: list[int] = field(default_factory=lambda: [1, 2, 4, 8])
@@ -163,6 +164,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--threshold-count", type=int)
     parser.add_argument("--min-val-recall", type=float)
     parser.add_argument("--min-val-precision", type=float)
+    parser.add_argument("--min-val-min-pr", type=float,
+                        help="Threshold selection: min MinPR constraint (default 0 = disabled)")
     parser.add_argument("--min-consecutive-values", help="Comma-separated min-consecutive window counts to sweep (default: 1,3,5).")
     parser.add_argument("--tcn-channels")
     parser.add_argument("--tcn-dilations")
@@ -222,6 +225,7 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         "threshold_count": args.threshold_count,
         "min_val_recall": args.min_val_recall,
         "min_val_precision": args.min_val_precision,
+        "min_val_min_pr": args.min_val_min_pr,
         "tcn_kernel_size": args.tcn_kernel_size,
         "conv_pre_layers": args.conv_pre_layers,
         "conv_pre_filters": args.conv_pre_filters,
@@ -742,9 +746,11 @@ def select_threshold(
             v_true, _, v_pred = video_level_eval(y_true, y_score, groups, threshold, min_consec)
             cm = confusion_matrix(v_true, v_pred, labels=[0, 1])
             tn, fp, fn, tp = int(cm[0, 0]), int(cm[0, 1]), int(cm[1, 0]), int(cm[1, 1])
-            fall_prec = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-            nfall_prec = tn / (tn + fn) if (tn + fn) > 0 else 0.0
-            rec = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+            fall_prec   = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+            nfall_prec  = tn / (tn + fn) if (tn + fn) > 0 else 0.0
+            rec         = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+            nfall_rec   = tn / (tn + fp) if (tn + fp) > 0 else 0.0
+            min_pr      = min(fall_prec, nfall_prec, rec, nfall_rec)
             f1 = 2 * fall_prec * rec / (fall_prec + rec) if (fall_prec + rec) > 0 else 0.0
             rows.append({
                 "threshold": float(threshold),
@@ -752,16 +758,25 @@ def select_threshold(
                 "precision": fall_prec,
                 "nfall_precision": nfall_prec,
                 "recall": rec,
+                "nfall_recall": nfall_rec,
+                "min_pr": min_pr,
                 "f1": f1,
                 "accuracy": float(accuracy_score(v_true, v_pred)),
             })
     candidates = pd.DataFrame(rows)
-    valid = candidates[
+    mask = (
         (candidates["recall"] >= config.min_val_recall) &
         (candidates["precision"] >= config.min_val_precision) &
         (candidates["nfall_precision"] >= config.min_val_precision)
-    ]
-    chosen = (valid if not valid.empty else candidates).sort_values(["f1", "recall"], ascending=False).iloc[0]
+    )
+    if config.min_val_min_pr > 0:
+        mask &= candidates["min_pr"] >= config.min_val_min_pr
+    valid = candidates[mask]
+    if not valid.empty:
+        chosen = valid.sort_values(["min_pr", "recall", "precision", "f1"], ascending=False).iloc[0]
+    else:
+        # Fallback: maximize MinPR with no hard constraint
+        chosen = candidates.sort_values(["min_pr", "recall", "precision", "f1"], ascending=False).iloc[0]
     return {
         "threshold": float(chosen["threshold"]),
         "min_consecutive": int(chosen["min_consecutive"]),
@@ -772,12 +787,16 @@ def select_threshold(
 def save_threshold_sweep(threshold_payload: dict[str, Any], output_dir: Path) -> None:
     sweep = pd.DataFrame(threshold_payload["sweep"])
     sweep.to_csv(output_dir / "threshold_sweep.csv", index=False)
-    # Plot the best row per threshold (max F1 across min_consecutive values)
-    best = sweep.loc[sweep.groupby("threshold")["f1"].idxmax()].reset_index(drop=True)
+    # Plot the best row per threshold using the same MinPR-first objective.
+    best = (
+        sweep.sort_values(["threshold", "min_pr", "recall", "precision", "f1"], ascending=[True, False, False, False, False])
+        .drop_duplicates("threshold")
+        .reset_index(drop=True)
+    )
     sel_thresh = float(threshold_payload["threshold"])
     sel_consec = int(threshold_payload.get("min_consecutive", 1))
     fig, ax = plt.subplots(figsize=(8, 4))
-    for col in ["precision", "recall", "f1", "accuracy"]:
+    for col in ["min_pr", "precision", "nfall_precision", "recall", "nfall_recall", "f1"]:
         ax.plot(best["threshold"], best[col], marker="o", linewidth=1.4, label=col)
     ax.axvline(sel_thresh, color="black", linestyle="--", linewidth=1.2, label=f"selected (min_consec={sel_consec})")
     ax.set_xlabel("Threshold")
@@ -802,8 +821,10 @@ def metrics_for(
     pred = y_pred if y_pred is not None else (y_score >= threshold).astype(np.int32)
     cm = confusion_matrix(y_true, pred, labels=[0, 1])
     tn, fp, fn, tp = int(cm[0, 0]), int(cm[0, 1]), int(cm[1, 0]), int(cm[1, 1])
-    fall_prec  = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    nfall_prec = tn / (tn + fn) if (tn + fn) > 0 else 0.0
+    fall_prec   = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+    nfall_prec  = tn / (tn + fn) if (tn + fn) > 0 else 0.0
+    fall_recall = float(recall_score(y_true, pred, zero_division=0))
+    nfall_recall = tn / (tn + fp) if (tn + fp) > 0 else 0.0
     result = {
         "split": split,
         "threshold": threshold,
@@ -811,7 +832,9 @@ def metrics_for(
         "precision": fall_prec,
         "nfall_precision": nfall_prec,
         "min_precision": min(fall_prec, nfall_prec),
-        "recall": float(recall_score(y_true, pred, zero_division=0)),
+        "nfall_recall": nfall_recall,
+        "min_pr": min(fall_prec, nfall_prec, fall_recall, nfall_recall),
+        "recall": fall_recall,
         "f1": float(f1_score(y_true, pred, zero_division=0)),
         "auc_roc": float(roc_auc_score(y_true, y_score)) if len(np.unique(y_true)) == 2 else None,
         "pr_auc": float(average_precision_score(y_true, y_score)) if len(np.unique(y_true)) == 2 else None,
@@ -1235,9 +1258,9 @@ def main() -> None:
         metrics[f"{split_name}_video"] = v_metrics
         log(
             f"video-level {split_name}: videos={len(v_true)} "
-            f"f1={v_metrics['f1']:.4f} recall={v_metrics['recall']:.4f} "
+            f"f1={v_metrics['f1']:.4f} fall_recall={v_metrics['recall']:.4f} nfall_recall={v_metrics['nfall_recall']:.4f} "
             f"fall_prec={v_metrics['precision']:.4f} nfall_prec={v_metrics['nfall_precision']:.4f} "
-            f"min_prec={v_metrics['min_precision']:.4f} min_consecutive={min_consecutive}"
+            f"min_pr={v_metrics['min_pr']:.4f} min_consecutive={min_consecutive}"
         )
         plot_confusion_curve(v_true, v_score, threshold, output_dir,
                              prefix=f"video_{split_name}_",
@@ -1273,9 +1296,9 @@ def main() -> None:
             metrics["test_int8_video"] = q_v_metrics
             log(
                 f"video-level test_int8: videos={len(q_v_true)} "
-                f"f1={q_v_metrics['f1']:.4f} recall={q_v_metrics['recall']:.4f} "
+                f"f1={q_v_metrics['f1']:.4f} fall_recall={q_v_metrics['recall']:.4f} nfall_recall={q_v_metrics['nfall_recall']:.4f} "
                 f"fall_prec={q_v_metrics['precision']:.4f} nfall_prec={q_v_metrics['nfall_precision']:.4f} "
-                f"min_prec={q_v_metrics['min_precision']:.4f} min_consecutive={min_consecutive}"
+                f"min_pr={q_v_metrics['min_pr']:.4f} min_consecutive={min_consecutive}"
             )
         plot_confusion_curve(
             y_eval["test"][:eval_count],
@@ -1315,7 +1338,7 @@ def main() -> None:
         f"done {config.experiment_id} "
         f"val_f1={metrics['val_float']['f1']:.4f} (video={metrics['val_video']['f1']:.4f}) "
         f"test_f1={metrics['test_float']['f1']:.4f} (video={metrics['test_video']['f1']:.4f}) "
-        f"test_min_prec={metrics['test_video']['min_precision']:.4f} "
+        f"test_min_pr={metrics['test_video']['min_pr']:.4f} "
         f"threshold={threshold:.3f} min_consecutive={min_consecutive}"
     )
 

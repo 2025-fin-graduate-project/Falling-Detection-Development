@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""STedgeAI --mode host evaluation with full video-level MinP metric.
+"""STedgeAI --mode host evaluation with full video-level MinPR metric.
 
 학습 시와 동일한 평가 기준 적용:
   - test CSV → 윈도우 추출 (학습 normalization 사용)
   - stedgeai validate --mode host → per-window INT8 예측
   - threshold × min_consecutive sweep → video-level 집계
-  - MinP = min(FallPrecision, NFallPrecision)
+  - MinPR = min(FallPrecision, NonFallPrecision, FallRecall, NonFallRecall)
 
 Usage:
     # 학습된 threshold 사용 (기본)
@@ -248,15 +248,18 @@ def compute_metrics(v_true: np.ndarray, v_pred: np.ndarray) -> dict:
     tn = int(((v_true == 0) & (v_pred == 0)).sum())
     fp = int(((v_true == 0) & (v_pred == 1)).sum())
     fn = int(((v_true == 1) & (v_pred == 0)).sum())
-    fall_p  = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    nfall_p = tn / (tn + fn) if (tn + fn) > 0 else 0.0
-    recall  = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    f1      = 2 * fall_p * recall / (fall_p + recall) if (fall_p + recall) > 0 else 0.0
+    fall_p    = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+    nfall_p   = tn / (tn + fn) if (tn + fn) > 0 else 0.0
+    recall    = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    nfall_rec = tn / (tn + fp) if (tn + fp) > 0 else 0.0
+    f1        = 2 * fall_p * recall / (fall_p + recall) if (fall_p + recall) > 0 else 0.0
     return {
         "fall_precision":  round(fall_p, 6),
         "nfall_precision": round(nfall_p, 6),
         "min_precision":   round(min(fall_p, nfall_p), 6),
         "recall":          round(recall, 6),
+        "nfall_recall":    round(nfall_rec, 6),
+        "min_pr":          round(min(fall_p, nfall_p, recall, nfall_rec), 6),
         "f1":              round(f1, 6),
         "tp": tp, "tn": tn, "fp": fp, "fn": fn,
         "n_videos": int(len(v_true)),
@@ -270,16 +273,31 @@ def threshold_sweep(
     min_consecutive_values: list[int],
     min_precision: float = 0.90,
 ) -> dict:
-    """val set 기준 최적 (threshold, min_consecutive) 선택."""
+    """val set 기준 최적 (threshold, min_consecutive) 선택 — MinPR 기반."""
     best = None
+    best_fallback = None  # MinPR maximizer when no candidate meets constraint
     for thr in np.linspace(0.05, 0.95, 37):
         for mc in min_consecutive_values:
             v_true, v_pred = video_level_eval(labels, scores, groups, float(thr), mc)
             m = compute_metrics(v_true, v_pred)
-            if m["fall_precision"] >= min_precision and m["nfall_precision"] >= min_precision:
-                if best is None or m["f1"] > best["f1"] or (m["f1"] == best["f1"] and m["recall"] > best["recall"]):
-                    best = {"threshold": round(float(thr), 4), "min_consecutive": mc, **m}
-    return best or {"threshold": 0.5, "min_consecutive": 1}
+            candidate = {"threshold": round(float(thr), 4), "min_consecutive": mc, **m}
+            if m["min_pr"] >= min_precision:
+                score = (m["min_pr"], m["recall"], m["fall_precision"], m["f1"])
+                best_score = (
+                    (best["min_pr"], best["recall"], best["fall_precision"], best["f1"])
+                    if best else (-1, -1, -1, -1)
+                )
+                if score > best_score:
+                    best = candidate
+            # Track best MinPR regardless of constraint (for fallback)
+            fallback_score = (m["min_pr"], m["recall"], m["fall_precision"], m["f1"])
+            best_fallback_score = (
+                (best_fallback["min_pr"], best_fallback["recall"], best_fallback["fall_precision"], best_fallback["f1"])
+                if best_fallback else (-1, -1, -1, -1)
+            )
+            if fallback_score > best_fallback_score:
+                best_fallback = candidate
+    return best or best_fallback or {"threshold": 0.5, "min_consecutive": 1}
 
 
 # ── 메인 평가 루프 ─────────────────────────────────────────────────────────────
@@ -450,25 +468,27 @@ def evaluate_one(exp_dir: Path, reselect_threshold: bool = False, eval_stride: i
 
 
 def _print_result(name: str, r: dict) -> None:
-    minp = r.get("min_precision", 0)
-    fp   = r.get("fall_precision", 0)
-    nfp  = r.get("nfall_precision", 0)
-    rec  = r.get("recall", 0)
-    f1   = r.get("f1", 0)
-    thr  = r.get("threshold", "?")
-    mc   = r.get("min_consecutive", "?")
-    src  = r.get("threshold_source", "?")
+    min_pr = r.get("min_pr", 0)
+    minp   = r.get("min_precision", 0)
+    fp     = r.get("fall_precision", 0)
+    nfp    = r.get("nfall_precision", 0)
+    rec    = r.get("recall", 0)
+    nfrec  = r.get("nfall_recall", 0)
+    f1     = r.get("f1", 0)
+    thr    = r.get("threshold", "?")
+    mc     = r.get("min_consecutive", "?")
+    src    = r.get("threshold_source", "?")
     print(f"\n  ── {name} STedgeAI INT8 (host mode) ──")
-    print(f"  MinP={minp:.4f}  FallP={fp:.4f}  NFallP={nfp:.4f}")
-    print(f"  Recall={rec:.4f}  F1={f1:.4f}")
-    print(f"  threshold={thr:.3f}  min_consecutive={mc}  (source: {src})")
+    print(f"  MinPR={min_pr:.4f}  MinP={minp:.4f}")
+    print(f"  FallP={fp:.4f}  NFallP={nfp:.4f}  FallR={rec:.4f}  NFallR={nfrec:.4f}")
+    print(f"  F1={f1:.4f}  threshold={thr:.3f}  min_consecutive={mc}  (source: {src})")
 
 
 # ── CLI ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="STedgeAI --mode host evaluation with video-level MinP"
+        description="STedgeAI --mode host evaluation with video-level MinPR"
     )
     parser.add_argument("--exp-dir", nargs="+", required=True,
                         help="실험 디렉토리 (여러 개 가능)")
@@ -487,14 +507,16 @@ def main() -> None:
             results[exp_dir.name] = r
 
     if len(results) > 1:
-        print(f"\n{'='*60}")
-        print(f"{'ID':<10} {'MinP':>7} {'FallP':>7} {'NFallP':>8} {'Recall':>8} {'F1':>7}")
-        print("-" * 55)
+        print(f"\n{'='*70}")
+        print(f"{'ID':<10} {'MinPR':>7} {'MinP':>7} {'FallP':>7} {'NFallP':>8} {'FallR':>7} {'NFallR':>8} {'F1':>7}")
+        print("-" * 65)
         for name, r in results.items():
-            print(f"{name:<10} {r.get('min_precision',0):>7.4f} "
+            print(f"{name:<10} {r.get('min_pr',0):>7.4f} "
+                  f"{r.get('min_precision',0):>7.4f} "
                   f"{r.get('fall_precision',0):>7.4f} "
                   f"{r.get('nfall_precision',0):>8.4f} "
-                  f"{r.get('recall',0):>8.4f} "
+                  f"{r.get('recall',0):>7.4f} "
+                  f"{r.get('nfall_recall',0):>8.4f} "
                   f"{r.get('f1',0):>7.4f}")
 
 
