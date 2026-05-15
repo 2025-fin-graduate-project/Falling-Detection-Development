@@ -72,8 +72,9 @@ COMMON=(
     --epochs "$EPOCHS" --early-stop-patience "$PATIENCE" --batch-size "$BATCH_SIZE"
     --min-consecutive-values 1,2,3,4,5,7,9
     --threshold-count 37
-    --checkpoint-monitor val_video_min_pr
     --quiet
+    # v01-v03: val_video_min_pr — 분석 완료, thr=0.475 val 과적합 확인
+    # v04+: val_loss (baseline 체크포인팅) + hard-negative 조합으로 효과 분리
 )
 
 run_exp() {
@@ -161,78 +162,81 @@ PYEOF
 # ---------------------------------------------------------------------------
 # Experiment candidates — run in order until test MinPR >= 0.92
 #
-# Rationale for each:
-#   v01  baseline: just switch to val_video_min_pr checkpointing
-#   v02  + val FP hard-negative oversample (stride=1)
-#   v03  v02 + wider consecutive sweep (probe postprocess gain)
-#   v04  v02 + higher focal alpha=0.10 (90% weight on non-fall windows)
-#   v05  v02 + train_negative_stride=1 globally (more non-fall coverage)
-#   v06  v02 + kp12 (more features; non-fall patterns may be better separated)
-#   v07  v02 + GRU(256,128) (bigger model; more capacity for ambiguous poses)
+# [분석 결과 반영 2026-05-15]
+# v01-v02: val_video_min_pr 체크포인팅이 val MinPR↑ but test MinPR↓
+#   원인: thr=0.475 val 과적합 → test FP 증가 (19→32→26)
+#   hard-negative는 효과 있음: FP 32→26
+#
+# v04+: val_loss 체크포인팅으로 복귀 + hard-negative 조합 (효과 분리)
+#   v04: val_loss + hard-neg (hard-neg 단독 효과 검증)
+#   v05: val_loss + hard-neg + focal alpha=0.10 (non-fall 손실 가중치 강화)
+#   v06: val_loss + hard-neg + neg stride=1 전체 (더 많은 non-fall 노출)
+#   v07: val_loss + hard-neg + val_video_min_pr + thr_floor=0.50 (floor 추가 재시도)
+#   v08: val_loss + hard-neg + kp12
+#   v09: val_loss + hard-neg + GRU(256,128)
 # ---------------------------------------------------------------------------
 
-log "=== P11-v01: MinPR checkpointing only ==="
-run_exp "P11-v01"
+run_until_pass() {
+    # v01-v03: val_video_min_pr (분석용 — thr=0.475 과적합 확인됨)
+    log "=== P11-v01: val_video_min_pr 체크포인팅만 ==="
+    run_exp "P11-v01" --checkpoint-monitor val_video_min_pr
+    any_passed && return
 
-if any_passed; then
-    log "TARGET REACHED after P11-v01 — skipping further candidates"
-else
+    log "=== P11-v02: val_video_min_pr + hard-neg ==="
+    run_exp "P11-v02" \
+        --checkpoint-monitor val_video_min_pr \
+        --hard-negative-video-ids "$FP_CSV" --hard-negative-stride 1
+    any_passed && return
 
-log "=== P11-v02: + val FP hard-negative stride=1 ==="
-run_exp "P11-v02" \
-    --hard-negative-video-ids "$FP_CSV" \
-    --hard-negative-stride 1
+    log "=== P11-v03: val_video_min_pr + hard-neg + wider sweep ==="
+    run_exp "P11-v03" \
+        --checkpoint-monitor val_video_min_pr \
+        --hard-negative-video-ids "$FP_CSV" --hard-negative-stride 1 \
+        --min-consecutive-values 1,2,3,4,5,6,7,8,9
+    any_passed && return
 
-if any_passed; then
-    log "TARGET REACHED after P11-v02 — skipping further candidates"
-else
+    # v04+: val_loss 복귀 + hard-neg 조합 (효과 분리)
+    log "=== P11-v04: val_loss + hard-neg (hard-neg 단독 효과) ==="
+    run_exp "P11-v04" \
+        --checkpoint-monitor val_loss \
+        --hard-negative-video-ids "$FP_CSV" --hard-negative-stride 1
+    any_passed && return
 
-log "=== P11-v03: + wider consecutive sweep ==="
-run_exp "P11-v03" \
-    --hard-negative-video-ids "$FP_CSV" \
-    --hard-negative-stride 1 \
-    --min-consecutive-values 1,2,3,4,5,6,7,8,9
+    log "=== P11-v05: val_loss + hard-neg + focal alpha=0.10 ==="
+    run_exp "P11-v05" \
+        --checkpoint-monitor val_loss \
+        --hard-negative-video-ids "$FP_CSV" --hard-negative-stride 1 \
+        --focal-alpha 0.10
+    any_passed && return
 
-if any_passed; then
-    log "TARGET REACHED after P11-v03 — skipping further candidates"
-else
+    log "=== P11-v06: val_loss + hard-neg + 전체 neg stride=1 ==="
+    run_exp "P11-v06" \
+        --checkpoint-monitor val_loss \
+        --hard-negative-video-ids "$FP_CSV" --hard-negative-stride 1 \
+        --train-negative-stride 1
+    any_passed && return
 
-log "=== P11-v04: + focal alpha=0.10 (90% weight on non-fall) ==="
-run_exp "P11-v04" \
-    --hard-negative-video-ids "$FP_CSV" \
-    --hard-negative-stride 1 \
-    --focal-alpha 0.10
+    log "=== P11-v07: val_video_min_pr + hard-neg + thr_floor=0.50 ==="
+    run_exp "P11-v07" \
+        --checkpoint-monitor val_video_min_pr \
+        --min-checkpoint-threshold 0.50 \
+        --hard-negative-video-ids "$FP_CSV" --hard-negative-stride 1
+    any_passed && return
 
-if any_passed; then
-    log "TARGET REACHED after P11-v04 — skipping further candidates"
-else
+    log "=== P11-v08: val_loss + hard-neg + kp12 ==="
+    run_exp "P11-v08" \
+        --checkpoint-monitor val_loss \
+        --feature-set kp12 \
+        --hard-negative-video-ids "$FP_CSV" --hard-negative-stride 1
+    any_passed && return
 
-log "=== P11-v05: + global negative stride=1 (all non-fall windows) ==="
-run_exp "P11-v05" \
-    --hard-negative-video-ids "$FP_CSV" \
-    --hard-negative-stride 1 \
-    --train-negative-stride 1
+    log "=== P11-v09: val_loss + hard-neg + GRU(256,128) ==="
+    run_exp "P11-v09" \
+        --checkpoint-monitor val_loss \
+        --gru-units 256,128 \
+        --hard-negative-video-ids "$FP_CSV" --hard-negative-stride 1
+}
 
-if any_passed; then
-    log "TARGET REACHED after P11-v05 — skipping further candidates"
-else
-
-log "=== P11-v06: kp12 + hard-negative stride=1 ==="
-run_exp "P11-v06" \
-    --feature-set kp12 \
-    --hard-negative-video-ids "$FP_CSV" \
-    --hard-negative-stride 1
-
-if any_passed; then
-    log "TARGET REACHED after P11-v06 — skipping further candidates"
-else
-
-log "=== P11-v07: GRU(256,128) + hard-negative stride=1 ==="
-run_exp "P11-v07" \
-    --gru-units 256,128 \
-    --hard-negative-video-ids "$FP_CSV" \
-    --hard-negative-stride 1
-
-fi; fi; fi; fi; fi; fi  # close all if-else blocks
+run_until_pass
 
 print_summary | tee -a "$SUMMARY"

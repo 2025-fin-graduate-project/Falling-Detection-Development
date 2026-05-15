@@ -121,6 +121,7 @@ class BaselineConfig:
     max_windows_per_split: int | None = None
     quiet: bool = False
     checkpoint_monitor: str = "val_loss"
+    min_checkpoint_threshold: float = 0.0
     hard_negative_video_ids: str = ""
     hard_negative_stride: int = 1
 
@@ -195,6 +196,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--noise-std", type=float, help="Gaussian noise std for training augmentation (0 = off).")
     parser.add_argument("--checkpoint-monitor", choices=["val_loss", "val_video_min_pr"],
                         help="Early-stop / best-weights monitor. Use val_video_min_pr for MinPR-optimised checkpointing.")
+    parser.add_argument("--min-checkpoint-threshold", type=float,
+                        help="When checkpoint-monitor=val_video_min_pr, skip thresholds below this floor (e.g. 0.50).")
     parser.add_argument("--hard-negative-video-ids",
                         help="CSV file with a 'video_id' column. Training windows from these non-fall videos use --hard-negative-stride.")
     parser.add_argument("--hard-negative-stride", type=int,
@@ -286,6 +289,8 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         payload["min_consecutive_values"] = parse_csv_ints(args.min_consecutive_values)
     if args.checkpoint_monitor is not None:
         payload["checkpoint_monitor"] = args.checkpoint_monitor
+    if args.min_checkpoint_threshold is not None:
+        payload["min_checkpoint_threshold"] = args.min_checkpoint_threshold
     if args.hard_negative_video_ids is not None:
         payload["hard_negative_video_ids"] = args.hard_negative_video_ids
     if args.hard_negative_stride is not None:
@@ -767,7 +772,8 @@ class ValVideoMinPRCallback(tf.keras.callbacks.Callback):
 
         # Quick sweep over threshold × min_consecutive
         best_min_pr = 0.0
-        thresholds = np.linspace(0.05, 0.95, self.config.threshold_count)
+        thr_floor = self.config.min_checkpoint_threshold
+        thresholds = [t for t in np.linspace(0.05, 0.95, self.config.threshold_count) if t >= thr_floor - 1e-6]
         for thr in thresholds:
             for mc in self.config.min_consecutive_values:
                 v_true, _, v_pred = video_level_eval(self.y_eval_val, scores, self.groups_val, thr, mc)
