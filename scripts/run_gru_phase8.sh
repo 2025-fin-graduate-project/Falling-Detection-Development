@@ -1,68 +1,42 @@
 #!/usr/bin/env bash
-# Phase 8 — Flash 예산 내 최적 모델 확정 + STedgeAI 전체 파이프라인 검증
+# Phase 8 — Conv 경량화 실험 + STedgeAI 파이프라인 검증
 #
-# 목표: Flash < 512 KiB + MinP ≥ 0.93 (float) + 네이티브 Keras 3.7 호환
+# 목표: MinP ≥ 0.93 유지하면서 Conv 스택 줄여 MACC/크기 감소
+#   (Flash는 64 MB NOR Flash에 여유 충분 — 제약 없음)
 #
 # 핵심 발견 (Phase 7):
-#   - GRU(128,64) + 2×Conv64 + kp7 → Flash ≈ 537 KiB (25 KiB 초과)
-#   - Flash는 window 크기(30f/40f)와 무관 (GRU weights는 seq_len 독립)
-#   - Flash 절감 전략: Conv 레이어 수 감소 or 필터 수 감소
+#   - GRU(128,64) + 2×Conv64 + kp7:  Flash=537 KiB, MACC=4.0M, MinP=0.934
+#   - GRU(128,64) + 2×Conv64 + kp12: Flash=559 KiB, MACC=4.2M, MinP=0.939
+#   - Conv 축소 전략: 레이어 수 감소 or 필터 수 감소
 #
 # 실험 설계:
-#   P8-v01: 1×Conv64 + kp7  → Flash ≈ 459 KiB ✓  (Conv 1층 제거)
-#   P8-v02: 2×Conv32 + kp7  → Flash ≈ 415 KiB ✓  (필터 64→32)
-#   P8-v03: 1×Conv64 + minimal → Flash ≈ 452 KiB ✓  (최소 피처 + 단순 Conv)
+#   P8-v01: 1×Conv64 + kp7     (Conv 1층 제거, MACC ↓)
+#   P8-v02: 2×Conv32 + kp7     (필터 64→32, MACC ↓)
+#   P8-v03: 1×Conv64 + minimal (최소 피처, 추론 최경량)
 #
-# Keras 버전 전략:
-#   TF 2.18.0 (= STedgeAI 4.0 내부 Keras 3.7) 전용 venv 사용
-#   → quantization_config 필드 생성 안 됨 → stripping 없이 직접 STedgeAI 로드
+# Keras 호환:
+#   main venv (TF 2.21/Keras 3.13) 사용 → export_stedgeai.py가 quantization_config 자동 strip
 #
 # STedgeAI 파이프라인:
-#   analyze: Flash/RAM 크기 확인
-#   validate: --mode host로 INT8 MinP 측정 (실제 양자화 오차 포함)
+#   analyze: Flash/RAM/MACC 크기 확인
+#   validate: eval_stedgeai_host.py --mode host (stm32h7)로 INT8 MinP 측정
 
 set -uo pipefail
 
 OUTROOT="results/gru_phase8_flash"
 SUMMARY="$OUTROOT/summary.log"
-TF218_VENV=".venv-tf218"
 STEDGE_PY="/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/python"
 STEDGEAI="/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/stedgeai"
 mkdir -p "$OUTROOT"
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$SUMMARY"; }
 
-# ── TF 2.18 venv 준비 ─────────────────────────────────────────────────────
-setup_tf218_venv() {
-    if [[ -f "$TF218_VENV/bin/python" ]]; then
-        local ver
-        ver=$("$TF218_VENV/bin/python" -c "import tensorflow as tf; print(tf.__version__)" 2>/dev/null || echo "")
-        if [[ "$ver" == "2.18."* ]]; then
-            log "TF 2.18 venv OK (TF=$ver)"
-            return 0
-        fi
-    fi
-    log "Creating TF 2.18 venv at $TF218_VENV ..."
-    uv venv "$TF218_VENV" --python 3.12 2>&1 | tail -3
-    "$TF218_VENV/bin/pip" install --quiet \
-        "tensorflow==2.18.0" \
-        "pandas>=2.0" "scikit-learn" "scipy" "seaborn" "matplotlib" \
-        "nvidia-cudnn-cu12>=9.0" "nvidia-cublas-cu12>=12.0" \
-        "nvidia-cuda-runtime-cu12>=12.0" "nvidia-cufft-cu12>=11.0" \
-        2>&1 | tail -5
-    local ver
-    ver=$("$TF218_VENV/bin/python" -c "import tensorflow as tf; import keras; print(f'TF={tf.__version__} Keras={keras.__version__}')" 2>/dev/null || echo "FAIL")
-    log "TF 2.18 venv ready: $ver"
-}
-
-# TF218 venv LD_LIBRARY_PATH 설정
-set_tf218_ldpath() {
-    local site
-    site=$("$TF218_VENV/bin/python" -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
-    if [[ -n "$site" ]]; then
-        export LD_LIBRARY_PATH="${site}/nvidia/cudnn/lib:${site}/nvidia/cublas/lib:${site}/nvidia/cuda_runtime/lib:/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-    fi
-}
+# main venv GPU LD_LIBRARY_PATH — all nvidia subdirs included
+_SITE=$(uv run python3 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
+if [[ -n "$_SITE" ]]; then
+    _NVIDIA_LIBS=$(find "${_SITE}/nvidia" -maxdepth 2 -name "lib" -type d 2>/dev/null | tr '\n' ':')
+    export LD_LIBRARY_PATH="${_NVIDIA_LIBS}/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+fi
 
 # ── 학습 함수 ──────────────────────────────────────────────────────────────
 run_exp() {
@@ -72,7 +46,7 @@ run_exp() {
         log "SKIP  $id — already complete"; return 0
     fi
     log "START $id"
-    if "$TF218_VENV/bin/python" scripts/train_baseline.py \
+    if uv run python scripts/train_baseline.py \
             --experiment-id "$id" \
             --output-root   "$OUTROOT" \
             --quiet \
@@ -101,8 +75,6 @@ sys.exit(0 if m.get('stedgeai',{}).get('analyze',{}).get('analyze_ok') else 1)
     fi
 
     log "STEDGEAI $id"
-    # Phase 8 모델은 TF 2.18/Keras 3.7로 학습 → stripping 불필요하지만
-    # export_stedgeai.py가 안전하게 처리하므로 그대로 사용
     "$STEDGE_PY" scripts/util/export_stedgeai.py \
         --exp-dir "$exp_dir" \
         --target stm32n6 \
@@ -112,10 +84,7 @@ sys.exit(0 if m.get('stedgeai',{}).get('analyze',{}).get('analyze_ok') else 1)
 
 # ─────────────────────────────────────────────────────────────────────────────
 
-log "=== Phase 8: Flash-optimized GRU (TF 2.18 / Keras 3.7) ==="
-
-setup_tf218_venv
-set_tf218_ldpath
+log "=== Phase 8: Conv-optimized GRU (uv/TF 2.21) ==="
 
 # 공통 베이스 (focal, filtered, GRU(128,64), 30f)
 BASE=(
@@ -191,7 +160,7 @@ def row(exp: Path, cfg: str):
 
 hdr = f"{'ID':<8} {'Config':<22} {'Float MinP':<9} {'INT8 MinP':<8} {'Flash':>8}       {'RAM':>6}   {'OK?'}"
 sep = "-" * 72
-print(f"\n[Phase 8 — Flash-optimized GRU(128,64) TF2.18/Keras3.7]")
+print(f"\n[Phase 8 — Conv-optimized GRU(128,64)]")
 print(hdr); print(sep)
 
 root = Path("results/gru_phase8_flash")

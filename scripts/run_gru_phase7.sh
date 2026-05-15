@@ -26,7 +26,8 @@ set -uo pipefail
 
 _SITE=$(uv run python3 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
 if [[ -n "$_SITE" ]]; then
-    export LD_LIBRARY_PATH="${_SITE}/nvidia/cudnn/lib:${_SITE}/nvidia/cufft/lib:${_SITE}/nvidia/cusolver/lib:/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    _NVIDIA_LIBS=$(find "${_SITE}/nvidia" -maxdepth 2 -name "lib" -type d 2>/dev/null | tr '\n' ':')
+    export LD_LIBRARY_PATH="${_NVIDIA_LIBS}/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 fi
 
 OUTROOT="results/gru_phase7_quant"
