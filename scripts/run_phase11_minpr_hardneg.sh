@@ -102,29 +102,7 @@ print(f\"{d['metrics']['test_video']['min_pr']:.4f}\")
     return "$rc"
 }
 
-run_stedgeai() {
-    local exp_dir="$1"
-    local id; id=$(basename "$exp_dir")
-    [[ -f "$exp_dir/metrics.json" ]] || return
-    local min_pr
-    min_pr=$(python3 -c "
-import json
-d = json.load(open('$exp_dir/metrics.json'))
-print(d['metrics']['test_video']['min_pr'])
-" 2>/dev/null || echo 0)
-    if python3 -c "import sys; sys.exit(0 if float('$min_pr') >= $TARGET_MIN_PR else 1)"; then
-        log "STEDGEAI analyze $id (min_pr=$min_pr >= $TARGET_MIN_PR)"
-        "$STEDGE_PY" scripts/util/export_stedgeai.py \
-            --exp-dir "$exp_dir" --target stm32n6 \
-            2>&1 | tee -a "$SUMMARY" || log "STEDGEAI analyze WARN $id"
-        log "STEDGEAI host eval $id"
-        uv run python scripts/util/eval_stedgeai_host.py \
-            --exp-dir "$exp_dir" --reselect-threshold --eval-stride "$EVAL_STRIDE" \
-            2>&1 | tee -a "$SUMMARY" || log "STEDGEAI host WARN $id"
-    else
-        log "SKIP  STedgeAI for $id (min_pr=$min_pr < $TARGET_MIN_PR)"
-    fi
-}
+# STedgeAI skipped — focusing on float performance first
 
 # ---------------------------------------------------------------------------
 # Helper: check if any experiment in OUTROOT has already achieved target
@@ -256,13 +234,5 @@ run_exp "P11-v07" \
     --hard-negative-stride 1
 
 fi; fi; fi; fi; fi; fi  # close all if-else blocks
-
-# ---------------------------------------------------------------------------
-# STedgeAI deploy checks for any passing candidates
-# ---------------------------------------------------------------------------
-log "=== Phase 11: STedgeAI deploy checks ==="
-for exp_dir in "$OUTROOT"/P11-v*/; do
-    run_stedgeai "$exp_dir"
-done
 
 print_summary | tee -a "$SUMMARY"
