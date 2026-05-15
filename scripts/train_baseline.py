@@ -120,6 +120,9 @@ class BaselineConfig:
     max_rows: int | None = None
     max_windows_per_split: int | None = None
     quiet: bool = False
+    checkpoint_monitor: str = "val_loss"
+    hard_negative_video_ids: str = ""
+    hard_negative_stride: int = 1
 
 
 def load_config(path: Path | None) -> dict[str, Any]:
@@ -190,6 +193,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--focal-alpha", type=float)
     parser.add_argument("--focal-gamma", type=float)
     parser.add_argument("--noise-std", type=float, help="Gaussian noise std for training augmentation (0 = off).")
+    parser.add_argument("--checkpoint-monitor", choices=["val_loss", "val_video_min_pr"],
+                        help="Early-stop / best-weights monitor. Use val_video_min_pr for MinPR-optimised checkpointing.")
+    parser.add_argument("--hard-negative-video-ids",
+                        help="CSV file with a 'video_id' column. Training windows from these non-fall videos use --hard-negative-stride.")
+    parser.add_argument("--hard-negative-stride", type=int,
+                        help="Negative window stride for hard-negative videos (default: 1 = all windows).")
     return parser.parse_args()
 
 
@@ -275,6 +284,12 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         payload["noise_std"] = args.noise_std
     if args.min_consecutive_values is not None:
         payload["min_consecutive_values"] = parse_csv_ints(args.min_consecutive_values)
+    if args.checkpoint_monitor is not None:
+        payload["checkpoint_monitor"] = args.checkpoint_monitor
+    if args.hard_negative_video_ids is not None:
+        payload["hard_negative_video_ids"] = args.hard_negative_video_ids
+    if args.hard_negative_stride is not None:
+        payload["hard_negative_stride"] = args.hard_negative_stride
 
     required = ["experiment_id", "model_type", "preprocessing"]
     if payload.get("input_mode", "split_csv") == "source_csv":
@@ -439,6 +454,7 @@ def build_windows_for_split(
     config: BaselineConfig,
     *,
     training: bool,
+    hard_negative_ids: set[str] | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, pd.DataFrame]:
     split_df = df[df["video_id"].isin(split_ids)].sort_values(["video_id", "time_sec", "frame"])
     windows: list[np.ndarray] = []
@@ -458,13 +474,17 @@ def build_windows_for_split(
         frame_labels = segment["label"].to_numpy(dtype=np.int32)
         frame_eval_labels = segment["eval_label"].to_numpy(dtype=np.int32)
         direction = str(segment["direction"].iloc[0])
+        is_hard_neg = training and hard_negative_ids is not None and str(video_id) in hard_negative_ids
         for start_idx in range(0, len(segment) - config.target_steps + 1):
             y = window_label(frame_labels[start_idx : start_idx + config.target_steps], config.label_mode)
             y_eval = window_label(frame_eval_labels[start_idx : start_idx + config.target_steps], config.label_mode)
             stride = config.eval_stride
             if training:
-                # Use binary eval label for stride so positive stride applies to any fall-related class
-                stride = config.train_positive_stride if y_eval == 1 else config.train_negative_stride
+                if is_hard_neg and y_eval == 0:
+                    stride = config.hard_negative_stride
+                else:
+                    # Use binary eval label for stride so positive stride applies to any fall-related class
+                    stride = config.train_positive_stride if y_eval == 1 else config.train_negative_stride
             if start_idx % stride != 0:
                 continue
             chunk = values[start_idx : start_idx + config.target_steps]
@@ -527,6 +547,17 @@ def prepare_data(
         split_dir = resolve_path(project_root, data_root, config.split_dir)
         split_ids = load_split_video_ids(split_dir)
         split_frames = {split: df[df["video_id"].isin(split_ids[split])] for split in ["train", "val", "test"]}
+
+    hard_negative_ids: set[str] | None = None
+    if config.hard_negative_video_ids:
+        hn_path = resolve_path(project_root, None, config.hard_negative_video_ids)
+        if hn_path.exists():
+            hn_df = pd.read_csv(hn_path, usecols=["video_id"])
+            hard_negative_ids = set(hn_df["video_id"].astype(str).tolist())
+            log(f"hard_negative_ids loaded: {len(hard_negative_ids)} videos from {hn_path}")
+        else:
+            log(f"WARNING: hard_negative_video_ids path not found: {hn_path}")
+
     built = {}
     for split in ["train", "val", "test"]:
         built[split] = build_windows_for_split(
@@ -535,6 +566,7 @@ def prepare_data(
             cols,
             config,
             training=(split == "train"),
+            hard_negative_ids=hard_negative_ids if split == "train" else None,
         )
         # built[split]: (x, y_train, y_eval, groups, directions, dist_df)
         log(
@@ -704,16 +736,104 @@ def build_model(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.kera
     return model
 
 
-def train_model(model: tf.keras.Model, x: dict[str, np.ndarray], y: dict[str, np.ndarray], config: BaselineConfig) -> tf.keras.callbacks.History:
-    callbacks = [
-        tf.keras.callbacks.EarlyStopping(
-            monitor="val_loss",
-            mode="min",
-            patience=config.early_stop_patience,
-            restore_best_weights=True,
-        ),
-        tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=3, min_lr=1e-5),
-    ]
+class ValVideoMinPRCallback(tf.keras.callbacks.Callback):
+    """Evaluates video-level MinPR on val each epoch and checkpoints best weights."""
+
+    def __init__(
+        self,
+        x_val: np.ndarray,
+        y_eval_val: np.ndarray,
+        groups_val: np.ndarray,
+        config: BaselineConfig,
+        patience: int,
+        batch_size: int,
+    ) -> None:
+        super().__init__()
+        self.x_val = x_val
+        self.y_eval_val = y_eval_val
+        self.groups_val = groups_val
+        self.config = config
+        self.patience = patience
+        self.batch_size = batch_size
+        self.best_min_pr: float = -1.0
+        self.best_weights: list[Any] | None = None
+        self.wait: int = 0
+        self.stopped_epoch: int = 0
+
+    def on_epoch_end(self, epoch: int, logs: dict[str, Any] | None = None) -> None:
+        pos_cols = np.array(self.config.positive_labels)
+        raw = self.model.predict(self.x_val, batch_size=self.batch_size, verbose=0)
+        scores = raw[:, pos_cols].sum(axis=1)
+
+        # Quick sweep over threshold × min_consecutive
+        best_min_pr = 0.0
+        thresholds = np.linspace(0.05, 0.95, self.config.threshold_count)
+        for thr in thresholds:
+            for mc in self.config.min_consecutive_values:
+                v_true, _, v_pred = video_level_eval(self.y_eval_val, scores, self.groups_val, thr, mc)
+                cm = confusion_matrix(v_true, v_pred, labels=[0, 1])
+                tn, fp, fn, tp = int(cm[0, 0]), int(cm[0, 1]), int(cm[1, 0]), int(cm[1, 1])
+                fp_ = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+                nfp = tn / (tn + fn) if (tn + fn) > 0 else 0.0
+                rec = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+                nfr = tn / (tn + fp) if (tn + fp) > 0 else 0.0
+                min_pr = min(fp_, nfp, rec, nfr)
+                if min_pr > best_min_pr:
+                    best_min_pr = min_pr
+
+        logs = logs or {}
+        logs["val_video_min_pr"] = float(best_min_pr)
+
+        if best_min_pr > self.best_min_pr:
+            self.best_min_pr = best_min_pr
+            self.best_weights = self.model.get_weights()
+            self.wait = 0
+            if not self.config.quiet:
+                log(f"epoch {epoch + 1}: val_video_min_pr improved to {best_min_pr:.4f} — saving weights")
+        else:
+            self.wait += 1
+            if not self.config.quiet:
+                log(f"epoch {epoch + 1}: val_video_min_pr={best_min_pr:.4f} (best={self.best_min_pr:.4f}, wait={self.wait}/{self.patience})")
+            if self.wait >= self.patience:
+                self.stopped_epoch = epoch
+                self.model.stop_training = True
+
+    def on_train_end(self, logs: dict[str, Any] | None = None) -> None:
+        if self.best_weights is not None:
+            self.model.set_weights(self.best_weights)
+            log(f"ValVideoMinPR: restored best weights (val_video_min_pr={self.best_min_pr:.4f})")
+
+
+def train_model(
+    model: tf.keras.Model,
+    x: dict[str, np.ndarray],
+    y: dict[str, np.ndarray],
+    y_eval: dict[str, np.ndarray],
+    groups: dict[str, np.ndarray],
+    config: BaselineConfig,
+) -> tf.keras.callbacks.History:
+    if config.checkpoint_monitor == "val_video_min_pr":
+        callbacks: list[Any] = [
+            ValVideoMinPRCallback(
+                x_val=x["val"],
+                y_eval_val=y_eval["val"],
+                groups_val=groups["val"],
+                config=config,
+                patience=config.early_stop_patience,
+                batch_size=config.batch_size,
+            ),
+            tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=3, min_lr=1e-5),
+        ]
+    else:
+        callbacks = [
+            tf.keras.callbacks.EarlyStopping(
+                monitor="val_loss",
+                mode="min",
+                patience=config.early_stop_patience,
+                restore_best_weights=True,
+            ),
+            tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=3, min_lr=1e-5),
+        ]
     if not config.quiet:
         callbacks.append(
             tf.keras.callbacks.LambdaCallback(
@@ -1215,7 +1335,7 @@ def main() -> None:
     model = build_model(config, (config.target_steps, len(feature_cols)))
     if not config.quiet:
         model.summary(print_fn=lambda line: log(f"model {line}"))
-    history = train_model(model, x, y, config)
+    history = train_model(model, x, y, y_eval, groups, config)
     model.save(output_dir / "model.keras")
     plot_history(history, output_dir / "training_curve.png")
 
