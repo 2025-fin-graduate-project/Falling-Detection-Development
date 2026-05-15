@@ -29,33 +29,57 @@ Fall detection model targeting **STM32N6** deployment.
 
 ## STM32N6 Deployment
 
-**Target**: STM32N6 Cortex-M55 CPU; STedgeAI imports `.keras` → channel-wise INT8 PTQ → C code
-- GRU and Conv1D natively supported; bidirectional GRU is **incompatible** (requires future frames)
-- Stateless training → stateful inference: 학습은 window(30~40f) 단위, 온디바이스는 1-step stateful (매 프레임마다 GRU 1스텝 실행, hidden state 유지)
-- 낙상 알람 시 `network_reset()` 호출 → hidden state 초기화
-- I/O: float32 인터페이스 (STedgeAI가 내부적으로 INT8 추론 후 dequant)
+**Target**: STM32N6570-DK / NUCLEO-N657X0-Q, Cortex-M55 CPU
 
-**실제 Flash 레이아웃 (STM32N6570-DK, xSPI2 NOR 64 MB)**:
+### 추론 구조
+- MoveNet (NPU) → keypoints → GRU (CPU, 1-step stateful) → fall score
+- 학습: window(30~40f) 단위 stateless / 온디바이스: 매 프레임 1-step, hidden state 유지
+- 낙상 알람 시 hidden state 초기화 (`network_reset()`)
+- Bidirectional GRU 불가 — 미래 프레임 필요, stateful 스트리밍 불가
+
+### 포팅 경로 (목표)
+```
+model.keras  →  STedgeAI generate  →  C code + .bin weights  →  flash 0x70680000
+```
+- **직접 경로**: `.keras` → STedgeAI (TFLite 경유 불필요)
+- STedgeAI channel-wise INT8 PTQ — TFLite per-tensor보다 정확도 손실 적음
+- `reexport_tflite.py`는 PC에서 window-level 정확도 추정 전용으로만 유지
+
+### I/O 타입 전략
+- **기본**: float32 I/O (MoveNet keypoint 출력이 float32이므로 자연스러운 연결)
+- **병목 시**: INT8 I/O로 전환 고려 (dequant overhead 실측 후 결정)
+- 온디바이스 성능 평가 후 타협점 결정 — 현재 v26은 평가 미실시
+
+### Flash 레이아웃 (xSPI2 NOR 64 MB)
 ```
 0x70000000  FSBL
 0x70100000  Application code
-0x70380000  MoveNet 256×256 weights (2.64 MB)
-0x70680000  GRU/TCN weights  ← 여기서 시작, 여유 ~60 MB
+0x70380000  MoveNet 256×256 (2.64 MB)
+0x70680000  GRU weights  ← 여유 ~60 MB, Flash 제약 없음
 ```
-Flash 예산 제약은 사실상 없음 — GRU(128,64) 537 KiB는 전혀 문제 없음.
 
-**실제 제약 = 추론 속도 + MinP 성능**
-- GRU는 CPU(Cortex-M55) 추론 — stateful 1-step, 매 카메라 프레임마다 실행
-- 활성화 버퍼 (RAM): GRU(64,32) 기준 2.8 KiB, GRU(128,64) 기준 ~40 KiB (cpuRAM2 1 MB 내 여유)
+### 현재 배포 모델 (v26, 미평가)
+| 항목 | 값 |
+|---|---|
+| 모델 | `gru_v26_int8.tflite` → GRU(64,32) stateful |
+| 포팅 경로 | keras → TFLite INT8 → STedgeAI (구 경로) |
+| 활성화 버퍼 | 2,816 B |
+| MACC/frame | 37,378 |
+| 임계값 | score ≥ 0.65, 인물 미감지 45f → reset |
+| 온디바이스 성능 | **미평가** — 동작 확인만 됨 |
 
-**Known STedgeAI sizes (stm32n6 analyze 결과)**:
-| Config | Flash (KiB) | Activation (KiB) | 비고 |
-|---|---|---|---|
-| GRU(128,64) kp7 40f | 537 | ~40 | P5-v02 실측 |
-| GRU(128,64) kp12 40f | 559 | ~40 | Q7-v01 실측 |
-| GRU(64,32) — v26 | ~150 | 2.8 | 현재 배포 모델 |
+### 다음 포팅 대상 (Phase 7/8 완료 후)
+최적 모델(GRU(128,64), MinP ≥ 0.93)을 `.keras` → STedgeAI 직접 경로로 포팅.
+`Model/generate-gru-model_STM32N6570-DK.sh` 업데이트 후 온디바이스 성능 실측.
 
-STedgeAI analyze results written to `metrics.json["stedgeai"]["analyze"]` (weights_kib, activations_kib, analyze_ok).
+**Known STedgeAI sizes (stm32n6 analyze)**:
+| Config | Flash (KiB) | Activation (KiB) |
+|---|---|---|
+| GRU(128,64) kp7 | 537 | ~40 |
+| GRU(128,64) kp12 | 559 | ~40 |
+| GRU(64,32) — v26 | ~150 | 2.8 |
+
+STedgeAI analyze → `metrics.json["stedgeai"]["analyze"]` (weights_kib, activations_kib, analyze_ok).
 
 ---
 
