@@ -148,6 +148,7 @@ class BaselineConfig:
     checkpoint_monitor: str = "val_loss"
     min_checkpoint_threshold: float = 0.0
     event_tolerance_windows: int = 2
+    threshold_eval_level: str = "video"
     hard_negative_video_ids: str = ""
     hard_negative_stride: int = 1
 
@@ -230,6 +231,8 @@ def parse_args() -> argparse.Namespace:
                         help="When checkpoint-monitor=val_video_min_pr, skip thresholds below this floor (e.g. 0.50).")
     parser.add_argument("--event-tolerance-windows", type=int,
                         help="Loose event-level success tolerance around true positive-label windows.")
+    parser.add_argument("--threshold-eval-level", choices=["video", "event"],
+                        help="Validation level used for threshold/min-consecutive selection.")
     parser.add_argument("--hard-negative-video-ids",
                         help="CSV file with a 'video_id' column. Training windows from these non-fall videos use --hard-negative-stride.")
     parser.add_argument("--hard-negative-stride", type=int,
@@ -328,6 +331,8 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         payload["min_checkpoint_threshold"] = args.min_checkpoint_threshold
     if args.event_tolerance_windows is not None:
         payload["event_tolerance_windows"] = args.event_tolerance_windows
+    if args.threshold_eval_level is not None:
+        payload["threshold_eval_level"] = args.threshold_eval_level
     if args.hard_negative_video_ids is not None:
         payload["hard_negative_video_ids"] = args.hard_negative_video_ids
     if args.hard_negative_stride is not None:
@@ -967,11 +972,21 @@ def select_threshold(
     groups: np.ndarray,
     config: BaselineConfig,
 ) -> dict[str, Any]:
-    """2D sweep over (threshold × min_consecutive) evaluated at video level."""
+    """2D sweep over (threshold × min_consecutive) evaluated at the selected video aggregation level."""
     rows = []
     for threshold in np.linspace(0.05, 0.95, config.threshold_count):
         for min_consec in config.min_consecutive_values:
-            v_true, _, v_pred = video_level_eval(y_true, y_score, groups, threshold, min_consec)
+            if config.threshold_eval_level == "event":
+                v_true, _, v_pred = event_level_eval(
+                    y_true,
+                    y_score,
+                    groups,
+                    threshold,
+                    min_consec,
+                    config.event_tolerance_windows,
+                )
+            else:
+                v_true, _, v_pred = video_level_eval(y_true, y_score, groups, threshold, min_consec)
             cm = confusion_matrix(v_true, v_pred, labels=[0, 1])
             tn, fp, fn, tp = int(cm[0, 0]), int(cm[0, 1]), int(cm[1, 0]), int(cm[1, 1])
             fall_prec   = tp / (tp + fp) if (tp + fp) > 0 else 0.0
@@ -983,6 +998,7 @@ def select_threshold(
             rows.append({
                 "threshold": float(threshold),
                 "min_consecutive": int(min_consec),
+                "eval_level": config.threshold_eval_level,
                 "precision": fall_prec,
                 "nfall_precision": nfall_prec,
                 "recall": rec,
@@ -1008,6 +1024,7 @@ def select_threshold(
     return {
         "threshold": float(chosen["threshold"]),
         "min_consecutive": int(chosen["min_consecutive"]),
+        "eval_level": config.threshold_eval_level,
         "sweep": rows,
     }
 
@@ -1030,7 +1047,8 @@ def save_threshold_sweep(threshold_payload: dict[str, Any], output_dir: Path) ->
     ax.set_xlabel("Threshold")
     ax.set_ylabel("Score")
     ax.set_ylim(0.0, 1.0)
-    ax.set_title("Validation threshold sweep (video-level, best min_consecutive per threshold)")
+    eval_level = str(threshold_payload.get("eval_level", "video"))
+    ax.set_title(f"Validation threshold sweep ({eval_level}-level, best min_consecutive per threshold)")
     ax.grid(alpha=0.3)
     ax.legend()
     fig.tight_layout()

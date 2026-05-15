@@ -14,6 +14,7 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import math
 from pathlib import Path
 
@@ -207,9 +208,14 @@ def process_split(src: Path, dst: Path) -> None:
 
 
 def main() -> None:
-    root    = Path(__file__).resolve().parents[2] / "dataset"
-    src_dir = root / "splits_v2"
-    dst_dir = root / "splits_v2_filtered"
+    parser = argparse.ArgumentParser(description="Apply Pipeline D filtering to split CSV files.")
+    root = Path(__file__).resolve().parents[2] / "dataset"
+    parser.add_argument("--src-dir", type=Path, default=root / "splits_v2")
+    parser.add_argument("--dst-dir", type=Path, default=root / "splits_v2_filtered")
+    args = parser.parse_args()
+
+    src_dir = args.src_dir
+    dst_dir = args.dst_dir
 
     print(f"Source : {src_dir}")
     print(f"Output : {dst_dir}")
