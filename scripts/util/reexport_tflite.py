@@ -40,7 +40,9 @@ def reexport(exp_dir: Path, representative_samples: int = 256) -> dict:
         return {"status": "skip", "reason": "model.keras not found"}
 
     print(f"  Loading {keras_path.name} ...", flush=True)
-    model = tf.keras.models.load_model(str(keras_path))
+    # compile=False: skips optimizer/loss deserialization (e.g. SparseFocalLoss)
+    # — safe because we only need the model graph for TFLite conversion.
+    model = tf.keras.models.load_model(str(keras_path), compile=False)
 
     # Build a small representative dataset from normalization stats (unit box)
     norm = json.loads(norm_path.read_text()) if norm_path.exists() else None
@@ -51,23 +53,22 @@ def reexport(exp_dir: Path, representative_samples: int = 256) -> dict:
 
     result: dict = {}
 
-    # Bidirectional GRU models fail TFLite conversion because the backward GRU
-    # uses TensorListReserve with dynamic element_shape.
-    # Fix: rebuild the model with unroll=True on all GRU cells (eliminates
-    # TensorList ops by unrolling the time axis into explicit graph ops),
-    # then transfer weights from the original model.
+    # All GRU/LSTM models (uni- and bidirectional) use TensorListReserve ops
+    # internally, which TFLite cannot lower when element_shape is dynamic.
+    # Fix: rebuild with unroll=True to replace the while_loop with explicit
+    # per-timestep graph ops, eliminating TensorList entirely.
+    # Side-effect: TFLite file size scales with timesteps — this is only used
+    # for accuracy validation, not for deployment (STedgeAI reads .keras or
+    # this TFLite fp32 and generates compact C code with the loop intact).
     def _rebuild_with_unroll(src_model: "tf.keras.Model") -> "tf.keras.Model":
         import json as _json
         cfg = _json.loads(src_model.to_json())
 
         def _patch_rnn(node: dict) -> None:
-            """Recursively set unroll=True on all RNN layers."""
             cls = node.get("class_name", "")
             inner = node.get("config", {})
             if cls in ("GRU", "LSTM", "SimpleRNN"):
                 inner["unroll"] = True
-            # Bidirectional stores forward as "layer"; backward is auto-cloned
-            # but we need to patch "layer" so the clone also gets unroll=True
             if cls == "Bidirectional":
                 _patch_rnn(inner.get("layer", {}))
                 _patch_rnn(inner.get("backward_layer", {}))
@@ -80,7 +81,8 @@ def reexport(exp_dir: Path, representative_samples: int = 256) -> dict:
         rebuilt.set_weights(src_model.get_weights())
         return rebuilt
 
-    unrolled = _rebuild_with_unroll(model)
+    print("    rebuilding with unroll=True for TFLite compatibility", flush=True)
+    convert_model = _rebuild_with_unroll(model)
 
     def _make_converter(m: "tf.keras.Model") -> "tf.lite.TFLiteConverter":
         return tf.lite.TFLiteConverter.from_keras_model(m)
@@ -97,7 +99,7 @@ def reexport(exp_dir: Path, representative_samples: int = 256) -> dict:
     # FP32
     try:
         fp32_path = exp_dir / "model_fp32.tflite"
-        fp32_path.write_bytes(_make_converter(unrolled).convert())
+        fp32_path.write_bytes(_make_converter(convert_model).convert())
         result["model_fp32_tflite"] = str(fp32_path)
         print(f"    fp32 OK ({fp32_path.stat().st_size // 1024} KB)", flush=True)
     except Exception as exc:
@@ -107,7 +109,7 @@ def reexport(exp_dir: Path, representative_samples: int = 256) -> dict:
     # INT8
     try:
         int8_path = exp_dir / "model_int8.tflite"
-        int8_path.write_bytes(_make_converter_int8(unrolled).convert())
+        int8_path.write_bytes(_make_converter_int8(convert_model).convert())
         result["model_int8_tflite"] = str(int8_path)
         result["model_int8_size_kb"] = round(int8_path.stat().st_size / 1024.0, 3)
         print(f"    int8 OK ({int8_path.stat().st_size // 1024} KB)", flush=True)
@@ -139,13 +141,16 @@ def main() -> None:
         candidates = sorted(p for p in root.iterdir() if p.is_dir() and (p / "metrics.json").exists())
 
     for exp_dir in candidates:
-        if not (exp_dir / "metrics.json").exists():
-            print(f"{exp_dir.name}: no metrics.json, skip")
-            continue
-        ep = json.loads((exp_dir / "metrics.json").read_text()).get("export_paths", {})
-        if "model_int8_tflite" in ep and Path(ep["model_int8_tflite"]).exists():
-            print(f"{exp_dir.name}: int8 already exists, skip")
-            continue
+        # When called with --ids (e.g. from train_baseline.py), metrics.json does not
+        # exist yet — skip the check and always attempt conversion.
+        if not args.ids:
+            if not (exp_dir / "metrics.json").exists():
+                print(f"{exp_dir.name}: no metrics.json, skip")
+                continue
+            ep = json.loads((exp_dir / "metrics.json").read_text()).get("export_paths", {})
+            if "model_int8_tflite" in ep and Path(ep["model_int8_tflite"]).exists():
+                print(f"{exp_dir.name}: int8 already exists, skip")
+                continue
         print(f"\n[{exp_dir.name}]")
         reexport(exp_dir, args.representative_samples)
 
