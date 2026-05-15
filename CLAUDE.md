@@ -11,6 +11,34 @@ Fall detection model targeting **STM32N6** deployment.
   - INT8 (after STedgeAI quantization): MinP ≥ 0.90~0.91
   - **MinP = min(FallPrecision, NFallPrecision)** — primary metric
 
+## Environment Versions
+
+| Component | Version | Notes |
+|---|---|---|
+| Python (training) | 3.12+ (uv managed) | `uv run python` |
+| TensorFlow | 2.21.0 | `tensorflow>=2.21.0` in pyproject.toml |
+| Keras | 3.13.2 | bundled with TF 2.21 |
+| CUDA | 12.x | nvidia-*-cu12 packages via uv |
+| cuDNN | 9.x | nvidia-cudnn-cu12 |
+| STedgeAI | 4.0 | `/home/min/app/ST/STEdgeAI/4.0/` |
+| STedgeAI Python | 3.9 (internal) | `/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/python` |
+| STedgeAI TF | 2.18.0 (internal) | bundled inside STedgeAI 4.0 |
+| STedgeAI Keras | **3.7.0** (internal) | **Keras 3.10+ fields are incompatible** — see compat note below |
+
+### Keras compatibility note (training env vs STedgeAI)
+Training produces `.keras` files with Keras 3.13 format. STedgeAI 4.0 uses Keras 3.7 internally and **fails** on `quantization_config` field added in Keras 3.10+.
+
+**Fix** (`scripts/util/export_stedgeai.py`): strip `quantization_config` from `config.json` inside the `.keras` zip before passing to STedgeAI. Run with STedgeAI's own Python:
+```bash
+/path/to/STEdgeAI/4.0/Utilities/linux/python scripts/util/export_stedgeai.py \
+    --exp-dir results/gru_phase7_quant/Q7-v01 --target stm32n6
+```
+
+### TFLite export note
+All GRU models (uni- and bidirectional) use `TensorListReserve` internally. TFLite cannot lower it with dynamic element_shape. Fix: rebuild model with `unroll=True` before conversion (`scripts/util/reexport_tflite.py`). Side-effect: TFLite file size ≈ weights × timesteps (not representative of deployment size). STedgeAI keeps the RNN as a loop → actual Flash is ~3–5× smaller than TFLite file.
+
+---
+
 ## Deployment Constraints (STM32N6)
 
 **Target hardware**: STM32N6 Cortex-M55 CPU (no NPU required for GRU)
@@ -18,15 +46,23 @@ Fall detection model targeting **STM32N6** deployment.
 **Conversion tool**: STedgeAI (X-CUBE-AI) — imports `.keras` directly, generates optimized C code
 - STedgeAI does channel-wise INT8 PTQ natively → lower accuracy loss than TFLite PTQ
 - GRU and Conv1D are both natively supported
+- STedgeAI analyze result written to `metrics.json` under `"stedgeai"` key
 
 **Model requirements**:
 - **Unidirectional GRU only** — bidirectional GRU requires future frames, incompatible with stateful streaming
 - Stateless training → stateful inference conversion via `set_weights()` (weights copy directly)
 - On fall alarm: call `network_reset()` to zero hidden state
-- Model size target: weight INT8 < 512 KB (STM32N6 Flash budget)
+- Model size target: **weight INT8 < 512 KiB** (STM32N6 Flash budget)
 
-**Preferred architecture** (for new experiments): unidirectional GRU, `--gru-units 128,64`, focal loss
-- GRU(256,128) unidirectional is also acceptable if MinP target requires it
+**Known Flash sizes (STedgeAI INT8, stm32n6)**:
+| Config | Flash (KiB) | RAM (KiB) | Budget? |
+|---|---|---|---|
+| GRU(128,64) kp7 40f | ~537 | ~40 | ✗ slightly over |
+| GRU(128,64) kp7 30f | ~403 | ~30 | ✓ |
+| GRU(256,128) any | >1000 | >80 | ✗ too large |
+
+**Preferred architecture** (for new experiments): unidirectional GRU, `--gru-units 128,64`, focal loss, 30f window
+- GRU(256,128) exceeds Flash budget — do not use for new STM32N6-targeted experiments
 
 ---
 
