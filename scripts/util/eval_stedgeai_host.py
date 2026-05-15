@@ -30,6 +30,8 @@ import os
 import shutil
 import subprocess
 import sys
+# ensure print() output is flushed immediately (useful when piped through tee)
+sys.stdout.reconfigure(line_buffering=True)
 import tempfile
 from pathlib import Path
 

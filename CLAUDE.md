@@ -169,7 +169,7 @@ Updates `metrics.json["stedgeai"]` with analyze results. Compat `.keras` is crea
 # INT8 video-level MinP evaluation via --mode host (uses stm32h7 as proxy — stm32n6 unsupported)
 uv run python scripts/util/eval_stedgeai_host.py \
     --exp-dir results/gru_phase7_quant/Q7-v01 \
-    [--eval-stride 5]        # default 5 → 83K→17K windows (minutes not hours)
+    [--eval-stride 5]        # default 5 → ~17K windows (≈20 min; stride=1 = 83K = hours)
     [--reselect-threshold]   # reselect threshold on val INT8 scores
 ```
 
