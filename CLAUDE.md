@@ -4,13 +4,29 @@
 
 Fall detection model targeting **STM32N6** deployment.
 - Input: MoveNet 17-keypoint pose sequences (15 fps, 4-second window = 60 frames)
-- Architecture: GRU (primary) / TCN — must be **TFLite INT8 quantizable**
+- Architecture: GRU (primary) / TCN — **unidirectional, STM32/STedgeAI portable, INT8 quantizable**
 - Output: binary fall/non-fall alarm triggered by consecutive-window post-processing
-- Performance target (video-level, post consecutive rule, **including INT8 quantized model**):
-  - Minimum: F1 ≥ 0.91 for both fall and non-fall detection
-  - Good: F1 0.92~0.93
-  - Best: F1 0.94~0.95
-  - **Quantization must not drop below 0.90** — INT8 F1 should stay in the 0.9x range
+- Performance target (video-level, post consecutive rule):
+  - Float (after training): MinP ≥ 0.93~0.95
+  - INT8 (after STedgeAI quantization): MinP ≥ 0.90~0.91
+  - **MinP = min(FallPrecision, NFallPrecision)** — primary metric
+
+## Deployment Constraints (STM32N6)
+
+**Target hardware**: STM32N6 Cortex-M55 CPU (no NPU required for GRU)
+
+**Conversion tool**: STedgeAI (X-CUBE-AI) — imports `.keras` directly, generates optimized C code
+- STedgeAI does channel-wise INT8 PTQ natively → lower accuracy loss than TFLite PTQ
+- GRU and Conv1D are both natively supported
+
+**Model requirements**:
+- **Unidirectional GRU only** — bidirectional GRU requires future frames, incompatible with stateful streaming
+- Stateless training → stateful inference conversion via `set_weights()` (weights copy directly)
+- On fall alarm: call `network_reset()` to zero hidden state
+- Model size target: weight INT8 < 512 KB (STM32N6 Flash budget)
+
+**Preferred architecture** (for new experiments): unidirectional GRU, `--gru-units 128,64`, focal loss
+- GRU(256,128) unidirectional is also acceptable if MinP target requires it
 
 ---
 
@@ -42,7 +58,7 @@ Fall detection model targeting **STM32N6** deployment.
 | `--data-scope` | `all` | No direction filtering — all fall directions must be covered |
 | `--feature-set` | `kp12` (default) | Unless KP reduction is the variable under test |
 | Post-processing | consecutive+threshold sweep [1,3,5] | Applied by default |
-| Model family | GRU (primary focus) | TFLite INT8 quantizable; TCN as secondary in separate branches |
+| Model family | GRU (primary focus) | STedgeAI INT8 quantizable; unidirectional required for stateful deployment |
 | `--min-val-precision` | `0.90` | Dual-precision constraint |
 | `--early-stop-patience` | `15` | Standard across all runs |
 | `--epochs` | `100` | Max epochs |

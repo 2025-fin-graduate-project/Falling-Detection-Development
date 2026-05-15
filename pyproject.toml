@@ -22,4 +22,5 @@ dependencies = [
     "scipy>=1.17.1",
     "seaborn>=0.13.2",
     "tensorflow>=2.21.0",
+    "tf2onnx>=1.17.0",
 ]
