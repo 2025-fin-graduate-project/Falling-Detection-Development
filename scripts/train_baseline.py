@@ -142,9 +142,12 @@ class BaselineConfig:
     quant_eval_max_windows: int = 5000
     max_rows: int | None = None
     max_windows_per_split: int | None = None
+    train_balance_windows: bool = False
+    train_balance_ratio: float = 1.0
     quiet: bool = False
     checkpoint_monitor: str = "val_loss"
     min_checkpoint_threshold: float = 0.0
+    event_tolerance_windows: int = 2
     hard_negative_video_ids: str = ""
     hard_negative_stride: int = 1
 
@@ -209,6 +212,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--smoke", action="store_true", help="Use small limits for a Colab/local smoke run.")
     parser.add_argument("--max-rows", type=int)
     parser.add_argument("--max-windows-per-split", type=int)
+    parser.add_argument("--train-balance-windows", action=argparse.BooleanOptionalAction,
+                        help="Downsample majority-class training windows after window construction.")
+    parser.add_argument("--train-balance-ratio", type=float,
+                        help="Maximum majority/minority ratio when --train-balance-windows is enabled.")
     parser.add_argument("--quiet", action="store_true", help="Suppress model summary and epoch-level training output.")
     parser.add_argument("--bidirectional", action=argparse.BooleanOptionalAction, help="Use Bidirectional GRU.")
     parser.add_argument("--temporal-attention", action=argparse.BooleanOptionalAction, help="Add additive temporal attention pooling after GRU layers (TFLite INT8 compatible).")
@@ -221,6 +228,8 @@ def parse_args() -> argparse.Namespace:
                         help="Early-stop / best-weights monitor. Use val_video_min_pr for MinPR-optimised checkpointing.")
     parser.add_argument("--min-checkpoint-threshold", type=float,
                         help="When checkpoint-monitor=val_video_min_pr, skip thresholds below this floor (e.g. 0.50).")
+    parser.add_argument("--event-tolerance-windows", type=int,
+                        help="Loose event-level success tolerance around true positive-label windows.")
     parser.add_argument("--hard-negative-video-ids",
                         help="CSV file with a 'video_id' column. Training windows from these non-fall videos use --hard-negative-stride.")
     parser.add_argument("--hard-negative-stride", type=int,
@@ -269,6 +278,7 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         "quant_eval_max_windows": args.quant_eval_max_windows,
         "max_rows": args.max_rows,
         "max_windows_per_split": args.max_windows_per_split,
+        "train_balance_ratio": args.train_balance_ratio,
     }
     for key, value in overrides.items():
         if value is not None:
@@ -294,6 +304,8 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         payload["quant_eval_max_windows"] = min(int(payload.get("quant_eval_max_windows", 256)), 256)
     if args.quiet:
         payload["quiet"] = True
+    if args.train_balance_windows is not None:
+        payload["train_balance_windows"] = args.train_balance_windows
     if args.bidirectional is not None:
         payload["bidirectional"] = args.bidirectional
     if args.temporal_attention is not None:
@@ -314,6 +326,8 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         payload["checkpoint_monitor"] = args.checkpoint_monitor
     if args.min_checkpoint_threshold is not None:
         payload["min_checkpoint_threshold"] = args.min_checkpoint_threshold
+    if args.event_tolerance_windows is not None:
+        payload["event_tolerance_windows"] = args.event_tolerance_windows
     if args.hard_negative_video_ids is not None:
         payload["hard_negative_video_ids"] = args.hard_negative_video_ids
     if args.hard_negative_stride is not None:
@@ -498,6 +512,36 @@ def window_label(labels: np.ndarray, mode: str) -> int:
     raise ValueError(f"Unsupported label_mode={mode}")
 
 
+def balance_training_windows(
+    x: np.ndarray,
+    y: np.ndarray,
+    y_eval: np.ndarray,
+    groups: np.ndarray,
+    directions: np.ndarray,
+    dist_df: pd.DataFrame,
+    ratio: float,
+    seed: int,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, pd.DataFrame]:
+    neg_idx = np.flatnonzero(y_eval == 0)
+    pos_idx = np.flatnonzero(y_eval == 1)
+    if len(neg_idx) == 0 or len(pos_idx) == 0:
+        return x, y, y_eval, groups, directions, dist_df
+    max_majority = max(1, int(round(len(pos_idx) * max(ratio, 1.0))))
+    if len(neg_idx) <= max_majority:
+        return x, y, y_eval, groups, directions, dist_df
+    rng = np.random.default_rng(seed)
+    keep_neg = rng.choice(neg_idx, size=max_majority, replace=False)
+    keep = np.sort(np.concatenate([pos_idx, keep_neg]))
+    return (
+        x[keep],
+        y[keep],
+        y_eval[keep],
+        groups[keep],
+        directions[keep],
+        dist_df.iloc[keep].reset_index(drop=True),
+    )
+
+
 def build_windows_for_split(
     df: pd.DataFrame,
     split_ids: set[str],
@@ -619,6 +663,18 @@ def prepare_data(
             training=(split == "train"),
             hard_negative_ids=hard_negative_ids if split == "train" else None,
         )
+        if split == "train" and config.train_balance_windows:
+            before = len(built[split][2])
+            built[split] = balance_training_windows(
+                *built[split],
+                ratio=config.train_balance_ratio,
+                seed=config.seed,
+            )
+            log(
+                f"train window balance: before={before:,} after={len(built[split][2]):,} "
+                f"positive={int(built[split][2].sum()):,} negative={int((built[split][2] == 0).sum()):,} "
+                f"ratio={config.train_balance_ratio:.3f}"
+            )
         # built[split]: (x, y_train, y_eval, groups, directions, dist_df)
         log(
             f"{split} windows={len(built[split][1]):,} "
@@ -1152,6 +1208,48 @@ def video_level_eval(
     return v_true, v_score, v_pred
 
 
+def event_level_eval(
+    y_true: np.ndarray,
+    y_score: np.ndarray,
+    groups: np.ndarray,
+    threshold: float,
+    min_consecutive: int = 1,
+    tolerance_windows: int = 2,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Loose video-level event localization.
+
+    A fall video is counted as detected only when at least one filtered positive
+    prediction overlaps a true positive-label window, or is within
+    tolerance_windows of that true positive region. Non-fall videos use the same
+    false-alarm rule as video_level_eval.
+    """
+    video_ids = np.unique(groups)
+    v_true = np.empty(len(video_ids), dtype=np.int32)
+    v_score = np.empty(len(video_ids), dtype=np.float32)
+    v_pred = np.empty(len(video_ids), dtype=np.int32)
+    tol = max(int(tolerance_windows), 0)
+    for i, vid in enumerate(video_ids):
+        mask = groups == vid
+        true_windows = y_true[mask].astype(np.int32)
+        scores = y_score[mask]
+        v_true[i] = int(true_windows.max())
+        v_score[i] = float(scores.max())
+        binary_windows = (scores >= threshold).astype(np.int32)
+        filtered = apply_consecutive_rule(binary_windows, min_consecutive)
+        if v_true[i] == 0:
+            v_pred[i] = int(filtered.max()) if len(filtered) > 0 else 0
+            continue
+        true_idx = np.flatnonzero(true_windows == 1)
+        pred_idx = np.flatnonzero(filtered == 1)
+        if len(true_idx) == 0 or len(pred_idx) == 0:
+            v_pred[i] = 0
+            continue
+        start = max(int(true_idx[0]) - tol, 0)
+        end = min(int(true_idx[-1]) + tol, len(true_windows) - 1)
+        v_pred[i] = int(np.any((pred_idx >= start) & (pred_idx <= end)))
+    return v_true, v_score, v_pred
+
+
 def plot_class_metrics_bar(
     metrics_dict: dict[str, Any],
     output_dir: Path,
@@ -1441,6 +1539,26 @@ def main() -> None:
         plot_class_metrics_bar(v_metrics, output_dir,
                                prefix=f"video_{split_name}_",
                                title_prefix=f"Video-Level {split_name.capitalize()}")
+
+        e_true, e_score, e_pred = event_level_eval(
+            y_eval[split_name], scores[split_name], groups[split_name],
+            threshold, min_consecutive, config.event_tolerance_windows,
+        )
+        e_metrics = metrics_for(e_true, e_score, threshold, f"{split_name}_event_video", y_pred=e_pred)
+        metrics[f"{split_name}_event_video"] = e_metrics
+        log(
+            f"event-level {split_name}: videos={len(e_true)} "
+            f"f1={e_metrics['f1']:.4f} fall_recall={e_metrics['recall']:.4f} nfall_recall={e_metrics['nfall_recall']:.4f} "
+            f"fall_prec={e_metrics['precision']:.4f} nfall_prec={e_metrics['nfall_precision']:.4f} "
+            f"min_pr={e_metrics['min_pr']:.4f} tolerance_windows={config.event_tolerance_windows}"
+        )
+        plot_confusion_curve(e_true, e_score, threshold, output_dir,
+                             prefix=f"event_{split_name}_",
+                             title_prefix=f"Event-Level {split_name.capitalize()}",
+                             y_pred=e_pred)
+        plot_class_metrics_bar(e_metrics, output_dir,
+                               prefix=f"event_{split_name}_",
+                               title_prefix=f"Event-Level {split_name.capitalize()}")
 
     # Print classification reports cleanly
     for split_name in ["val", "test"]:
