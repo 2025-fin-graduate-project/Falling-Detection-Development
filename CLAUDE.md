@@ -30,19 +30,30 @@ Fall detection model targeting **STM32N6** deployment.
 ## STM32N6 Deployment
 
 **Target**: STM32N6 Cortex-M55 CPU; STedgeAI imports `.keras` → channel-wise INT8 PTQ → C code
-- Flash budget: **< 512 KiB** (weights INT8)
 - GRU and Conv1D natively supported; bidirectional GRU is **incompatible** (requires future frames)
-- Stateless training → stateful inference via `set_weights()`; reset hidden state on alarm
+- Stateless training → stateful inference: 학습은 window(30~40f) 단위, 온디바이스는 1-step stateful (매 프레임마다 GRU 1스텝 실행, hidden state 유지)
+- 낙상 알람 시 `network_reset()` 호출 → hidden state 초기화
+- I/O: float32 인터페이스 (STedgeAI가 내부적으로 INT8 추론 후 dequant)
 
-**Known Flash sizes (STedgeAI INT8, stm32n6 target)**:
-| Config | Flash (KiB) | RAM (KiB) | OK? |
+**실제 Flash 레이아웃 (STM32N6570-DK, xSPI2 NOR 64 MB)**:
+```
+0x70000000  FSBL
+0x70100000  Application code
+0x70380000  MoveNet 256×256 weights (2.64 MB)
+0x70680000  GRU/TCN weights  ← 여기서 시작, 여유 ~60 MB
+```
+Flash 예산 제약은 사실상 없음 — GRU(128,64) 537 KiB는 전혀 문제 없음.
+
+**실제 제약 = 추론 속도 + MinP 성능**
+- GRU는 CPU(Cortex-M55) 추론 — stateful 1-step, 매 카메라 프레임마다 실행
+- 활성화 버퍼 (RAM): GRU(64,32) 기준 2.8 KiB, GRU(128,64) 기준 ~40 KiB (cpuRAM2 1 MB 내 여유)
+
+**Known STedgeAI sizes (stm32n6 analyze 결과)**:
+| Config | Flash (KiB) | Activation (KiB) | 비고 |
 |---|---|---|---|
-| GRU(128,64) kp7 30f | ~403 | ~30 | ✓ |
-| GRU(128,64) kp7 40f | ~537 | ~40 | ✗ over |
-| GRU(256,128) any | >1000 | >80 | ✗ too large |
-
-**Preferred architecture**: `--gru-units 128,64`, unidirectional, focal loss, 30f window.
-GRU(256,128) exceeds budget — do not use for new STM32N6-targeted experiments.
+| GRU(128,64) kp7 40f | 537 | ~40 | P5-v02 실측 |
+| GRU(128,64) kp12 40f | 559 | ~40 | Q7-v01 실측 |
+| GRU(64,32) — v26 | ~150 | 2.8 | 현재 배포 모델 |
 
 STedgeAI analyze results written to `metrics.json["stedgeai"]["analyze"]` (weights_kib, activations_kib, analyze_ok).
 
