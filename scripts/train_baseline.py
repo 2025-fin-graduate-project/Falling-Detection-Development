@@ -39,10 +39,33 @@ ENGINEERED_FILTERED = ["HSSC_y", "HSSC_x", "RWHC", "VHSSC", "AHSSC", "AHSSC_x"]
 FEATURE_SETS = {
     "minimal": [0, 5, 6, 11, 12],
     "kp7": [0, 5, 6, 7, 8, 11, 12],
+    "kp7kv": [0, 5, 6, 7, 8, 11, 12],  # kp7 + per-joint velocity for [0,5,6,11,12]
+    "kp7rel": [0, 5, 6, 7, 8, 11, 12],  # kp7 pose-relative coordinates, no absolute engineered features
+    "kp7releng": [0, 5, 6, 7, 8, 11, 12],  # kp7rel + existing engineered filtered features
     "kp8": [0, 5, 6, 7, 8, 9, 11, 12],
     "kp12": list(range(13)),
     "all": list(range(17)),
 }
+# Per-joint velocity columns added by build_filtered_v2_splits_kv.py
+KV_KP_IDX = [0, 5, 6, 11, 12]
+VELOCITY_COLS_KV = [f"kp{i}_{ax}" for i in KV_KP_IDX for ax in ("vy", "vx")]
+REL_FEATURE_SETS = {"kp7rel", "kp7releng"}
+REL_POSE_COLS = [
+    "torso_dx",
+    "torso_dy",
+    "torso_len",
+    "torso_angle_sin",
+    "torso_angle_cos",
+    "head_hip_dx",
+    "head_hip_dy",
+    "shoulder_width_norm",
+    "hip_width_norm",
+    "shoulder_hip_width_ratio",
+    "body_height_norm",
+    "body_width_norm",
+    "body_aspect_ratio",
+    "body_aspect_velocity",
+]
 
 
 def log(message: str) -> None:
@@ -334,17 +357,40 @@ def infer_direction(video_id: str) -> str:
 
 def feature_columns(columns: list[str], feature_set: str, preprocessing: str) -> list[str]:
     kp_indexes = FEATURE_SETS[feature_set]
+    engineered = ENGINEERED_FILTERED if preprocessing == "filtered" else ENGINEERED_RAW
+    if feature_set in REL_FEATURE_SETS:
+        kp_cols = [
+            f"kp{idx}_rel_{axis}"
+            for idx in kp_indexes
+            for axis in ("y", "x")
+            if f"kp{idx}_rel_{axis}" in columns
+        ]
+        kp_cols.extend([
+            f"kp{idx}_s"
+            for idx in kp_indexes
+            if f"kp{idx}_s" in columns
+        ])
+        pose_cols = [col for col in REL_POSE_COLS if col in columns]
+        engineered_cols = [col for col in engineered if col in columns] if feature_set == "kp7releng" else []
+        if not kp_cols:
+            raise ValueError("No pose-relative keypoint feature columns found.")
+        if not pose_cols:
+            raise ValueError("No pose-relative derived feature columns found.")
+        return kp_cols + pose_cols + engineered_cols
+
     kp_cols = [
         f"kp{idx}_{axis}"
         for idx in kp_indexes
         for axis in ("y", "x", "s")
         if f"kp{idx}_{axis}" in columns
     ]
-    engineered = ENGINEERED_FILTERED if preprocessing == "filtered" else ENGINEERED_RAW
     engineered_cols = [col for col in engineered if col in columns]
     if not kp_cols:
         raise ValueError("No keypoint feature columns found.")
-    return kp_cols + engineered_cols
+    velocity_cols = []
+    if feature_set == "kp7kv":
+        velocity_cols = [col for col in VELOCITY_COLS_KV if col in columns]
+    return kp_cols + engineered_cols + velocity_cols
 
 
 def load_split_video_ids(split_dir: Path) -> dict[str, set[str]]:
