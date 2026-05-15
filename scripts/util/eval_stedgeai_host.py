@@ -282,7 +282,7 @@ def threshold_sweep(
 
 # ── 메인 평가 루프 ─────────────────────────────────────────────────────────────
 
-def evaluate_one(exp_dir: Path, reselect_threshold: bool = False) -> dict | None:
+def evaluate_one(exp_dir: Path, reselect_threshold: bool = False, eval_stride: int = 5) -> dict | None:
     exp_dir = exp_dir.resolve()
     print(f"\n{'='*60}")
     print(f"[{exp_dir.name}]")
@@ -342,13 +342,14 @@ def evaluate_one(exp_dir: Path, reselect_threshold: bool = False) -> dict | None
         dummy_df = pd.read_csv(test_csv, nrows=1, low_memory=False)
         feat_cols = feature_columns(dummy_df.columns.tolist(), feature_set, preprocessing)
     print(f"  features={len(feat_cols)}  steps={target_steps}  "
-          f"window={win_start}~{win_end}s")
+          f"window={win_start}~{win_end}s  eval_stride={eval_stride}")
 
     # 테스트 윈도우 추출
     print(f"  Extracting test windows from {test_csv.name} ...")
     x_test, y_test, g_test = build_test_windows(
         test_csv, feat_cols, norm_min, norm_scale,
         target_steps, win_start, win_end, label_col,
+        eval_stride=eval_stride,
     )
     print(f"  test windows={len(y_test):,}  positive={y_test.sum():,}  "
           f"videos={len(np.unique(g_test)):,}")
@@ -360,6 +361,7 @@ def evaluate_one(exp_dir: Path, reselect_threshold: bool = False) -> dict | None
         x_val, y_val, g_val = build_test_windows(
             val_csv, feat_cols, norm_min, norm_scale,
             target_steps, win_start, win_end, label_col,
+            eval_stride=eval_stride,
         )
         print(f"  val windows={len(y_val):,}")
 
@@ -470,12 +472,15 @@ def main() -> None:
                         help="실험 디렉토리 (여러 개 가능)")
     parser.add_argument("--reselect-threshold", action="store_true",
                         help="val set INT8 예측으로 threshold 재탐색 (기본: 학습 시 선택값 사용)")
+    parser.add_argument("--eval-stride", type=int, default=5,
+                        help="윈도우 샘플링 stride (기본: 5 → 83K→17K 축소, 속도↑)")
     args = parser.parse_args()
 
     results = {}
     for path in args.exp_dir:
         exp_dir = Path(path)
-        r = evaluate_one(exp_dir, reselect_threshold=args.reselect_threshold)
+        r = evaluate_one(exp_dir, reselect_threshold=args.reselect_threshold,
+                         eval_stride=args.eval_stride)
         if r:
             results[exp_dir.name] = r
 

@@ -120,7 +120,7 @@ Fresh setup: splits_v2 already exists. Run lb3 build then filtered build (filter
 |---|---|---|
 | Preprocessing | `raw` (splits_v2) / `filtered` (splits_v2_filtered) | `--preprocessing` |
 | Label | LB-2: `label` / LB-3: `label_3class --num-classes 3 --positive-labels 1,2` | `--label-column` |
-| GRU units | **`128,64`** (target) / `256,128` (over Flash budget) | `--gru-units` |
+| GRU units | **`128,64`** (preferred) / `256,128` (MinP ↑, MACC 4× higher) | `--gru-units` |
 | Feature set | `kp7` (27f) / `kp12` (45f, default) / `kp8` / `all` | `--feature-set` |
 | Window | 30f (`--target-steps 30`) / 40f | `--target-steps` |
 
@@ -155,13 +155,31 @@ Output per experiment (`{output-root}/{id}/`): `metrics.json`, `model.keras`, `m
 ## STedgeAI Analysis
 
 ```bash
-# Run with STedgeAI's internal Python (Keras 3.7 env)
+# Analyze Flash/RAM/MACC — run with STedgeAI's internal Python (Keras 3.7 env)
 /home/min/app/ST/STEdgeAI/4.0/Utilities/linux/python \
     scripts/util/export_stedgeai.py \
     --exp-dir results/gru_phase7_quant/Q7-v01 --target stm32n6
 ```
 
-Updates `metrics.json["stedgeai"]` with analyze results. Compat `.keras` is created and deleted automatically.
+Updates `metrics.json["stedgeai"]` with analyze results. Compat `.keras` is created (stripped of `quantization_config`) and kept for reuse.
+
+## STedgeAI Host Evaluation (INT8 MinP)
+
+```bash
+# INT8 video-level MinP evaluation via --mode host (uses stm32h7 as proxy — stm32n6 unsupported)
+uv run python scripts/util/eval_stedgeai_host.py \
+    --exp-dir results/gru_phase7_quant/Q7-v01 \
+    [--eval-stride 5]        # default 5 → 83K→17K windows (minutes not hours)
+    [--reselect-threshold]   # reselect threshold on val INT8 scores
+```
+
+Writes result to `metrics.json["stedgeai_host_eval"]` (min_precision, fall_precision, etc.).
+
+**Note**: LD_LIBRARY_PATH must include ALL nvidia subdirs for GPU:
+```bash
+_SITE=$(uv run python3 -c "import site; print(site.getsitepackages()[0])")
+export LD_LIBRARY_PATH="$(find ${_SITE}/nvidia -maxdepth 2 -name lib -type d | tr '\n' ':'):/usr/local/cuda/lib64"
+```
 
 ---
 
@@ -174,9 +192,13 @@ Updates `metrics.json["stedgeai"]` with analyze results. Compat `.keras` is crea
 | 3 | `run_gru_phase3_2s.sh` | 30f window (2s) variants | done |
 | 4 | `run_gru_phase4_uni_kp.sh` | Unidirectional + KP ablation | done |
 | 5 | `run_gru_phase5_compact.sh` | GRU(128,64) compact + focal | done |
-| 7 | `run_gru_phase7.sh` | STM32N6 Flash verify + Q7 training | **in progress** |
+| 7 | `run_gru_phase7.sh` | STedgeAI analyze (existing + Q7 new) | done |
+| 8 | `run_gru_phase8.sh` | Conv reduction (1×Conv64, 2×Conv32) | **in progress** |
 
-Best models (MinP ≥ 0.93, unidirectional): P5-v02 (0.9495), P4-v05 (0.9513), P4-v02 (0.9469).
+Best models (MinP ≥ 0.93, unidirectional, float):
+- P5-v02: GRU(128,64) kp7 40f MinP=0.9495, Flash=537 KiB, MACC=5.3M
+- P4-v05: GRU(256,128) minimal 40f MinP=0.9513, MACC=16.6M (large)
+- Q7-v03: GRU(128,64) kp12 30f MinP=0.9386, Flash=559 KiB, INT8 MinP=0.9038
 
 ---
 
