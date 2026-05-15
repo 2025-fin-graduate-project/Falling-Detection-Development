@@ -225,7 +225,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--focal-alpha", type=float)
     parser.add_argument("--focal-gamma", type=float)
     parser.add_argument("--noise-std", type=float, help="Gaussian noise std for training augmentation (0 = off).")
-    parser.add_argument("--checkpoint-monitor", choices=["val_loss", "val_video_min_pr"],
+    parser.add_argument("--checkpoint-monitor", choices=["val_loss", "val_video_min_pr", "val_event_min_pr"],
                         help="Early-stop / best-weights monitor. Use val_video_min_pr for MinPR-optimised checkpointing.")
     parser.add_argument("--min-checkpoint-threshold", type=float,
                         help="When checkpoint-monitor=val_video_min_pr, skip thresholds below this floor (e.g. 0.50).")
@@ -848,8 +848,8 @@ def build_model(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.kera
     return model
 
 
-class ValVideoMinPRCallback(tf.keras.callbacks.Callback):
-    """Evaluates video-level MinPR on val each epoch and checkpoints best weights."""
+class ValMinPRCallback(tf.keras.callbacks.Callback):
+    """Evaluates aggregated val MinPR each epoch and checkpoints best weights."""
 
     def __init__(
         self,
@@ -859,6 +859,7 @@ class ValVideoMinPRCallback(tf.keras.callbacks.Callback):
         config: BaselineConfig,
         patience: int,
         batch_size: int,
+        eval_level: str,
     ) -> None:
         super().__init__()
         self.x_val = x_val
@@ -867,6 +868,7 @@ class ValVideoMinPRCallback(tf.keras.callbacks.Callback):
         self.config = config
         self.patience = patience
         self.batch_size = batch_size
+        self.eval_level = eval_level
         self.best_min_pr: float = -1.0
         self.best_weights: list[Any] | None = None
         self.wait: int = 0
@@ -883,7 +885,17 @@ class ValVideoMinPRCallback(tf.keras.callbacks.Callback):
         thresholds = [t for t in np.linspace(0.05, 0.95, self.config.threshold_count) if t >= thr_floor - 1e-6]
         for thr in thresholds:
             for mc in self.config.min_consecutive_values:
-                v_true, _, v_pred = video_level_eval(self.y_eval_val, scores, self.groups_val, thr, mc)
+                if self.eval_level == "event":
+                    v_true, _, v_pred = event_level_eval(
+                        self.y_eval_val,
+                        scores,
+                        self.groups_val,
+                        thr,
+                        mc,
+                        self.config.event_tolerance_windows,
+                    )
+                else:
+                    v_true, _, v_pred = video_level_eval(self.y_eval_val, scores, self.groups_val, thr, mc)
                 cm = confusion_matrix(v_true, v_pred, labels=[0, 1])
                 tn, fp, fn, tp = int(cm[0, 0]), int(cm[0, 1]), int(cm[1, 0]), int(cm[1, 1])
                 fp_ = tp / (tp + fp) if (tp + fp) > 0 else 0.0
@@ -895,18 +907,19 @@ class ValVideoMinPRCallback(tf.keras.callbacks.Callback):
                     best_min_pr = min_pr
 
         logs = logs or {}
-        logs["val_video_min_pr"] = float(best_min_pr)
+        metric_name = f"val_{self.eval_level}_min_pr"
+        logs[metric_name] = float(best_min_pr)
 
         if best_min_pr > self.best_min_pr:
             self.best_min_pr = best_min_pr
             self.best_weights = self.model.get_weights()
             self.wait = 0
             if not self.config.quiet:
-                log(f"epoch {epoch + 1}: val_video_min_pr improved to {best_min_pr:.4f} — saving weights")
+                log(f"epoch {epoch + 1}: {metric_name} improved to {best_min_pr:.4f} — saving weights")
         else:
             self.wait += 1
             if not self.config.quiet:
-                log(f"epoch {epoch + 1}: val_video_min_pr={best_min_pr:.4f} (best={self.best_min_pr:.4f}, wait={self.wait}/{self.patience})")
+                log(f"epoch {epoch + 1}: {metric_name}={best_min_pr:.4f} (best={self.best_min_pr:.4f}, wait={self.wait}/{self.patience})")
             if self.wait >= self.patience:
                 self.stopped_epoch = epoch
                 self.model.stop_training = True
@@ -914,7 +927,7 @@ class ValVideoMinPRCallback(tf.keras.callbacks.Callback):
     def on_train_end(self, logs: dict[str, Any] | None = None) -> None:
         if self.best_weights is not None:
             self.model.set_weights(self.best_weights)
-            log(f"ValVideoMinPR: restored best weights (val_video_min_pr={self.best_min_pr:.4f})")
+            log(f"ValMinPR: restored best weights (val_{self.eval_level}_min_pr={self.best_min_pr:.4f})")
 
 
 def train_model(
@@ -925,15 +938,17 @@ def train_model(
     groups: dict[str, np.ndarray],
     config: BaselineConfig,
 ) -> tf.keras.callbacks.History:
-    if config.checkpoint_monitor == "val_video_min_pr":
+    if config.checkpoint_monitor in {"val_video_min_pr", "val_event_min_pr"}:
+        eval_level = "event" if config.checkpoint_monitor == "val_event_min_pr" else "video"
         callbacks: list[Any] = [
-            ValVideoMinPRCallback(
+            ValMinPRCallback(
                 x_val=x["val"],
                 y_eval_val=y_eval["val"],
                 groups_val=groups["val"],
                 config=config,
                 patience=config.early_stop_patience,
                 batch_size=config.batch_size,
+                eval_level=eval_level,
             ),
             tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=3, min_lr=1e-5),
         ]
