@@ -58,15 +58,16 @@ model.keras  →  STedgeAI generate  →  C code + .bin weights  →  flash 0x70
 0x70680000  GRU weights  ← 여유 ~60 MB, Flash 제약 없음
 ```
 
-### 현재 배포 모델 (v26, 미평가)
+### 현재 배포 모델 (v26 — PoC)
+**목적**: 포팅 가능성 증명 (Proof of Concept). 성능 최적화 대상 아님.
 | 항목 | 값 |
 |---|---|
 | 모델 | `gru_v26_int8.tflite` → GRU(64,32) stateful |
-| 포팅 경로 | keras → TFLite INT8 → STedgeAI (구 경로) |
+| 포팅 경로 | keras → TFLite INT8 → STedgeAI (구 경로, 이후 미사용) |
 | 활성화 버퍼 | 2,816 B |
 | MACC/frame | 37,378 |
 | 임계값 | score ≥ 0.65, 인물 미감지 45f → reset |
-| 온디바이스 성능 | **미평가** — 동작 확인만 됨 |
+| 온디바이스 성능 | 평가 없음 — STM32N6에서 GRU 구동 가능함을 확인하는 것이 목적 |
 
 ### 다음 포팅 대상 (Phase 7/8 완료 후)
 최적 모델(GRU(128,64), MinP ≥ 0.93)을 `.keras` → STedgeAI 직접 경로로 포팅.
