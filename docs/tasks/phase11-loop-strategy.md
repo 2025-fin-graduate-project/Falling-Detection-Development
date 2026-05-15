@@ -60,6 +60,10 @@
 - **손실**: NFall recall 보조 손실
 - **데이터**: hard-negative windows repeat 삽입 (repeat=3)
 - **모델**: TCN (temporal feature 더 명시적)
+- **외부 데이터 증강 (Kaggle 등)**: UR Fall Detection, MCFD, Le2i 등 공개 낙상 데이터셋 활용
+  - 절차: 외부 영상 → MoveNet 17-kp 추출 → splits_v2_filtered 포맷으로 변환 → train에 병합
+  - 주의: 카메라 앵글·해상도·keypoint 좌표계 차이 확인 필요
+  - 목적: non-fall 영상 다양성 증가 → FP 방어력 향상
 
 ---
 
