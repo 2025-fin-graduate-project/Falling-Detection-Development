@@ -61,7 +61,7 @@ EVAL_STRIDE=50 bash scripts/run_int8_batch_eval.sh
 EVAL_STRIDE=5 bash scripts/run_int8_batch_eval.sh
 ```
 
-결과: `results/int8_eval_summary.tsv`
+결과: `results/quantization/int8_eval_summary.tsv`
 
 ---
 
@@ -112,7 +112,7 @@ EVAL_STRIDE=5 bash scripts/run_int8_batch_eval.sh
 | `scripts/run_int8_batch_eval.sh` | 배치 실행 스크립트 |
 | `scripts/util/export_stedgeai.py` | STedgeAI analyze + compat .keras 생성 |
 | `scripts/util/eval_stedgeai_host.py` | INT8 host eval, metrics.json 업데이트 |
-| `results/int8_eval_summary.tsv` | 전체 결과 TSV (배치 완료 후) |
+| `results/quantization/int8_eval_summary.tsv` | 전체 결과 TSV (배치 완료 후) |
 
 ---
 

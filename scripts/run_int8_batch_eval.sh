@@ -7,7 +7,7 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
-SUMMARY="results/int8_eval_summary.tsv"
+SUMMARY="results/quantization/int8_eval_summary.tsv"
 STEDGE_PY="/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/python"
 EVAL_STRIDE="${EVAL_STRIDE:-10}"   # stride=10 → ~7K windows, ~20min/모델
 
@@ -21,30 +21,30 @@ log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 # ── 대상 모델 목록 (float EventMinPR 내림차순) ─────────────────────────────
 EXP_DIRS=(
     results/phase27_seed_sweep/P27-vm0
-    results/phase21_event_minpr_checkpoint/P21-v01
-    results/phase30_val_loss_chain/P30-lstm
-    results/phase20_class_balanced_gru/P20-v03
-    results/phase32_gru_vl_explore/P32-ce-42
-    results/phase20_class_balanced_gru/P20-v01
-    results/phase32_gru_vl_explore/P32-fl-1
+    results/training/phase21_event_minpr_checkpoint/P21-v01
+    results/training/phase30_val_loss_chain/P30-lstm
+    results/training/phase20_class_balanced_gru/P20-v03
+    results/training/phase32_gru_vl_explore/P32-ce-42
+    results/training/phase20_class_balanced_gru/P20-v01
+    results/training/phase32_gru_vl_explore/P32-fl-1
     results/phase27_seed_sweep/P27-s1
-    results/phase26_full_patience/P26-v01
-    results/phase30_val_loss_chain/P30-gru
+    results/training/phase26_full_patience/P26-v01
+    results/training/phase30_val_loss_chain/P30-gru
     results/phase35_ncw/P35-ncw
-    results/phase34_aug_alpha/P34-a35-fm10
+    results/training/phase34_aug_alpha/P34-a35-fm10
     results/phase27_seed_sweep/P27-s2
-    results/phase23_gru256_event/P23-v01
+    results/training/phase23_gru256_event/P23-v01
     results/phase27_seed_sweep/P27-s0
-    results/phase28_seed_probe/P28-vm7
-    results/phase33_ce_vm_explore/P33-gce-vm0
-    results/phase31_lstm_ckpt/P31-vm42
-    results/phase19_gru256/P19-v02
-    results/phase28_seed_probe/P28-vm77
-    results/phase29_alpha_sweep/P29-a35
-    results/phase28_seed_probe/P28-vm123
+    results/training/phase28_seed_probe/P28-vm7
+    results/training/phase33_ce_vm_explore/P33-gce-vm0
+    results/training/phase31_lstm_ckpt/P31-vm42
+    results/training/phase19_gru256/P19-v02
+    results/training/phase28_seed_probe/P28-vm77
+    results/training/phase29_alpha_sweep/P29-a35
+    results/training/phase28_seed_probe/P28-vm123
 )
 
-mkdir -p results
+mkdir -p results/quantization
 # TSV 헤더
 if [[ ! -f "$SUMMARY" ]]; then
     echo -e "exp_id\tfloat_event_minpr\tint8_event_minpr\tint8_fall_pr\tint8_nfall_pr\tint8_fn\tint8_fp\tweights_kib\tmacc\tanalyze_ok\tstatus" > "$SUMMARY"
