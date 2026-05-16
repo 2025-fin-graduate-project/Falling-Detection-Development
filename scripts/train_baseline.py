@@ -167,7 +167,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--data-root", type=Path)
     parser.add_argument("--output-root")
     parser.add_argument("--experiment-id")
-    parser.add_argument("--model-type", choices=["tcn", "gru"])
+    parser.add_argument("--model-type", choices=["tcn", "gru", "lstm"])
     parser.add_argument("--preprocessing", choices=["raw", "filtered"])
     parser.add_argument("--source-csv")
     parser.add_argument("--input-mode", choices=["split_csv", "source_csv"])
@@ -346,8 +346,8 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         raise ValueError(f"Missing required config fields: {missing}")
     payload["positive_labels"] = parse_csv_ints(payload.get("positive_labels", [1]))
     config = BaselineConfig(**payload)
-    if config.model_type not in {"tcn", "gru"}:
-        raise ValueError("--model-type must be tcn or gru.")
+    if config.model_type not in {"tcn", "gru", "lstm"}:
+        raise ValueError("--model-type must be tcn, gru, or lstm.")
     if config.preprocessing not in {"raw", "filtered"}:
         raise ValueError("--preprocessing must be raw or filtered.")
     if config.input_mode not in {"split_csv", "source_csv"}:
@@ -833,8 +833,45 @@ def build_gru(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.keras.
     return tf.keras.Model(inputs, outputs, name=f"{config.experiment_id}_gru")
 
 
+def build_lstm(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.keras.Model:
+    inputs = tf.keras.Input(shape=input_shape, name="pose_sequence")
+    x = inputs
+    for i in range(config.conv_pre_layers):
+        kernel = config.conv_pre_kernel if i == 0 else max(3, config.conv_pre_kernel - 2)
+        x = tf.keras.layers.Conv1D(
+            config.conv_pre_filters, kernel,
+            padding="causal", use_bias=False, name=f"conv_pre_{i + 1}",
+        )(x)
+        x = tf.keras.layers.BatchNormalization(name=f"conv_pre_bn_{i + 1}")(x)
+        x = tf.keras.layers.ReLU(name=f"conv_pre_relu_{i + 1}")(x)
+    if config.conv_pre_layers > 0:
+        x = tf.keras.layers.Dropout(config.dropout_rate, name="conv_pre_drop")(x)
+    for idx, units in enumerate(config.gru_units, start=1):
+        return_seq = idx < len(config.gru_units)
+        x = tf.keras.layers.LSTM(
+            units,
+            return_sequences=return_seq,
+            dropout=config.dropout_rate,
+            recurrent_dropout=0.0,
+            unroll=config.gru_unroll,
+            name=f"lstm_{idx}",
+        )(x)
+        if return_seq:
+            x = tf.keras.layers.LayerNormalization(name=f"ln_{idx}")(x)
+    head_units = config.gru_units[-1]
+    x = tf.keras.layers.Dense(head_units, activation="relu", name="head_dense")(x)
+    x = tf.keras.layers.Dropout(config.dropout_rate, name="head_drop")(x)
+    outputs = tf.keras.layers.Dense(config.num_classes, activation="softmax", name="classifier")(x)
+    return tf.keras.Model(inputs, outputs, name=f"{config.experiment_id}_lstm")
+
+
 def build_model(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.keras.Model:
-    model = build_tcn(config, input_shape) if config.model_type == "tcn" else build_gru(config, input_shape)
+    if config.model_type == "tcn":
+        model = build_tcn(config, input_shape)
+    elif config.model_type == "lstm":
+        model = build_lstm(config, input_shape)
+    else:
+        model = build_gru(config, input_shape)
     loss: Any = (
         SparseFocalLoss(alpha=config.focal_alpha, gamma=config.focal_gamma)
         if config.focal_loss
