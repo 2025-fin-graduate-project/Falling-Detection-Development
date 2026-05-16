@@ -136,6 +136,11 @@ class BaselineConfig:
     focal_alpha: float = 0.25
     focal_gamma: float = 2.0
     noise_std: float = 0.0
+    feat_mask_prob: float = 0.0   # per-feature dropout prob during training (0=off)
+    time_mask_max: int = 0        # max consecutive timesteps to zero-mask per window (0=off)
+    hflip_prob: float = 0.0       # horizontal keypoint flip probability (0=off)
+    label_smoothing: float = 0.0  # label smoothing for CE loss (0=off, e.g. 0.1)
+    use_class_weight: bool = True  # set False to disable auto class_weight in model.fit
     export_tflite: bool = True
     quantize_int8: bool = True
     representative_samples: int = 256
@@ -225,6 +230,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--focal-alpha", type=float)
     parser.add_argument("--focal-gamma", type=float)
     parser.add_argument("--noise-std", type=float, help="Gaussian noise std for training augmentation (0 = off).")
+    parser.add_argument("--feat-mask-prob", type=float, help="Per-feature (column) masking probability during training (0=off). Simulates keypoint occlusion.")
+    parser.add_argument("--time-mask-max", type=int, help="Max consecutive timesteps to zero-mask per window during training (0=off). Simulates tracking loss.")
+    parser.add_argument("--hflip-prob", type=float, help="Horizontal flip probability for kp7/kp8/kp12 feature sets (0=off). Mirrors left↔right keypoints.")
+    parser.add_argument("--label-smoothing", type=float, help="Label smoothing for CE loss (0=off, e.g. 0.1). Ignored when using focal loss.")
+    parser.add_argument("--no-class-weight", action="store_true", default=False,
+                        help="Disable automatic class_weight balancing in model.fit. "
+                             "Useful when focal loss already handles class imbalance.")
     parser.add_argument("--checkpoint-monitor", choices=["val_loss", "val_video_min_pr", "val_event_min_pr"],
                         help="Early-stop / best-weights monitor. Use val_video_min_pr for MinPR-optimised checkpointing.")
     parser.add_argument("--min-checkpoint-threshold", type=float,
@@ -323,6 +335,16 @@ def make_config(args: argparse.Namespace) -> BaselineConfig:
         payload["focal_gamma"] = args.focal_gamma
     if args.noise_std is not None:
         payload["noise_std"] = args.noise_std
+    if args.feat_mask_prob is not None:
+        payload["feat_mask_prob"] = args.feat_mask_prob
+    if args.time_mask_max is not None:
+        payload["time_mask_max"] = args.time_mask_max
+    if args.hflip_prob is not None:
+        payload["hflip_prob"] = args.hflip_prob
+    if args.label_smoothing is not None:
+        payload["label_smoothing"] = args.label_smoothing
+    if args.no_class_weight:
+        payload["use_class_weight"] = False
     if args.min_consecutive_values is not None:
         payload["min_consecutive_values"] = parse_csv_ints(args.min_consecutive_values)
     if args.checkpoint_monitor is not None:
@@ -705,7 +727,16 @@ def class_weight_from_labels(y: np.ndarray) -> dict[int, float]:
     return {c: float(total / (n_classes * max(counts[c], 1.0))) for c in range(n_classes)}
 
 
-def make_tf_dataset(x: np.ndarray, y: np.ndarray, batch_size: int, training: bool, noise_std: float = 0.0) -> tf.data.Dataset:
+# kp7 horizontal flip: x-coords to negate and left↔right column swap pairs
+_HFLIP_X_COLS  = [1, 4, 7, 10, 13, 16, 19, 22, 26]   # _x and HSSC_x/AHSSC_x cols in kp7+filtered
+_HFLIP_SWAP    = [(3,6),(4,7),(5,8),(9,12),(10,13),(11,14),(15,18),(16,19),(17,20)]  # kp5↔kp6, kp7↔kp8, kp11↔kp12
+
+
+def make_tf_dataset(
+    x: np.ndarray, y: np.ndarray, batch_size: int, training: bool,
+    noise_std: float = 0.0, feat_mask_prob: float = 0.0, time_mask_max: int = 0,
+    hflip_prob: float = 0.0,
+) -> tf.data.Dataset:
     ds = tf.data.Dataset.from_tensor_slices((x, y))
     if training:
         ds = ds.shuffle(min(len(x), 100_000), reshuffle_each_iteration=True)
@@ -714,6 +745,44 @@ def make_tf_dataset(x: np.ndarray, y: np.ndarray, batch_size: int, training: boo
                 noise = tf.random.normal(tf.shape(xb), stddev=noise_std)
                 return tf.clip_by_value(xb + noise, 0.0, 1.0), yb
             ds = ds.map(add_noise, num_parallel_calls=tf.data.AUTOTUNE)
+        if feat_mask_prob > 0.0:
+            # Randomly zero out entire feature columns — simulates keypoint occlusion
+            def feat_mask(xb: tf.Tensor, yb: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]:
+                mask = tf.cast(tf.random.uniform([tf.shape(xb)[1]]) > feat_mask_prob, xb.dtype)
+                return xb * mask, yb
+            ds = ds.map(feat_mask, num_parallel_calls=tf.data.AUTOTUNE)
+        if time_mask_max > 0:
+            # Zero out a random consecutive block of timesteps — simulates tracking loss
+            def time_mask(xb: tf.Tensor, yb: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]:
+                t = tf.shape(xb)[0]
+                mask_len = tf.random.uniform((), 1, time_mask_max + 1, dtype=tf.int32)
+                start = tf.random.uniform((), 0, tf.maximum(1, t - mask_len + 1), dtype=tf.int32)
+                indices = tf.range(t)
+                keep = tf.cast((indices < start) | (indices >= start + mask_len), xb.dtype)
+                return xb * tf.expand_dims(keep, 1), yb
+            ds = ds.map(time_mask, num_parallel_calls=tf.data.AUTOTUNE)
+        if hflip_prob > 0.0 and x.shape[-1] == 27:
+            # Horizontal flip for kp7+filtered (27 features): mirror x-coords, swap L↔R keypoints.
+            # Only applied when feature dim exactly matches kp7+filtered layout.
+            x_idx  = tf.constant(_HFLIP_X_COLS, dtype=tf.int32)
+            swap_a = tf.constant([p[0] for p in _HFLIP_SWAP], dtype=tf.int32)
+            swap_b = tf.constant([p[1] for p in _HFLIP_SWAP], dtype=tf.int32)
+            def hflip(xb: tf.Tensor, yb: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]:
+                do_flip = tf.random.uniform(()) < hflip_prob
+                def flip_fn(x_in: tf.Tensor) -> tf.Tensor:
+                    # negate x-coordinate columns (horizontal mirror)
+                    x_neg = tf.tensor_scatter_nd_update(
+                        x_in, tf.expand_dims(x_idx, 1),
+                        1.0 - tf.gather(x_in, x_idx, axis=1),
+                    )
+                    # swap left↔right keypoint column groups
+                    cols_a = tf.gather(x_neg, swap_a, axis=1)
+                    cols_b = tf.gather(x_neg, swap_b, axis=1)
+                    x_sw = tf.tensor_scatter_nd_update(x_neg, tf.expand_dims(swap_b, 1), cols_a)
+                    x_sw = tf.tensor_scatter_nd_update(x_sw,  tf.expand_dims(swap_a, 1), cols_b)
+                    return x_sw
+                return tf.cond(do_flip, lambda: flip_fn(xb), lambda: xb), yb
+            ds = ds.map(hflip, num_parallel_calls=tf.data.AUTOTUNE)
     return ds.batch(batch_size).prefetch(tf.data.AUTOTUNE)
 
 
@@ -872,11 +941,15 @@ def build_model(config: BaselineConfig, input_shape: tuple[int, int]) -> tf.kera
         model = build_lstm(config, input_shape)
     else:
         model = build_gru(config, input_shape)
-    loss: Any = (
-        SparseFocalLoss(alpha=config.focal_alpha, gamma=config.focal_gamma)
-        if config.focal_loss
-        else "sparse_categorical_crossentropy"
-    )
+    if config.focal_loss:
+        loss: Any = SparseFocalLoss(alpha=config.focal_alpha, gamma=config.focal_gamma)
+    elif config.label_smoothing > 0.0:
+        # SparseCategoricalCrossentropy supports label_smoothing directly
+        loss = tf.keras.losses.SparseCategoricalCrossentropy(
+            label_smoothing=config.label_smoothing
+        )
+    else:
+        loss = "sparse_categorical_crossentropy"
     model.compile(
         optimizer=tf.keras.optimizers.Adam(learning_rate=config.learning_rate),
         loss=loss,
@@ -1009,10 +1082,10 @@ def train_model(
             )
         )
     return model.fit(
-        make_tf_dataset(x["train"], y["train"], config.batch_size, True, config.noise_std),
+        make_tf_dataset(x["train"], y["train"], config.batch_size, True, config.noise_std, config.feat_mask_prob, config.time_mask_max, config.hflip_prob),
         validation_data=make_tf_dataset(x["val"], y["val"], config.batch_size, False),
         epochs=config.epochs,
-        class_weight=class_weight_from_labels(y["train"]),
+        class_weight=class_weight_from_labels(y["train"]) if config.use_class_weight else None,
         callbacks=callbacks,
         verbose=0,
     )
