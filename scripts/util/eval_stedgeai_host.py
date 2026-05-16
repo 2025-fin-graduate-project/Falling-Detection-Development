@@ -189,20 +189,30 @@ def run_validate_host(
         print(f"[stedgeai] validate failed:\n{result.stderr[-3000:]}", file=sys.stderr)
         return None
 
-    csvs = list(out_dir.glob(f"{name}_val_output*.csv"))
+    # STedgeAI 4.0 outputs: _val_c_outputs_1.csv (INT8 C), _val_m_outputs_1.csv (float32)
+    csvs = list(out_dir.glob(f"{name}_val_c_outputs_*.csv"))
+    if not csvs:
+        csvs = list(out_dir.glob(f"{name}_val_output*.csv"))
     return csvs[0] if csvs else None
 
 
 # ── 예측 CSV 파싱 ─────────────────────────────────────────────────────────────
 
 def load_predictions(csv_path: Path) -> np.ndarray:
-    """stedgeai validate 출력 CSV → (N, 2) float32 softmax 확률."""
+    """stedgeai validate 출력 CSV → (N, 2) float32 softmax 확률.
+
+    STedgeAI 4.0 CSV 형식: 앞부분에 '# ...' 주석 라인 다수 포함.
+    """
     rows = []
     with open(csv_path) as f:
         reader = csv.reader(f)
-        next(reader, None)  # header
         for row in reader:
-            vals = [float(v) for v in row if v.strip()]
+            if not row or row[0].strip().startswith("#"):
+                continue
+            try:
+                vals = [float(v) for v in row if v.strip()]
+            except ValueError:
+                continue
             if len(vals) >= 2:
                 rows.append(vals[:2])
     if not rows:
