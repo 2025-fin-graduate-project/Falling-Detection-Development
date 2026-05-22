@@ -174,7 +174,9 @@ model.keras  →  STedgeAI generate  →  C code + INT8 weights  →  STM32N6 Fl
 
 ---
 
-## 4.7 Phase 41/42 — K-of-N Vote Sweep (새 후처리 방식)
+## 4.7 Phase 41/42 — K-of-N Vote Sweep (새 후처리 방식) + Detection Latency
+
+### K-of-N 투표 방식
 
 Phase 41/42에서 post-processing을 슬라이딩 투표창 방식으로 일반화.
 
@@ -194,6 +196,23 @@ val set에서 7개 조합을 모두 평가하여 ev_minpr이 최고인 (vw, vk)�
 이전 방식(`min_consecutive=3/5`)과 비교:
 - `min_consecutive=3`은 3개 연속(연속 조건), `v5k3`은 5개 중 3개(비연속 허용)
 - K-of-N이 더 유연하여 일시적 점수 하락에 강건
+
+### Detection Latency Analysis (추가 실험 3)
+
+v10k6 post-processing에서의 낙상 감지 지연 측정 (stride=1, float 추론):
+
+| 모델 | Fall Recall | 평균 지연 | 중앙값 | P25~P75 |
+|---|---|---|---|---|
+| P42-kp17-w60 (w=60) | 0.984 | 1.02s | **1.00s** | 0.87s ~ 1.17s |
+| P41-kp13-w60 (w=60) | 0.984 | 1.00s | **1.00s** | 0.80s ~ 1.13s |
+| P41-raw-kp7-w40 (w=40) | 0.976 | 0.91s | **0.93s** | 0.80s ~ 1.13s |
+
+- 중앙값 감지 지연 ≈ 1.0초 (w=60 모델), 0.93초 (w=40 모델)
+- 음수 지연(early detection): 최소 -20~-36프레임 — 낙상 전조 동작 포착
+- 최장 지연 42~65프레임(2.8~4.3초): 느리거나 keypoint 가림이 있는 낙상
+- **임상 의의**: 낙상 후 1초 이내 감지로 즉각 대응 가능 (경보, 알림)
+
+---
 
 ## 4.8 Phase 43 — INT8 양자화 결과 (GRU(64,32), class-balanced split)
 

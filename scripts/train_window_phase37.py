@@ -25,17 +25,51 @@ from pathlib import Path
 import numpy as np
 import tensorflow as tf
 
+# GPU memory growth — 다중 프로세스 공존 및 서버 안정성
+for _gpu in tf.config.list_physical_devices('GPU'):
+    tf.config.experimental.set_memory_growth(_gpu, True)
+
 REPO     = Path(__file__).resolve().parents[1]
 DATA_DIR = REPO / "dataset/splits_v2_class_balanced_filtered"
 OUT_ROOT = REPO / "results/phase36_window_ablation"
 
+_DERIVED = ["HSSC_y","HSSC_x","RWHC","VHSSC","AHSSC","AHSSC_x"]
+
+# kp5: 코+어깨+골반 (5kp, 21f) — 최소 torso
+KP5_COLS = [
+    "kp0_y","kp0_x","kp0_s",
+    "kp5_y","kp5_x","kp5_s","kp6_y","kp6_x","kp6_s",
+    "kp11_y","kp11_x","kp11_s","kp12_y","kp12_x","kp12_s",
+] + _DERIVED
+
+# kp7: +팔꿈치 (7kp, 27f)
 KP7_COLS = [
     "kp0_y","kp0_x","kp0_s",
     "kp5_y","kp5_x","kp5_s","kp6_y","kp6_x","kp6_s",
     "kp7_y","kp7_x","kp7_s","kp8_y","kp8_x","kp8_s",
     "kp11_y","kp11_x","kp11_s","kp12_y","kp12_x","kp12_s",
-    "HSSC_y","HSSC_x","RWHC","VHSSC","AHSSC","AHSSC_x",
-]
+] + _DERIVED
+
+# kp9: +손목 (9kp, 33f)
+KP9_COLS = [
+    "kp0_y","kp0_x","kp0_s",
+    "kp5_y","kp5_x","kp5_s","kp6_y","kp6_x","kp6_s",
+    "kp7_y","kp7_x","kp7_s","kp8_y","kp8_x","kp8_s",
+    "kp9_y","kp9_x","kp9_s","kp10_y","kp10_x","kp10_s",
+    "kp11_y","kp11_x","kp11_s","kp12_y","kp12_x","kp12_s",
+] + _DERIVED
+
+# kp11: +무릎 (11kp, 39f)
+KP11_COLS = [
+    "kp0_y","kp0_x","kp0_s",
+    "kp5_y","kp5_x","kp5_s","kp6_y","kp6_x","kp6_s",
+    "kp7_y","kp7_x","kp7_s","kp8_y","kp8_x","kp8_s",
+    "kp9_y","kp9_x","kp9_s","kp10_y","kp10_x","kp10_s",
+    "kp11_y","kp11_x","kp11_s","kp12_y","kp12_x","kp12_s",
+    "kp13_y","kp13_x","kp13_s","kp14_y","kp14_x","kp14_s",
+] + _DERIVED
+
+# kp13: +발목 (13kp, 45f) — 기존 full body
 KP13_COLS = [
     "kp0_y","kp0_x","kp0_s",
     "kp5_y","kp5_x","kp5_s","kp6_y","kp6_x","kp6_s",
@@ -44,24 +78,59 @@ KP13_COLS = [
     "kp11_y","kp11_x","kp11_s","kp12_y","kp12_x","kp12_s",
     "kp13_y","kp13_x","kp13_s","kp14_y","kp14_x","kp14_s",
     "kp15_y","kp15_x","kp15_s","kp16_y","kp16_x","kp16_s",
-    "HSSC_y","HSSC_x","RWHC","VHSSC","AHSSC","AHSSC_x",
-]
+] + _DERIVED
+
+# kp17: +눈/귀 (17kp, 57f) — MoveNet 전체
+KP17_COLS = [
+    "kp0_y","kp0_x","kp0_s",
+    "kp1_y","kp1_x","kp1_s","kp2_y","kp2_x","kp2_s",
+    "kp3_y","kp3_x","kp3_s","kp4_y","kp4_x","kp4_s",
+    "kp5_y","kp5_x","kp5_s","kp6_y","kp6_x","kp6_s",
+    "kp7_y","kp7_x","kp7_s","kp8_y","kp8_x","kp8_s",
+    "kp9_y","kp9_x","kp9_s","kp10_y","kp10_x","kp10_s",
+    "kp11_y","kp11_x","kp11_s","kp12_y","kp12_x","kp12_s",
+    "kp13_y","kp13_x","kp13_s","kp14_y","kp14_x","kp14_s",
+    "kp15_y","kp15_x","kp15_s","kp16_y","kp16_x","kp16_s",
+] + _DERIVED
+
 # velocity 계산 대상: _y, _x 컬럼만 (confidence 제외)
+KP5_VEL_BASE  = [c for c in KP5_COLS  if c.endswith("_y") or c.endswith("_x")]
 KP7_VEL_BASE  = [c for c in KP7_COLS  if c.endswith("_y") or c.endswith("_x")]
+KP9_VEL_BASE  = [c for c in KP9_COLS  if c.endswith("_y") or c.endswith("_x")]
+KP11_VEL_BASE = [c for c in KP11_COLS if c.endswith("_y") or c.endswith("_x")]
 KP13_VEL_BASE = [c for c in KP13_COLS if c.endswith("_y") or c.endswith("_x")]
-FEATURE_SETS  = {"kp7": KP7_COLS, "kp13": KP13_COLS}
+KP17_VEL_BASE = [c for c in KP17_COLS if c.endswith("_y") or c.endswith("_x")]
+
+FEATURE_SETS = {
+    "kp5":  KP5_COLS,
+    "kp7":  KP7_COLS,
+    "kp9":  KP9_COLS,
+    "kp11": KP11_COLS,
+    "kp13": KP13_COLS,
+    "kp17": KP17_COLS,
+}
+VEL_BASE_MAP = {
+    "kp5":  KP5_VEL_BASE,
+    "kp7":  KP7_VEL_BASE,
+    "kp9":  KP9_VEL_BASE,
+    "kp11": KP11_VEL_BASE,
+    "kp13": KP13_VEL_BASE,
+    "kp17": KP17_VEL_BASE,
+}
 
 # hip center y,x 인덱스 (kp11, kp12)
-HIP_Y_COLS = {"kp7": ["kp11_y","kp12_y"], "kp13": ["kp11_y","kp12_y"]}
-HIP_X_COLS = {"kp7": ["kp11_x","kp12_x"], "kp13": ["kp11_x","kp12_x"]}
+_HIP_Y = ["kp11_y","kp12_y"]
+_HIP_X = ["kp11_x","kp12_x"]
+HIP_Y_COLS = {k: _HIP_Y for k in FEATURE_SETS}
+HIP_X_COLS = {k: _HIP_X for k in FEATURE_SETS}
 
 
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--exp-id",         required=True)
-    p.add_argument("--feature-set",    choices=["kp7","kp13"], default="kp13")
-    p.add_argument("--window-size",    type=int, choices=[30,40], default=40)
-    p.add_argument("--model-type",     choices=["gru","lstm"],   default="gru")
+    p.add_argument("--feature-set",    choices=["kp5","kp7","kp9","kp11","kp13","kp17"], default="kp13")
+    p.add_argument("--window-size",    type=int, default=40)
+    p.add_argument("--model-type",     choices=["gru","lstm","tcn"],   default="gru")
     p.add_argument("--hidden-sizes",   nargs="+", type=int,      default=[128,64])
     p.add_argument("--epochs",         type=int,   default=80)
     p.add_argument("--batch-size",     type=int,   default=512)
@@ -80,6 +149,10 @@ def parse_args():
     p.add_argument("--pure-margin", type=int, default=5,
                    help="frames fall_end may extend beyond window end (captures post-fall lying state)")
     p.add_argument("--seed", type=int, default=42)
+    p.add_argument("--data-dir", default=None,
+                   help="Override data directory (default: splits_v2_class_balanced_filtered)")
+    p.add_argument("--out-root", default=None,
+                   help="Override output root (default: results/phase36_window_ablation)")
     return p.parse_args()
 
 
@@ -98,8 +171,8 @@ def load_video_frames(csv_path, feat_cols, need_3class=False):
             frame_idx = int(row.get("frame", 0))
             lbl3 = int(row.get("label_3class", lbl))
             try:
-                feat = [float(row[c]) for c in feat_cols]
-            except (KeyError, ValueError):
+                feat = [float(row[c]) if c in row and row[c] != "" else 0.0 for c in feat_cols]
+            except ValueError:
                 continue
             data[vid]["feat"].append((frame_idx, feat))
             data[vid]["label"].append((frame_idx, lbl))
@@ -197,7 +270,13 @@ def build_train_windows(video_data, window_size, fall_stride, nfall_stride, rng,
                     if pos % nfall_stride == 0:
                         nfall_wins.append(win)
 
-    n_feat_out = fall_wins[0].shape[-1] if fall_wins else (frames.shape[-1] + (len(vel_idx) if vel_idx else 0))
+    if fall_wins:
+        n_feat_out = fall_wins[0].shape[-1]
+    elif nfall_wins:
+        n_feat_out = nfall_wins[0].shape[-1]
+    else:
+        sample = next(iter(video_data.values()))[0]
+        n_feat_out = sample.shape[-1] + (len(vel_idx) if vel_idx else 0)
     X_f = np.stack(fall_wins,  0).astype(np.float32) if fall_wins  else np.empty((0, window_size, n_feat_out), np.float32)
     X_n = np.stack(nfall_wins, 0).astype(np.float32) if nfall_wins else np.empty((0, window_size, n_feat_out), np.float32)
     X = np.concatenate([X_f, X_n], 0)
@@ -254,17 +333,39 @@ def normalize(X, mn, scale):
 
 
 def build_model(n_feat, window_size, model_type, hidden_sizes, dropout):
-    RNN = tf.keras.layers.GRU if model_type == "gru" else tf.keras.layers.LSTM
     inp = tf.keras.Input(shape=(window_size, n_feat))
-    x = tf.keras.layers.Conv1D(64, 5, padding="causal", activation="relu")(inp)
-    x = tf.keras.layers.Conv1D(64, 5, padding="causal", activation="relu")(x)
-    rnn_kwargs = {"dropout": dropout, "recurrent_dropout": 0.0, "unroll": True}
-    if model_type == "gru":
-        rnn_kwargs["reset_after"] = True
-    for i, h in enumerate(hidden_sizes):
-        x = RNN(h, return_sequences=(i < len(hidden_sizes)-1), **rnn_kwargs)(x)
-    x = tf.keras.layers.Dense(hidden_sizes[-1], activation="relu")(x)
-    x = tf.keras.layers.Dropout(dropout)(x)
+
+    if model_type == "tcn":
+        # Dilated causal Conv1D stack (no recurrence) — deployable, stateless
+        filters = hidden_sizes[0]  # e.g. 64
+        x = inp
+        for dilation in [1, 2, 4, 8]:
+            residual = x
+            x = tf.keras.layers.Conv1D(filters, 3, padding="causal",
+                                       dilation_rate=dilation, activation="relu")(x)
+            x = tf.keras.layers.Dropout(dropout)(x)
+            x = tf.keras.layers.Conv1D(filters, 3, padding="causal",
+                                       dilation_rate=dilation, activation="relu")(x)
+            x = tf.keras.layers.Dropout(dropout)(x)
+            # residual projection if channel mismatch
+            if residual.shape[-1] != filters:
+                residual = tf.keras.layers.Conv1D(filters, 1, padding="same")(residual)
+            x = tf.keras.layers.Add()([x, residual])
+        x = x[:, -1, :]  # last time step
+        x = tf.keras.layers.Dense(hidden_sizes[-1], activation="relu")(x)
+        x = tf.keras.layers.Dropout(dropout)(x)
+    else:
+        RNN = tf.keras.layers.GRU if model_type == "gru" else tf.keras.layers.LSTM
+        x = tf.keras.layers.Conv1D(64, 5, padding="causal", activation="relu")(inp)
+        x = tf.keras.layers.Conv1D(64, 5, padding="causal", activation="relu")(x)
+        rnn_kwargs = {"dropout": dropout, "recurrent_dropout": 0.0, "unroll": True}
+        if model_type == "gru":
+            rnn_kwargs["reset_after"] = True
+        for i, h in enumerate(hidden_sizes):
+            x = RNN(h, return_sequences=(i < len(hidden_sizes)-1), **rnn_kwargs)(x)
+        x = tf.keras.layers.Dense(hidden_sizes[-1], activation="relu")(x)
+        x = tf.keras.layers.Dropout(dropout)(x)
+
     out = tf.keras.layers.Dense(2, activation="softmax")(x)
     return tf.keras.Model(inp, out)
 
@@ -280,16 +381,10 @@ def focal_loss(gamma=2.0, alpha=0.75):
     return loss
 
 
-def event_vote_eval(model, video_data, window_size, threshold,
-                    vote_window=5, vote_k=3,
-                    vel_idx=None, hip_y=None, hip_x=None, mn=None, sc=None):
-    """Simulate deployed vote-based detection at video level.
-
-    For each video: run sliding window inference, apply K-of-N vote logic,
-    declare 'fall detected' if vote_sum >= vote_k at any point.
-    Ground truth: video contains label==1 anywhere → fall video.
-    """
-    tp = fp = fn = tn = 0
+def compute_video_scores(model, video_data, window_size,
+                         vel_idx=None, hip_y=None, hip_x=None, mn=None, sc=None):
+    """Pre-compute fall score sequence for each video. Returns {vid: (scores, has_fall)}."""
+    results = {}
     for vid, (frames, labels, _) in video_data.items():
         n = len(frames)
         if n < window_size:
@@ -301,31 +396,32 @@ def event_vote_eval(model, video_data, window_size, threshold,
             f = add_velocity(f, vel_idx)
         if mn is not None:
             f = normalize(f, mn, sc)
-
-        has_fall = bool(np.any(labels == 1))
         n_wins = n - window_size + 1
-        windows = np.stack([f[t:t + window_size] for t in range(n_wins)], axis=0).astype(np.float32)
-        fall_scores = model.predict(windows, batch_size=256, verbose=0)[:, 1]
+        wins = np.stack([f[t:t + window_size] for t in range(n_wins)], 0).astype(np.float32)
+        scores = WindowMinPRCallback._predict_batched(model, wins)
+        results[vid] = (scores, bool(np.any(labels == 1)))
+    return results
 
-        vote_buf = np.zeros(vote_window, dtype=np.int32)
-        vote_sum = 0
-        vote_head = 0
+
+def apply_vote_metrics(video_scores, threshold, vote_window, vote_k):
+    """Apply K-of-N vote on precomputed per-video scores and return full metrics."""
+    tp = fp = fn = tn = 0
+    for scores, has_fall in video_scores.values():
+        buf = np.zeros(vote_window, dtype=np.int32)
+        vote_sum = head = 0
         detected = False
-        for score in fall_scores:
-            this_vote = 1 if score >= threshold else 0
-            old_vote = int(vote_buf[vote_head])
-            vote_buf[vote_head] = this_vote
-            vote_head = (vote_head + 1) % vote_window
-            vote_sum += this_vote - old_vote
+        for score in scores:
+            v = 1 if score >= threshold else 0
+            vote_sum += v - int(buf[head])
+            buf[head] = v
+            head = (head + 1) % vote_window
             if vote_sum >= vote_k:
                 detected = True
                 break
-
         if has_fall:
-            tp += detected; fn += (not detected)
+            tp += detected;  fn += not detected
         else:
-            fp += detected; tn += (not detected)
-
+            fp += detected;  tn += not detected
     e = 1e-9
     return {
         "min_pr":          round(min(tp/(tp+fp+e), tp/(tp+fn+e), tn/(tn+fn+e), tn/(tn+fp+e)), 4),
@@ -334,7 +430,6 @@ def event_vote_eval(model, video_data, window_size, threshold,
         "nfall_precision": round(tn/(tn+fn+e), 4),
         "nfall_recall":    round(tn/(tn+fp+e), 4),
         "tp": tp, "fp": fp, "fn": fn, "tn": tn,
-        "vote_window": vote_window, "vote_k": vote_k,
     }
 
 
@@ -359,8 +454,14 @@ def select_threshold(y_true, y_prob):
 
 
 class WindowMinPRCallback(tf.keras.callbacks.Callback):
+    _MAX_CB_VAL = 20_000  # 서브샘플 상한 — 234K 전체 eager 루프 대비 ~10x 빠름
+
     def __init__(self, X_val, y_val, out_dir, patience=15):
         super().__init__()
+        if len(X_val) > self._MAX_CB_VAL:
+            rng = np.random.default_rng(42)
+            idx = rng.choice(len(X_val), self._MAX_CB_VAL, replace=False)
+            X_val, y_val = X_val[idx], y_val[idx]
         self.X_val, self.y_val = X_val, y_val
         self.out_dir = out_dir
         self.patience = patience
@@ -368,8 +469,16 @@ class WindowMinPRCallback(tf.keras.callbacks.Callback):
         self.history = {"epoch": [], "loss": [], "val_loss": [],
                         "val_acc": [], "val_window_minpr": []}
 
+    @staticmethod
+    def _predict_batched(model, X, batch=128):
+        """Eager batched inference — avoids compiled-graph EagerConst copy failures."""
+        parts = []
+        for i in range(0, len(X), batch):
+            parts.append(model(X[i:i + batch], training=False)[:, 1].numpy())
+        return np.concatenate(parts)
+
     def on_epoch_end(self, epoch, logs=None):
-        probs = self.model.predict(self.X_val, batch_size=1024, verbose=0)[:, 1]
+        probs = self._predict_batched(self.model, self.X_val)
         thr, mp = select_threshold(self.y_val, probs)
         logs["val_window_minpr"] = mp
         self.history["epoch"].append(epoch + 1)
@@ -395,12 +504,15 @@ def main():
     tf.random.set_seed(args.seed)
     rng = np.random.default_rng(args.seed)
 
+    data_dir = Path(args.data_dir) if args.data_dir else DATA_DIR
+    out_root = Path(args.out_root) if args.out_root else OUT_ROOT
+
     feat_cols = FEATURE_SETS[args.feature_set]
-    exp_dir = OUT_ROOT / args.exp_id
+    exp_dir = out_root / args.exp_id
     exp_dir.mkdir(parents=True, exist_ok=True)
 
     # velocity 인덱스 계산
-    vel_base = KP7_VEL_BASE if args.feature_set == "kp7" else KP13_VEL_BASE
+    vel_base = VEL_BASE_MAP[args.feature_set]
     vel_idx = [feat_cols.index(c) for c in vel_base if c in feat_cols] if args.use_velocity else None
 
     # hip center 인덱스
@@ -419,9 +531,9 @@ def main():
         log(f"  pure_window=True  margin={args.pure_margin} frames")
 
     log("Loading CSVs …")
-    train_data = load_video_frames(DATA_DIR/"train.csv", feat_cols, need_3class=True)
-    val_data   = load_video_frames(DATA_DIR/"val.csv",   feat_cols, need_3class=True)
-    test_data  = load_video_frames(DATA_DIR/"test.csv",  feat_cols, need_3class=True)
+    train_data = load_video_frames(data_dir/"train.csv", feat_cols, need_3class=True)
+    val_data   = load_video_frames(data_dir/"val.csv",   feat_cols, need_3class=True)
+    test_data  = load_video_frames(data_dir/"test.csv",  feat_cols, need_3class=True)
 
     log("Building windows …")
     X_tr, y_tr = build_train_windows(train_data, args.window_size, args.fall_stride, args.nfall_stride,
@@ -446,8 +558,16 @@ def main():
     cb = WindowMinPRCallback(X_va, y_va, exp_dir, patience=15)
     lr_cb = tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=6, min_lr=1e-5, verbose=0)
     log("Training …")
-    model.fit(X_tr, y_tr, batch_size=args.batch_size, epochs=args.epochs,
-              validation_data=(X_va, y_va), callbacks=[cb, lr_cb], verbose=0)
+    with tf.device("/CPU:0"):
+        ds_tr = (tf.data.Dataset.from_tensor_slices((X_tr, y_tr))
+                 .shuffle(min(len(X_tr), 50_000), seed=42)
+                 .batch(args.batch_size)
+                 .prefetch(tf.data.AUTOTUNE))
+        ds_va = (tf.data.Dataset.from_tensor_slices((X_va, y_va))
+                 .batch(args.batch_size)
+                 .prefetch(tf.data.AUTOTUNE))
+    model.fit(ds_tr, epochs=args.epochs,
+              validation_data=ds_va, callbacks=[cb, lr_cb], verbose=0)
     (exp_dir / "training_history.json").write_text(json.dumps(cb.history, indent=2))
 
     best = exp_dir / "model_best.keras"
@@ -455,68 +575,103 @@ def main():
         model = tf.keras.models.load_model(str(best), compile=False)
     model.save(str(exp_dir / "model.keras"))
 
-    val_probs = model.predict(X_va, batch_size=1024, verbose=0)[:, 1]
-    thr, val_mp = select_threshold(y_va, val_probs)
-    val_m = window_minpr(y_va, val_probs, thr)
+    # window-level probabilities (for threshold sweep)
+    val_probs  = WindowMinPRCallback._predict_batched(model, X_va)
+    test_probs = WindowMinPRCallback._predict_batched(model, X_te)
 
-    test_probs = model.predict(X_te, batch_size=1024, verbose=0)[:, 1]
-    test_m = window_minpr(y_te, test_probs, thr)
+    # per-video scores (computed once; reused across all sweep combos)
+    log("Scoring videos …")
+    ev_kw = dict(vel_idx=vel_idx, hip_y=hip_y, hip_x=hip_x, mn=mn, sc=sc)
+    val_vscores  = compute_video_scores(model, val_data,  args.window_size, **ev_kw)
+    test_vscores = compute_video_scores(model, test_data, args.window_size, **ev_kw)
 
-    log(f"Val   minpr={val_mp:.4f}  thr={thr}")
-    log(f"Test  minpr={test_m['min_pr']:.4f}  "
-        f"fall_pr={test_m['fall_precision']:.4f}  nfall_pr={test_m['nfall_precision']:.4f}  "
-        f"fall_rc={test_m['fall_recall']:.4f}  nfall_rc={test_m['nfall_recall']:.4f}  "
+    VOTE_COMBOS = [(1, 1), (3, 2), (5, 3), (5, 4), (7, 4), (7, 5), (10, 6)]
+
+    # ── Threshold sweep ───────────────────────────────────────────────────────
+    log("Threshold sweep …")
+    thr_sweep = []
+    for thr_f in np.arange(0.30, 0.905, 0.025):
+        t = round(float(thr_f), 3)
+        thr_sweep.append({
+            "thr":          t,
+            "val_win":      window_minpr(y_va, val_probs,  t),
+            "test_win":     window_minpr(y_te, test_probs, t),
+            "val_ev_v5k3":  apply_vote_metrics(val_vscores,  t, 5, 3),
+            "test_ev_v5k3": apply_vote_metrics(test_vscores, t, 5, 3),
+        })
+
+    best_thr_row = max(thr_sweep, key=lambda r: r["val_win"]["min_pr"])
+    thr    = best_thr_row["thr"]
+    val_m  = best_thr_row["val_win"]
+    test_m = best_thr_row["test_win"]
+
+    log(f"Best thr={thr}")
+    log(f"Val  window: minpr={val_m['min_pr']:.4f}  "
+        f"fall={val_m['fall_precision']:.4f}/{val_m['fall_recall']:.4f}  "
+        f"nfall={val_m['nfall_precision']:.4f}/{val_m['nfall_recall']:.4f}  "
+        f"FN={val_m['fn']}  FP={val_m['fp']}")
+    log(f"Test window: minpr={test_m['min_pr']:.4f}  "
+        f"fall={test_m['fall_precision']:.4f}/{test_m['fall_recall']:.4f}  "
+        f"nfall={test_m['nfall_precision']:.4f}/{test_m['nfall_recall']:.4f}  "
         f"FN={test_m['fn']}  FP={test_m['fp']}")
 
-    # ── Event-level vote simulation ───────────────────────────────────────────
-    # raw: single-window threshold (vote_window=1, vote_k=1) — baseline
-    # vote: K-of-N matching STM32 deployment (vote_window=5, vote_k=3)
-    log("Event eval …")
-    ev_kw = dict(vel_idx=vel_idx, hip_y=hip_y, hip_x=hip_x, mn=mn, sc=sc)
-    val_ev_raw  = event_vote_eval(model, val_data,  args.window_size, thr, 1, 1, **ev_kw)
-    test_ev_raw = event_vote_eval(model, test_data, args.window_size, thr, 1, 1, **ev_kw)
-    val_ev_vote  = event_vote_eval(model, val_data,  args.window_size, thr, 5, 3, **ev_kw)
-    test_ev_vote = event_vote_eval(model, test_data, args.window_size, thr, 5, 3, **ev_kw)
+    # ── Post-processing sweep at best threshold ───────────────────────────────
+    log(f"Postproc sweep (thr={thr}) …")
+    pp_sweep = []
+    for vw, vk in VOTE_COMBOS:
+        val_ev  = apply_vote_metrics(val_vscores,  thr, vw, vk)
+        test_ev = apply_vote_metrics(test_vscores, thr, vw, vk)
+        pp_sweep.append({"vote_window": vw, "vote_k": vk,
+                         "val": val_ev, "test": test_ev})
+        log(f"  v{vw}k{vk}"
+            f"  val={val_ev['min_pr']:.4f}"
+            f"(fall={val_ev['fall_precision']:.4f}/{val_ev['fall_recall']:.4f}"
+            f" nfall={val_ev['nfall_precision']:.4f}/{val_ev['nfall_recall']:.4f}"
+            f" FP={val_ev['fp']} FN={val_ev['fn']})"
+            f"  test={test_ev['min_pr']:.4f}"
+            f"(fall={test_ev['fall_precision']:.4f}/{test_ev['fall_recall']:.4f}"
+            f" nfall={test_ev['nfall_precision']:.4f}/{test_ev['nfall_recall']:.4f}"
+            f" FP={test_ev['fp']} FN={test_ev['fn']})")
 
-    log(f"Val  event(raw)  minpr={val_ev_raw['min_pr']:.4f}  "
-        f"fall={val_ev_raw['fall_precision']:.4f}/{val_ev_raw['fall_recall']:.4f}  "
-        f"nfall={val_ev_raw['nfall_precision']:.4f}/{val_ev_raw['nfall_recall']:.4f}  "
-        f"TP={val_ev_raw['tp']} FP={val_ev_raw['fp']} FN={val_ev_raw['fn']}")
-    log(f"Val  event(v5k3) minpr={val_ev_vote['min_pr']:.4f}  "
-        f"fall={val_ev_vote['fall_precision']:.4f}/{val_ev_vote['fall_recall']:.4f}  "
-        f"nfall={val_ev_vote['nfall_precision']:.4f}/{val_ev_vote['nfall_recall']:.4f}  "
-        f"TP={val_ev_vote['tp']} FP={val_ev_vote['fp']} FN={val_ev_vote['fn']}")
-    log(f"Test event(raw)  minpr={test_ev_raw['min_pr']:.4f}  "
-        f"fall={test_ev_raw['fall_precision']:.4f}/{test_ev_raw['fall_recall']:.4f}  "
-        f"nfall={test_ev_raw['nfall_precision']:.4f}/{test_ev_raw['nfall_recall']:.4f}  "
-        f"TP={test_ev_raw['tp']} FP={test_ev_raw['fp']} FN={test_ev_raw['fn']}")
-    log(f"Test event(v5k3) minpr={test_ev_vote['min_pr']:.4f}  "
-        f"fall={test_ev_vote['fall_precision']:.4f}/{test_ev_vote['fall_recall']:.4f}  "
-        f"nfall={test_ev_vote['nfall_precision']:.4f}/{test_ev_vote['nfall_recall']:.4f}  "
-        f"TP={test_ev_vote['tp']} FP={test_ev_vote['fp']} FN={test_ev_vote['fn']}")
-    gap_raw  = round(val_mp - val_ev_raw['min_pr'],  4)
-    gap_vote = round(val_mp - val_ev_vote['min_pr'], 4)
-    log(f"Gap window→event: raw={gap_raw:+.4f}  vote(5,3)={gap_vote:+.4f}")
+    best_pp = max(pp_sweep, key=lambda r: r["val"]["min_pr"])
+    log(f"Best postproc: v{best_pp['vote_window']}k{best_pp['vote_k']}  "
+        f"val_ev={best_pp['val']['min_pr']:.4f}  test_ev={best_pp['test']['min_pr']:.4f}")
+    log(f"Gap window→event(best): {val_m['min_pr'] - best_pp['val']['min_pr']:+.4f}")
+
+    # unified_eval: summary entry used by the analysis loop
+    unified_eval = {
+        "threshold": thr,
+        "window": {"val": val_m, "test": test_m},
+        "event": {
+            "min_pr":      best_pp["test"]["min_pr"],
+            "val":         best_pp["val"],
+            "test":        best_pp["test"],
+            "vote_window": best_pp["vote_window"],
+            "vote_k":      best_pp["vote_k"],
+        },
+    }
 
     (exp_dir/"feature_columns.json").write_text(json.dumps(feat_cols, indent=2))
-    (exp_dir/"normalization.json").write_text(json.dumps({"min": mn.tolist(), "scale": sc.tolist()}))
-    metrics = {
-        "exp_id": args.exp_id,
-        "config": vars(args),
-        "threshold": thr,
-        "metrics": {
-            "val_window":   {**val_m},
-            "test_window":  {**test_m},
-            "val_event_raw":   {**val_ev_raw},
-            "test_event_raw":  {**test_ev_raw},
-            "val_event_vote":  {**val_ev_vote},
-            "test_event_vote": {**test_ev_vote},
+    (exp_dir/"normalization.json").write_text(
+        json.dumps({"min": mn.tolist(), "scale": sc.tolist()}))
+    metrics_out = {
+        "exp_id":         args.exp_id,
+        "config":         vars(args),
+        "unified_eval":   unified_eval,
+        "threshold_sweep": thr_sweep,
+        "postproc_sweep":  pp_sweep,
+        "window_stats": {
+            "train_fall":  int(y_tr.sum()),
+            "train_nfall": int((y_tr == 0).sum()),
+            "val_fall":    int(y_va.sum()),
+            "test_fall":   int(y_te.sum()),
         },
-        "window_stats": {"train_fall": int(y_tr.sum()), "train_nfall": int((y_tr==0).sum()),
-                         "val_fall": int(y_va.sum()), "test_fall": int(y_te.sum())},
     }
-    (exp_dir/"metrics.json").write_text(json.dumps(metrics, indent=2))
-    log(f"=== DONE {args.exp_id}  test_minpr={test_m['min_pr']:.4f} ===")
+    (exp_dir/"metrics.json").write_text(json.dumps(metrics_out, indent=2))
+    log(f"=== DONE {args.exp_id}  "
+        f"test_win={test_m['min_pr']:.4f}  "
+        f"test_ev={best_pp['test']['min_pr']:.4f}"
+        f"(v{best_pp['vote_window']}k{best_pp['vote_k']}) ===")
 
 
 if __name__ == "__main__":
