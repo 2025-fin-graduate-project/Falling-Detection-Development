@@ -1,0 +1,42 @@
+{
+  "export": {
+    "model_fp32_tflite": "/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/tcn_ablation/EMA-kp12-w30/model_fp32.tflite",
+    "model_int8_tflite": "/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/tcn_ablation/EMA-kp12-w30/model_int8.tflite",
+    "model_int8_size_kb": 153.664
+  },
+  "runtime": {
+    "test_int8": {
+      "split": "test_int8",
+      "threshold": 0.44999999999999996,
+      "accuracy": 0.9386,
+      "precision": 0.9054325955734407,
+      "nfall_precision": 0.9468297553669496,
+      "min_precision": 0.9054325955734407,
+      "nfall_recall": 0.9758168253151531,
+      "min_pr": 0.8086253369272237,
+      "recall": 0.8086253369272237,
+      "f1": 0.8542952064546749,
+      "auc_roc": 0.9671035827721635,
+      "pr_auc": 0.9273974088867775,
+      "positive_support": 1113,
+      "negative_support": 3887,
+      "confusion_matrix": [
+        [
+          3793,
+          94
+        ],
+        [
+          213,
+          900
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9468    0.9758    0.9611      3887\n           1     0.9054    0.8086    0.8543      1113\n\n    accuracy                         0.9386      5000\n   macro avg     0.9261    0.8922    0.9077      5000\nweighted avg     0.9376    0.9386    0.9373      5000\n",
+      "by_direction_recall": {
+        "BY": 0.8235294117647058,
+        "FY": 0.8621700879765396,
+        "SY": 0.7454068241469817
+      }
+    },
+    "delta_f1": -0.0727934121558057
+  }
+}

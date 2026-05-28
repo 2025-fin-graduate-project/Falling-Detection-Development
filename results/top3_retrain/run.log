@@ -1,0 +1,1476 @@
+[17:08:47] === Top-3 모델 재훈련 시작 ===
+[17:08:47] TRAIN → M1-kp13-w60
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779437327.881238 3605065 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+E0000 00:00:1779437329.557181 3605065 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_COMPAT_NOT_SUPPORTED_ON_DEVICE: forward compatibility was attempted on non supported HW
+I0000 00:00:1779437329.557203 3605065 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1779437329.557205 3605065 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1779437329.557208 3605065 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1779437329.557271 3605065 cuda_diagnostics.cc:190] libcuda reported version is: 580.159.3
+I0000 00:00:1779437329.557286 3605065 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+E0000 00:00:1779437329.557288 3605065 cuda_diagnostics.cc:287] kernel version 580.142.0 does not match DSO version 580.159.3 -- cannot find working devices in this configuration
+[17:08:49] === M1-kp13-w60 ===
+[17:08:49]   feat=kp13(45f)  win=60  model=gru
+[17:08:49]   velocity=False  hip_center=False  exclude_boundary=False
+[17:08:49]   focal α=0.65 γ=2.0  strides fall=1/nfall=5
+[17:08:49]   pure_window=True  margin=5 frames
+[17:08:49] Loading CSVs …
+[17:09:30] Building windows …
+[17:09:40]   train=304581 (fall=199466)  val=201631 (fall=57017)  test=101544 (fall=28592)
+[17:09:52]   params=70,498
+[17:09:52] Training …
+W0000 00:00:1779437393.003563 3605065 cpu_allocator_impl.cc:82] Allocation of 3289474800 exceeds 10% of free system memory.
+W0000 00:00:1779437395.473694 3605065 cpu_allocator_impl.cc:82] Allocation of 2177614800 exceeds 10% of free system memory.
+W0000 00:00:1779437397.095666 3605065 cpu_allocator_impl.cc:82] Allocation of 3289474800 exceeds 10% of free system memory.
+W0000 00:00:1779437460.101016 3605065 cpu_allocator_impl.cc:82] Allocation of 2177614800 exceeds 10% of free system memory.
+[17:11:48]   ep  1  val_minpr=0.9378  thr=0.775  *** best
+[17:13:20]   ep  2  val_minpr=0.9485  thr=0.8  *** best
+[17:14:51]   ep  3  val_minpr=0.9506  thr=0.75  *** best
+[17:16:23]   ep  4  val_minpr=0.9582  thr=0.7  *** best
+[17:17:53]   ep  5  val_minpr=0.9562  thr=0.7  (wait 1/15)
+[17:33:37] === Top-3 모델 재훈련 시작 ===
+[17:33:37] === Top-3 모델 재훈련 시작 ===
+[17:33:37] TRAIN → M1-kp13-w60
+[17:33:37] TRAIN → M1-kp13-w60
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779438817.340446   12383 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[17:33:39] === M1-kp13-w60 ===
+[17:33:39]   feat=kp13(45f)  win=60  model=gru
+[17:33:39]   velocity=False  hip_center=False  exclude_boundary=False
+[17:33:39]   focal α=0.65 γ=2.0  strides fall=1/nfall=5
+[17:33:39]   pure_window=True  margin=5 frames
+[17:33:39] Loading CSVs …
+[17:34:21] Building windows …
+[17:34:33]   train=304581 (fall=199466)  val=201631 (fall=57017)  test=101544 (fall=28592)
+I0000 00:00:1779438883.190810   12383 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6368 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+[17:34:44]   params=70,498
+[17:34:44] Training …
+W0000 00:00:1779438885.558608   12383 cpu_allocator_impl.cc:82] Allocation of 3289474800 exceeds 10% of free system memory.
+W0000 00:00:1779438889.110686   12383 cpu_allocator_impl.cc:82] Allocation of 2177614800 exceeds 10% of free system memory.
+W0000 00:00:1779438890.810664   12383 cpu_allocator_impl.cc:82] Allocation of 3289474800 exceeds 10% of free system memory.
+I0000 00:00:1779438905.505192   14102 service.cc:153] XLA service 0x443c5e60 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1779438905.505206   14102 service.cc:161]   StreamExecutor [0]: NVIDIA GeForce RTX 2060 SUPER, Compute Capability 7.5 (Driver: 13.0.0; Runtime: 12.9.0; Toolkit: 12.5.0; DNN: 9.22.0)
+I0000 00:00:1779438906.271061   14102 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+I0000 00:00:1779438909.589679   14102 cuda_dnn.cc:461] Loaded cuDNN version 92200
+I0000 00:00:1779438910.079654   14102 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_40175__.255
+W0000 00:00:1779438911.938693   14102 bfc_allocator.cc:383] Garbage collection: deallocate free memory regions (i.e., allocations) so that we can re-allocate a larger region to avoid OOM due to memory fragmentation. If you see this message frequently, you are running near the threshold of the available device memory and re-allocation may incur great performance overhead. You may try smaller batch sizes to observe the performance impact. Set TF_ENABLE_GPU_GARBAGE_COLLECTION=false if you'd like to disable this feature.
+E0000 00:00:1779438912.386558   14102 cuda_timer.cc:87] Delay kernel timed out: measured time has sub-optimal accuracy. There may be a missing warmup execution, please investigate in Nsight Systems.
+I0000 00:00:1779438924.016785   14102 device_compiler.h:208] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+I0000 00:00:1779438935.286342   14103 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_40175__.255
+E0000 00:00:1779438936.652331   14103 cuda_timer.cc:87] Delay kernel timed out: measured time has sub-optimal accuracy. There may be a missing warmup execution, please investigate in Nsight Systems.
+W0000 00:00:1779438944.650463   12383 cpu_allocator_impl.cc:82] Allocation of 2177614800 exceeds 10% of free system memory.
+I0000 00:00:1779438949.235636   14103 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_47853__.7
+I0000 00:00:1779438955.160041   14099 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_47853__.7
+[17:36:38]   ep  1  val_minpr=0.9465  thr=0.75  *** best
+[17:37:27]   ep  2  val_minpr=0.9468  thr=0.8  *** best
+[17:38:14]   ep  3  val_minpr=0.9499  thr=0.775  *** best
+[17:39:02]   ep  4  val_minpr=0.9579  thr=0.775  *** best
+[17:39:50]   ep  5  val_minpr=0.9539  thr=0.725  (wait 1/15)
+[17:43:46]   ep 10  val_minpr=0.9571  thr=0.75  (wait 6/15)
+[17:44:33]   ep 11  val_minpr=0.9603  thr=0.7  *** best
+[17:47:43]   ep 15  val_minpr=0.9558  thr=0.75  (wait 4/15)
+[17:51:39]   ep 20  val_minpr=0.9583  thr=0.725  (wait 9/15)
+[17:55:36]   ep 25  val_minpr=0.9581  thr=0.75  (wait 14/15)
+[17:56:23]   Early stop ep26
+[18:06:09] Scoring videos …
+[18:27:25] Threshold sweep …
+[18:27:26] Best thr=0.675
+[18:27:26] Val  window: minpr=0.9581  fall=0.9581/0.9635  nfall=0.9856/0.9834  FN=2080  FP=2401
+[18:27:26] Test window: minpr=0.9531  fall=0.9609/0.9531  nfall=0.9817/0.9848  FN=1342  FP=1110
+[18:27:26] Postproc sweep (thr=0.675) …
+[18:27:26]   v1k1  val=0.8587(fall=0.9507/0.9944 nfall=0.9826/0.8587 FP=65 FN=7)  test=0.8701(fall=0.9544/0.9921 nfall=0.9757/0.8701 FP=30 FN=5)
+[18:27:26]   v3k2  val=0.8630(fall=0.9521/0.9944 nfall=0.9827/0.8630 FP=63 FN=7)  test=0.8788(fall=0.9573/0.9921 nfall=0.9760/0.8788 FP=28 FN=5)
+[18:27:26]   v5k3  val=0.8674(fall=0.9535/0.9929 nfall=0.9779/0.8674 FP=61 FN=9)  test=0.8788(fall=0.9573/0.9905 nfall=0.9713/0.8788 FP=28 FN=6)
+[18:27:26]   v5k4  val=0.8761(fall=0.9564/0.9929 nfall=0.9782/0.8761 FP=57 FN=9)  test=0.8788(fall=0.9573/0.9905 nfall=0.9713/0.8788 FP=28 FN=6)
+[18:27:26]   v7k4  val=0.8761(fall=0.9564/0.9929 nfall=0.9782/0.8761 FP=57 FN=9)  test=0.8788(fall=0.9573/0.9905 nfall=0.9713/0.8788 FP=28 FN=6)
+[18:27:26]   v7k5  val=0.8826(fall=0.9586/0.9929 nfall=0.9783/0.8826 FP=54 FN=9)  test=0.8788(fall=0.9573/0.9905 nfall=0.9713/0.8788 FP=28 FN=6)
+[18:27:26]   v10k6  val=0.8891(fall=0.9608/0.9921 nfall=0.9761/0.8891 FP=51 FN=10)  test=0.8918(fall=0.9617/0.9905 nfall=0.9717/0.8918 FP=25 FN=6)
+[18:27:26] Best postproc: v10k6  val_ev=0.8891  test_ev=0.8918
+[18:27:26] Gap window→event(best): +0.0690
+[18:27:26] === DONE M1-kp13-w60  test_win=0.9531  test_ev=0.8918(v10k6) ===
+[18:27:29] DONE M1-kp13-w60
+[18:27:29] DONE M1-kp13-w60
+  M1-kp13-w60: ev_minpr=0.8918 thr=?  Flash=?KiB MACC=?
+[18:27:29] TRAIN → M2-vel-kp13-w40
+[18:27:29] TRAIN → M2-vel-kp13-w40
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779442049.458913   25508 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[18:27:31] === M2-vel-kp13-w40 ===
+[18:27:31]   feat=kp13(74f)  win=40  model=gru
+[18:27:31]   velocity=True  hip_center=False  exclude_boundary=False
+[18:27:31]   focal α=0.65 γ=2.0  strides fall=1/nfall=5
+[18:27:31]   pure_window=True  margin=5 frames
+[18:27:31] Loading CSVs …
+[18:28:12] Building windows …
+[18:28:25]   train=258219 (fall=111991)  val=235247 (fall=31991)  test=118434 (fall=16083)
+I0000 00:00:1779442116.389146   25508 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+[18:28:36]   params=79,778
+[18:28:37] Training …
+W0000 00:00:1779442118.328990   25508 cpu_allocator_impl.cc:82] Allocation of 3057312960 exceeds 10% of free system memory.
+W0000 00:00:1779442121.801721   25508 cpu_allocator_impl.cc:82] Allocation of 2785324480 exceeds 10% of free system memory.
+W0000 00:00:1779442123.931373   25508 cpu_allocator_impl.cc:82] Allocation of 3057312960 exceeds 10% of free system memory.
+I0000 00:00:1779442133.979912   25706 service.cc:153] XLA service 0x7d705c0b8b20 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1779442133.979935   25706 service.cc:161]   StreamExecutor [0]: NVIDIA GeForce RTX 2060 SUPER, Compute Capability 7.5 (Driver: 13.0.0; Runtime: 12.9.0; Toolkit: 12.5.0; DNN: 9.22.0)
+I0000 00:00:1779442134.412422   25706 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+I0000 00:00:1779442136.621100   25706 cuda_dnn.cc:461] Loaded cuDNN version 92200
+I0000 00:00:1779442136.939580   25706 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_27815__.175
+I0000 00:00:1779442148.938827   25706 device_compiler.h:208] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+I0000 00:00:1779442155.804968   25708 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_27815__.175
+W0000 00:00:1779442167.232226   25508 cpu_allocator_impl.cc:82] Allocation of 2785324480 exceeds 10% of free system memory.
+I0000 00:00:1779442170.931497   25705 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_33493__.7
+I0000 00:00:1779442175.435790   25705 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_33493__.7
+[18:30:05]   ep  1  val_minpr=0.9159  thr=0.725  *** best
+[18:30:38]   ep  2  val_minpr=0.9252  thr=0.75  *** best
+[18:31:10]   ep  3  val_minpr=0.9327  thr=0.775  *** best
+[18:31:43]   ep  4  val_minpr=0.9381  thr=0.725  *** best
+[18:32:16]   ep  5  val_minpr=0.9333  thr=0.75  (wait 1/15)
+[18:33:53]   ep  8  val_minpr=0.9418  thr=0.75  *** best
+[18:34:26]   ep  9  val_minpr=0.9429  thr=0.7  *** best
+[18:34:58]   ep 10  val_minpr=0.9411  thr=0.65  (wait 1/15)
+[18:37:08]   ep 14  val_minpr=0.9444  thr=0.775  *** best
+[18:37:41]   ep 15  val_minpr=0.9445  thr=0.7  *** best
+[18:39:50]   ep 19  val_minpr=0.9450  thr=0.7  *** best
+[18:40:22]   ep 20  val_minpr=0.9427  thr=0.675  (wait 1/15)
+[18:42:00]   ep 23  val_minpr=0.9459  thr=0.7  *** best
+[18:43:05]   ep 25  val_minpr=0.9437  thr=0.675  (wait 2/15)
+[18:45:47]   ep 30  val_minpr=0.9444  thr=0.7  (wait 7/15)
+[18:48:29]   ep 35  val_minpr=0.9440  thr=0.7  (wait 12/15)
+[18:50:07]   Early stop ep38
+[18:57:54] Scoring videos …
+[19:12:33] Threshold sweep …
+[19:12:34] Best thr=0.7
+[19:12:34] Val  window: minpr=0.9445  fall=0.9445/0.9462  nfall=0.9915/0.9913  FN=1722  FP=1778
+[19:12:34] Test window: minpr=0.9347  fall=0.9522/0.9347  nfall=0.9898/0.9926  FN=1050  FP=754
+[19:12:34] Postproc sweep (thr=0.7) …
+[19:12:34]   v1k1  val=0.8652(fall=0.9526/0.9897 nfall=0.9684/0.8652 FP=62 FN=13)  test=0.8658(fall=0.9529/0.9905 nfall=0.9709/0.8658 FP=31 FN=6)
+[19:12:34]   v3k2  val=0.8696(fall=0.9540/0.9881 nfall=0.9639/0.8696 FP=60 FN=15)  test=0.8701(fall=0.9540/0.9826 nfall=0.9481/0.8701 FP=30 FN=11)
+[19:12:34]   v5k3  val=0.8717(fall=0.9548/0.9881 nfall=0.9639/0.8717 FP=59 FN=15)  test=0.8788(fall=0.9569/0.9826 nfall=0.9486/0.8788 FP=28 FN=11)
+[19:12:35]   v5k4  val=0.8761(fall=0.9562/0.9865 nfall=0.9595/0.8761 FP=57 FN=17)  test=0.8874(fall=0.9598/0.9795 nfall=0.9404/0.8874 FP=26 FN=13)
+[19:12:35]   v7k4  val=0.8717(fall=0.9547/0.9873 nfall=0.9616/0.8717 FP=59 FN=16)  test=0.8831(fall=0.9583/0.9795 nfall=0.9401/0.8831 FP=27 FN=13)
+[19:12:35]   v7k5  val=0.8826(fall=0.9583/0.9857 nfall=0.9575/0.8826 FP=54 FN=18)  test=0.8918(fall=0.9612/0.9779 nfall=0.9364/0.8918 FP=25 FN=14)
+[19:12:35]   v10k6  val=0.8870(fall=0.9598/0.9849 nfall=0.9555/0.8870 FP=52 FN=19)  test=0.9004(fall=0.9641/0.9763 nfall=0.9327/0.9004 FP=23 FN=15)
+[19:12:35] Best postproc: v10k6  val_ev=0.8870  test_ev=0.9004
+[19:12:35] Gap window→event(best): +0.0575
+[19:12:35] === DONE M2-vel-kp13-w40  test_win=0.9347  test_ev=0.9004(v10k6) ===
+[19:12:37] DONE M2-vel-kp13-w40
+[19:12:37] DONE M2-vel-kp13-w40
+  M2-vel-kp13-w40: ev_minpr=0.9004 thr=?  Flash=?KiB MACC=?
+[19:12:37] TRAIN → M3-kp17-w40
+[19:12:37] TRAIN → M3-kp17-w40
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779444757.542859   40223 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[19:12:39] === M3-kp17-w40 ===
+[19:12:39]   feat=kp17(57f)  win=40  model=gru
+[19:12:39]   velocity=False  hip_center=False  exclude_boundary=False
+[19:12:39]   focal α=0.65 γ=2.0  strides fall=1/nfall=5
+[19:12:39]   pure_window=True  margin=5 frames
+[19:12:39] Loading CSVs …
+[19:13:25] Building windows …
+[19:13:36]   train=258219 (fall=111991)  val=235247 (fall=31991)  test=118434 (fall=16083)
+I0000 00:00:1779444824.862964   40223 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+[19:13:45]   params=74,338
+[19:13:45] Training …
+W0000 00:00:1779444826.549700   40223 cpu_allocator_impl.cc:82] Allocation of 2354957280 exceeds 10% of free system memory.
+W0000 00:00:1779444829.280025   40223 cpu_allocator_impl.cc:82] Allocation of 2145452640 exceeds 10% of free system memory.
+W0000 00:00:1779444830.938822   40223 cpu_allocator_impl.cc:82] Allocation of 2354957280 exceeds 10% of free system memory.
+I0000 00:00:1779444840.585917   40571 service.cc:153] XLA service 0x3029a740 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1779444840.585951   40571 service.cc:161]   StreamExecutor [0]: NVIDIA GeForce RTX 2060 SUPER, Compute Capability 7.5 (Driver: 13.0.0; Runtime: 12.9.0; Toolkit: 12.5.0; DNN: 9.22.0)
+I0000 00:00:1779444840.987593   40571 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+I0000 00:00:1779444843.187649   40571 cuda_dnn.cc:461] Loaded cuDNN version 92200
+I0000 00:00:1779444843.499833   40571 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_27815__.175
+I0000 00:00:1779444855.558592   40571 device_compiler.h:208] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+I0000 00:00:1779444862.440189   40571 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_27815__.175
+W0000 00:00:1779444873.349449   40223 cpu_allocator_impl.cc:82] Allocation of 2145452640 exceeds 10% of free system memory.
+I0000 00:00:1779444876.809342   40571 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_33493__.7
+I0000 00:00:1779444881.037661   40569 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_33493__.7
+[19:15:10]   ep  1  val_minpr=0.9190  thr=0.75  *** best
+[19:15:42]   ep  2  val_minpr=0.9362  thr=0.75  *** best
+[19:16:46]   ep  4  val_minpr=0.9386  thr=0.7  *** best
+[19:17:18]   ep  5  val_minpr=0.9363  thr=0.7  (wait 1/15)
+[19:17:50]   ep  6  val_minpr=0.9420  thr=0.725  *** best
+[19:19:58]   ep 10  val_minpr=0.9375  thr=0.675  (wait 4/15)
+[19:20:30]   ep 11  val_minpr=0.9444  thr=0.675  *** best
+[19:22:38]   ep 15  val_minpr=0.9382  thr=0.725  (wait 4/15)
+[19:23:42]   ep 17  val_minpr=0.9460  thr=0.675  *** best
+[19:25:18]   ep 20  val_minpr=0.9349  thr=0.75  (wait 3/15)
+[19:26:55]   ep 23  val_minpr=0.9466  thr=0.725  *** best
+[19:27:58]   ep 25  val_minpr=0.9419  thr=0.675  (wait 2/15)
+[19:30:39]   ep 30  val_minpr=0.9422  thr=0.725  (wait 7/15)
+[19:33:20]   ep 35  val_minpr=0.9411  thr=0.725  (wait 12/15)
+[19:34:57]   Early stop ep38
+[19:42:49] Scoring videos …
+[19:57:27] Threshold sweep …
+[19:57:28] Best thr=0.725
+[19:57:28] Val  window: minpr=0.9431  fall=0.9447/0.9431  nfall=0.9910/0.9913  FN=1820  FP=1765
+[19:57:28] Test window: minpr=0.9259  fall=0.9445/0.9259  nfall=0.9884/0.9915  FN=1191  FP=875
+[19:57:28] Postproc sweep (thr=0.725) …
+[19:57:28]   v1k1  val=0.8587(fall=0.9505/0.9913 nfall=0.9729/0.8587 FP=65 FN=11)  test=0.8745(fall=0.9557/0.9874 nfall=0.9619/0.8745 FP=29 FN=8)
+[19:57:28]   v3k2  val=0.8783(fall=0.9571/0.9905 nfall=0.9712/0.8783 FP=56 FN=12)  test=0.8874(fall=0.9600/0.9858 nfall=0.9579/0.8874 FP=26 FN=9)
+[19:57:28]   v5k3  val=0.8870(fall=0.9599/0.9889 nfall=0.9668/0.8870 FP=52 FN=14)  test=0.9004(fall=0.9643/0.9810 nfall=0.9455/0.9004 FP=23 FN=12)
+[19:57:28]   v5k4  val=0.8913(fall=0.9614/0.9881 nfall=0.9647/0.8913 FP=50 FN=15)  test=0.9004(fall=0.9642/0.9795 nfall=0.9412/0.9004 FP=23 FN=13)
+[19:57:28]   v7k4  val=0.8913(fall=0.9614/0.9889 nfall=0.9670/0.8913 FP=50 FN=14)  test=0.9004(fall=0.9642/0.9795 nfall=0.9412/0.9004 FP=23 FN=13)
+[19:57:28]   v7k5  val=0.8957(fall=0.9628/0.9865 nfall=0.9604/0.8957 FP=48 FN=17)  test=0.9004(fall=0.9641/0.9763 nfall=0.9327/0.9004 FP=23 FN=15)
+[19:57:29]   v10k6  val=0.9000(fall=0.9642/0.9833 nfall=0.9517/0.9000 FP=46 FN=21)  test=0.9048(fall=0.9655/0.9731 nfall=0.9248/0.9048 FP=22 FN=17)
+[19:57:29] Best postproc: v10k6  val_ev=0.9000  test_ev=0.9048
+[19:57:29] Gap window→event(best): +0.0431
+[19:57:29] === DONE M3-kp17-w40  test_win=0.9259  test_ev=0.9048(v10k6) ===
+[19:57:31] DONE M3-kp17-w40
+[19:57:31] DONE M3-kp17-w40
+  M3-kp17-w40: ev_minpr=0.9048 thr=?  Flash=?KiB MACC=?
+[19:57:31] === 훈련 완료. STedgeAI analyze + generate ===
+[19:57:31] === 훈련 완료. STedgeAI analyze + generate ===
+[19:57:31] ANALYZE → M1-kp13-w60
+[19:57:31] ANALYZE → M1-kp13-w60
+[stedgeai] making compat .keras for M1-kp13-w60
+[stedgeai] making compat .keras for M1-kp13-w60
+[stedgeai] analyze ...
+[stedgeai] analyze ...
+ST Edge AI Core v4.0.0-20500 359356bb0
+
+Creating c (debug) info json file /tmp/stedgeai_out_akv3pgvn/m1_kp13_w60_c_info.json
+ 
+ Exec/report summary (analyze)
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/model_stedgeai_compat.keras   
+ type               :   keras                                                                                                                         
+ c_name             :   m1_kp13_w60                                                                                                                   
+ compression        :   lossless                                                                                                                      
+ options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                
+ optimization       :   balanced                                                                                                                      
+ target/series      :   stm32n6                                                                                                                       
+ workspace dir      :   /tmp/stedgeai_ws_0c_yqm5e                                                                                                     
+ output dir         :   /tmp/stedgeai_out_akv3pgvn                                                                                                    
+ model_fmt          :   float                                                                                                                         
+ model_name         :   model_stedgeai_compat                                                                                                         
+ model_hash         :   0xff17621704e089665449120390575e8c                                                                                            
+ params #           :   70,498 items (275.38 KiB)                                                                                                     
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ input 1/1          :   'input_layer', f32(1x60x45), 10.55 KBytes, activations                                                                        
+ output 1/1         :   'dense_1', f32(1x2), 8 Bytes, activations                                                                                     
+ macc               :   4,140,832                                                                                                                     
+ weights (ro)       :   281,992 B (275.38 KiB) (1 segment)                                                                                            
+ activations (rw)   :   32,256 B (31.50 KiB) (1 segment) *                                                                                            
+ ram (total)        :   32,256 B (31.50 KiB) = 32,256 + 0 + 0                                                                                         
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+
+Computing AI RT data/code size (target=stm32n6)..
+ -> compiler "gcc:arm-none-eabi-gcc" is not in the PATH
+
+ Model name - model_stedgeai_compat
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ m_id   layer (original)           oshape            param/size             macc      connected to
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 0      input_layer (InputLayer)   [b:1,h:60,c:45]
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 1      conv1d_conv2d (Conv1D)     [b:1,h:60,c:64]   14,464/57,856       864,064       input_layer
+        conv1d (Conv1D)            [b:1,h:60,c:64]                         3,840     conv1d_conv2d
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 2      conv1d_1_conv2d (Conv1D)   [b:1,h:60,c:64]   20,544/82,176     1,228,864            conv1d
+        conv1d_1 (Conv1D)          [b:1,h:60,c:64]                         3,840   conv1d_1_conv2d
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 3      gru (GRU)                  [b:1,h:60,c:64]   24,960/99,840     1,482,240          conv1d_1
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 4      gru_1 (GRU)                [b:1,c:32]        9,408/37,632        556,800               gru
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 5      dense_dense (Dense)        [b:1,c:32]        1,056/4,224           1,056             gru_1
+        dense (Dense)              [b:1,c:32]                                 32       dense_dense
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 7      dense_1_dense (Dense)      [b:1,c:2]         66/264                   66             dense
+        dense_1 (Dense)            [b:1,c:2]                                  30     dense_1_dense
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ model: macc=4,140,832 weights=281,992 activations=-- io=--
+
+ Number of operations per c-layer
+ ------- ------ --------------------------- ----------- --------------
+ c_id    m_id   name (type)                         #op           type
+ ------- ------ --------------------------- ----------- --------------
+ 0       1      conv1d_conv2d (Conv2D)          864,064   smul_f32_f32
+ 1       1      conv1d (Nonlinearity)             3,840     op_f32_f32
+ 2       2      conv1d_1_conv2d (Conv2D)      1,228,864   smul_f32_f32
+ 3       2      conv1d_1 (Nonlinearity)           3,840     op_f32_f32
+ 4       3      gru (GRU)                     1,482,240   smul_f32_f32
+ 5       4      gru_1 (GRU)                     556,800   smul_f32_f32
+ 6       5      dense_dense (Dense)               1,056   smul_f32_f32
+ 7       5      dense (Nonlinearity)                 32     op_f32_f32
+ 8       7      dense_1_dense (Dense)                66   smul_f32_f32
+ 9       7      dense_1 (Nonlinearity)               30     op_f32_f32
+ ------- ------ --------------------------- ----------- --------------
+ total                                        4,140,832
+
+ Number of operation types
+ ---------------- ----------- -----------
+ operation type             #           %
+ ---------------- ----------- -----------
+ smul_f32_f32       4,133,090       99.8%
+ op_f32_f32             7,742        0.2%
+
+ Complexity report (model)
+ ------ ----------------- ------------------------- ------------------------- --------
+ m_id   name              c_macc                    c_rom                     c_id
+ ------ ----------------- ------------------------- ------------------------- --------
+ 1      conv1d_conv2d     |||||||||         21.0%   |||||||||         20.5%   [0, 1]
+ 2      conv1d_1_conv2d   |||||||||||||     29.8%   |||||||||||||     29.1%   [2, 3]
+ 3      gru               ||||||||||||||||  35.8%   ||||||||||||||||  35.4%   [4]
+ 4      gru_1             ||||||            13.4%   ||||||            13.3%   [5]
+ 5      dense_dense       |                  0.0%   |                  1.5%   [6, 7]
+ 7      dense_1_dense     |                  0.0%   |                  0.1%   [8, 9]
+ ------ ----------------- ------------------------- ------------------------- --------
+ macc=4,140,832 weights=281,992 act=32,256 ram_io=0
+
+Creating txt report file /tmp/stedgeai_out_akv3pgvn/m1_kp13_w60_analyze_report.txt
+elapsed time (ANALYZE): 6.256s
+
+ST Edge AI Core v4.0.0-20500 359356bb0
+
+Creating c (debug) info json file /tmp/stedgeai_out_akv3pgvn/m1_kp13_w60_c_info.json
+ 
+ Exec/report summary (analyze)
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/model_stedgeai_compat.keras   
+ type               :   keras                                                                                                                         
+ c_name             :   m1_kp13_w60                                                                                                                   
+ compression        :   lossless                                                                                                                      
+ options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                
+ optimization       :   balanced                                                                                                                      
+ target/series      :   stm32n6                                                                                                                       
+ workspace dir      :   /tmp/stedgeai_ws_0c_yqm5e                                                                                                     
+ output dir         :   /tmp/stedgeai_out_akv3pgvn                                                                                                    
+ model_fmt          :   float                                                                                                                         
+ model_name         :   model_stedgeai_compat                                                                                                         
+ model_hash         :   0xff17621704e089665449120390575e8c                                                                                            
+ params #           :   70,498 items (275.38 KiB)                                                                                                     
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ input 1/1          :   'input_layer', f32(1x60x45), 10.55 KBytes, activations                                                                        
+ output 1/1         :   'dense_1', f32(1x2), 8 Bytes, activations                                                                                     
+ macc               :   4,140,832                                                                                                                     
+ weights (ro)       :   281,992 B (275.38 KiB) (1 segment)                                                                                            
+ activations (rw)   :   32,256 B (31.50 KiB) (1 segment) *                                                                                            
+ ram (total)        :   32,256 B (31.50 KiB) = 32,256 + 0 + 0                                                                                         
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+
+Computing AI RT data/code size (target=stm32n6)..
+ -> compiler "gcc:arm-none-eabi-gcc" is not in the PATH
+
+ Model name - model_stedgeai_compat
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ m_id   layer (original)           oshape            param/size             macc      connected to
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 0      input_layer (InputLayer)   [b:1,h:60,c:45]
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 1      conv1d_conv2d (Conv1D)     [b:1,h:60,c:64]   14,464/57,856       864,064       input_layer
+        conv1d (Conv1D)            [b:1,h:60,c:64]                         3,840     conv1d_conv2d
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 2      conv1d_1_conv2d (Conv1D)   [b:1,h:60,c:64]   20,544/82,176     1,228,864            conv1d
+        conv1d_1 (Conv1D)          [b:1,h:60,c:64]                         3,840   conv1d_1_conv2d
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 3      gru (GRU)                  [b:1,h:60,c:64]   24,960/99,840     1,482,240          conv1d_1
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 4      gru_1 (GRU)                [b:1,c:32]        9,408/37,632        556,800               gru
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 5      dense_dense (Dense)        [b:1,c:32]        1,056/4,224           1,056             gru_1
+        dense (Dense)              [b:1,c:32]                                 32       dense_dense
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 7      dense_1_dense (Dense)      [b:1,c:2]         66/264                   66             dense
+        dense_1 (Dense)            [b:1,c:2]                                  30     dense_1_dense
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ model: macc=4,140,832 weights=281,992 activations=-- io=--
+
+ Number of operations per c-layer
+ ------- ------ --------------------------- ----------- --------------
+ c_id    m_id   name (type)                         #op           type
+ ------- ------ --------------------------- ----------- --------------
+ 0       1      conv1d_conv2d (Conv2D)          864,064   smul_f32_f32
+ 1       1      conv1d (Nonlinearity)             3,840     op_f32_f32
+ 2       2      conv1d_1_conv2d (Conv2D)      1,228,864   smul_f32_f32
+ 3       2      conv1d_1 (Nonlinearity)           3,840     op_f32_f32
+ 4       3      gru (GRU)                     1,482,240   smul_f32_f32
+ 5       4      gru_1 (GRU)                     556,800   smul_f32_f32
+ 6       5      dense_dense (Dense)               1,056   smul_f32_f32
+ 7       5      dense (Nonlinearity)                 32     op_f32_f32
+ 8       7      dense_1_dense (Dense)                66   smul_f32_f32
+ 9       7      dense_1 (Nonlinearity)               30     op_f32_f32
+ ------- ------ --------------------------- ----------- --------------
+ total                                        4,140,832
+
+ Number of operation types
+ ---------------- ----------- -----------
+ operation type             #           %
+ ---------------- ----------- -----------
+ smul_f32_f32       4,133,090       99.8%
+ op_f32_f32             7,742        0.2%
+
+ Complexity report (model)
+ ------ ----------------- ------------------------- ------------------------- --------
+ m_id   name              c_macc                    c_rom                     c_id
+ ------ ----------------- ------------------------- ------------------------- --------
+ 1      conv1d_conv2d     |||||||||         21.0%   |||||||||         20.5%   [0, 1]
+ 2      conv1d_1_conv2d   |||||||||||||     29.8%   |||||||||||||     29.1%   [2, 3]
+ 3      gru               ||||||||||||||||  35.8%   ||||||||||||||||  35.4%   [4]
+ 4      gru_1             ||||||            13.4%   ||||||            13.3%   [5]
+ 5      dense_dense       |                  0.0%   |                  1.5%   [6, 7]
+ 7      dense_1_dense     |                  0.0%   |                  0.1%   [8, 9]
+ ------ ----------------- ------------------------- ------------------------- --------
+ macc=4,140,832 weights=281,992 act=32,256 ram_io=0
+
+Creating txt report file /tmp/stedgeai_out_akv3pgvn/m1_kp13_w60_analyze_report.txt
+elapsed time (ANALYZE): 6.256s
+
+[stedgeai] metrics.json updated
+[stedgeai] metrics.json updated
+{
+  "analyze": {
+    "analyze_ok": true,
+    "weights_kib": 275.38,
+    "weights_b": 281992,
+    "activations_kib": 31.5,
+    "macc": 4140832
+  }
+}
+{
+  "analyze": {
+    "analyze_ok": true,
+    "weights_kib": 275.38,
+    "weights_b": 281992,
+    "activations_kib": 31.5,
+    "macc": 4140832
+  }
+}
+[19:57:38] SPLIT → M1-kp13-w60
+[19:57:38] SPLIT → M1-kp13-w60
+2026-05-22 19:57:38.487723: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-22 19:57:38.487723: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+=== Conv-GRU Split PoC: M1-kp13-w60 ===
+Keras version: 3.7.0
+Loading model: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/model.keras
+=== Conv-GRU Split PoC: M1-kp13-w60 ===
+Keras version: 3.7.0
+Loading model: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/model.keras
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 234, in from_config
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 234, in from_config
+    return cls(**config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/core/dense.py", line 87, in __init__
+    return cls(**config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/core/dense.py", line 87, in __init__
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/layer.py", line 285, in __init__
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/layer.py", line 285, in __init__
+    raise ValueError(
+ValueError: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+    raise ValueError(
+ValueError: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 236, in from_config
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 236, in from_config
+    raise TypeError(
+TypeError: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    raise TypeError(
+TypeError: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/model.py", line 527, in from_config
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/model.py", line 527, in from_config
+    return functional_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 546, in functional_from_config
+    return functional_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 546, in functional_from_config
+    process_layer(layer_data)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 518, in process_layer
+    process_layer(layer_data)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 518, in process_layer
+    layer = serialization_lib.deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    layer = serialization_lib.deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    raise TypeError(
+TypeError: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 357, in <module>
+    raise TypeError(
+TypeError: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 357, in <module>
+    main()
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 218, in main
+    main()
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 218, in main
+    model = load_model(exp_dir)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 43, in load_model
+    model = load_model(exp_dir)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 43, in load_model
+    return keras.models.load_model(str(orig))
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return keras.models.load_model(str(orig))
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return saving_lib.load_model(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 367, in load_model
+    return saving_lib.load_model(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 367, in load_model
+    return _load_model_from_fileobj(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 444, in _load_model_from_fileobj
+    return _load_model_from_fileobj(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 444, in _load_model_from_fileobj
+    model = _model_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 433, in _model_from_config
+    model = _model_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 433, in _model_from_config
+    model = deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    model = deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    raise TypeError(
+TypeError: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': {}}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+    raise TypeError(
+TypeError: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': {}}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+[19:57:39] GRU ONNX GENERATE → M1-kp13-w60
+[19:57:39] GRU ONNX GENERATE → M1-kp13-w60
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779447460.184990   52967 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779447460.184990   52967 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+=== GRU ONNX export: M1-kp13-w60 ===
+=== GRU ONNX export: M1-kp13-w60 ===
+ERROR: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/submodels/gru_stateful.keras 없음. --skip-split 없이 재실행하거나 split_stateful_k37.py 먼저 실행하세요.
+ERROR: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/submodels/gru_stateful.keras 없음. --skip-split 없이 재실행하거나 split_stateful_k37.py 먼저 실행하세요.
+[19:57:42] FULL MODEL GENERATE → M1-kp13-w60
+[19:57:42] FULL MODEL GENERATE → M1-kp13-w60
+ST Edge AI Core v4.0.0-20500 359356bb0
+ST Edge AI Core v4.0.0-20500 359356bb0
+PASS:   0%|          | 0/171 [00:00<?, ?it/s]PASS:   0%|          | 0/171 [00:00<?, ?it/s]                                                                                          
+E010(InvalidModelError): Couldn't load Keras model /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/model_best.keras,
+error: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': None}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None, 'shared_object_id': 138527649108992}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+E010(InvalidModelError): Couldn't load Keras model /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/model_best.keras,
+error: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': None}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None, 'shared_object_id': 138527649108992}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+[19:57:45] ANALYZE → M2-vel-kp13-w40
+[19:57:45] ANALYZE → M2-vel-kp13-w40
+[stedgeai] making compat .keras for M2-vel-kp13-w40
+[stedgeai] making compat .keras for M2-vel-kp13-w40
+[stedgeai] analyze ...
+[stedgeai] analyze ...
+ST Edge AI Core v4.0.0-20500 359356bb0
+
+Creating c (debug) info json file /tmp/stedgeai_out_foq2wdcb/m2_vel_kp13_w40_c_info.json
+ 
+ Exec/report summary (analyze)
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------
+ model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M2-vel-kp13-w40/model_stedgeai_compat.keras   
+ type               :   keras                                                                                                                             
+ c_name             :   m2_vel_kp13_w40                                                                                                                   
+ compression        :   lossless                                                                                                                          
+ options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                    
+ optimization       :   balanced                                                                                                                          
+ target/series      :   stm32n6                                                                                                                           
+ workspace dir      :   /tmp/stedgeai_ws__9lx2o2w                                                                                                         
+ output dir         :   /tmp/stedgeai_out_foq2wdcb                                                                                                        
+ model_fmt          :   float                                                                                                                             
+ model_name         :   model_stedgeai_compat                                                                                                             
+ model_hash         :   0x12762fed9b0aab0b31792389258783e3                                                                                                
+ params #           :   79,778 items (311.63 KiB)                                                                                                         
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------
+ input 1/1          :   'input_layer', f32(1x40x74), 11.56 KBytes, activations                                                                            
+ output 1/1         :   'dense_1', f32(1x2), 8 Bytes, activations                                                                                         
+ macc               :   3,132,192                                                                                                                         
+ weights (ro)       :   319,112 B (311.63 KiB) (1 segment)                                                                                                
+ activations (rw)   :   22,016 B (21.50 KiB) (1 segment) *                                                                                                
+ ram (total)        :   22,016 B (21.50 KiB) = 22,016 + 0 + 0                                                                                             
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+
+Computing AI RT data/code size (target=stm32n6)..
+ -> compiler "gcc:arm-none-eabi-gcc" is not in the PATH
+
+ Model name - model_stedgeai_compat
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ m_id   layer (original)           oshape            param/size           macc      connected to
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 0      input_layer (InputLayer)   [b:1,h:40,c:74]
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 1      conv1d_conv2d (Conv1D)     [b:1,h:40,c:64]   23,744/94,976     947,264       input_layer
+        conv1d (Conv1D)            [b:1,h:40,c:64]                       2,560     conv1d_conv2d
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 2      conv1d_1_conv2d (Conv1D)   [b:1,h:40,c:64]   20,544/82,176     819,264            conv1d
+        conv1d_1 (Conv1D)          [b:1,h:40,c:64]                       2,560   conv1d_1_conv2d
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 3      gru (GRU)                  [b:1,h:40,c:64]   24,960/99,840     988,160          conv1d_1
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 4      gru_1 (GRU)                [b:1,c:32]        9,408/37,632      371,200               gru
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 5      dense_dense (Dense)        [b:1,c:32]        1,056/4,224         1,056             gru_1
+        dense (Dense)              [b:1,c:32]                               32       dense_dense
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 7      dense_1_dense (Dense)      [b:1,c:2]         66/264                 66             dense
+        dense_1 (Dense)            [b:1,c:2]                                30     dense_1_dense
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ model: macc=3,132,192 weights=319,112 activations=-- io=--
+
+ Number of operations per c-layer
+ ------- ------ --------------------------- ----------- --------------
+ c_id    m_id   name (type)                         #op           type
+ ------- ------ --------------------------- ----------- --------------
+ 0       1      conv1d_conv2d (Conv2D)          947,264   smul_f32_f32
+ 1       1      conv1d (Nonlinearity)             2,560     op_f32_f32
+ 2       2      conv1d_1_conv2d (Conv2D)        819,264   smul_f32_f32
+ 3       2      conv1d_1 (Nonlinearity)           2,560     op_f32_f32
+ 4       3      gru (GRU)                       988,160   smul_f32_f32
+ 5       4      gru_1 (GRU)                     371,200   smul_f32_f32
+ 6       5      dense_dense (Dense)               1,056   smul_f32_f32
+ 7       5      dense (Nonlinearity)                 32     op_f32_f32
+ 8       7      dense_1_dense (Dense)                66   smul_f32_f32
+ 9       7      dense_1 (Nonlinearity)               30     op_f32_f32
+ ------- ------ --------------------------- ----------- --------------
+ total                                        3,132,192
+
+ Number of operation types
+ ---------------- ----------- -----------
+ operation type             #           %
+ ---------------- ----------- -----------
+ smul_f32_f32       3,127,010       99.8%
+ op_f32_f32             5,182        0.2%
+
+ Complexity report (model)
+ ------ ----------------- ------------------------- ------------------------- --------
+ m_id   name              c_macc                    c_rom                     c_id
+ ------ ----------------- ------------------------- ------------------------- --------
+ 1      conv1d_conv2d     |||||||||||||||   30.3%   |||||||||||||||   29.8%   [0, 1]
+ 2      conv1d_1_conv2d   |||||||||||||     26.2%   |||||||||||||     25.8%   [2, 3]
+ 3      gru               ||||||||||||||||  31.5%   ||||||||||||||||  31.3%   [4]
+ 4      gru_1             ||||||            11.9%   ||||||            11.8%   [5]
+ 5      dense_dense       |                  0.0%   |                  1.3%   [6, 7]
+ 7      dense_1_dense     |                  0.0%   |                  0.1%   [8, 9]
+ ------ ----------------- ------------------------- ------------------------- --------
+ macc=3,132,192 weights=319,112 act=22,016 ram_io=0
+
+Creating txt report file /tmp/stedgeai_out_foq2wdcb/m2_vel_kp13_w40_analyze_report.txt
+elapsed time (ANALYZE): 5.076s
+
+ST Edge AI Core v4.0.0-20500 359356bb0
+
+Creating c (debug) info json file /tmp/stedgeai_out_foq2wdcb/m2_vel_kp13_w40_c_info.json
+ 
+ Exec/report summary (analyze)
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------
+ model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M2-vel-kp13-w40/model_stedgeai_compat.keras   
+ type               :   keras                                                                                                                             
+ c_name             :   m2_vel_kp13_w40                                                                                                                   
+ compression        :   lossless                                                                                                                          
+ options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                    
+ optimization       :   balanced                                                                                                                          
+ target/series      :   stm32n6                                                                                                                           
+ workspace dir      :   /tmp/stedgeai_ws__9lx2o2w                                                                                                         
+ output dir         :   /tmp/stedgeai_out_foq2wdcb                                                                                                        
+ model_fmt          :   float                                                                                                                             
+ model_name         :   model_stedgeai_compat                                                                                                             
+ model_hash         :   0x12762fed9b0aab0b31792389258783e3                                                                                                
+ params #           :   79,778 items (311.63 KiB)                                                                                                         
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------
+ input 1/1          :   'input_layer', f32(1x40x74), 11.56 KBytes, activations                                                                            
+ output 1/1         :   'dense_1', f32(1x2), 8 Bytes, activations                                                                                         
+ macc               :   3,132,192                                                                                                                         
+ weights (ro)       :   319,112 B (311.63 KiB) (1 segment)                                                                                                
+ activations (rw)   :   22,016 B (21.50 KiB) (1 segment) *                                                                                                
+ ram (total)        :   22,016 B (21.50 KiB) = 22,016 + 0 + 0                                                                                             
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+
+Computing AI RT data/code size (target=stm32n6)..
+ -> compiler "gcc:arm-none-eabi-gcc" is not in the PATH
+
+ Model name - model_stedgeai_compat
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ m_id   layer (original)           oshape            param/size           macc      connected to
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 0      input_layer (InputLayer)   [b:1,h:40,c:74]
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 1      conv1d_conv2d (Conv1D)     [b:1,h:40,c:64]   23,744/94,976     947,264       input_layer
+        conv1d (Conv1D)            [b:1,h:40,c:64]                       2,560     conv1d_conv2d
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 2      conv1d_1_conv2d (Conv1D)   [b:1,h:40,c:64]   20,544/82,176     819,264            conv1d
+        conv1d_1 (Conv1D)          [b:1,h:40,c:64]                       2,560   conv1d_1_conv2d
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 3      gru (GRU)                  [b:1,h:40,c:64]   24,960/99,840     988,160          conv1d_1
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 4      gru_1 (GRU)                [b:1,c:32]        9,408/37,632      371,200               gru
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 5      dense_dense (Dense)        [b:1,c:32]        1,056/4,224         1,056             gru_1
+        dense (Dense)              [b:1,c:32]                               32       dense_dense
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 7      dense_1_dense (Dense)      [b:1,c:2]         66/264                 66             dense
+        dense_1 (Dense)            [b:1,c:2]                                30     dense_1_dense
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ model: macc=3,132,192 weights=319,112 activations=-- io=--
+
+ Number of operations per c-layer
+ ------- ------ --------------------------- ----------- --------------
+ c_id    m_id   name (type)                         #op           type
+ ------- ------ --------------------------- ----------- --------------
+ 0       1      conv1d_conv2d (Conv2D)          947,264   smul_f32_f32
+ 1       1      conv1d (Nonlinearity)             2,560     op_f32_f32
+ 2       2      conv1d_1_conv2d (Conv2D)        819,264   smul_f32_f32
+ 3       2      conv1d_1 (Nonlinearity)           2,560     op_f32_f32
+ 4       3      gru (GRU)                       988,160   smul_f32_f32
+ 5       4      gru_1 (GRU)                     371,200   smul_f32_f32
+ 6       5      dense_dense (Dense)               1,056   smul_f32_f32
+ 7       5      dense (Nonlinearity)                 32     op_f32_f32
+ 8       7      dense_1_dense (Dense)                66   smul_f32_f32
+ 9       7      dense_1 (Nonlinearity)               30     op_f32_f32
+ ------- ------ --------------------------- ----------- --------------
+ total                                        3,132,192
+
+ Number of operation types
+ ---------------- ----------- -----------
+ operation type             #           %
+ ---------------- ----------- -----------
+ smul_f32_f32       3,127,010       99.8%
+ op_f32_f32             5,182        0.2%
+
+ Complexity report (model)
+ ------ ----------------- ------------------------- ------------------------- --------
+ m_id   name              c_macc                    c_rom                     c_id
+ ------ ----------------- ------------------------- ------------------------- --------
+ 1      conv1d_conv2d     |||||||||||||||   30.3%   |||||||||||||||   29.8%   [0, 1]
+ 2      conv1d_1_conv2d   |||||||||||||     26.2%   |||||||||||||     25.8%   [2, 3]
+ 3      gru               ||||||||||||||||  31.5%   ||||||||||||||||  31.3%   [4]
+ 4      gru_1             ||||||            11.9%   ||||||            11.8%   [5]
+ 5      dense_dense       |                  0.0%   |                  1.3%   [6, 7]
+ 7      dense_1_dense     |                  0.0%   |                  0.1%   [8, 9]
+ ------ ----------------- ------------------------- ------------------------- --------
+ macc=3,132,192 weights=319,112 act=22,016 ram_io=0
+
+Creating txt report file /tmp/stedgeai_out_foq2wdcb/m2_vel_kp13_w40_analyze_report.txt
+elapsed time (ANALYZE): 5.076s
+
+[stedgeai] metrics.json updated
+[stedgeai] metrics.json updated
+{
+  "analyze": {
+    "analyze_ok": true,
+    "weights_kib": 311.63,
+    "weights_b": 319112,
+    "activations_kib": 21.5,
+    "macc": 3132192
+  }
+}
+{
+  "analyze": {
+    "analyze_ok": true,
+    "weights_kib": 311.63,
+    "weights_b": 319112,
+    "activations_kib": 21.5,
+    "macc": 3132192
+  }
+}
+[19:57:51] SPLIT → M2-vel-kp13-w40
+[19:57:51] SPLIT → M2-vel-kp13-w40
+2026-05-22 19:57:51.370537: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-22 19:57:51.370537: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+=== Conv-GRU Split PoC: M2-vel-kp13-w40 ===
+Keras version: 3.7.0
+Loading model: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M2-vel-kp13-w40/model.keras
+=== Conv-GRU Split PoC: M2-vel-kp13-w40 ===
+Keras version: 3.7.0
+Loading model: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M2-vel-kp13-w40/model.keras
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 234, in from_config
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 234, in from_config
+    return cls(**config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/core/dense.py", line 87, in __init__
+    return cls(**config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/core/dense.py", line 87, in __init__
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/layer.py", line 285, in __init__
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/layer.py", line 285, in __init__
+    raise ValueError(
+ValueError: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    raise ValueError(
+ValueError: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 236, in from_config
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 236, in from_config
+    raise TypeError(
+TypeError: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    raise TypeError(
+TypeError: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/model.py", line 527, in from_config
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/model.py", line 527, in from_config
+    return functional_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 546, in functional_from_config
+    return functional_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 546, in functional_from_config
+    process_layer(layer_data)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 518, in process_layer
+    process_layer(layer_data)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 518, in process_layer
+    layer = serialization_lib.deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    layer = serialization_lib.deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    raise TypeError(
+TypeError: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 357, in <module>
+    raise TypeError(
+TypeError: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 357, in <module>
+    main()
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 218, in main
+    main()
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 218, in main
+    model = load_model(exp_dir)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 43, in load_model
+    model = load_model(exp_dir)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 43, in load_model
+    return keras.models.load_model(str(orig))
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return keras.models.load_model(str(orig))
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return saving_lib.load_model(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 367, in load_model
+    return saving_lib.load_model(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 367, in load_model
+    return _load_model_from_fileobj(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 444, in _load_model_from_fileobj
+    return _load_model_from_fileobj(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 444, in _load_model_from_fileobj
+    model = _model_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 433, in _model_from_config
+    model = _model_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 433, in _model_from_config
+    model = deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    model = deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    raise TypeError(
+TypeError: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': {}}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+    raise TypeError(
+TypeError: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': {}}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+[19:57:52] GRU ONNX GENERATE → M2-vel-kp13-w40
+[19:57:52] GRU ONNX GENERATE → M2-vel-kp13-w40
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779447473.012195   53186 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779447473.012195   53186 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+=== GRU ONNX export: M2-vel-kp13-w40 ===
+=== GRU ONNX export: M2-vel-kp13-w40 ===
+ERROR: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M2-vel-kp13-w40/submodels/gru_stateful.keras 없음. --skip-split 없이 재실행하거나 split_stateful_k37.py 먼저 실행하세요.
+ERROR: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M2-vel-kp13-w40/submodels/gru_stateful.keras 없음. --skip-split 없이 재실행하거나 split_stateful_k37.py 먼저 실행하세요.
+[19:57:54] FULL MODEL GENERATE → M2-vel-kp13-w40
+[19:57:54] FULL MODEL GENERATE → M2-vel-kp13-w40
+ST Edge AI Core v4.0.0-20500 359356bb0
+ST Edge AI Core v4.0.0-20500 359356bb0
+PASS:   0%|          | 0/171 [00:00<?, ?it/s]PASS:   0%|          | 0/171 [00:00<?, ?it/s]                                                                                          
+E010(InvalidModelError): Couldn't load Keras model /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M2-vel-kp13-w40/model_best.keras,
+error: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': None}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None, 'shared_object_id': 137934179046400}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+E010(InvalidModelError): Couldn't load Keras model /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M2-vel-kp13-w40/model_best.keras,
+error: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': None}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None, 'shared_object_id': 137934179046400}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+[19:57:57] ANALYZE → M3-kp17-w40
+[19:57:57] ANALYZE → M3-kp17-w40
+[stedgeai] making compat .keras for M3-kp17-w40
+[stedgeai] making compat .keras for M3-kp17-w40
+[stedgeai] analyze ...
+[stedgeai] analyze ...
+ST Edge AI Core v4.0.0-20500 359356bb0
+
+Creating c (debug) info json file /tmp/stedgeai_out_02z0yv_6/m3_kp17_w40_c_info.json
+ 
+ Exec/report summary (analyze)
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M3-kp17-w40/model_stedgeai_compat.keras   
+ type               :   keras                                                                                                                         
+ c_name             :   m3_kp17_w40                                                                                                                   
+ compression        :   lossless                                                                                                                      
+ options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                
+ optimization       :   balanced                                                                                                                      
+ target/series      :   stm32n6                                                                                                                       
+ workspace dir      :   /tmp/stedgeai_ws_698q7c5o                                                                                                     
+ output dir         :   /tmp/stedgeai_out_02z0yv_6                                                                                                    
+ model_fmt          :   float                                                                                                                         
+ model_name         :   model_stedgeai_compat                                                                                                         
+ model_hash         :   0xa2479bc6eeefb14f9a1f4b74aef8db28                                                                                            
+ params #           :   74,338 items (290.38 KiB)                                                                                                     
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ input 1/1          :   'input_layer', f32(1x40x57), 8.91 KBytes, activations                                                                         
+ output 1/1         :   'dense_1', f32(1x2), 8 Bytes, activations                                                                                     
+ macc               :   2,914,592                                                                                                                     
+ weights (ro)       :   297,352 B (290.38 KiB) (1 segment)                                                                                            
+ activations (rw)   :   22,016 B (21.50 KiB) (1 segment) *                                                                                            
+ ram (total)        :   22,016 B (21.50 KiB) = 22,016 + 0 + 0                                                                                         
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+
+Computing AI RT data/code size (target=stm32n6)..
+ -> compiler "gcc:arm-none-eabi-gcc" is not in the PATH
+
+ Model name - model_stedgeai_compat
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ m_id   layer (original)           oshape            param/size           macc      connected to
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 0      input_layer (InputLayer)   [b:1,h:40,c:57]
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 1      conv1d_conv2d (Conv1D)     [b:1,h:40,c:64]   18,304/73,216     729,664       input_layer
+        conv1d (Conv1D)            [b:1,h:40,c:64]                       2,560     conv1d_conv2d
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 2      conv1d_1_conv2d (Conv1D)   [b:1,h:40,c:64]   20,544/82,176     819,264            conv1d
+        conv1d_1 (Conv1D)          [b:1,h:40,c:64]                       2,560   conv1d_1_conv2d
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 3      gru (GRU)                  [b:1,h:40,c:64]   24,960/99,840     988,160          conv1d_1
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 4      gru_1 (GRU)                [b:1,c:32]        9,408/37,632      371,200               gru
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 5      dense_dense (Dense)        [b:1,c:32]        1,056/4,224         1,056             gru_1
+        dense (Dense)              [b:1,c:32]                               32       dense_dense
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 7      dense_1_dense (Dense)      [b:1,c:2]         66/264                 66             dense
+        dense_1 (Dense)            [b:1,c:2]                                30     dense_1_dense
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ model: macc=2,914,592 weights=297,352 activations=-- io=--
+
+ Number of operations per c-layer
+ ------- ------ --------------------------- ----------- --------------
+ c_id    m_id   name (type)                         #op           type
+ ------- ------ --------------------------- ----------- --------------
+ 0       1      conv1d_conv2d (Conv2D)          729,664   smul_f32_f32
+ 1       1      conv1d (Nonlinearity)             2,560     op_f32_f32
+ 2       2      conv1d_1_conv2d (Conv2D)        819,264   smul_f32_f32
+ 3       2      conv1d_1 (Nonlinearity)           2,560     op_f32_f32
+ 4       3      gru (GRU)                       988,160   smul_f32_f32
+ 5       4      gru_1 (GRU)                     371,200   smul_f32_f32
+ 6       5      dense_dense (Dense)               1,056   smul_f32_f32
+ 7       5      dense (Nonlinearity)                 32     op_f32_f32
+ 8       7      dense_1_dense (Dense)                66   smul_f32_f32
+ 9       7      dense_1 (Nonlinearity)               30     op_f32_f32
+ ------- ------ --------------------------- ----------- --------------
+ total                                        2,914,592
+
+ Number of operation types
+ ---------------- ----------- -----------
+ operation type             #           %
+ ---------------- ----------- -----------
+ smul_f32_f32       2,909,410       99.8%
+ op_f32_f32             5,182        0.2%
+
+ Complexity report (model)
+ ------ ----------------- ------------------------- ------------------------- --------
+ m_id   name              c_macc                    c_rom                     c_id
+ ------ ----------------- ------------------------- ------------------------- --------
+ 1      conv1d_conv2d     ||||||||||||      25.1%   ||||||||||||      24.6%   [0, 1]
+ 2      conv1d_1_conv2d   |||||||||||||     28.2%   |||||||||||||     27.6%   [2, 3]
+ 3      gru               ||||||||||||||||  33.9%   ||||||||||||||||  33.6%   [4]
+ 4      gru_1             ||||||            12.7%   ||||||            12.7%   [5]
+ 5      dense_dense       |                  0.0%   |                  1.4%   [6, 7]
+ 7      dense_1_dense     |                  0.0%   |                  0.1%   [8, 9]
+ ------ ----------------- ------------------------- ------------------------- --------
+ macc=2,914,592 weights=297,352 act=22,016 ram_io=0
+
+Creating txt report file /tmp/stedgeai_out_02z0yv_6/m3_kp17_w40_analyze_report.txt
+elapsed time (ANALYZE): 6.178s
+
+ST Edge AI Core v4.0.0-20500 359356bb0
+
+Creating c (debug) info json file /tmp/stedgeai_out_02z0yv_6/m3_kp17_w40_c_info.json
+ 
+ Exec/report summary (analyze)
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M3-kp17-w40/model_stedgeai_compat.keras   
+ type               :   keras                                                                                                                         
+ c_name             :   m3_kp17_w40                                                                                                                   
+ compression        :   lossless                                                                                                                      
+ options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                
+ optimization       :   balanced                                                                                                                      
+ target/series      :   stm32n6                                                                                                                       
+ workspace dir      :   /tmp/stedgeai_ws_698q7c5o                                                                                                     
+ output dir         :   /tmp/stedgeai_out_02z0yv_6                                                                                                    
+ model_fmt          :   float                                                                                                                         
+ model_name         :   model_stedgeai_compat                                                                                                         
+ model_hash         :   0xa2479bc6eeefb14f9a1f4b74aef8db28                                                                                            
+ params #           :   74,338 items (290.38 KiB)                                                                                                     
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ input 1/1          :   'input_layer', f32(1x40x57), 8.91 KBytes, activations                                                                         
+ output 1/1         :   'dense_1', f32(1x2), 8 Bytes, activations                                                                                     
+ macc               :   2,914,592                                                                                                                     
+ weights (ro)       :   297,352 B (290.38 KiB) (1 segment)                                                                                            
+ activations (rw)   :   22,016 B (21.50 KiB) (1 segment) *                                                                                            
+ ram (total)        :   22,016 B (21.50 KiB) = 22,016 + 0 + 0                                                                                         
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+
+Computing AI RT data/code size (target=stm32n6)..
+ -> compiler "gcc:arm-none-eabi-gcc" is not in the PATH
+
+ Model name - model_stedgeai_compat
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ m_id   layer (original)           oshape            param/size           macc      connected to
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 0      input_layer (InputLayer)   [b:1,h:40,c:57]
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 1      conv1d_conv2d (Conv1D)     [b:1,h:40,c:64]   18,304/73,216     729,664       input_layer
+        conv1d (Conv1D)            [b:1,h:40,c:64]                       2,560     conv1d_conv2d
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 2      conv1d_1_conv2d (Conv1D)   [b:1,h:40,c:64]   20,544/82,176     819,264            conv1d
+        conv1d_1 (Conv1D)          [b:1,h:40,c:64]                       2,560   conv1d_1_conv2d
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 3      gru (GRU)                  [b:1,h:40,c:64]   24,960/99,840     988,160          conv1d_1
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 4      gru_1 (GRU)                [b:1,c:32]        9,408/37,632      371,200               gru
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 5      dense_dense (Dense)        [b:1,c:32]        1,056/4,224         1,056             gru_1
+        dense (Dense)              [b:1,c:32]                               32       dense_dense
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ 7      dense_1_dense (Dense)      [b:1,c:2]         66/264                 66             dense
+        dense_1 (Dense)            [b:1,c:2]                                30     dense_1_dense
+ ------ -------------------------- ----------------- --------------- --------- -----------------
+ model: macc=2,914,592 weights=297,352 activations=-- io=--
+
+ Number of operations per c-layer
+ ------- ------ --------------------------- ----------- --------------
+ c_id    m_id   name (type)                         #op           type
+ ------- ------ --------------------------- ----------- --------------
+ 0       1      conv1d_conv2d (Conv2D)          729,664   smul_f32_f32
+ 1       1      conv1d (Nonlinearity)             2,560     op_f32_f32
+ 2       2      conv1d_1_conv2d (Conv2D)        819,264   smul_f32_f32
+ 3       2      conv1d_1 (Nonlinearity)           2,560     op_f32_f32
+ 4       3      gru (GRU)                       988,160   smul_f32_f32
+ 5       4      gru_1 (GRU)                     371,200   smul_f32_f32
+ 6       5      dense_dense (Dense)               1,056   smul_f32_f32
+ 7       5      dense (Nonlinearity)                 32     op_f32_f32
+ 8       7      dense_1_dense (Dense)                66   smul_f32_f32
+ 9       7      dense_1 (Nonlinearity)               30     op_f32_f32
+ ------- ------ --------------------------- ----------- --------------
+ total                                        2,914,592
+
+ Number of operation types
+ ---------------- ----------- -----------
+ operation type             #           %
+ ---------------- ----------- -----------
+ smul_f32_f32       2,909,410       99.8%
+ op_f32_f32             5,182        0.2%
+
+ Complexity report (model)
+ ------ ----------------- ------------------------- ------------------------- --------
+ m_id   name              c_macc                    c_rom                     c_id
+ ------ ----------------- ------------------------- ------------------------- --------
+ 1      conv1d_conv2d     ||||||||||||      25.1%   ||||||||||||      24.6%   [0, 1]
+ 2      conv1d_1_conv2d   |||||||||||||     28.2%   |||||||||||||     27.6%   [2, 3]
+ 3      gru               ||||||||||||||||  33.9%   ||||||||||||||||  33.6%   [4]
+ 4      gru_1             ||||||            12.7%   ||||||            12.7%   [5]
+ 5      dense_dense       |                  0.0%   |                  1.4%   [6, 7]
+ 7      dense_1_dense     |                  0.0%   |                  0.1%   [8, 9]
+ ------ ----------------- ------------------------- ------------------------- --------
+ macc=2,914,592 weights=297,352 act=22,016 ram_io=0
+
+Creating txt report file /tmp/stedgeai_out_02z0yv_6/m3_kp17_w40_analyze_report.txt
+elapsed time (ANALYZE): 6.178s
+
+[stedgeai] metrics.json updated
+[stedgeai] metrics.json updated
+{
+  "analyze": {
+    "analyze_ok": true,
+    "weights_kib": 290.38,
+    "weights_b": 297352,
+    "activations_kib": 21.5,
+    "macc": 2914592
+  }
+}
+{
+  "analyze": {
+    "analyze_ok": true,
+    "weights_kib": 290.38,
+    "weights_b": 297352,
+    "activations_kib": 21.5,
+    "macc": 2914592
+  }
+}
+[19:58:04] SPLIT → M3-kp17-w40
+[19:58:04] SPLIT → M3-kp17-w40
+2026-05-22 19:58:04.940981: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-22 19:58:04.940981: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+=== Conv-GRU Split PoC: M3-kp17-w40 ===
+Keras version: 3.7.0
+Loading model: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M3-kp17-w40/model.keras
+=== Conv-GRU Split PoC: M3-kp17-w40 ===
+Keras version: 3.7.0
+Loading model: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M3-kp17-w40/model.keras
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 234, in from_config
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 234, in from_config
+    return cls(**config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/core/dense.py", line 87, in __init__
+    return cls(**config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/core/dense.py", line 87, in __init__
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/layer.py", line 285, in __init__
+    super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/layers/layer.py", line 285, in __init__
+    raise ValueError(
+ValueError: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+    raise ValueError(
+ValueError: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 236, in from_config
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/ops/operation.py", line 236, in from_config
+    raise TypeError(
+TypeError: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    raise TypeError(
+TypeError: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 718, in deserialize_keras_object
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/model.py", line 527, in from_config
+    instance = cls.from_config(inner_config)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/model.py", line 527, in from_config
+    return functional_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 546, in functional_from_config
+    return functional_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 546, in functional_from_config
+    process_layer(layer_data)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 518, in process_layer
+    process_layer(layer_data)
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/models/functional.py", line 518, in process_layer
+    layer = serialization_lib.deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    layer = serialization_lib.deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    raise TypeError(
+TypeError: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 357, in <module>
+    raise TypeError(
+TypeError: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 357, in <module>
+    main()
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 218, in main
+    main()
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 218, in main
+    model = load_model(exp_dir)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 43, in load_model
+    model = load_model(exp_dir)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/split_stateful_k37.py", line 43, in load_model
+    return keras.models.load_model(str(orig))
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return keras.models.load_model(str(orig))
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return saving_lib.load_model(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 367, in load_model
+    return saving_lib.load_model(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 367, in load_model
+    return _load_model_from_fileobj(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 444, in _load_model_from_fileobj
+    return _load_model_from_fileobj(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 444, in _load_model_from_fileobj
+    model = _model_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 433, in _model_from_config
+    model = _model_from_config(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/saving_lib.py", line 433, in _model_from_config
+    model = deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    model = deserialize_keras_object(
+  File "/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/lib/python3.9/site-packages/keras/src/saving/serialization_lib.py", line 720, in deserialize_keras_object
+    raise TypeError(
+TypeError: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': {}}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+    raise TypeError(
+TypeError: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': {}}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+[19:58:06] GRU ONNX GENERATE → M3-kp17-w40
+[19:58:06] GRU ONNX GENERATE → M3-kp17-w40
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779447486.598022   53405 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779447486.598022   53405 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+=== GRU ONNX export: M3-kp17-w40 ===
+=== GRU ONNX export: M3-kp17-w40 ===
+ERROR: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M3-kp17-w40/submodels/gru_stateful.keras 없음. --skip-split 없이 재실행하거나 split_stateful_k37.py 먼저 실행하세요.
+ERROR: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M3-kp17-w40/submodels/gru_stateful.keras 없음. --skip-split 없이 재실행하거나 split_stateful_k37.py 먼저 실행하세요.
+[19:58:09] FULL MODEL GENERATE → M3-kp17-w40
+[19:58:09] FULL MODEL GENERATE → M3-kp17-w40
+ST Edge AI Core v4.0.0-20500 359356bb0
+ST Edge AI Core v4.0.0-20500 359356bb0
+PASS:   0%|          | 0/171 [00:00<?, ?it/s]PASS:   0%|          | 0/171 [00:00<?, ?it/s]                                                                                          
+E010(InvalidModelError): Couldn't load Keras model /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M3-kp17-w40/model_best.keras,
+error: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': None}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None, 'shared_object_id': 136168253232128}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+
+E010(InvalidModelError): Couldn't load Keras model /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M3-kp17-w40/model_best.keras,
+error: <class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': None}.
+
+Exception encountered: <class 'keras.src.layers.core.dense.Dense'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.
+
+config={'module': 'keras.layers', 'class_name': 'Dense', 'config': {'name': 'dense', 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None, 'shared_object_id': 136168253232128}, 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}, 'registered_name': None, 'build_config': {'input_shape': [None, 32]}, 'name': 'dense', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 32], 'dtype': 'float32', 'keras_history': ['gru_1', 0, 0]}}], 'kwargs': {}}]}.
+
+Exception encountered: Error when deserializing class 'Dense' using config={'name': 'dense', 'trainable': True, 'dtype': 'float32', 'units': 32, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'module': 'keras.initializers', 'class_name': 'GlorotUniform', 'config': {'seed': None}, 'registered_name': None}, 'bias_initializer': {'module': 'keras.initializers', 'class_name': 'Zeros', 'config': {}, 'registered_name': None}, 'kernel_regularizer': None, 'bias_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None, 'quantization_config': None}.
+
+Exception encountered: Unrecognized keyword arguments passed to Dense: {'quantization_config': None}
+[19:58:11] === 결과 요약 ===
+[19:58:11] === 결과 요약 ===
+  M1-kp13-w60: ev_minpr=0.8918 thr=?  Flash=275.38KiB MACC=4140832
+  M2-vel-kp13-w40: ev_minpr=0.9004 thr=?  Flash=311.63KiB MACC=3132192
+  M3-kp17-w40: ev_minpr=0.9048 thr=?  Flash=290.38KiB MACC=2914592
+[19:58:11] 
+[19:58:11] 
+[19:58:11] 생성된 C 코드 위치:
+[19:58:11] 생성된 C 코드 위치:

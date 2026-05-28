@@ -179,7 +179,7 @@ def add_label_3class(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def process_split(src: Path, dst: Path) -> None:
+def process_split(src: Path, dst: Path, ema_deriv_alpha: float = 0.4) -> None:
     print(f"  Loading {src.name} ...", end=" ", flush=True)
     raw = pd.read_csv(src, low_memory=False)
     raw["video_id"] = raw["video_id"].astype(str)
@@ -193,7 +193,7 @@ def process_split(src: Path, dst: Path) -> None:
     results = []
     iterator = tqdm(groups, total=groups.ngroups, unit="video") if HAS_TQDM else groups
     for _, grp in iterator:
-        results.append(_process_video(grp))
+        results.append(_process_video(grp, ema_deriv_alpha=ema_deriv_alpha))
 
     out = pd.concat(results, ignore_index=True)
     out = out.sort_values(["video_id", "time_sec"]).reset_index(drop=True)
@@ -212,13 +212,16 @@ def main() -> None:
     root = Path(__file__).resolve().parents[2] / "dataset"
     parser.add_argument("--src-dir", type=Path, default=root / "splits_v2")
     parser.add_argument("--dst-dir", type=Path, default=root / "splits_v2_filtered")
+    parser.add_argument("--ema-deriv-alpha", type=float, default=0.4,
+                        help="EMA alpha for VHSSC smoothing before AHSSC (0 = skip, default: 0.4)")
     args = parser.parse_args()
 
     src_dir = args.src_dir
     dst_dir = args.dst_dir
 
-    print(f"Source : {src_dir}")
-    print(f"Output : {dst_dir}")
+    print(f"Source         : {src_dir}")
+    print(f"Output         : {dst_dir}")
+    print(f"ema-deriv-alpha: {args.ema_deriv_alpha}")
     for split in ("train", "val", "test"):
         src = src_dir / f"{split}.csv"
         dst = dst_dir / f"{split}.csv"
@@ -226,7 +229,7 @@ def main() -> None:
             print(f"  SKIP {split} — {src} not found")
             continue
         print(f"\n[{split}]")
-        process_split(src, dst)
+        process_split(src, dst, ema_deriv_alpha=args.ema_deriv_alpha)
 
     print("\nDone.")
 

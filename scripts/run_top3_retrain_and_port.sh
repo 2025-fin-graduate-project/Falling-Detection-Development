@@ -15,7 +15,7 @@ cd "$REPO"
 
 STEDGEAI="/home/min/app/ST/STEdgeAI/4.0/Utilities/linux/stedgeai"
 OUT="$REPO/results/top3_retrain"
-FILT="$REPO/dataset/splits_v2_class_balanced_filtered"
+FILT="$REPO/dataset/splits_v2_filtered"
 LOG="$OUT/run.log"
 mkdir -p "$OUT"
 
@@ -54,16 +54,28 @@ analyze_and_generate() {
     [[ -f "$model" ]] || model="$exp_dir/model.keras"
     [[ -f "$model" ]] || { log "WARN: no model.keras for $id"; return; }
 
-    # STedgeAI analyze
+    # STedgeAI analyze (Flash/MACC 추출)
     log "ANALYZE → $id"
     /home/min/app/ST/STEdgeAI/4.0/Utilities/linux/python \
         "$REPO/scripts/util/export_stedgeai.py" \
         --exp-dir "$exp_dir" --target stm32n6 2>&1 | tee -a "$LOG" || true
 
-    # STedgeAI generate (full model + --allocate-states for stateful on-device)
+    # 1) Conv submodel + stateful GRU 분리 (STedgeAI Python / Keras 3.7)
+    log "SPLIT → $id"
+    /home/min/app/ST/STEdgeAI/4.0/Utilities/linux/python \
+        "$REPO/scripts/util/split_stateful_k37.py" \
+        --exp-dir "$exp_dir" 2>&1 | tee -a "$LOG" || true
+
+    # 2) Stateful GRU → ONNX → STedgeAI generate --type onnx
+    log "GRU ONNX GENERATE → $id"
+    uv run python "$REPO/scripts/util/export_gru_onnx.py" \
+        --exp-dir "$exp_dir" --skip-split \
+        2>&1 | tee -a "$LOG" || true
+
+    # 3) Conv submodel full model generate (fallback / 비교용)
     local gen_dir="$exp_dir/generate"
     mkdir -p "$gen_dir"
-    log "GENERATE → $id"
+    log "FULL MODEL GENERATE → $id"
     "$STEDGEAI" generate \
         --target stm32n6 \
         --model "$model" \

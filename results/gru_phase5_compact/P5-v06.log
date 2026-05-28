@@ -1,0 +1,126 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778807881.062519 3275093 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-15 10:18:02] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/train.csv
+[2026-05-15 10:18:15] train rows=1,274,014 videos=6,344 features=21 data_scope=all
+[2026-05-15 10:18:15] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/val.csv
+[2026-05-15 10:18:19] val rows=363,918 videos=1,811 features=21 data_scope=all
+[2026-05-15 10:18:19] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/test.csv
+[2026-05-15 10:18:21] test rows=182,782 videos=911 features=21 data_scope=all
+[2026-05-15 10:18:35] train windows=370,921 positive=224,347 videos=6,344
+[2026-05-15 10:18:41] val windows=147,859 positive=64,446 videos=1,811
+[2026-05-15 10:18:43] test windows=74,372 positive=32,532 videos=911
+I0000 00:00:1778807929.026742 3275093 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6061 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778807930.354331 3275093 cpu_allocator_impl.cc:82] Allocation of 1246294560 exceeds 10% of free system memory.
+W0000 00:00:1778807931.467481 3275093 cpu_allocator_impl.cc:82] Allocation of 1246294560 exceeds 10% of free system memory.
+W0000 00:00:1778807933.975020 3275093 cpu_allocator_impl.cc:82] Allocation of 1246294560 exceeds 10% of free system memory.
+I0000 00:00:1778807936.342888 3275583 cuda_dnn.cc:461] Loaded cuDNN version 92200
+W0000 00:00:1778809266.237048 3275093 cpu_allocator_impl.cc:82] Allocation of 1246294560 exceeds 10% of free system memory.
+W0000 00:00:1778809267.394291 3275093 cpu_allocator_impl.cc:82] Allocation of 1246294560 exceeds 10% of free system memory.
+[2026-05-15 10:42:01] video-level val: videos=1811 f1=0.9628 recall=0.9715 fall_prec=0.9542 nfall_prec=0.9167 min_prec=0.9167 min_consecutive=5
+[2026-05-15 10:42:02] video-level test: videos=911 f1=0.9629 recall=0.9745 fall_prec=0.9516 nfall_prec=0.9258 min_prec=0.9258 min_consecutive=5
+[2026-05-15 10:42:02] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9167    0.8708    0.8932       480
+           1     0.9542    0.9715    0.9628      1331
+
+    accuracy                         0.9448      1811
+   macro avg     0.9355    0.9211    0.9280      1811
+weighted avg     0.9443    0.9448    0.9443      1811
+
+[2026-05-15 10:42:02] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9258    0.8653    0.8945       245
+           1     0.9516    0.9745    0.9629       666
+
+    accuracy                         0.9451       911
+   macro avg     0.9387    0.9199    0.9287       911
+weighted avg     0.9447    0.9451    0.9445       911
+
+[2026-05-15 10:42:06] tflite export subprocess exit=0
+[2026-05-15 10:42:06]   [tflite] [P5-v06]
+[2026-05-15 10:42:06]   [tflite]   Loading model.keras ...
+[2026-05-15 10:42:06]   [tflite]     unidirectional → converting without unroll (compact graph)
+[2026-05-15 10:42:06]   [tflite] Saved artifact at '/tmp/tmp6ufber93'. The following endpoints are available:
+[2026-05-15 10:42:06]   [tflite] 
+[2026-05-15 10:42:06]   [tflite] * Endpoint 'serve'
+[2026-05-15 10:42:06]   [tflite]   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 21), dtype=tf.float32, name='pose_sequence')
+[2026-05-15 10:42:06]   [tflite] Output Type:
+[2026-05-15 10:42:06]   [tflite]   TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+[2026-05-15 10:42:06]   [tflite] Captures:
+[2026-05-15 10:42:06]   [tflite]   135171812056848: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057424: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812056656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812058576: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812058384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812055504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812059152: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812060688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812059728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812060112: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812058960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812060880: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812059536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812061648: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812060304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812059920: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812062032: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812062224: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812061456: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812063184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]     fp32 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v06_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v06_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+[2026-05-15 10:42:06]   [tflite] 
+[2026-05-15 10:42:06]   [tflite] Saved artifact at '/tmp/tmp0xcip9kx'. The following endpoints are available:
+[2026-05-15 10:42:06]   [tflite] 
+[2026-05-15 10:42:06]   [tflite] * Endpoint 'serve'
+[2026-05-15 10:42:06]   [tflite]   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 21), dtype=tf.float32, name='pose_sequence')
+[2026-05-15 10:42:06]   [tflite] Output Type:
+[2026-05-15 10:42:06]   [tflite]   TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+[2026-05-15 10:42:06]   [tflite] Captures:
+[2026-05-15 10:42:06]   [tflite]   135171812056848: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057424: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812056656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812058576: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812058384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812057616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812055504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812059152: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812060688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812059728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812060112: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812058960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812060880: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812059536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812061648: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812060304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812059920: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812062032: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812062224: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812061456: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]   135171812063184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-15 10:42:06]   [tflite]     int8 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v06_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v06_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+[2026-05-15 10:42:06]   [tflite] <unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+[2026-05-15 10:42:06]   [tflite] 
+[2026-05-15 10:42:06]   [tflite] 
+[2026-05-15 10:42:06]   [tflite] Done.
+[2026-05-15 10:42:06] done P5-v06 val_f1=0.8932 (video=0.9628) test_f1=0.9007 (video=0.9629) test_min_prec=0.9258 threshold=0.500 min_consecutive=5

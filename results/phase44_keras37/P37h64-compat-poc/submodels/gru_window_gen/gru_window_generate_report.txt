@@ -1,0 +1,124 @@
+ST Edge AI Core v4.0.0-20500 359356bb0
+Created date          : 2026-05-22 12:26:49
+Parameters            : generate --target stm32n6 --model results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_mode.keras --type keras --name gru_window --output results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen --workspace results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen/workspace --compression lossless --verbosity 1
+
+Exec/report summary (generate)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_mode.keras      
+type               :   keras                                                                                                                                         
+c_name             :   gru_window                                                                                                                                    
+compression        :   lossless                                                                                                                                      
+options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                                
+optimization       :   balanced                                                                                                                                      
+target/series      :   stm32n6                                                                                                                                       
+workspace dir      :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen/workspace   
+output dir         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen             
+model_fmt          :   float                                                                                                                                         
+model_name         :   gru_window_mode                                                                                                                               
+model_hash         :   0xf0a2c486ecf1a710437d300680e63770                                                                                                            
+params #           :   34,368 items (134.25 KiB)                                                                                                                     
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+input 1/1          :   'conv_features_window', f32(1x40x64), 10.00 KBytes, activations                                                                               
+output 1/1         :   'gru_window_20', f32(1x32), 128 Bytes, activations                                                                                            
+macc               :   1,359,360                                                                                                                                     
+weights (ro)       :   137,472 B (134.25 KiB) (1 segment)                                                                                                            
+activations (rw)   :   22,016 B (21.50 KiB) (1 segment) *                                                                                                            
+ram (total)        :   22,016 B (21.50 KiB) = 22,016 + 0 + 0                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers are allocated in the activations buffer
+
+Model name - gru_window_mode
+------ ------------------------------------------ ----------------- --------------- --------- ---------------------- --- -------- -------- ------------ 
+m_id   layer (type,original)                      oshape            param/size           macc           connected to   | c_size   c_macc   c_type       
+------ ------------------------------------------ ----------------- --------------- --------- ---------------------- --- -------- -------- ------------ 
+0      conv_features_window (Input, InputLayer)   [b:1,h:40,c:64]                                                      |                   
+------ ------------------------------------------ ----------------- --------------- --------- ---------------------- --- -------- -------- ------------ 
+1      gru_window_1 (GRU, GRU)                    [b:1,h:40,c:64]   24,960/99,840     988,160   conv_features_window   |                   GRU_[0]      
+------ ------------------------------------------ ----------------- --------------- --------- ---------------------- --- -------- -------- ------------ 
+2      gru_window_2 (GRU, GRU)                    [b:1,c:32]        9,408/37,632      371,200           gru_window_1   |                   GRU_[o][1]   
+------ ------------------------------------------ ----------------- --------------- --------- ---------------------- --- -------- -------- ------------ 
+model/c-model: macc=1,359,360/1,359,360  weights=137,472/137,472  activations=--/22,016 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : gru_window_mode
+c-name                : gru_window
+c-node #              : 2
+c-array #             : 11
+activations size      : 22016 (1 segment)
+weights size          : 137472 (1 segment)
+macc                  : 1359360
+inputs                : ['conv_features_window_output']
+outputs               : ['gru_window_2_output0']
+
+C-Arrays (11)
+------ ----------------------------- ------------- ------------------------- ------------- --------- 
+c_id   name (*_array)                item/size     domain/mem-pool           c-type        comment   
+------ ----------------------------- ------------- ------------------------- ------------- --------- 
+0      conv_features_window_output   2560/10240    activations/**default**   float         /input    
+1      gru_window_1_bias             384/1536      weights/weights           const float             
+2      gru_window_1_kernel           12288/49152   weights/weights           const float             
+3      gru_window_1_output0          2560/10240    activations/**default**   float                   
+4      gru_window_1_recurrent        12288/49152   weights/weights           const float             
+5      gru_window_1_scratch0         384/1536      activations/**default**   float                   
+6      gru_window_2_bias             192/768       weights/weights           const float             
+7      gru_window_2_kernel           6144/24576    weights/weights           const float             
+8      gru_window_2_output0          32/128        activations/**default**   float         /output   
+9      gru_window_2_recurrent        3072/12288    weights/weights           const float             
+10     gru_window_2_scratch0         192/768       activations/**default**   float                   
+------ ----------------------------- ------------- ------------------------- ------------- --------- 
+
+C-Layers (2)
+------ ---------------- ---- ------------ -------- ------- -------------------------------- ------------------ 
+c_id   name (*_layer)   id   layer_type   macc     rom     tensors                          shape (array id)   
+------ ---------------- ---- ------------ -------- ------- -------------------------------- ------------------ 
+0      gru_window_1     1    GRU          988160   99840   I: conv_features_window_output   f32(1x40x64) (0)   
+                                                           S: gru_window_1_scratch0                            
+                                                           W: gru_window_1_kernel           f32(192x64) (2)    
+                                                           W: gru_window_1_recurrent        f32(192x64) (4)    
+                                                           W: gru_window_1_bias             f32(2x192) (1)     
+                                                           O: gru_window_1_output0          f32(1x40x64) (3)   
+------ ---------------- ---- ------------ -------- ------- -------------------------------- ------------------ 
+1      gru_window_2     2    GRU          371200   37632   I: gru_window_1_output0          f32(1x40x64) (3)   
+                                                           S: gru_window_2_scratch0                            
+                                                           W: gru_window_2_kernel           f32(96x64) (7)     
+                                                           W: gru_window_2_recurrent        f32(96x32) (9)     
+                                                           W: gru_window_2_bias             f32(2x96) (6)      
+                                                           O: gru_window_2_output0          f32(1x32) (8)      
+------ ---------------- ---- ------------ -------- ------- -------------------------------- ------------------ 
+
+
+
+Number of operations per c-layer
+------- ------ --------------------- ----------- -------------- 
+c_id    m_id   name (type)                   #op           type 
+------- ------ --------------------- ----------- -------------- 
+0       1      gru_window_1 (GRU)        988,160   smul_f32_f32 
+1       2      gru_window_2 (GRU)        371,200   smul_f32_f32 
+------- ------ --------------------- ----------- -------------- 
+total                                  1,359,360 
+
+Number of operation types
+---------------- ----------- ----------- 
+operation type             #           % 
+---------------- ----------- ----------- 
+smul_f32_f32       1,359,360      100.0% 
+
+Complexity report (model)
+------ -------------- ------------------------- ------------------------- ------ 
+m_id   name           c_macc                    c_rom                     c_id   
+------ -------------- ------------------------- ------------------------- ------ 
+1      gru_window_1   ||||||||||||||||  72.7%   ||||||||||||||||  72.6%   [0]    
+2      gru_window_2   ||||||            27.3%   ||||||            27.4%   [1]    
+------ -------------- ------------------------- ------------------------- ------ 
+macc=1,359,360 weights=137,472 act=22,016 ram_io=0
+
+Generated files (5)
+-------------------------------------------------------------------------------------------------------------------------------------------------------- 
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen/gru_window_data.h      
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen/gru_window_data.c      
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen/gru_window.h           
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen/gru_window.c           
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen/gru_window_details.h   

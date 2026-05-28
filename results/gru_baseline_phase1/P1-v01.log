@@ -1,0 +1,48 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778733308.758541 2491365 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 13:35:10] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 13:35:21] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 13:35:21] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 13:35:24] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 13:35:24] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 13:35:26] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 13:35:33] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 13:35:36] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 13:35:37] test windows=19,712 positive=7,332 videos=911
+I0000 00:00:1778733341.322112 2491365 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6065 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778733342.772007 2491365 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778733343.644772 2491365 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778733345.817983 2491365 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+I0000 00:00:1778733348.416930 2491775 cuda_dnn.cc:461] Loaded cuDNN version 92200
+W0000 00:00:1778733770.494948 2491365 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778733771.357004 2491365 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+[2026-05-14 13:43:12] video-level val: videos=1811 f1=0.9217 recall=0.9400 precision=0.9041 min_consecutive=3
+[2026-05-14 13:43:13] video-level test: videos=911 f1=0.8937 recall=0.9156 precision=0.8727 min_consecutive=3
+[2026-05-14 13:43:13] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8926    0.8333    0.8619       678
+           1     0.9041    0.9400    0.9217      1133
+
+    accuracy                         0.9001      1811
+   macro avg     0.8983    0.8867    0.8918      1811
+weighted avg     0.8998    0.9001    0.8993      1811
+
+[2026-05-14 13:43:13] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8471    0.7778    0.8110       342
+           1     0.8727    0.9156    0.8937       569
+
+    accuracy                         0.8639       911
+   macro avg     0.8599    0.8467    0.8523       911
+weighted avg     0.8631    0.8639    0.8626       911
+
+I0000 00:00:1778733793.714017 2491365 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778733793.714133 2491365 single_machine.cc:376] Starting new session
+I0000 00:00:1778733793.723718 2491365 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6065 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+I0000 00:00:1778733794.001416 2491365 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778733794.001534 2491365 single_machine.cc:376] Starting new session
+I0000 00:00:1778733794.006590 2491365 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6065 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+[2026-05-14 13:43:14] done P1-v01 val_f1=0.7867 (video=0.9217) test_f1=0.7731 (video=0.8937) threshold=0.450 min_consecutive=3

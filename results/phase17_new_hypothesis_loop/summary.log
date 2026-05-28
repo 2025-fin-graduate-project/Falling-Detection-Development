@@ -1,0 +1,37 @@
+[2026-05-16 00:01:29] Building pose-relative splits: dataset/splits_v2_filtered_rel
+Source : /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2
+Output : /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered_rel
+
+[train]
+  Loading train.csv ... 1,274,014 rows, 6,344 videos
+    -> /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered_rel/train.csv  (normal=1,177,257  falling=96,757  fallen=422,135  rel_cols=14)
+
+[val]
+  Loading val.csv ... 363,918 rows, 1,811 videos
+    -> /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered_rel/val.csv  (normal=336,309  falling=27,609  fallen=119,966  rel_cols=14)
+
+[test]
+  Loading test.csv ... 182,782 rows, 911 videos
+    -> /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered_rel/test.csv  (normal=168,903  falling=13,879  fallen=60,493  rel_cols=14)
+
+Done.
+[2026-05-16 00:09:14] === Phase 17 new-hypothesis loop started; target MinPR=0.92 ===
+[2026-05-16 00:09:14] START P17H-v01
+[2026-05-16 00:10:42] FAIL  P17H-v01  (exit 1)
+[2026-05-16 00:10:42] START P17H-v02
+[2026-05-16 00:12:02] FAIL  P17H-v02  (exit 1)
+[2026-05-16 00:12:02] START P17H-v03
+[2026-05-16 00:17:58] OK    P17H-v03  test_min_pr=0.6135
+[2026-05-16 00:17:58] START P17H-v04
+[2026-05-16 00:19:15] FAIL  P17H-v04  (exit 1)
+[2026-05-16 00:19:15] START P17H-v05
+[2026-05-16 00:20:38] FAIL  P17H-v05  (exit 1)
+[2026-05-16 00:20:38] START P17H-v06
+[2026-05-16 00:22:04] FAIL  P17H-v06  (exit 1)
+[2026-05-16 00:22:04] START P17H-v07
+[2026-05-16 00:23:26] FAIL  P17H-v07  (exit 1)
+[2026-05-16 00:23:26] === Phase 17 new-hypothesis summary ===
+[2026-05-16 00:23:26] === Phase 17 new-hypothesis summary ===
+ID             MinPR feat      model label       alpha     NFP     NFR   FallP   FallR   FP   FN   thr  mc PASS
+P17H-v03      0.6135 None      None None         None  0.6494  0.6135  0.7910  0.8154  126  108 0.500   2 
+[2026-05-16 00:23:26] === Phase 17 new-hypothesis loop complete ===

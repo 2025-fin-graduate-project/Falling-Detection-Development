@@ -1,0 +1,9 @@
+[2026-05-16 11:20:34] === Phase 29: focal alpha sweep (seed=42, val_video_min_pr) ===
+[2026-05-16 11:20:34] 기준: P27-vm0 alpha=0.25 → event=0.9241 FN=18 FallPr=0.979 NFallPr=0.924
+[2026-05-16 11:20:34] 목표: NFallPr≥0.93 (FN≤16). FallPr 여유 4.9%p 활용.
+[2026-05-16 11:20:34] GPU ready: 17MiB
+[2026-05-16 11:20:34] START P29-a35
+[OK] P29-a35 event=0.9000 video=0.9038 thr=0.575 mc=3
+  CM: TN=216 FP=16 FN=24 TP=597  fall_pr=0.9739 nfall_pr=0.9000
+[2026-05-16 11:44:45] GPU ready: 17MiB
+[2026-05-16 11:44:45] START P29-a50

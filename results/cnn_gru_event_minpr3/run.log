@@ -1,0 +1,12 @@
+[12:54:12] === event MinPR v3: focal_alpha sweep (base: kp7 w40 s0) ===
+[12:54:12] TRAIN → F-a35-kp7-w40-s0
+[13:08:12] DONE F-a35-kp7-w40-s0
+[13:08:12] TRAIN → F-a50-kp7-w40-s0
+[13:22:40] DONE F-a50-kp7-w40-s0
+[13:22:40] TRAIN → F-a65-kp7-w40-s0
+[13:43:15] DONE F-a65-kp7-w40-s0
+[13:43:15] TRAIN → F-a50-kp12-w40-s0
+[14:02:14] DONE F-a50-kp12-w40-s0
+[14:02:14] === 전체 완료 ===
+[14:02:14] 
+[14:02:14] === 결과 요약 ===

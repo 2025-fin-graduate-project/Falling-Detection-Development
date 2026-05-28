@@ -1,0 +1,356 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779469123.909782  187702 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-23 01:58:45] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_ema/train.csv
+[2026-05-23 01:58:57] train rows=1,208,593 videos=6,022 features=45 data_scope=all
+[2026-05-23 01:58:57] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_ema/val.csv
+[2026-05-23 01:59:00] val rows=345,348 videos=1,720 features=45 data_scope=all
+[2026-05-23 01:59:00] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_ema/test.csv
+[2026-05-23 01:59:02] test rows=173,653 videos=864 features=45 data_scope=all
+[2026-05-23 01:59:11] train windows=183,690 positive=56,835 videos=6,022
+[2026-05-23 01:59:15] val windows=88,806 positive=15,691 videos=1,720
+[2026-05-23 01:59:17] test windows=44,628 positive=7,936 videos=864
+I0000 00:00:1779469161.308860  187702 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+[2026-05-23 01:59:22] model Model: "EMA-kp12-w30_tcn"
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)        ┃ Output Shape      ┃    Param # ┃ Connected to      ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩
+│ pose_sequence       │ (None, 30, 45)    │          0 │ -                 │
+│ (InputLayer)        │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_conv1   │ (None, 30, 32)    │      4,320 │ pose_sequence[0]… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_bn1     │ (None, 30, 32)    │        128 │ tcn_block_1_conv… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_relu1   │ (None, 30, 32)    │          0 │ tcn_block_1_bn1[… │
+│ (ReLU)              │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_drop    │ (None, 30, 32)    │          0 │ tcn_block_1_relu… │
+│ (Dropout)           │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_proj    │ (None, 30, 32)    │      1,440 │ pose_sequence[0]… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_conv2   │ (None, 30, 32)    │      3,072 │ tcn_block_1_drop… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_proj_bn │ (None, 30, 32)    │        128 │ tcn_block_1_proj… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_bn2     │ (None, 30, 32)    │        128 │ tcn_block_1_conv… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_add     │ (None, 30, 32)    │          0 │ tcn_block_1_proj… │
+│ (Add)               │                   │            │ tcn_block_1_bn2[… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_1_out     │ (None, 30, 32)    │          0 │ tcn_block_1_add[… │
+│ (ReLU)              │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_2_conv1   │ (None, 30, 32)    │      3,072 │ tcn_block_1_out[… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_2_bn1     │ (None, 30, 32)    │        128 │ tcn_block_2_conv… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_2_relu1   │ (None, 30, 32)    │          0 │ tcn_block_2_bn1[… │
+│ (ReLU)              │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_2_drop    │ (None, 30, 32)    │          0 │ tcn_block_2_relu… │
+│ (Dropout)           │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_2_conv2   │ (None, 30, 32)    │      3,072 │ tcn_block_2_drop… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_2_bn2     │ (None, 30, 32)    │        128 │ tcn_block_2_conv… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_2_add     │ (None, 30, 32)    │          0 │ tcn_block_1_out[… │
+│ (Add)               │                   │            │ tcn_block_2_bn2[… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_2_out     │ (None, 30, 32)    │          0 │ tcn_block_2_add[… │
+│ (ReLU)              │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_conv1   │ (None, 30, 64)    │      6,144 │ tcn_block_2_out[… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_bn1     │ (None, 30, 64)    │        256 │ tcn_block_3_conv… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_relu1   │ (None, 30, 64)    │          0 │ tcn_block_3_bn1[… │
+│ (ReLU)              │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_drop    │ (None, 30, 64)    │          0 │ tcn_block_3_relu… │
+│ (Dropout)           │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_proj    │ (None, 30, 64)    │      2,048 │ tcn_block_2_out[… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_conv2   │ (None, 30, 64)    │     12,288 │ tcn_block_3_drop… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_proj_bn │ (None, 30, 64)    │        256 │ tcn_block_3_proj… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_bn2     │ (None, 30, 64)    │        256 │ tcn_block_3_conv… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_add     │ (None, 30, 64)    │          0 │ tcn_block_3_proj… │
+│ (Add)               │                   │            │ tcn_block_3_bn2[… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_3_out     │ (None, 30, 64)    │          0 │ tcn_block_3_add[… │
+│ (ReLU)              │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_conv1   │ (None, 30, 96)    │     18,432 │ tcn_block_3_out[… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_bn1     │ (None, 30, 96)    │        384 │ tcn_block_4_conv… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_relu1   │ (None, 30, 96)    │          0 │ tcn_block_4_bn1[… │
+│ (ReLU)              │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_drop    │ (None, 30, 96)    │          0 │ tcn_block_4_relu… │
+│ (Dropout)           │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_proj    │ (None, 30, 96)    │      6,144 │ tcn_block_3_out[… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_conv2   │ (None, 30, 96)    │     27,648 │ tcn_block_4_drop… │
+│ (Conv1D)            │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_proj_bn │ (None, 30, 96)    │        384 │ tcn_block_4_proj… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_bn2     │ (None, 30, 96)    │        384 │ tcn_block_4_conv… │
+│ (BatchNormalizatio… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_add     │ (None, 30, 96)    │          0 │ tcn_block_4_proj… │
+│ (Add)               │                   │            │ tcn_block_4_bn2[… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ tcn_block_4_out     │ (None, 30, 96)    │          0 │ tcn_block_4_add[… │
+│ (ReLU)              │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ gap                 │ (None, 96)        │          0 │ tcn_block_4_out[… │
+│ (GlobalAveragePool… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ gmp                 │ (None, 96)        │          0 │ tcn_block_4_out[… │
+│ (GlobalMaxPooling1… │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ pool_concat         │ (None, 192)       │          0 │ gap[0][0],        │
+│ (Concatenate)       │                   │            │ gmp[0][0]         │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ head_dense (Dense)  │ (None, 96)        │     18,528 │ pool_concat[0][0] │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ head_drop (Dropout) │ (None, 96)        │          0 │ head_dense[0][0]  │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ classifier (Dense)  │ (None, 2)         │        194 │ head_drop[0][0]   │
+└─────────────────────┴───────────────────┴────────────┴───────────────────┘
+ Total params: 108,962 (425.63 KB)
+ Trainable params: 107,682 (420.63 KB)
+ Non-trainable params: 1,280 (5.00 KB)
+
+I0000 00:00:1779469169.102346  187892 service.cc:153] XLA service 0x3523ac50 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1779469169.102370  187892 service.cc:161]   StreamExecutor [0]: NVIDIA GeForce RTX 2060 SUPER, Compute Capability 7.5 (Driver: 13.0.0; Runtime: 12.9.0; Toolkit: 12.5.0; DNN: 9.22.0)
+I0000 00:00:1779469169.202263  187892 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+I0000 00:00:1779469169.698816  187892 cuda_dnn.cc:461] Loaded cuDNN version 92200
+I0000 00:00:1779469169.843463  187892 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_8878__.85
+I0000 00:00:1779469178.426953  187892 device_compiler.h:208] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+I0000 00:00:1779469187.397404  187890 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_8878__.85
+[2026-05-23 01:59:59] epoch 1/100 accuracy=0.8349 loss=0.0476 val_accuracy=0.9180 val_loss=0.0384 learning_rate=0.0010
+[2026-05-23 02:00:09] epoch 2/100 accuracy=0.8747 loss=0.0369 val_accuracy=0.9212 val_loss=0.0369 learning_rate=0.0010
+[2026-05-23 02:00:20] epoch 3/100 accuracy=0.8832 loss=0.0346 val_accuracy=0.9222 val_loss=0.0257 learning_rate=0.0010
+[2026-05-23 02:00:30] epoch 4/100 accuracy=0.8888 loss=0.0328 val_accuracy=0.9253 val_loss=0.0250 learning_rate=0.0010
+[2026-05-23 02:00:40] epoch 5/100 accuracy=0.8926 loss=0.0316 val_accuracy=0.9280 val_loss=0.0285 learning_rate=0.0010
+[2026-05-23 02:00:51] epoch 6/100 accuracy=0.8975 loss=0.0303 val_accuracy=0.9254 val_loss=0.0308 learning_rate=0.0010
+[2026-05-23 02:01:01] epoch 7/100 accuracy=0.8994 loss=0.0296 val_accuracy=0.9246 val_loss=0.0252 learning_rate=0.0010
+[2026-05-23 02:01:11] epoch 8/100 accuracy=0.9073 loss=0.0272 val_accuracy=0.9282 val_loss=0.0273 learning_rate=0.0005
+[2026-05-23 02:01:22] epoch 9/100 accuracy=0.9090 loss=0.0263 val_accuracy=0.9288 val_loss=0.0244 learning_rate=0.0005
+[2026-05-23 02:01:32] epoch 10/100 accuracy=0.9111 loss=0.0260 val_accuracy=0.9268 val_loss=0.0251 learning_rate=0.0005
+[2026-05-23 02:01:42] epoch 11/100 accuracy=0.9128 loss=0.0254 val_accuracy=0.9284 val_loss=0.0254 learning_rate=0.0005
+[2026-05-23 02:01:53] epoch 12/100 accuracy=0.9141 loss=0.0250 val_accuracy=0.9277 val_loss=0.0281 learning_rate=0.0005
+[2026-05-23 02:02:03] epoch 13/100 accuracy=0.9188 loss=0.0235 val_accuracy=0.9257 val_loss=0.0301 learning_rate=0.0003
+[2026-05-23 02:02:14] epoch 14/100 accuracy=0.9205 loss=0.0230 val_accuracy=0.9258 val_loss=0.0296 learning_rate=0.0003
+[2026-05-23 02:02:24] epoch 15/100 accuracy=0.9209 loss=0.0229 val_accuracy=0.9266 val_loss=0.0292 learning_rate=0.0003
+[2026-05-23 02:02:34] epoch 16/100 accuracy=0.9231 loss=0.0220 val_accuracy=0.9254 val_loss=0.0309 learning_rate=0.0001
+[2026-05-23 02:02:45] epoch 17/100 accuracy=0.9240 loss=0.0218 val_accuracy=0.9251 val_loss=0.0304 learning_rate=0.0001
+[2026-05-23 02:02:55] epoch 18/100 accuracy=0.9249 loss=0.0216 val_accuracy=0.9250 val_loss=0.0302 learning_rate=0.0001
+[2026-05-23 02:03:05] epoch 19/100 accuracy=0.9258 loss=0.0213 val_accuracy=0.9246 val_loss=0.0317 learning_rate=0.0001
+[2026-05-23 02:03:15] epoch 20/100 accuracy=0.9262 loss=0.0211 val_accuracy=0.9252 val_loss=0.0310 learning_rate=0.0001
+[2026-05-23 02:03:26] epoch 21/100 accuracy=0.9273 loss=0.0210 val_accuracy=0.9251 val_loss=0.0307 learning_rate=0.0001
+[2026-05-23 02:03:36] epoch 22/100 accuracy=0.9277 loss=0.0209 val_accuracy=0.9260 val_loss=0.0304 learning_rate=0.0000
+[2026-05-23 02:03:47] epoch 23/100 accuracy=0.9278 loss=0.0209 val_accuracy=0.9252 val_loss=0.0312 learning_rate=0.0000
+[2026-05-23 02:03:57] epoch 24/100 accuracy=0.9281 loss=0.0207 val_accuracy=0.9251 val_loss=0.0320 learning_rate=0.0000
+[2026-05-23 02:04:30] video-level val: videos=1720 f1=0.9257 fall_recall=0.9300 nfall_recall=0.8688 fall_prec=0.9214 nfall_prec=0.8824 min_pr=0.8688 min_consecutive=1
+[2026-05-23 02:04:30] event-level val: videos=1720 f1=0.9182 fall_recall=0.9160 nfall_recall=0.8688 fall_prec=0.9203 nfall_prec=0.8622 min_pr=0.8622 tolerance_windows=2
+[2026-05-23 02:04:31] video-level test: videos=864 f1=0.9047 fall_recall=0.9056 nfall_recall=0.8551 fall_prec=0.9038 nfall_prec=0.8576 min_pr=0.8551 min_consecutive=1
+[2026-05-23 02:04:31] event-level test: videos=864 f1=0.8984 fall_recall=0.8940 nfall_recall=0.8551 fall_prec=0.9027 nfall_prec=0.8429 min_pr=0.8429 tolerance_windows=2
+[2026-05-23 02:04:31] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8824    0.8688    0.8756       648
+           1     0.9214    0.9300    0.9257      1072
+
+    accuracy                         0.9070      1720
+   macro avg     0.9019    0.8994    0.9007      1720
+weighted avg     0.9068    0.9070    0.9068      1720
+
+[2026-05-23 02:04:31] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8576    0.8551    0.8563       345
+           1     0.9038    0.9056    0.9047       519
+
+    accuracy                         0.8854       864
+   macro avg     0.8807    0.8803    0.8805       864
+weighted avg     0.8854    0.8854    0.8854       864
+
+[2026-05-23 02:04:36] tflite export subprocess exit=0
+[2026-05-23 02:04:36]   [tflite] [EMA-kp12-w30]
+[2026-05-23 02:04:36]   [tflite]   Loading model.keras ...
+[2026-05-23 02:04:36]   [tflite]     rebuilding with unroll=True for TFLite compatibility
+[2026-05-23 02:04:36]   [tflite] Saved artifact at '/tmp/tmp6dvwm_q_'. The following endpoints are available:
+[2026-05-23 02:04:36]   [tflite] 
+[2026-05-23 02:04:36]   [tflite] * Endpoint 'serve'
+[2026-05-23 02:04:36]   [tflite]   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 30, 45), dtype=tf.float32, name='pose_sequence')
+[2026-05-23 02:04:36]   [tflite] Output Type:
+[2026-05-23 02:04:36]   [tflite]   TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+[2026-05-23 02:04:36]   [tflite] Captures:
+[2026-05-23 02:04:36]   [tflite]   127694007187984: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007188752: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007188560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007188944: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007187792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007188176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007189136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883408848: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007189328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883408464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409424: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883410384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411152: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883410960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411344: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883410192: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883412304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883412112: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883412496: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883410576: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413264: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413072: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413456: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883408656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883412688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413648: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413840: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414032: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414800: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411920: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414992: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883415184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414224: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414416: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883415568: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416144: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416528: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414608: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883415760: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416720: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416912: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883417104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883417872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883415376: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883418064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883418256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883417296: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883417488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883418640: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883419600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883419216: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883420176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]     fp32 OK (446 KB)
+[2026-05-23 02:04:36]   [tflite] Saved artifact at '/tmp/tmpdqdmqbzw'. The following endpoints are available:
+[2026-05-23 02:04:36]   [tflite] 
+[2026-05-23 02:04:36]   [tflite] * Endpoint 'serve'
+[2026-05-23 02:04:36]   [tflite]   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 30, 45), dtype=tf.float32, name='pose_sequence')
+[2026-05-23 02:04:36]   [tflite] Output Type:
+[2026-05-23 02:04:36]   [tflite]   TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+[2026-05-23 02:04:36]   [tflite] Captures:
+[2026-05-23 02:04:36]   [tflite]   127694007187984: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007188752: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007188560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007188944: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007187792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007188176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007189136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883408848: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127694007189328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883408464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883409424: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883410384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411152: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883410960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411344: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883410192: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883412304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883412112: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883412496: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883410576: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413264: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413072: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413456: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883408656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883412688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413648: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883413840: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414032: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414800: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883411920: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414992: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883415184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414224: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414416: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883415568: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416144: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416528: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883414608: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883415760: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416720: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883416912: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883417104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883417872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883415376: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883418064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883418256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883417296: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883417488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883418640: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883419600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883419216: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]   127693883420176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-23 02:04:36]   [tflite]     int8 OK (153 KB)
+[2026-05-23 02:04:36]   [tflite] 
+[2026-05-23 02:04:36]   [tflite] Done.
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/interpreter.py:457: UserWarning:     Warning: tf.lite.Interpreter is deprecated and is scheduled for deletion in
+    TF 2.20. Please use the LiteRT interpreter from the ai_edge_litert package.
+    See the [migration guide](https://ai.google.dev/edge/litert/migration)
+    for details.
+    
+  warnings.warn(_INTERPRETER_DELETION_WARNING)
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[2026-05-23 02:04:37] done EMA-kp12-w30 val_f1=0.7840 (video=0.9257) test_f1=0.7815 (video=0.9047) test_min_pr=0.8551 threshold=0.450 min_consecutive=1

@@ -1,0 +1,18 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778687188.090034 2048344 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 00:46:29] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-14 00:46:51] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-14 00:46:51] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-14 00:46:57] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-14 00:46:57] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-14 00:47:00] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-14 00:47:10] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 00:47:13] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 00:47:15] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778687239.693465 2048344 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778687240.464740 2048344 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778687241.861810 2048344 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778687242.338084 2048344 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778687318.381984 2048344 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.

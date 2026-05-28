@@ -1,0 +1,22 @@
+Source : /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered
+Output : /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv
+
+[train]
+  Loading train.csv ...
+  1,211,093 rows, 6,039 videos — computing velocity ...
+  → /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/train.csv  vel_cols=10
+  done: 1,211,093 rows, 6,039 videos
+
+[val]
+  Loading val.csv ...
+  344,292 rows, 1,714 videos — computing velocity ...
+  → /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/val.csv  vel_cols=10
+  done: 344,292 rows, 1,714 videos
+
+[test]
+  Loading test.csv ...
+  172,209 rows, 853 videos — computing velocity ...
+  → /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/test.csv  vel_cols=10
+  done: 172,209 rows, 853 videos
+
+Done.

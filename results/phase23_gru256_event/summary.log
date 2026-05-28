@@ -1,0 +1,7 @@
+[2026-05-16 03:15:41] === Phase 23: GRU(256,128) + val_event_min_pr checkpoint + class_balanced ===
+[2026-05-16 03:15:41] GPU ready: used=17MiB <= 2200MiB
+[2026-05-16 03:15:41] START P23-v01
+[OK] P23-v01 test_event_min_pr=0.9064 test_video_min_pr=0.9103 thr=0.475 mc=3 thr_eval=event
+  event_CM: TN=213 FP=19 FN=22 TP=599
+[2026-05-16 03:40:23] GPU ready: used=17MiB <= 2200MiB
+[2026-05-16 03:40:23] START P23-v02

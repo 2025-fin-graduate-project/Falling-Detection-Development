@@ -1,0 +1,37 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778718897.733009 2348882 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 09:34:59] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 09:35:10] train rows=1,274,014 videos=6,344 features=28 data_scope=all
+[2026-05-14 09:35:10] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 09:35:13] val rows=363,918 videos=1,811 features=28 data_scope=all
+[2026-05-14 09:35:13] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 09:35:14] test rows=182,782 videos=911 features=28 data_scope=all
+[2026-05-14 09:35:21] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 09:35:24] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 09:35:25] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778718927.631998 2348882 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 10:03:57] video-level val: videos=1811 f1=0.9239 recall=0.9435 precision=0.9052
+[2026-05-14 10:03:57] video-level test: videos=911 f1=0.9111 recall=0.9367 precision=0.8869
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x75c0c85e91c0> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: expected an indented block after function definition on line 10 (<unknown>, line 11)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+I0000 00:00:1778720638.254950 2348882 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778720638.255026 2348882 single_machine.cc:376] Starting new session
+W0000 00:00:1778720638.257968 2348882 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x75c0c9778680> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: expected an indented block after function definition on line 10 (<unknown>, line 11)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x75c0c9778680> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: expected an indented block after function definition on line 10 (<unknown>, line 11)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+I0000 00:00:1778720638.788533 2348882 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778720638.788604 2348882 single_machine.cc:376] Starting new session
+W0000 00:00:1778720638.789787 2348882 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 10:03:58] done B-GRU-raw-v16 val_f1=0.7914 (video=0.9239) test_f1=0.7878 (video=0.9111) threshold=0.550

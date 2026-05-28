@@ -1,0 +1,45 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778876590.570685   53823 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 05:23:11] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 05:23:23] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 05:23:23] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 05:23:27] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 05:23:27] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 05:23:28] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 05:23:42] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 05:23:45] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 05:23:46] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778876629.861277   53823 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778876630.792239   53823 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778876632.122897   53823 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778876634.108177   53823 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778876636.611633   53885 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 05:36:51] ValMinPR: restored best weights (val_event_min_pr=0.8985)
+W0000 00:00:1778877412.316741   53823 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778877413.632796   53823 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+[2026-05-16 05:38:06] video-level val: videos=1714 f1=0.9638 fall_recall=0.9662 nfall_recall=0.8985 fall_prec=0.9615 nfall_prec=0.9101 min_pr=0.8985 min_consecutive=3
+[2026-05-16 05:38:06] event-level val: videos=1714 f1=0.9634 fall_recall=0.9654 nfall_recall=0.8985 fall_prec=0.9615 nfall_prec=0.9081 min_pr=0.8985 tolerance_windows=2
+[2026-05-16 05:38:07] video-level test: videos=853 f1=0.9678 fall_recall=0.9678 nfall_recall=0.9138 fall_prec=0.9678 nfall_prec=0.9138 min_pr=0.9138 min_consecutive=3
+[2026-05-16 05:38:07] event-level test: videos=853 f1=0.9661 fall_recall=0.9646 nfall_recall=0.9138 fall_prec=0.9677 nfall_prec=0.9060 min_pr=0.9060 tolerance_windows=2
+[2026-05-16 05:38:07] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9101    0.8985    0.9043       473
+           1     0.9615    0.9662    0.9638      1241
+
+    accuracy                         0.9475      1714
+   macro avg     0.9358    0.9323    0.9340      1714
+weighted avg     0.9473    0.9475    0.9474      1714
+
+[2026-05-16 05:38:07] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9138    0.9138    0.9138       232
+           1     0.9678    0.9678    0.9678       621
+
+    accuracy                         0.9531       853
+   macro avg     0.9408    0.9408    0.9408       853
+weighted avg     0.9531    0.9531    0.9531       853
+
+[2026-05-16 05:38:07] done P27-s0 val_f1=0.8848 (video=0.9638) test_f1=0.8827 (video=0.9678) test_min_pr=0.9138 threshold=0.475 min_consecutive=3

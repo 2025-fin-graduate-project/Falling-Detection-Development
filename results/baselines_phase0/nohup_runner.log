@@ -1,0 +1,567 @@
+[2026-05-14 01:33:55] Waiting for B-GRU-raw-v4 to complete...
+[2026-05-14 02:17:25] B-GRU-raw-v4 done — proceeding
+[2026-05-14 02:17:25] START B-GRU-raw-v5
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778692646.348824 2121107 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 02:17:27] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 02:17:39] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 02:17:39] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 02:17:42] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 02:17:42] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 02:17:43] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 02:17:51] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 02:17:53] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 02:17:54] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778692677.849865 2121107 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778692678.437967 2121107 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778692679.819184 2121107 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778694231.872257 2121107 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+[2026-05-14 02:44:20] video-level val: videos=1811 f1=0.9209 recall=0.9453 precision=0.8977
+[2026-05-14 02:44:21] video-level test: videos=911 f1=0.9042 recall=0.9367 precision=0.8738
+I0000 00:00:1778694261.749605 2121107 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778694261.749684 2121107 single_machine.cc:376] Starting new session
+W0000 00:00:1778694261.751991 2121107 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778694262.253803 2121107 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778694262.253875 2121107 single_machine.cc:376] Starting new session
+W0000 00:00:1778694262.255044 2121107 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 02:44:22] done B-GRU-raw-v5 val_f1=0.7780 (video=0.9209) test_f1=0.7794 (video=0.9042) threshold=0.500
+[2026-05-14 02:44:23] OK    B-GRU-raw-v5
+[2026-05-14 02:44:23] START B-GRU-raw-v6
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778694263.737324 2135457 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 02:44:25] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-14 02:44:47] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-14 02:44:47] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-14 02:44:53] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-14 02:44:53] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-14 02:44:55] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-14 02:45:05] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 02:45:09] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 02:45:10] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778694315.048328 2135457 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778694315.826358 2135457 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778694317.211587 2135457 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778694317.684321 2135457 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778694424.190463 2135457 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778697692.071880 2135457 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+[2026-05-14 03:42:26] video-level val: videos=2536 f1=0.8997 recall=0.9419 precision=0.8611
+[2026-05-14 03:42:26] video-level test: videos=1273 f1=0.8812 recall=0.9289 precision=0.8382
+I0000 00:00:1778697747.568946 2135457 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778697747.569008 2135457 single_machine.cc:376] Starting new session
+W0000 00:00:1778697747.571284 2135457 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778697748.510024 2135457 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778697748.510098 2135457 single_machine.cc:376] Starting new session
+W0000 00:00:1778697748.511218 2135457 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 03:42:28] done B-GRU-raw-v6 val_f1=0.7743 (video=0.8997) test_f1=0.7514 (video=0.8812) threshold=0.500
+[2026-05-14 03:42:29] OK    B-GRU-raw-v6
+[2026-05-14 03:42:29] START B-GRU-raw-v7
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778697750.188095 2164984 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 03:42:31] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-14 03:42:53] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-14 03:42:53] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-14 03:42:59] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-14 03:42:59] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-14 03:43:02] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-14 03:43:11] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 03:43:15] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 03:43:16] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778697801.213797 2164984 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778697801.975990 2164984 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778697803.380885 2164984 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778697803.868622 2164984 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778697881.202908 2164984 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778700110.252842 2164984 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+[2026-05-14 04:22:30] video-level val: videos=2536 f1=0.8972 recall=0.9324 precision=0.8646
+[2026-05-14 04:22:30] video-level test: videos=1273 f1=0.8889 recall=0.9363 precision=0.8461
+I0000 00:00:1778700151.623913 2164984 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778700151.623981 2164984 single_machine.cc:376] Starting new session
+W0000 00:00:1778700151.626383 2164984 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778700152.135341 2164984 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778700152.135414 2164984 single_machine.cc:376] Starting new session
+W0000 00:00:1778700152.136584 2164984 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 04:22:32] done B-GRU-raw-v7 val_f1=0.7739 (video=0.8972) test_f1=0.7549 (video=0.8889) threshold=0.500
+[2026-05-14 04:22:33] OK    B-GRU-raw-v7
+[2026-05-14 04:22:33] START B-GRU-raw-v8
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778700153.725262 2185433 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 04:22:35] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-14 04:22:56] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-14 04:22:56] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-14 04:23:02] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-14 04:23:02] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-14 04:23:05] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-14 04:23:15] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 04:23:18] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 04:23:20] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778700204.914233 2185433 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778700205.775974 2185433 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778700207.218414 2185433 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778700207.694527 2185433 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778700339.217278 2185433 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778704949.707206 2185433 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+[2026-05-14 05:43:39] video-level val: videos=2536 f1=0.9030 recall=0.9201 precision=0.8866
+[2026-05-14 05:43:40] video-level test: videos=1273 f1=0.8922 recall=0.9259 precision=0.8609
+I0000 00:00:1778705020.763133 2185433 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778705020.763205 2185433 single_machine.cc:376] Starting new session
+W0000 00:00:1778705020.765539 2185433 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778705021.284010 2185433 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778705021.284080 2185433 single_machine.cc:376] Starting new session
+W0000 00:00:1778705021.285337 2185433 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 05:43:41] done B-GRU-raw-v8 val_f1=0.7769 (video=0.9030) test_f1=0.7608 (video=0.8922) threshold=0.550
+[2026-05-14 05:43:42] OK    B-GRU-raw-v8
+[2026-05-14 05:43:42] START B-GRU-raw-v9
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778705022.846989 2224886 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 05:43:44] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-14 05:44:06] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-14 05:44:06] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-14 05:44:12] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-14 05:44:12] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-14 05:44:14] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-14 05:44:24] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 05:44:28] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 05:44:29] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778705074.170254 2224886 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778705074.934645 2224886 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778705076.325278 2224886 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778705076.800979 2224886 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778705153.423963 2224886 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778707694.179972 2224886 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+[2026-05-14 06:28:54] video-level val: videos=2536 f1=0.9049 recall=0.9302 precision=0.8809
+[2026-05-14 06:28:54] video-level test: videos=1273 f1=0.8922 recall=0.9259 precision=0.8609
+I0000 00:00:1778707735.450157 2224886 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778707735.450237 2224886 single_machine.cc:376] Starting new session
+W0000 00:00:1778707735.452699 2224886 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778707735.968977 2224886 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778707735.969054 2224886 single_machine.cc:376] Starting new session
+W0000 00:00:1778707735.970404 2224886 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 06:28:56] done B-GRU-raw-v9 val_f1=0.7754 (video=0.9049) test_f1=0.7612 (video=0.8922) threshold=0.550
+[2026-05-14 06:28:56] OK    B-GRU-raw-v9
+[2026-05-14 06:28:56] START B-GRU-raw-v10
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778707737.529100 2248599 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 06:28:58] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 06:29:10] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 06:29:10] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 06:29:13] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 06:29:13] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 06:29:14] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 06:29:23] train windows=137,339 positive=51,271 videos=6,344
+[2026-05-14 06:29:25] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 06:29:27] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778707771.241760 2248599 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778707772.051295 2248599 cpu_allocator_impl.cc:82] Allocation of 1417338480 exceeds 10% of free system memory.
+W0000 00:00:1778707773.765343 2248599 cpu_allocator_impl.cc:82] Allocation of 1417338480 exceeds 10% of free system memory.
+W0000 00:00:1778710039.778387 2248599 cpu_allocator_impl.cc:82] Allocation of 1417338480 exceeds 10% of free system memory.
+[2026-05-14 07:07:57] video-level val: videos=1811 f1=0.9173 recall=0.9541 precision=0.8832
+[2026-05-14 07:07:57] video-level test: videos=911 f1=0.9103 recall=0.9543 precision=0.8702
+I0000 00:00:1778710078.152062 2248599 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778710078.152125 2248599 single_machine.cc:376] Starting new session
+W0000 00:00:1778710078.154525 2248599 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778710078.659863 2248599 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778710078.659930 2248599 single_machine.cc:376] Starting new session
+W0000 00:00:1778710078.661101 2248599 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 07:07:58] done B-GRU-raw-v10 val_f1=0.7888 (video=0.9173) test_f1=0.7847 (video=0.9103) threshold=0.500
+[2026-05-14 07:07:59] OK    B-GRU-raw-v10
+[2026-05-14 07:07:59] START B-GRU-raw-v11
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778710080.384444 2268238 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 07:08:01] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 07:08:13] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 07:08:13] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 07:08:16] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 07:08:16] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 07:08:18] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 07:08:25] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 07:08:27] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 07:08:28] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778710112.033199 2268238 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778710112.623203 2268238 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778710114.001383 2268238 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778711997.713139 2268238 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+[2026-05-14 07:40:37] video-level val: videos=1811 f1=0.9221 recall=0.9347 precision=0.9098
+[2026-05-14 07:40:37] video-level test: videos=911 f1=0.9033 recall=0.9192 precision=0.8879
+I0000 00:00:1778712038.630683 2268238 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778712038.630751 2268238 single_machine.cc:376] Starting new session
+W0000 00:00:1778712038.633177 2268238 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778712039.573046 2268238 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778712039.573118 2268238 single_machine.cc:376] Starting new session
+W0000 00:00:1778712039.574227 2268238 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 07:40:39] done B-GRU-raw-v11 val_f1=0.7818 (video=0.9221) test_f1=0.7793 (video=0.9033) threshold=0.500
+[2026-05-14 07:40:40] OK    B-GRU-raw-v11
+[2026-05-14 07:40:40] START B-GRU-raw-v12
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778712041.219392 2284953 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 07:40:42] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 07:40:53] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 07:40:53] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 07:40:57] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 07:40:57] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 07:40:58] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 07:41:05] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 07:41:08] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 07:41:09] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778712072.506244 2284953 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778712073.092282 2284953 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778712074.467426 2284953 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778714468.466592 2284953 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+[2026-05-14 08:21:59] video-level val: videos=1811 f1=0.9222 recall=0.9576 precision=0.8893
+[2026-05-14 08:22:00] video-level test: videos=911 f1=0.9121 recall=0.9578 precision=0.8706
+I0000 00:00:1778714520.968467 2284953 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778714520.968535 2284953 single_machine.cc:376] Starting new session
+W0000 00:00:1778714520.971418 2284953 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778714521.491751 2284953 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778714521.491832 2284953 single_machine.cc:376] Starting new session
+W0000 00:00:1778714521.492983 2284953 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 08:22:01] done B-GRU-raw-v12 val_f1=0.7922 (video=0.9222) test_f1=0.7794 (video=0.9121) threshold=0.450
+[2026-05-14 08:22:02] OK    B-GRU-raw-v12
+[2026-05-14 08:22:02] START B-GRU-raw-v13
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778714523.149505 2308318 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 08:22:04] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train_filtered.csv
+[2026-05-14 08:22:28] train rows=1,783,893 videos=8,882 features=45 data_scope=no_by
+[2026-05-14 08:22:28] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val_filtered.csv
+[2026-05-14 08:22:34] val rows=509,932 videos=2,536 features=45 data_scope=no_by
+[2026-05-14 08:22:34] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test_filtered.csv
+[2026-05-14 08:22:37] test rows=255,682 videos=1,273 features=45 data_scope=no_by
+[2026-05-14 08:22:47] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 08:22:50] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 08:22:52] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778714576.671865 2308318 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778714577.482536 2308318 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+W0000 00:00:1778714579.465812 2308318 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+W0000 00:00:1778717053.979940 2308318 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+[2026-05-14 09:04:54] video-level val: videos=2536 f1=0.9100 recall=0.9186 precision=0.9016
+[2026-05-14 09:04:54] video-level test: videos=1273 f1=0.9019 recall=0.9126 precision=0.8915
+I0000 00:00:1778717095.653554 2308318 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778717095.653625 2308318 single_machine.cc:376] Starting new session
+W0000 00:00:1778717095.656028 2308318 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778717096.170786 2308318 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778717096.170856 2308318 single_machine.cc:376] Starting new session
+W0000 00:00:1778717096.172025 2308318 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 09:04:56] done B-GRU-raw-v13 val_f1=0.8026 (video=0.9100) test_f1=0.7980 (video=0.9019) threshold=0.550
+[2026-05-14 09:04:57] OK    B-GRU-raw-v13
+[2026-05-14 09:04:57] START B-GRU-raw-v14
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778717097.771532 2331353 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 09:04:59] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-14 09:05:21] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-14 09:05:21] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-14 09:05:27] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-14 09:05:27] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-14 09:05:29] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-14 09:05:39] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 09:05:43] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 09:05:44] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778717149.150217 2331353 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778717149.942887 2331353 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778717151.847053 2331353 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778717955.075101 2331353 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+[2026-05-14 09:19:31] video-level val: videos=2536 f1=0.9086 recall=0.9244 precision=0.8933
+[2026-05-14 09:19:32] video-level test: videos=1273 f1=0.8854 recall=0.9274 precision=0.8471
+W0000 00:00:1778717973.635088 2331353 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778717973.635103 2331353 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778717973.635324 2331353 reader.cc:83] Reading SavedModel from: /tmp/tmp40zntybx
+I0000 00:00:1778717973.638325 2331353 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778717973.638333 2331353 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmp40zntybx
+I0000 00:00:1778717973.655470 2331353 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778717973.659270 2331353 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778717973.739487 2331353 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmp40zntybx
+I0000 00:00:1778717973.762928 2331353 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 127609 microseconds.
+I0000 00:00:1778717973.812829 2331353 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+W0000 00:00:1778717975.187061 2331353 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778717975.187072 2331353 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778717975.187162 2331353 reader.cc:83] Reading SavedModel from: /tmp/tmpw4qxdpa7
+I0000 00:00:1778717975.189352 2331353 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778717975.189358 2331353 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpw4qxdpa7
+I0000 00:00:1778717975.208863 2331353 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778717975.287843 2331353 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpw4qxdpa7
+I0000 00:00:1778717975.310518 2331353 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 123360 microseconds.
+[2026-05-14 09:19:35] done B-GRU-raw-v14 val_f1=0.7820 (video=0.9086) test_f1=0.7578 (video=0.8854) threshold=0.500
+[2026-05-14 09:19:36] OK    B-GRU-raw-v14
+[2026-05-14 09:19:36] START B-GRU-raw-v15
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778717977.030684 2339454 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 09:19:38] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train_filtered.csv
+[2026-05-14 09:20:01] train rows=1,783,893 videos=8,882 features=45 data_scope=no_by
+[2026-05-14 09:20:01] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val_filtered.csv
+[2026-05-14 09:20:07] val rows=509,932 videos=2,536 features=45 data_scope=no_by
+[2026-05-14 09:20:07] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test_filtered.csv
+[2026-05-14 09:20:10] test rows=255,682 videos=1,273 features=45 data_scope=no_by
+[2026-05-14 09:20:20] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 09:20:23] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 09:20:24] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778718029.486429 2339454 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778718030.306029 2339454 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+W0000 00:00:1778718032.295308 2339454 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+W0000 00:00:1778718875.747110 2339454 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+[2026-05-14 09:34:52] video-level val: videos=2536 f1=0.9124 recall=0.9164 precision=0.9085
+[2026-05-14 09:34:52] video-level test: videos=1273 f1=0.9095 recall=0.9230 precision=0.8964
+W0000 00:00:1778718894.396885 2339454 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778718894.396896 2339454 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778718894.397074 2339454 reader.cc:83] Reading SavedModel from: /tmp/tmpkjhdckk0
+I0000 00:00:1778718894.400000 2339454 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778718894.400006 2339454 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpkjhdckk0
+I0000 00:00:1778718894.417175 2339454 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778718894.420983 2339454 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778718894.498562 2339454 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpkjhdckk0
+I0000 00:00:1778718894.521567 2339454 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 124499 microseconds.
+I0000 00:00:1778718894.549780 2339454 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+W0000 00:00:1778718895.870100 2339454 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778718895.870111 2339454 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778718895.870204 2339454 reader.cc:83] Reading SavedModel from: /tmp/tmprxb6ivw5
+I0000 00:00:1778718895.872452 2339454 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778718895.872458 2339454 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmprxb6ivw5
+I0000 00:00:1778718895.892186 2339454 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778718895.969696 2339454 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmprxb6ivw5
+I0000 00:00:1778718895.992796 2339454 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 122596 microseconds.
+[2026-05-14 09:34:56] done B-GRU-raw-v15 val_f1=0.7911 (video=0.9124) test_f1=0.7846 (video=0.9095) threshold=0.500
+[2026-05-14 09:34:57] OK    B-GRU-raw-v15
+[2026-05-14 09:34:57] START B-GRU-raw-v16
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778718897.733009 2348882 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 09:34:59] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 09:35:10] train rows=1,274,014 videos=6,344 features=28 data_scope=all
+[2026-05-14 09:35:10] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 09:35:13] val rows=363,918 videos=1,811 features=28 data_scope=all
+[2026-05-14 09:35:13] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 09:35:14] test rows=182,782 videos=911 features=28 data_scope=all
+[2026-05-14 09:35:21] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 09:35:24] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 09:35:25] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778718927.631998 2348882 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 10:03:57] video-level val: videos=1811 f1=0.9239 recall=0.9435 precision=0.9052
+[2026-05-14 10:03:57] video-level test: videos=911 f1=0.9111 recall=0.9367 precision=0.8869
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x75c0c85e91c0> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: expected an indented block after function definition on line 10 (<unknown>, line 11)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+I0000 00:00:1778720638.254950 2348882 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778720638.255026 2348882 single_machine.cc:376] Starting new session
+W0000 00:00:1778720638.257968 2348882 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x75c0c9778680> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: expected an indented block after function definition on line 10 (<unknown>, line 11)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x75c0c9778680> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: expected an indented block after function definition on line 10 (<unknown>, line 11)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+I0000 00:00:1778720638.788533 2348882 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778720638.788604 2348882 single_machine.cc:376] Starting new session
+W0000 00:00:1778720638.789787 2348882 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 10:03:58] done B-GRU-raw-v16 val_f1=0.7914 (video=0.9239) test_f1=0.7878 (video=0.9111) threshold=0.550
+[2026-05-14 10:03:59] OK    B-GRU-raw-v16
+[2026-05-14 10:03:59] START B-GRU-raw-v17
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778720640.339943 2365301 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 10:04:01] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 10:04:13] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 10:04:13] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 10:04:16] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 10:04:16] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 10:04:17] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 10:04:25] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 10:04:27] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 10:04:28] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778720672.165379 2365301 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778720672.778662 2365301 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778720674.155665 2365301 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778724805.601633 2365301 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+[2026-05-14 11:14:43] video-level val: videos=1811 f1=0.9198 recall=0.9568 precision=0.8856
+[2026-05-14 11:14:44] video-level test: videos=911 f1=0.9056 recall=0.9438 precision=0.8703
+I0000 00:00:1778724885.360575 2365301 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778724885.360636 2365301 single_machine.cc:376] Starting new session
+W0000 00:00:1778724885.362927 2365301 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778724886.156279 2365301 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778724886.156345 2365301 single_machine.cc:376] Starting new session
+W0000 00:00:1778724886.157516 2365301 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 11:14:46] done B-GRU-raw-v17 val_f1=0.7913 (video=0.9198) test_f1=0.7778 (video=0.9056) threshold=0.500
+[2026-05-14 11:14:47] OK    B-GRU-raw-v17
+[2026-05-14 11:14:47] START B-GRU-raw-v18
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778724888.026034 2403207 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 11:14:49] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 11:15:00] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 11:15:00] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 11:15:03] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 11:15:03] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 11:15:05] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 11:15:14] train windows=137,339 positive=51,271 videos=6,344
+[2026-05-14 11:15:16] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 11:15:17] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778724922.015624 2403207 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778724922.840870 2403207 cpu_allocator_impl.cc:82] Allocation of 1417338480 exceeds 10% of free system memory.
+W0000 00:00:1778724924.207063 2403207 cpu_allocator_impl.cc:82] Allocation of 404533680 exceeds 10% of free system memory.
+W0000 00:00:1778724924.546200 2403207 cpu_allocator_impl.cc:82] Allocation of 1417338480 exceeds 10% of free system memory.
+W0000 00:00:1778725038.352592 2403207 cpu_allocator_impl.cc:82] Allocation of 404533680 exceeds 10% of free system memory.
+W0000 00:00:1778727461.625905 2403207 cpu_allocator_impl.cc:82] Allocation of 1417338480 exceeds 10% of free system memory.
+[2026-05-14 11:58:31] video-level val: videos=1811 f1=0.9199 recall=0.9426 precision=0.8982
+[2026-05-14 11:58:32] video-level test: videos=911 f1=0.9059 recall=0.9385 precision=0.8754
+I0000 00:00:1778727513.142688 2403207 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778727513.142757 2403207 single_machine.cc:376] Starting new session
+W0000 00:00:1778727513.145140 2403207 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778727513.925388 2403207 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778727513.925466 2403207 single_machine.cc:376] Starting new session
+W0000 00:00:1778727513.926648 2403207 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 11:58:34] done B-GRU-raw-v18 val_f1=0.7813 (video=0.9199) test_f1=0.7707 (video=0.9059) threshold=0.500
+[2026-05-14 11:58:35] OK    B-GRU-raw-v18
+[2026-05-14 11:58:35] START B-GRU-raw-v19
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778727515.875413 2432624 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 11:58:37] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 11:58:48] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 11:58:48] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 11:58:52] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 11:58:52] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 11:58:53] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 11:59:01] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 11:59:03] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 11:59:04] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778727548.280742 2432624 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778727548.858257 2432624 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778727550.264055 2432624 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778729559.702808 2432624 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+[2026-05-14 12:33:08] video-level val: videos=1811 f1=0.9222 recall=0.9523 precision=0.8940
+[2026-05-14 12:33:09] video-level test: videos=911 f1=0.9054 recall=0.9420 precision=0.8715
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x70da47167740> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: illegal target for annotation (<unknown>, line 2)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+I0000 00:00:1778729589.872777 2432624 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778729589.873370 2432624 single_machine.cc:376] Starting new session
+W0000 00:00:1778729589.876842 2432624 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x70da47a7af20> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: illegal target for annotation (<unknown>, line 2)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+WARNING:tensorflow:AutoGraph could not transform <function _make_serving_fn.<locals>.serving_fn at 0x70da47a7af20> and will run it as-is.
+Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
+Cause: illegal target for annotation (<unknown>, line 2)
+To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
+I0000 00:00:1778729590.429958 2432624 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778729590.430039 2432624 single_machine.cc:376] Starting new session
+W0000 00:00:1778729590.431237 2432624 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 12:33:10] done B-GRU-raw-v19 val_f1=0.7882 (video=0.9222) test_f1=0.7819 (video=0.9054) threshold=0.500
+[2026-05-14 12:33:12] OK    B-GRU-raw-v19
+[2026-05-14 12:33:12] START B-GRU-raw-v20
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778729593.716140 2453704 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 12:33:15] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 12:33:27] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 12:33:27] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 12:33:30] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 12:33:30] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 12:33:32] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 12:33:39] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 12:33:42] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 12:33:43] test windows=19,712 positive=7,332 videos=911
+W0000 00:00:1778729627.531680 2453704 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3641, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 168, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 197, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7668, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7676, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'threshold'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 1302, in <module>
+    main()
+    ~~~~^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 1202, in main
+    save_threshold_sweep(threshold_payload, output_dir)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 775, in save_threshold_sweep
+    ax.plot(best["threshold"], best[col], marker="o", linewidth=1.4, label=col)
+            ~~~~^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/pandas/core/frame.py", line 4378, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3648, in get_loc
+    raise KeyError(key) from err
+KeyError: 'threshold'
+[2026-05-14 12:49:17] FAIL  B-GRU-raw-v20 (see results/baselines_phase0/B-GRU-raw-v20.log)
+[2026-05-14 12:49:17] All experiments complete. Collecting results...
+
+=== RESULTS SUMMARY ===
+B-GRU-raw-v4  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v5  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v6  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v7  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v8  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v9  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v10  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v11  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v12  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v13  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v14  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v15  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v16  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v17  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v18  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v19  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v20  NOT DONE
+[2026-05-14 12:49:18] Done. See results/baselines_phase0/run_all_summary.log

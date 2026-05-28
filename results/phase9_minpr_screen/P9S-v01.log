@@ -1,0 +1,47 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778822281.084245 4118136 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-15 14:18:02] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/train.csv
+[2026-05-15 14:18:15] train rows=1,274,014 videos=6,344 features=27 data_scope=all
+[2026-05-15 14:18:15] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/val.csv
+[2026-05-15 14:18:18] val rows=363,918 videos=1,811 features=27 data_scope=all
+[2026-05-15 14:18:18] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/test.csv
+[2026-05-15 14:18:20] test rows=182,782 videos=911 features=27 data_scope=all
+[2026-05-15 14:18:36] train windows=370,921 positive=224,347 videos=6,344
+[2026-05-15 14:18:39] val windows=74,251 positive=32,590 videos=1,811
+[2026-05-15 14:18:41] test windows=37,351 positive=16,447 videos=911
+E0000 00:00:1778822327.495893 4118136 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778822327.495916 4118136 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778822327.495924 4118136 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778822327.495934 4118136 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778822327.495936 4118136 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778822327.495939 4118136 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778822327.496047 4118136 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778822327.496062 4118136 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778822327.496064 4118136 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+W0000 00:00:1778822327.826435 4118136 cpu_allocator_impl.cc:82] Allocation of 1602378720 exceeds 10% of free system memory.
+W0000 00:00:1778822329.284356 4118136 cpu_allocator_impl.cc:82] Allocation of 1602378720 exceeds 10% of free system memory.
+W0000 00:00:1778823542.846230 4118136 cpu_allocator_impl.cc:82] Allocation of 1602378720 exceeds 10% of free system memory.
+[2026-05-15 14:39:53] video-level val: videos=1811 f1=0.9664 fall_recall=0.9617 nfall_recall=0.9208 fall_prec=0.9712 nfall_prec=0.8966 min_pr=0.8966 min_consecutive=3
+[2026-05-15 14:39:53] video-level test: videos=911 f1=0.9656 fall_recall=0.9685 nfall_recall=0.8980 fall_prec=0.9627 nfall_prec=0.9129 min_pr=0.8980 min_consecutive=3
+[2026-05-15 14:39:53] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8966    0.9208    0.9085       480
+           1     0.9712    0.9617    0.9664      1331
+
+    accuracy                         0.9509      1811
+   macro avg     0.9339    0.9413    0.9375      1811
+weighted avg     0.9514    0.9509    0.9511      1811
+
+[2026-05-15 14:39:53] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9129    0.8980    0.9053       245
+           1     0.9627    0.9685    0.9656       666
+
+    accuracy                         0.9495       911
+   macro avg     0.9378    0.9332    0.9355       911
+weighted avg     0.9493    0.9495    0.9494       911
+
+[2026-05-15 14:39:53] done P9S-v01 val_f1=0.8709 (video=0.9664) test_f1=0.8752 (video=0.9656) test_min_pr=0.8980 threshold=0.500 min_consecutive=3

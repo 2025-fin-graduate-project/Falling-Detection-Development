@@ -1,0 +1,17 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778936857.897073  432376 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 22:07:39] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 22:07:51] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 22:07:51] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 22:07:54] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 22:07:54] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 22:07:56] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 22:08:09] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 22:08:12] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 22:08:14] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778936897.861701  432376 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778936898.783169  432376 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778936900.101525  432376 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778936902.074068  432376 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778936904.584602  432673 cuda_dnn.cc:461] Loaded cuDNN version 92200

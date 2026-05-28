@@ -1,0 +1,108 @@
+[stedgeai] making compat .keras for M1-kp13-w60
+[stedgeai] analyze ...
+ST Edge AI Core v4.0.0-20500 359356bb0
+
+Creating c (debug) info json file /tmp/stedgeai_out_a1m0wv1g/m1_kp13_w60_c_info.json
+ 
+ Exec/report summary (analyze)
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/top3_retrain/M1-kp13-w60/model_stedgeai_compat.keras   
+ type               :   keras                                                                                                                         
+ c_name             :   m1_kp13_w60                                                                                                                   
+ compression        :   lossless                                                                                                                      
+ options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                
+ optimization       :   balanced                                                                                                                      
+ target/series      :   stm32n6                                                                                                                       
+ workspace dir      :   /tmp/stedgeai_ws_21pdoqom                                                                                                     
+ output dir         :   /tmp/stedgeai_out_a1m0wv1g                                                                                                    
+ model_fmt          :   float                                                                                                                         
+ model_name         :   model_stedgeai_compat                                                                                                         
+ model_hash         :   0xfbbe176eec75cf7389b27a5658f8394a                                                                                            
+ params #           :   70,498 items (275.38 KiB)                                                                                                     
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ input 1/1          :   'input_layer', f32(1x60x45), 10.55 KBytes, activations                                                                        
+ output 1/1         :   'dense_1', f32(1x2), 8 Bytes, activations                                                                                     
+ macc               :   4,140,832                                                                                                                     
+ weights (ro)       :   281,992 B (275.38 KiB) (1 segment)                                                                                            
+ activations (rw)   :   32,256 B (31.50 KiB) (1 segment) *                                                                                            
+ ram (total)        :   32,256 B (31.50 KiB) = 32,256 + 0 + 0                                                                                         
+ -----------------------------------------------------------------------------------------------------------------------------------------------------
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+
+Computing AI RT data/code size (target=stm32n6)..
+ -> compiler "gcc:arm-none-eabi-gcc" is not in the PATH
+
+ Model name - model_stedgeai_compat
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ m_id   layer (original)           oshape            param/size             macc      connected to
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 0      input_layer (InputLayer)   [b:1,h:60,c:45]
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 1      conv1d_conv2d (Conv1D)     [b:1,h:60,c:64]   14,464/57,856       864,064       input_layer
+        conv1d (Conv1D)            [b:1,h:60,c:64]                         3,840     conv1d_conv2d
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 2      conv1d_1_conv2d (Conv1D)   [b:1,h:60,c:64]   20,544/82,176     1,228,864            conv1d
+        conv1d_1 (Conv1D)          [b:1,h:60,c:64]                         3,840   conv1d_1_conv2d
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 3      gru (GRU)                  [b:1,h:60,c:64]   24,960/99,840     1,482,240          conv1d_1
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 4      gru_1 (GRU)                [b:1,c:32]        9,408/37,632        556,800               gru
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 5      dense_dense (Dense)        [b:1,c:32]        1,056/4,224           1,056             gru_1
+        dense (Dense)              [b:1,c:32]                                 32       dense_dense
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ 7      dense_1_dense (Dense)      [b:1,c:2]         66/264                   66             dense
+        dense_1 (Dense)            [b:1,c:2]                                  30     dense_1_dense
+ ------ -------------------------- ----------------- --------------- ----------- -----------------
+ model: macc=4,140,832 weights=281,992 activations=-- io=--
+
+ Number of operations per c-layer
+ ------- ------ --------------------------- ----------- --------------
+ c_id    m_id   name (type)                         #op           type
+ ------- ------ --------------------------- ----------- --------------
+ 0       1      conv1d_conv2d (Conv2D)          864,064   smul_f32_f32
+ 1       1      conv1d (Nonlinearity)             3,840     op_f32_f32
+ 2       2      conv1d_1_conv2d (Conv2D)      1,228,864   smul_f32_f32
+ 3       2      conv1d_1 (Nonlinearity)           3,840     op_f32_f32
+ 4       3      gru (GRU)                     1,482,240   smul_f32_f32
+ 5       4      gru_1 (GRU)                     556,800   smul_f32_f32
+ 6       5      dense_dense (Dense)               1,056   smul_f32_f32
+ 7       5      dense (Nonlinearity)                 32     op_f32_f32
+ 8       7      dense_1_dense (Dense)                66   smul_f32_f32
+ 9       7      dense_1 (Nonlinearity)               30     op_f32_f32
+ ------- ------ --------------------------- ----------- --------------
+ total                                        4,140,832
+
+ Number of operation types
+ ---------------- ----------- -----------
+ operation type             #           %
+ ---------------- ----------- -----------
+ smul_f32_f32       4,133,090       99.8%
+ op_f32_f32             7,742        0.2%
+
+ Complexity report (model)
+ ------ ----------------- ------------------------- ------------------------- --------
+ m_id   name              c_macc                    c_rom                     c_id
+ ------ ----------------- ------------------------- ------------------------- --------
+ 1      conv1d_conv2d     |||||||||         21.0%   |||||||||         20.5%   [0, 1]
+ 2      conv1d_1_conv2d   |||||||||||||     29.8%   |||||||||||||     29.1%   [2, 3]
+ 3      gru               ||||||||||||||||  35.8%   ||||||||||||||||  35.4%   [4]
+ 4      gru_1             ||||||            13.4%   ||||||            13.3%   [5]
+ 5      dense_dense       |                  0.0%   |                  1.5%   [6, 7]
+ 7      dense_1_dense     |                  0.0%   |                  0.1%   [8, 9]
+ ------ ----------------- ------------------------- ------------------------- --------
+ macc=4,140,832 weights=281,992 act=32,256 ram_io=0
+
+Creating txt report file /tmp/stedgeai_out_a1m0wv1g/m1_kp13_w60_analyze_report.txt
+elapsed time (ANALYZE): 7.865s
+
+[stedgeai] metrics.json updated
+{
+  "analyze": {
+    "analyze_ok": true,
+    "weights_kib": 275.38,
+    "weights_b": 281992,
+    "activations_kib": 31.5,
+    "macc": 4140832
+  }
+}

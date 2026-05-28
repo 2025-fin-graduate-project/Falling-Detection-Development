@@ -1,0 +1,31 @@
+[2026-05-14 19:51:36] === LF GROUP A: raw + last_frame ===
+[2026-05-14 19:51:36] START LF-v01
+[2026-05-14 20:06:25] OK    LF-v01
+[2026-05-14 20:06:25] START LF-v02
+[2026-05-14 20:34:26] OK    LF-v02
+[2026-05-14 20:34:26] START LF-v03
+[2026-05-14 20:52:47] OK    LF-v03
+[2026-05-14 20:52:47] START LF-v04
+[2026-05-14 21:17:01] OK    LF-v04
+[2026-05-14 21:17:01] === LF GROUP B: filtered + last_frame ===
+[2026-05-14 21:17:01] START LF-v05
+[2026-05-14 21:35:51] OK    LF-v05
+[2026-05-14 21:35:51] START LF-v06
+[2026-05-14 22:10:29] OK    LF-v06
+[2026-05-14 22:10:29] START LF-v07
+[2026-05-14 22:33:32] OK    LF-v07
+[2026-05-14 22:33:32] START LF-v08
+[2026-05-14 23:07:38] OK    LF-v08
+[2026-05-14 23:07:38] All LF experiments complete.
+=== LAST-FRAME LB-3 RESULTS ===
+ID       PP   Arch          testF1     Rec FallPrec NFallPrc  MinPrec  mincn
+------------------------------------------------------------------------
+LF-v01   raw  base          0.9672  0.9837   0.9512   0.9486   0.9486      5
+LF-v02   raw  bidir         0.9743  0.9837   0.9651   0.9509   0.9509      5
+LF-v03   raw  attn          0.9715  0.9852   0.9582   0.9541   0.9541      5
+LF-v04   raw  bidir+attn    0.9715  0.9852   0.9582   0.9541   0.9541      5
+LF-v05   filt base          0.9662  0.9763   0.9564   0.9283   0.9283      5
+LF-v06   filt bidir         0.9738  0.9926   0.9557   0.9763   0.9557      5
+LF-v07   filt attn          0.9731  0.9911   0.9557   0.9717   0.9557      5
+LF-v08   filt bidir+attn    0.9672  0.9837   0.9512   0.9486   0.9486      5
+[2026-05-14 23:07:38] Summary written to results/gru_lb3_lastframe/summary.log

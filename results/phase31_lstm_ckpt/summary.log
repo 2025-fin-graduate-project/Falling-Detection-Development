@@ -1,0 +1,23 @@
+[2026-05-16 12:37:31] === Phase 31: LSTM × Checkpoint 탐색 ===
+[2026-05-16 12:37:31] 기준: P27-vm0 GRU val_video_min_pr 0.9241 / P30-lstm val_loss 0.9181
+[2026-05-16 12:37:31] GPU ready: 17MiB
+[2026-05-16 12:37:31] START P31-vm42
+[OK] P31-vm42 event=0.9038 video=0.9076 thr=0.525 mc=4
+  CM: TN=216 FP=16 FN=23 TP=598  fall_pr=0.9739 nfall_pr=0.9038 fall_rc=0.9630
+[2026-05-16 13:08:16] GPU ready: 17MiB
+[2026-05-16 13:08:16] START P31-vm1
+[OK] P31-vm1 event=0.8917 video=0.8992 thr=0.500 mc=4
+  CM: TN=214 FP=18 FN=26 TP=595  fall_pr=0.9706 nfall_pr=0.8917 fall_rc=0.9581
+[2026-05-16 13:36:22] GPU ready: 17MiB
+[2026-05-16 13:36:22] START P31-vm2
+[OK] P31-vm2 event=0.8870 video=0.8908 thr=0.575 mc=1
+  CM: TN=212 FP=20 FN=27 TP=594  fall_pr=0.9674 nfall_pr=0.8870 fall_rc=0.9565
+[2026-05-16 14:00:34] GPU ready: 17MiB
+[2026-05-16 14:00:34] START P31-ev42
+[OK] P31-ev42 event=0.8651 video=0.8685 thr=0.475 mc=5
+  CM: TN=218 FP=14 FN=34 TP=587  fall_pr=0.9767 nfall_pr=0.8651 fall_rc=0.9452
+[2026-05-16 14:24:48] GPU ready: 17MiB
+[2026-05-16 14:24:48] START P31-ev1
+[OK] P31-ev1 event=0.8992 video=0.9068 thr=0.575 mc=2
+  CM: TN=214 FP=18 FN=24 TP=597  fall_pr=0.9707 nfall_pr=0.8992 fall_rc=0.9614
+[2026-05-16 14:54:12] === Phase 31 done ===

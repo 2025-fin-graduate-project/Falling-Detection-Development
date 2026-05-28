@@ -1,0 +1,88 @@
+[2026-05-15 12:11:04] === Phase 8: Flash-optimized GRU (TF 2.18 / Keras 3.7) ===
+[2026-05-15 12:11:04] Creating TF 2.18 venv at .venv-tf218 ...
+[2026-05-15 12:52:54] === Phase 8: Conv-optimized GRU (uv/TF 2.21) ===
+[2026-05-15 12:52:54] === Part A: 학습 ===
+[2026-05-15 12:52:54] START P8-v01
+[2026-05-15 13:13:13] OK    P8-v01
+[2026-05-15 13:13:13] START P8-v02
+[2026-05-15 13:37:13] OK    P8-v02
+[2026-05-15 13:37:13] START P8-v03
+[2026-05-15 14:05:51] OK    P8-v03
+[2026-05-15 14:05:51] === Part A complete ===
+[2026-05-15 14:05:51] === Part B: STedgeAI analyze ===
+[2026-05-15 14:05:51] STEDGEAI P8-v01
+[stedgeai] making compat .keras for P8-v01
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x30x27), 3.16 KBytes, activations                                                                      
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                 
+ macc               :   3,622,358                                                                                                                    
+ weights (ro)       :   499,988 B (488.27 KiB) (1 segment) / -244(-0.0%) vs float model                                                              
+ activations (rw)   :   30,840 B (30.12 KiB) (1 segment) *                                                                                           
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size              macc       connected to
+ model: macc=3,702,304 weights=500,232 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=3,622,358 weights=499,988 act=30,840 ram_io=0
+ weights                                0   499,992       0        0
+ activations                            0         0       0   30,840
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 488.27,
+    "activations_kib": 30.12,
+    "macc": 3622358
+[2026-05-15 14:05:59] STEDGEAI P8-v02
+[stedgeai] making compat .keras for P8-v02
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x30x27), 3.16 KBytes, activations                                                                      
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                 
+ macc               :   3,216,278                                                                                                                    
+ weights (ro)       :   445,844 B (435.39 KiB) (1 segment) / -244(-0.1%) vs float model                                                              
+ activations (rw)   :   30,840 B (30.12 KiB) (1 segment) *                                                                                           
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size              macc       connected to
+ model: macc=3,296,224 weights=446,088 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=3,216,278 weights=445,844 act=30,840 ram_io=0
+ weights                                0   445,848       0        0
+ activations                            0         0       0   30,840
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 435.39,
+    "activations_kib": 30.12,
+    "macc": 3216278
+[2026-05-15 14:06:06] STEDGEAI P8-v03
+[stedgeai] making compat .keras for P8-v03
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x30x21), 2.46 KBytes, activations                                                                      
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                 
+ macc               :   3,564,758                                                                                                                    
+ weights (ro)       :   492,308 B (480.77 KiB) (1 segment) / -244(-0.0%) vs float model                                                              
+ activations (rw)   :   30,840 B (30.12 KiB) (1 segment) *                                                                                           
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size              macc       connected to
+ model: macc=3,644,704 weights=492,552 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=3,564,758 weights=492,308 act=30,840 ram_io=0
+ weights                                0   492,312       0        0
+ activations                            0         0       0   30,840
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 480.77,
+    "activations_kib": 30.12,
+    "macc": 3564758
+[2026-05-15 14:06:13] === Part B complete ===
+[2026-05-15 14:06:13] === Phase 8 Final Summary ===
+
+[Phase 8 — Conv-optimized GRU(128,64)]
+ID       Config                 Float MinP INT8 MinP    Flash          RAM   OK?
+------------------------------------------------------------------------
+P8-v01   1×Conv64 kp7 30f       0.9196  0.8898     488 KiB     30 KiB  ✓
+P8-v02   2×Conv32 kp7 30f       0.9266  0.8565     435 KiB     30 KiB  ✓
+P8-v03   1×Conv64 minimal 30f   0.9077  0.8257     481 KiB     30 KiB  ✓
+
+  ✓ = Flash ≤ 512 KiB  ✗ = over  ? = analyze not run
+
+[참고: Phase 7 best]
+  Q7-v02   2×Conv64 kp7 30f (537 KiB est)       MinP=0.9341  Flash=537 KiB
+  P5-v02   2×Conv64 kp7 40f (537 KiB actual)    MinP=0.9495  Flash=537 KiB
+[2026-05-15 14:06:13] Done. See results/gru_phase8_flash/summary.log

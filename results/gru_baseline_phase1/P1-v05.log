@@ -1,0 +1,109 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778736465.551053 2526333 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 14:27:46] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/lb3_v2/train.csv
+[2026-05-14 14:27:58] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 14:27:58] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/lb3_v2/val.csv
+[2026-05-14 14:28:02] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 14:28:02] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/lb3_v2/test.csv
+[2026-05-14 14:28:03] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 14:28:12] train windows=119,770 positive=101,606 videos=6,344
+[2026-05-14 14:28:14] val windows=39,199 positive=29,010 videos=1,811
+[2026-05-14 14:28:16] test windows=19,712 positive=14,587 videos=911
+I0000 00:00:1778736500.212113 2526333 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6065 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778736501.503551 2526333 cpu_allocator_impl.cc:82] Allocation of 1236026400 exceeds 10% of free system memory.
+W0000 00:00:1778736502.594783 2526333 cpu_allocator_impl.cc:82] Allocation of 1236026400 exceeds 10% of free system memory.
+W0000 00:00:1778736504.897134 2526333 cpu_allocator_impl.cc:82] Allocation of 1236026400 exceeds 10% of free system memory.
+I0000 00:00:1778736507.611751 2526748 cuda_dnn.cc:461] Loaded cuDNN version 92200
+W0000 00:00:1778737453.608185 2526333 cpu_allocator_impl.cc:82] Allocation of 1236026400 exceeds 10% of free system memory.
+W0000 00:00:1778737454.706348 2526333 cpu_allocator_impl.cc:82] Allocation of 1236026400 exceeds 10% of free system memory.
+[2026-05-14 14:44:37] video-level val: videos=1811 f1=0.9714 recall=0.9888 fall_prec=0.9546 nfall_prec=0.9645 min_prec=0.9546 min_consecutive=5
+[2026-05-14 14:44:37] video-level test: videos=911 f1=0.9714 recall=0.9822 fall_prec=0.9608 nfall_prec=0.9459 min_prec=0.9459 min_consecutive=5
+[2026-05-14 14:44:37] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9645    0.8662    0.9128       471
+           1     0.9546    0.9888    0.9714      1340
+
+    accuracy                         0.9569      1811
+   macro avg     0.9596    0.9275    0.9421      1811
+weighted avg     0.9572    0.9569    0.9562      1811
+
+[2026-05-14 14:44:37] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9459    0.8861    0.9150       237
+           1     0.9608    0.9822    0.9714       674
+
+    accuracy                         0.9572       911
+   macro avg     0.9534    0.9341    0.9432       911
+weighted avg     0.9569    0.9572    0.9567       911
+
+Saved artifact at '/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/gru_baseline_phase1/P1-v05/_saved_model_tmp'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 60, 43), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 3), dtype=tf.float32, name=None)
+Captures:
+  128355449192528: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451420304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451420496: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355449193872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355449194640: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451418576: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451407824: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451417808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451410512: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451419920: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451420112: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451406288: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451405904: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451414352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451414544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451414160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451418192: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451410704: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451412816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451414736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355451406096: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355450990288: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355450991632: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128355450994512: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778737478.693730 2526333 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778737478.693746 2526333 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778737478.693951 2526333 reader.cc:83] Reading SavedModel from: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/gru_baseline_phase1/P1-v05/_saved_model_tmp
+I0000 00:00:1778737478.694823 2526333 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778737478.694829 2526333 reader.cc:147] Reading SavedModel debug info (if present) from: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/gru_baseline_phase1/P1-v05/_saved_model_tmp
+I0000 00:00:1778737478.701497 2526333 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778737478.702906 2526333 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778737478.743386 2526333 loader.cc:220] Running initialization op on SavedModel bundle at path: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/gru_baseline_phase1/P1-v05/_saved_model_tmp
+I0000 00:00:1778737478.757275 2526333 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 63328 microseconds.
+I0000 00:00:1778737478.773075 2526333 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+loc(callsite(fused["CudnnRNNV3:", "P1-v05_gru_1/gru_1_1/CudnnRNNV3@__inference___call___425958"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper___call___426065"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.CudnnRNNV3' op is neither a custom op nor a flex op
+loc(callsite(fused["CudnnRNNV3:", "P1-v05_gru_1/gru_2_1/CudnnRNNV3@__inference___call___425958"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper___call___426065"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.CudnnRNNV3' op is neither a custom op nor a flex op
+error: failed while converting: 'main': 
+Some ops in the model are custom ops, See instructions to implement custom ops: https://www.tensorflow.org/lite/guide/ops_custom 
+Custom ops: CudnnRNNV3
+Details:
+	tf.CudnnRNNV3(tensor<?x60x256xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<148224xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) : {T = f32, device = "", direction = "unidirectional", dropout = 0.000000e+00 : f32, input_mode = "linear_input", is_training = true, num_proj = 0 : i64, rnn_mode = "gru", seed = 0 : i64, seed2 = 0 : i64, time_major = false}
+	tf.CudnnRNNV3(tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) : {T = f32, device = "", direction = "unidirectional", dropout = 0.000000e+00 : f32, input_mode = "linear_input", is_training = true, num_proj = 0 : i64, rnn_mode = "gru", seed = 0 : i64, seed2 = 0 : i64, time_major = false}
+
+W0000 00:00:1778737479.186604 2526333 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778737479.186621 2526333 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778737479.186745 2526333 reader.cc:83] Reading SavedModel from: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/gru_baseline_phase1/P1-v05/_saved_model_tmp
+I0000 00:00:1778737479.187632 2526333 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778737479.187637 2526333 reader.cc:147] Reading SavedModel debug info (if present) from: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/gru_baseline_phase1/P1-v05/_saved_model_tmp
+I0000 00:00:1778737479.195184 2526333 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778737479.236182 2526333 loader.cc:220] Running initialization op on SavedModel bundle at path: /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/gru_baseline_phase1/P1-v05/_saved_model_tmp
+I0000 00:00:1778737479.251713 2526333 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 64976 microseconds.
+loc(callsite(fused["CudnnRNNV3:", "P1-v05_gru_1/gru_1_1/CudnnRNNV3@__inference___call___425958"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper___call___426065"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.CudnnRNNV3' op is neither a custom op nor a flex op
+loc(callsite(fused["CudnnRNNV3:", "P1-v05_gru_1/gru_2_1/CudnnRNNV3@__inference___call___425958"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper___call___426065"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.CudnnRNNV3' op is neither a custom op nor a flex op
+error: failed while converting: 'main': 
+Some ops in the model are custom ops, See instructions to implement custom ops: https://www.tensorflow.org/lite/guide/ops_custom 
+Custom ops: CudnnRNNV3
+Details:
+	tf.CudnnRNNV3(tensor<?x60x256xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<148224xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) : {T = f32, device = "", direction = "unidirectional", dropout = 0.000000e+00 : f32, input_mode = "linear_input", is_training = true, num_proj = 0 : i64, rnn_mode = "gru", seed = 0 : i64, seed2 = 0 : i64, time_major = false}
+	tf.CudnnRNNV3(tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) : {T = f32, device = "", direction = "unidirectional", dropout = 0.000000e+00 : f32, input_mode = "linear_input", is_training = true, num_proj = 0 : i64, rnn_mode = "gru", seed = 0 : i64, seed2 = 0 : i64, time_major = false}
+
+[2026-05-14 14:44:39] done P1-v05 val_f1=0.9708 (video=0.9714) test_f1=0.9695 (video=0.9714) test_min_prec=0.9459 threshold=0.500 min_consecutive=5

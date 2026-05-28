@@ -1,0 +1,49 @@
+[20:01:09] === Pure GRU Ablation 시작 ===
+[20:01:09] -- Filter A --
+[20:01:09] TRAIN → A-kp7-w30
+[20:07:50] DONE A-kp7-w30
+[20:07:50] TRAIN → A-kp7-w40
+[20:14:31] DONE A-kp7-w40
+[20:14:31] TRAIN → A-kp12-w30
+[20:23:22] DONE A-kp12-w30
+[20:23:22] TRAIN → A-kp12-w40
+[20:32:20] DONE A-kp12-w40
+[20:32:20] TRAIN → A-all-w40
+[20:39:44] DONE A-all-w40
+[20:39:44] -- Filter EMA --
+[20:39:44] TRAIN → EMA-kp7-w30
+[20:48:33] DONE EMA-kp7-w30
+[20:48:33] TRAIN → EMA-kp7-w40
+[20:56:06] DONE EMA-kp7-w40
+[20:56:06] TRAIN → EMA-kp7-w50
+[21:01:16] DONE EMA-kp7-w50
+[21:01:16] TRAIN → EMA-kp12-w20
+[21:08:24] DONE EMA-kp12-w20
+[21:08:24] TRAIN → EMA-kp12-w30
+[21:21:11] DONE EMA-kp12-w30
+[21:21:11] TRAIN → EMA-kp12-w40
+[21:29:28] DONE EMA-kp12-w40
+[21:29:28] TRAIN → EMA-kp12-w50
+[21:38:11] DONE EMA-kp12-w50
+[21:38:11] TRAIN → EMA-all-w30
+[21:48:08] DONE EMA-all-w30
+[21:48:08] TRAIN → EMA-all-w40
+[21:56:19] DONE EMA-all-w40
+[21:56:19] TRAIN → EMA-all-w50
+[22:05:36] DONE EMA-all-w50
+[22:05:36] -- Filter D --
+[22:05:36] TRAIN → D-kp7-w40
+[22:12:23] DONE D-kp7-w40
+[22:12:23] TRAIN → D-kp12-w30
+[22:21:52] DONE D-kp12-w30
+[22:21:52] TRAIN → D-kp12-w40
+[22:30:53] DONE D-kp12-w40
+[22:30:53] TRAIN → D-kp12-w50
+[22:39:38] DONE D-kp12-w50
+[22:39:38] TRAIN → D-all-w40
+[22:48:52] DONE D-all-w40
+[22:48:52] TRAIN → D-all-w50
+[22:58:55] DONE D-all-w50
+[22:58:55] === 전체 완료 ===
+[22:58:55] 
+[22:58:55] === 결과 요약 ===

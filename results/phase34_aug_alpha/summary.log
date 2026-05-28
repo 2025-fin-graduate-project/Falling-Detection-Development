@@ -1,0 +1,79 @@
+[2026-05-16 17:25:35] === Phase 34: Augmentation × Focal Alpha 탐색 ===
+[2026-05-16 17:25:35] 기준: P27-vm0(GRU focal α=0.25 + val_vm + seed=42) = 0.9241
+[2026-05-16 17:25:35] 목표: FN 18→≤16 (FP 여유 충분: 현재 FP=13)
+[2026-05-16 17:25:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:26:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:27:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:28:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:29:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:30:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:31:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:32:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:33:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:34:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:35:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:36:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:37:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:38:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:39:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:40:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:41:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:42:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:43:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:44:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:45:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:46:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:47:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:48:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:49:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:50:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:51:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:52:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:53:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:54:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:55:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:56:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:57:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:58:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:59:35] GPU ready: 17MiB
+[2026-05-16 17:59:35] START P34-a35
+[2026-05-16 18:00:30] FAIL P34-a35 (exit 1)
+[2026-05-16 18:00:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:01:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:02:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:03:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:04:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:05:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:06:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:07:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:08:30] GPU ready: 17MiB
+[2026-05-16 18:08:30] START P34-a40
+[2026-05-16 18:09:24] FAIL P34-a40 (exit 1)
+[2026-05-16 18:09:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:10:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:11:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:12:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:13:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:14:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:15:24] GPU ready: 17MiB
+[2026-05-16 18:15:24] START P34-a45
+[OK] P34-a45 event=0.8926 video=0.8963
+  CM: TN=216 FP=16 FN=26 TP=595  fall_pr=0.9738 nfall_pr=0.8926 fall_rc=0.9581
+[2026-05-16 18:52:23] GPU ready: 17MiB
+[2026-05-16 18:52:23] START P34-fm10
+[OK] P34-fm10 event=0.8963 video=0.8963
+  CM: TN=216 FP=16 FN=25 TP=596  fall_pr=0.9739 nfall_pr=0.8963 fall_rc=0.9597
+[2026-05-16 19:44:59] GPU ready: 17MiB
+[2026-05-16 19:44:59] START P34-fm20
+[OK] P34-fm20 event=0.8699 video=0.8699
+  CM: TN=214 FP=18 FN=32 TP=589  fall_pr=0.9703 nfall_pr=0.8699 fall_rc=0.9485
+[2026-05-16 20:15:53] GPU ready: 17MiB
+[2026-05-16 20:15:53] START P34-tm3
+[OK] P34-tm3 event=0.8828 video=0.8866
+  CM: TN=211 FP=21 FN=28 TP=593  fall_pr=0.9658 nfall_pr=0.8828 fall_rc=0.9549
+[2026-05-16 21:30:08] GPU ready: 17MiB
+[2026-05-16 21:30:08] START P34-tm5
+[OK] P34-tm5 event=0.8941 video=0.8979
+  CM: TN=211 FP=21 FN=25 TP=596  fall_pr=0.9660 nfall_pr=0.8941 fall_rc=0.9597
+[2026-05-16 22:07:37] GPU ready: 17MiB
+[2026-05-16 22:07:37] START P34-a35-fm10

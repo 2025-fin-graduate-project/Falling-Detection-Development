@@ -1,0 +1,251 @@
+[2026-05-15 11:26:56] Watching for Q7-v02 and Q7-v03 completion...
+[2026-05-15 11:50:56] Training complete. Starting STedgeAI analyze pass.
+[2026-05-15 11:51:56] === Part A: Existing best models ===
+[2026-05-15 11:51:56] ANALYZE P5-v02
+[stedgeai] making compat .keras for P5-v02
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x40x27), 4.22 KBytes, activations                                                                        
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                   
+ macc               :   5,322,472                                                                                                                      
+ weights (ro)       :   549,396 B (536.52 KiB) (1 segment) / -500(-0.1%) vs float model                                                                
+ activations (rw)   :   41,120 B (40.16 KiB) (1 segment) *                                                                                             
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size              macc       connected to
+ model: macc=5,434,144 weights=549,896 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=5,322,472 weights=549,396 act=41,120 ram_io=0
+ weights                                0   549,400       0        0
+ activations                            0         0       0   41,120
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 536.52,
+    "activations_kib": 40.16,
+    "macc": 5322472
+[2026-05-15 11:52:04] ANALYZE P5-v01
+[stedgeai] making compat .keras for P5-v01
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x40x27), 4.22 KBytes, activations                                                                        
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                   
+ macc               :   5,322,472                                                                                                                      
+ weights (ro)       :   549,396 B (536.52 KiB) (1 segment) / -500(-0.1%) vs float model                                                                
+ activations (rw)   :   41,120 B (40.16 KiB) (1 segment) *                                                                                             
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size              macc       connected to
+ model: macc=5,434,144 weights=549,896 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=5,322,472 weights=549,396 act=41,120 ram_io=0
+ weights                                0   549,400       0        0
+ activations                            0         0       0   41,120
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 536.52,
+    "activations_kib": 40.16,
+    "macc": 5322472
+[2026-05-15 11:52:11] ANALYZE P4-v05
+[stedgeai] making compat .keras for P4-v05
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x40x21), 3.28 KBytes, activations                                                                       
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                  
+ macc               :   16,614,376                                                                                                                    
+ weights (ro)       :   1,727,764 B (1.65 MiB) (1 segment) / -500(-0.0%) vs float model                                                               
+ activations (rw)   :   82,080 B (80.16 KiB) (1 segment) *                                                                                            
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size               macc       connected to
+ model: macc=16,828,448 weights=1,728,264 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=16,614,376 weights=1,727,764 act=82,080 ram_io=0
+ weights                                0   1,727,768       0        0
+ activations                            0           0       0   82,080
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "activations_kib": 80.16,
+    "macc": 16614376
+[2026-05-15 11:52:19] ANALYZE P4-v02
+[stedgeai] making compat .keras for P4-v02
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x40x45), 7.03 KBytes, activations                                                                       
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                  
+ macc               :   16,921,576                                                                                                                    
+ weights (ro)       :   1,758,484 B (1.68 MiB) (1 segment) / -500(-0.0%) vs float model                                                               
+ activations (rw)   :   82,080 B (80.16 KiB) (1 segment) *                                                                                            
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size               macc       connected to
+ model: macc=17,135,648 weights=1,758,984 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=16,921,576 weights=1,758,484 act=82,080 ram_io=0
+ weights                                0   1,758,488       0        0
+ activations                            0           0       0   82,080
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "activations_kib": 80.16,
+    "macc": 16921576
+[2026-05-15 11:52:27] ANALYZE P4-v03
+[stedgeai] making compat .keras for P4-v03
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x40x27), 4.22 KBytes, activations                                                                       
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                  
+ macc               :   16,691,176                                                                                                                    
+ weights (ro)       :   1,735,444 B (1.66 MiB) (1 segment) / -500(-0.0%) vs float model                                                               
+ activations (rw)   :   82,080 B (80.16 KiB) (1 segment) *                                                                                            
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size               macc       connected to
+ model: macc=16,905,248 weights=1,735,944 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=16,691,176 weights=1,735,444 act=82,080 ram_io=0
+ weights                                0   1,735,448       0        0
+ activations                            0           0       0   82,080
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "activations_kib": 80.16,
+    "macc": 16691176
+[2026-05-15 11:52:34] ANALYZE P4-v04
+[stedgeai] making compat .keras for P4-v04
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x40x27), 4.22 KBytes, activations                                                                       
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                  
+ macc               :   16,691,176                                                                                                                    
+ weights (ro)       :   1,735,444 B (1.66 MiB) (1 segment) / -500(-0.0%) vs float model                                                               
+ activations (rw)   :   82,080 B (80.16 KiB) (1 segment) *                                                                                            
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size               macc       connected to
+ model: macc=16,905,248 weights=1,735,944 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=16,691,176 weights=1,735,444 act=82,080 ram_io=0
+ weights                                0   1,735,448       0        0
+ activations                            0           0       0   82,080
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "activations_kib": 80.16,
+    "macc": 16691176
+[2026-05-15 11:52:42] ANALYZE P3-v07
+[stedgeai] making compat .keras for P3-v07
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x30x45), 5.27 KBytes, activations                                                                   
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                              
+ macc               :   12,695,446                                                                                                                
+ weights (ro)       :   1,758,484 B (1.68 MiB) (1 segment) / -500(-0.0%) vs float model                                                           
+ activations (rw)   :   61,560 B (60.12 KiB) (1 segment) *                                                                                        
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size               macc       connected to
+ model: macc=12,855,968 weights=1,758,984 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=12,695,446 weights=1,758,484 act=61,560 ram_io=0
+ weights                                0   1,758,488       0        0
+ activations                            0           0       0   61,560
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "activations_kib": 60.12,
+    "macc": 12695446
+[2026-05-15 11:52:50] === Part C: Q7 new models ===
+[2026-05-15 11:52:50] ANALYZE Q7-v01
+[stedgeai] making compat .keras for Q7-v01
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x40x45), 7.03 KBytes, activations                                                                      
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                 
+ macc               :   5,552,872                                                                                                                    
+ weights (ro)       :   572,436 B (559.02 KiB) (1 segment) / -500(-0.1%) vs float model                                                              
+ activations (rw)   :   41,120 B (40.16 KiB) (1 segment) *                                                                                           
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size              macc       connected to
+ model: macc=5,664,544 weights=572,936 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=5,552,872 weights=572,436 act=41,120 ram_io=0
+ weights                                0   572,440       0        0
+ activations                            0         0       0   41,120
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 559.02,
+    "activations_kib": 40.16,
+    "macc": 5552872
+[2026-05-15 11:52:56] ANALYZE Q7-v02
+[stedgeai] making compat .keras for Q7-v02
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x30x27), 3.16 KBytes, activations                                                                      
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                 
+ macc               :   3,992,982                                                                                                                    
+ weights (ro)       :   549,396 B (536.52 KiB) (1 segment) / -500(-0.1%) vs float model                                                              
+ activations (rw)   :   30,840 B (30.12 KiB) (1 segment) *                                                                                           
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size              macc       connected to
+ model: macc=4,076,704 weights=549,896 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=3,992,982 weights=549,396 act=30,840 ram_io=0
+ weights                                0   549,400       0        0
+ activations                            0         0       0   30,840
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 536.52,
+    "activations_kib": 30.12,
+    "macc": 3992982
+[2026-05-15 11:53:03] ANALYZE Q7-v03
+[stedgeai] making compat .keras for Q7-v03
+[stedgeai] analyze ...
+ input 1/1          :   'pose_sequence', f32(1x30x45), 5.27 KBytes, activations                                                                      
+ output 1/1         :   'classifier', f32(1x2), 8 Bytes, activations                                                                                 
+ macc               :   4,165,782                                                                                                                    
+ weights (ro)       :   572,436 B (559.02 KiB) (1 segment) / -500(-0.1%) vs float model                                                              
+ activations (rw)   :   30,840 B (30.12 KiB) (1 segment) *                                                                                           
+ (*) 'input'/'output' buffers are allocated in the activations buffer
+ m_id   layer (original)                     oshape             param/size              macc       connected to
+ model: macc=4,249,504 weights=572,936 activations=-- io=--
+ m_id   name               c_macc                    c_rom                     c_id
+ macc=4,165,782 weights=572,436 act=30,840 ram_io=0
+ weights                                0   572,440       0        0
+ activations                            0         0       0   30,840
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 559.02,
+    "activations_kib": 30.12,
+    "macc": 4165782
+[2026-05-15 11:53:10] === Final STedgeAI Summary ===
+ID       Units      FS       W    Float_MinP INT8_MinP Flash_KiB   RAM_KiB   Deploy?
+--------------------------------------------------------------------------------
+P5-v02   128,64     kp7      40   0.9495    -         537 KiB     40 KiB  ✗
+P5-v01   128,64     kp7      40   0.9353    -         537 KiB     40 KiB  ✗
+P4-v05   256,128    minimal  40   0.9513    -         -   KiB     80 KiB  ✓
+P4-v02   256,128    kp12     40   0.9469    -         -   KiB     80 KiB  ✓
+P4-v03   256,128    kp7      40   0.9468    -         -   KiB     80 KiB  ✓
+P4-v04   256,128    kp7      40   0.9459    -         -   KiB     80 KiB  ✓
+P3-v07   256,128    kp12     30   0.9404    -         -   KiB     60 KiB  ✓
+Q7-v01   128,64     kp12     40   0.9042  0.9231      559 KiB     40 KiB  ✗
+Q7-v02   128,64     kp7      30   0.9341  0.9193      537 KiB     30 KiB  ✗
+Q7-v03   128,64     kp12     30   0.9386  0.9038      559 KiB     30 KiB  ✗
+
+  ✓ = Flash ≤ 512 KiB  ✗ = over budget  ? = analyze not run
+[2026-05-15 11:53:10] Done.
+ c_macc                    c_rom                     c_id
+ macc=4,165,782 weights=572,436 act=30,840 ram_io=0
+ weights                                0   572,440       0        0
+ activations                            0         0       0   30,840
+               FLASH (ro)     %*   RAM (rw)      %
+[stedgeai] metrics.json updated
+    "analyze_ok": true,
+    "weights_kib": 559.02,
+    "activations_kib": 30.12,
+    "macc": 4165782
+[2026-05-15 11:53:10] === Final STedgeAI Summary ===
+ID       Units      FS       W    Float_MinP INT8_MinP Flash_KiB   RAM_KiB   Deploy?
+--------------------------------------------------------------------------------
+P5-v02   128,64     kp7      40   0.9495    -         537 KiB     40 KiB  ✗
+P5-v01   128,64     kp7      40   0.9353    -         537 KiB     40 KiB  ✗
+P4-v05   256,128    minimal  40   0.9513    -         -   KiB     80 KiB  ✓
+P4-v02   256,128    kp12     40   0.9469    -         -   KiB     80 KiB  ✓
+P4-v03   256,128    kp7      40   0.9468    -         -   KiB     80 KiB  ✓
+P4-v04   256,128    kp7      40   0.9459    -         -   KiB     80 KiB  ✓
+P3-v07   256,128    kp12     30   0.9404    -         -   KiB     60 KiB  ✓
+Q7-v01   128,64     kp12     40   0.9042  0.9231      559 KiB     40 KiB  ✗
+Q7-v02   128,64     kp7      30   0.9341  0.9193      537 KiB     30 KiB  ✗
+Q7-v03   128,64     kp12     30   0.9386  0.9038      559 KiB     30 KiB  ✗
+
+  ✓ = Flash ≤ 512 KiB  ✗ = over budget  ? = analyze not run
+[2026-05-15 11:53:10] Done.

@@ -1,0 +1,26 @@
+[2026-05-16 05:23:09] === Phase 27: P21-v01 설정 seed sweep + checkpoint 변형 ===
+[2026-05-16 05:23:09] GPU ready: 17MiB
+[2026-05-16 05:23:09] START P27-s0
+[OK] P27-s0 event=0.9060 video=0.9138 thr=0.475 mc=3
+  event_CM: TN=212 FP=20 FN=22 TP=599
+[2026-05-16 05:38:08] GPU ready: 17MiB
+[2026-05-16 05:38:08] START P27-s1
+[OK] P27-s1 event=0.9103 video=0.9181 thr=0.550 mc=2
+  event_CM: TN=213 FP=19 FN=21 TP=600
+[2026-05-16 06:00:51] GPU ready: 17MiB
+[2026-05-16 06:00:51] START P27-s2
+[OK] P27-s2 event=0.9064 video=0.9103 thr=0.525 mc=3
+  event_CM: TN=213 FP=19 FN=22 TP=599
+[2026-05-16 06:24:50] GPU ready: 17MiB
+[2026-05-16 06:24:50] START P27-s3
+[OK] P27-s3 event=0.8936 video=0.8974 thr=0.475 mc=2
+  event_CM: TN=210 FP=22 FN=25 TP=596
+[2026-05-16 06:39:49] GPU ready: 17MiB
+[2026-05-16 06:39:49] START P27-vm0
+[OK] P27-vm0 event=0.9241 video=0.9280 thr=0.525 mc=3
+  event_CM: TN=219 FP=13 FN=18 TP=603
+[2026-05-16 07:07:45] GPU ready: 17MiB
+[2026-05-16 07:07:45] START P27-vm1
+[OK] P27-vm1 event=0.8613 video=0.8650 thr=0.575 mc=3
+  event_CM: TN=205 FP=27 FN=33 TP=588
+[2026-05-16 07:22:44] === Phase 27 done ===

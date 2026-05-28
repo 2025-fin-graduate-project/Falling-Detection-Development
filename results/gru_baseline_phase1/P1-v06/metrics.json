@@ -1,0 +1,682 @@
+{
+  "experiment_id": "P1-v06",
+  "model_type": "gru",
+  "preprocessing": "raw",
+  "feature_set": "kp12",
+  "data_scope": "all",
+  "threshold_selection": {
+    "threshold": 0.3,
+    "min_consecutive": 5,
+    "sweep": [
+      {
+        "threshold": 0.05,
+        "min_consecutive": 1,
+        "precision": 0.9271844660194175,
+        "nfall_precision": 0.991869918699187,
+        "recall": 0.9977611940298508,
+        "f1": 0.9611790079079799,
+        "accuracy": 0.9403644395361679
+      },
+      {
+        "threshold": 0.05,
+        "min_consecutive": 3,
+        "precision": 0.9349650349650349,
+        "nfall_precision": 0.9921259842519685,
+        "recall": 0.9977611940298508,
+        "f1": 0.9653429602888086,
+        "accuracy": 0.9469906129210381
+      },
+      {
+        "threshold": 0.05,
+        "min_consecutive": 5,
+        "precision": 0.9387755102040817,
+        "nfall_precision": 0.9846153846153847,
+        "recall": 0.9955223880597015,
+        "f1": 0.9663165519739224,
+        "accuracy": 0.9486471562672557
+      },
+      {
+        "threshold": 0.1,
+        "min_consecutive": 1,
+        "precision": 0.9328671328671329,
+        "nfall_precision": 0.984251968503937,
+        "recall": 0.9955223880597015,
+        "f1": 0.9631768953068592,
+        "accuracy": 0.943677526228603
+      },
+      {
+        "threshold": 0.1,
+        "min_consecutive": 3,
+        "precision": 0.9387755102040817,
+        "nfall_precision": 0.9846153846153847,
+        "recall": 0.9955223880597015,
+        "f1": 0.9663165519739224,
+        "accuracy": 0.9486471562672557
+      },
+      {
+        "threshold": 0.1,
+        "min_consecutive": 5,
+        "precision": 0.942756183745583,
+        "nfall_precision": 0.9848484848484849,
+        "recall": 0.9955223880597015,
+        "f1": 0.968421052631579,
+        "accuracy": 0.9519602429596907
+      },
+      {
+        "threshold": 0.15,
+        "min_consecutive": 1,
+        "precision": 0.9400986610288936,
+        "nfall_precision": 0.9846938775510204,
+        "recall": 0.9955223880597015,
+        "f1": 0.9670170351576658,
+        "accuracy": 0.9497515184980674
+      },
+      {
+        "threshold": 0.15,
+        "min_consecutive": 3,
+        "precision": 0.9454287739192062,
+        "nfall_precision": 0.985,
+        "recall": 0.9955223880597015,
+        "f1": 0.96982915303526,
+        "accuracy": 0.9541689674213142
+      },
+      {
+        "threshold": 0.15,
+        "min_consecutive": 5,
+        "precision": 0.9487179487179487,
+        "nfall_precision": 0.9803439803439803,
+        "recall": 0.9940298507462687,
+        "f1": 0.9708454810495627,
+        "accuracy": 0.9558255107675317
+      },
+      {
+        "threshold": 0.2,
+        "min_consecutive": 1,
+        "precision": 0.9434229137199435,
+        "nfall_precision": 0.9848866498740554,
+        "recall": 0.9955223880597015,
+        "f1": 0.9687726942628904,
+        "accuracy": 0.9525124240750966
+      },
+      {
+        "threshold": 0.2,
+        "min_consecutive": 3,
+        "precision": 0.9480796586059744,
+        "nfall_precision": 0.9827160493827161,
+        "recall": 0.994776119402985,
+        "f1": 0.9708667152221413,
+        "accuracy": 0.9558255107675317
+      },
+      {
+        "threshold": 0.2,
+        "min_consecutive": 5,
+        "precision": 0.9506437768240343,
+        "nfall_precision": 0.9733656174334141,
+        "recall": 0.9917910447761195,
+        "f1": 0.9707815924032142,
+        "accuracy": 0.9558255107675317
+      },
+      {
+        "threshold": 0.25,
+        "min_consecutive": 1,
+        "precision": 0.9460227272727273,
+        "nfall_precision": 0.9801488833746899,
+        "recall": 0.9940298507462687,
+        "f1": 0.9694323144104804,
+        "accuracy": 0.9536167863059083
+      },
+      {
+        "threshold": 0.25,
+        "min_consecutive": 3,
+        "precision": 0.948644793152639,
+        "nfall_precision": 0.9755501222493888,
+        "recall": 0.9925373134328358,
+        "f1": 0.9700948212983224,
+        "accuracy": 0.9547211485367201
+      },
+      {
+        "threshold": 0.25,
+        "min_consecutive": 5,
+        "precision": 0.9513242662848962,
+        "nfall_precision": 0.9734299516908212,
+        "recall": 0.9917910447761195,
+        "f1": 0.9711362805991962,
+        "accuracy": 0.9563776918829376
+      },
+      {
+        "threshold": 0.3,
+        "min_consecutive": 1,
+        "precision": 0.9466950959488273,
+        "nfall_precision": 0.9801980198019802,
+        "recall": 0.9940298507462687,
+        "f1": 0.9697852202402621,
+        "accuracy": 0.9541689674213142
+      },
+      {
+        "threshold": 0.3,
+        "min_consecutive": 3,
+        "precision": 0.949964260185847,
+        "nfall_precision": 0.9733009708737864,
+        "recall": 0.9917910447761195,
+        "f1": 0.9704271631982475,
+        "accuracy": 0.9552733296521259
+      },
+      {
+        "threshold": 0.3,
+        "min_consecutive": 5,
+        "precision": 0.9533715925394548,
+        "nfall_precision": 0.973621103117506,
+        "recall": 0.9917910447761195,
+        "f1": 0.972201901975128,
+        "accuracy": 0.9580342352291552
+      },
+      {
+        "threshold": 0.35,
+        "min_consecutive": 1,
+        "precision": 0.9473684210526315,
+        "nfall_precision": 0.980246913580247,
+        "recall": 0.9940298507462687,
+        "f1": 0.9701383831026948,
+        "accuracy": 0.9547211485367201
+      },
+      {
+        "threshold": 0.35,
+        "min_consecutive": 3,
+        "precision": 0.9519713261648746,
+        "nfall_precision": 0.9711538461538461,
+        "recall": 0.991044776119403,
+        "f1": 0.9711151736745888,
+        "accuracy": 0.9563776918829376
+      },
+      {
+        "threshold": 0.35,
+        "min_consecutive": 5,
+        "precision": 0.9552992069214131,
+        "nfall_precision": 0.964622641509434,
+        "recall": 0.9888059701492538,
+        "f1": 0.9717638430509716,
+        "accuracy": 0.9574820541137493
+      },
+      {
+        "threshold": 0.39999999999999997,
+        "min_consecutive": 1,
+        "precision": 0.949964260185847,
+        "nfall_precision": 0.9733009708737864,
+        "recall": 0.9917910447761195,
+        "f1": 0.9704271631982475,
+        "accuracy": 0.9552733296521259
+      },
+      {
+        "threshold": 0.39999999999999997,
+        "min_consecutive": 3,
+        "precision": 0.9526202440775305,
+        "nfall_precision": 0.9688995215311005,
+        "recall": 0.9902985074626866,
+        "f1": 0.9710940358580314,
+        "accuracy": 0.9563776918829376
+      },
+      {
+        "threshold": 0.39999999999999997,
+        "min_consecutive": 5,
+        "precision": 0.9558929862617498,
+        "nfall_precision": 0.9579439252336449,
+        "recall": 0.9865671641791045,
+        "f1": 0.970987881013588,
+        "accuracy": 0.9563776918829376
+      },
+      {
+        "threshold": 0.44999999999999996,
+        "min_consecutive": 1,
+        "precision": 0.9512893982808023,
+        "nfall_precision": 0.9710843373493976,
+        "recall": 0.991044776119403,
+        "f1": 0.9707602339181287,
+        "accuracy": 0.9558255107675317
+      },
+      {
+        "threshold": 0.44999999999999996,
+        "min_consecutive": 3,
+        "precision": 0.9539568345323741,
+        "nfall_precision": 0.9667458432304038,
+        "recall": 0.9895522388059701,
+        "f1": 0.9714285714285714,
+        "accuracy": 0.9569298729983434
+      },
+      {
+        "threshold": 0.44999999999999996,
+        "min_consecutive": 5,
+        "precision": 0.9592727272727273,
+        "nfall_precision": 0.9518348623853211,
+        "recall": 0.9843283582089553,
+        "f1": 0.9716390423572745,
+        "accuracy": 0.9574820541137493
+      },
+      {
+        "threshold": 0.49999999999999994,
+        "min_consecutive": 1,
+        "precision": 0.9519023689877961,
+        "nfall_precision": 0.9665071770334929,
+        "recall": 0.9895522388059701,
+        "f1": 0.9703622392974753,
+        "accuracy": 0.9552733296521259
+      },
+      {
+        "threshold": 0.49999999999999994,
+        "min_consecutive": 3,
+        "precision": 0.9545454545454546,
+        "nfall_precision": 0.96,
+        "recall": 0.9873134328358208,
+        "f1": 0.9706529713866471,
+        "accuracy": 0.9558255107675317
+      },
+      {
+        "threshold": 0.49999999999999994,
+        "min_consecutive": 5,
+        "precision": 0.9592430858806404,
+        "nfall_precision": 0.9496567505720824,
+        "recall": 0.9835820895522388,
+        "f1": 0.9712601326455416,
+        "accuracy": 0.9569298729983434
+      },
+      {
+        "threshold": 0.5499999999999999,
+        "min_consecutive": 1,
+        "precision": 0.9531024531024531,
+        "nfall_precision": 0.9552941176470588,
+        "recall": 0.985820895522388,
+        "f1": 0.9691856199559795,
+        "accuracy": 0.9536167863059083
+      },
+      {
+        "threshold": 0.5499999999999999,
+        "min_consecutive": 3,
+        "precision": 0.9571532316630356,
+        "nfall_precision": 0.9493087557603687,
+        "recall": 0.9835820895522388,
+        "f1": 0.9701877070298122,
+        "accuracy": 0.9552733296521259
+      },
+      {
+        "threshold": 0.5499999999999999,
+        "min_consecutive": 5,
+        "precision": 0.9611436950146628,
+        "nfall_precision": 0.9351230425055929,
+        "recall": 0.9783582089552239,
+        "f1": 0.9696745562130178,
+        "accuracy": 0.9547211485367201
+      },
+      {
+        "threshold": 0.6,
+        "min_consecutive": 1,
+        "precision": 0.9543478260869566,
+        "nfall_precision": 0.9466357308584686,
+        "recall": 0.9828358208955223,
+        "f1": 0.9683823529411765,
+        "accuracy": 0.9525124240750966
+      },
+      {
+        "threshold": 0.6,
+        "min_consecutive": 3,
+        "precision": 0.9584245076586433,
+        "nfall_precision": 0.9409090909090909,
+        "recall": 0.9805970149253731,
+        "f1": 0.9693839911471782,
+        "accuracy": 0.9541689674213142
+      },
+      {
+        "threshold": 0.6,
+        "min_consecutive": 5,
+        "precision": 0.9624447717231223,
+        "nfall_precision": 0.9271523178807947,
+        "recall": 0.9753731343283583,
+        "f1": 0.9688658265381764,
+        "accuracy": 0.9536167863059083
+      },
+      {
+        "threshold": 0.65,
+        "min_consecutive": 1,
+        "precision": 0.9555393586005831,
+        "nfall_precision": 0.9339407744874715,
+        "recall": 0.9783582089552239,
+        "f1": 0.9668141592920354,
+        "accuracy": 0.9503036996134733
+      },
+      {
+        "threshold": 0.65,
+        "min_consecutive": 3,
+        "precision": 0.9602649006622517,
+        "nfall_precision": 0.922566371681416,
+        "recall": 0.9738805970149254,
+        "f1": 0.9670248240088921,
+        "accuracy": 0.950855880728879
+      },
+      {
+        "threshold": 0.65,
+        "min_consecutive": 5,
+        "precision": 0.9643387815750372,
+        "nfall_precision": 0.9096774193548387,
+        "recall": 0.9686567164179104,
+        "f1": 0.9664929262844378,
+        "accuracy": 0.9503036996134733
+      },
+      {
+        "threshold": 0.7,
+        "min_consecutive": 1,
+        "precision": 0.9603232916972814,
+        "nfall_precision": 0.9266666666666666,
+        "recall": 0.9753731343283583,
+        "f1": 0.9677897075157348,
+        "accuracy": 0.9519602429596907
+      },
+      {
+        "threshold": 0.7,
+        "min_consecutive": 3,
+        "precision": 0.9644180874722016,
+        "nfall_precision": 0.9155844155844156,
+        "recall": 0.9708955223880597,
+        "f1": 0.9676459650427668,
+        "accuracy": 0.9519602429596907
+      },
+      {
+        "threshold": 0.7,
+        "min_consecutive": 5,
+        "precision": 0.96996996996997,
+        "nfall_precision": 0.8997912317327766,
+        "recall": 0.9641791044776119,
+        "f1": 0.967065868263473,
+        "accuracy": 0.951408061844285
+      },
+      {
+        "threshold": 0.75,
+        "min_consecutive": 1,
+        "precision": 0.9614529280948851,
+        "nfall_precision": 0.9069264069264069,
+        "recall": 0.9679104477611941,
+        "f1": 0.9646708813685386,
+        "accuracy": 0.9475427940364439
+      },
+      {
+        "threshold": 0.75,
+        "min_consecutive": 3,
+        "precision": 0.9676448457486833,
+        "nfall_precision": 0.8879668049792531,
+        "recall": 0.9597014925373134,
+        "f1": 0.9636568002997378,
+        "accuracy": 0.9464384318056323
+      },
+      {
+        "threshold": 0.75,
+        "min_consecutive": 5,
+        "precision": 0.9717341482047365,
+        "nfall_precision": 0.8645418326693227,
+        "recall": 0.9492537313432836,
+        "f1": 0.9603624009060023,
+        "accuracy": 0.9420209828823854
+      },
+      {
+        "threshold": 0.7999999999999999,
+        "min_consecutive": 1,
+        "precision": 0.9668674698795181,
+        "nfall_precision": 0.8840579710144928,
+        "recall": 0.9582089552238806,
+        "f1": 0.9625187406296852,
+        "accuracy": 0.9447818884594147
+      },
+      {
+        "threshold": 0.7999999999999999,
+        "min_consecutive": 3,
+        "precision": 0.9709480122324159,
+        "nfall_precision": 0.8608349900596421,
+        "recall": 0.9477611940298507,
+        "f1": 0.959214501510574,
+        "accuracy": 0.9403644395361679
+      },
+      {
+        "threshold": 0.7999999999999999,
+        "min_consecutive": 5,
+        "precision": 0.973561430793157,
+        "nfall_precision": 0.8323809523809523,
+        "recall": 0.9343283582089552,
+        "f1": 0.9535415079969535,
+        "accuracy": 0.932633903920486
+      },
+      {
+        "threshold": 0.85,
+        "min_consecutive": 1,
+        "precision": 0.9700460829493087,
+        "nfall_precision": 0.8487229862475442,
+        "recall": 0.9425373134328359,
+        "f1": 0.9560938682816048,
+        "accuracy": 0.9359469906129211
+      },
+      {
+        "threshold": 0.85,
+        "min_consecutive": 3,
+        "precision": 0.9726775956284153,
+        "nfall_precision": 0.8226415094339623,
+        "recall": 0.9298507462686567,
+        "f1": 0.9507821442197634,
+        "accuracy": 0.9287686361126449
+      },
+      {
+        "threshold": 0.85,
+        "min_consecutive": 5,
+        "precision": 0.9769658459094519,
+        "nfall_precision": 0.8007246376811594,
+        "recall": 0.917910447761194,
+        "f1": 0.9465178914967294,
+        "accuracy": 0.9232468249585865
+      },
+      {
+        "threshold": 0.9,
+        "min_consecutive": 1,
+        "precision": 0.9726134585289515,
+        "nfall_precision": 0.8180112570356473,
+        "recall": 0.9276119402985075,
+        "f1": 0.9495798319327732,
+        "accuracy": 0.9271120927664274
+      },
+      {
+        "threshold": 0.9,
+        "min_consecutive": 3,
+        "precision": 0.9751602564102564,
+        "nfall_precision": 0.7815275310834814,
+        "recall": 0.9082089552238806,
+        "f1": 0.9404945904173106,
+        "accuracy": 0.9149641082274986
+      },
+      {
+        "threshold": 0.9,
+        "min_consecutive": 5,
+        "precision": 0.981101068200493,
+        "nfall_precision": 0.7542087542087542,
+        "recall": 0.891044776119403,
+        "f1": 0.9339069221744232,
+        "accuracy": 0.9066813914964108
+      },
+      {
+        "threshold": 0.95,
+        "min_consecutive": 1,
+        "precision": 0.9753896636587367,
+        "nfall_precision": 0.7449324324324325,
+        "recall": 0.8873134328358209,
+        "f1": 0.9292692457991404,
+        "accuracy": 0.9000552181115405
+      },
+      {
+        "threshold": 0.95,
+        "min_consecutive": 3,
+        "precision": 0.9806234203875316,
+        "nfall_precision": 0.717948717948718,
+        "recall": 0.8686567164179104,
+        "f1": 0.9212504946576969,
+        "accuracy": 0.8901159580342353
+      },
+      {
+        "threshold": 0.95,
+        "min_consecutive": 5,
+        "precision": 0.9852430555555556,
+        "nfall_precision": 0.6889226100151745,
+        "recall": 0.8470149253731343,
+        "f1": 0.9109149277688604,
+        "accuracy": 0.8774157923799006
+      }
+    ]
+  },
+  "metrics": {
+    "train_float": {
+      "split": "train",
+      "threshold": 0.3,
+      "accuracy": 0.9842197545295149,
+      "precision": 0.9892836113837096,
+      "nfall_precision": 0.9553441522104085,
+      "min_precision": 0.9553441522104085,
+      "recall": 0.9921461331023759,
+      "f1": 0.9907128045364756,
+      "auc_roc": 0.9966779494127659,
+      "pr_auc": 0.9993908882907956,
+      "positive_support": 101606,
+      "negative_support": 18164,
+      "confusion_matrix": [
+        [
+          17072,
+          1092
+        ],
+        [
+          798,
+          100808
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9553    0.9399    0.9475     18164\n           1     0.9893    0.9921    0.9907    101606\n\n    accuracy                         0.9842    119770\n   macro avg     0.9723    0.9660    0.9691    119770\nweighted avg     0.9841    0.9842    0.9842    119770\n",
+      "by_direction_recall": {
+        "BY": 0.9957294552169899,
+        "FY": 0.9893145463500289,
+        "SY": 0.9925435780949089
+      }
+    },
+    "val_float": {
+      "split": "val",
+      "threshold": 0.3,
+      "accuracy": 0.9597948927268553,
+      "precision": 0.9613858055835856,
+      "nfall_precision": 0.9547998732706727,
+      "min_precision": 0.9547998732706727,
+      "recall": 0.9852464667356085,
+      "f1": 0.9731699012597889,
+      "auc_roc": 0.9840379664736346,
+      "pr_auc": 0.9933366703932,
+      "positive_support": 29010,
+      "negative_support": 10189,
+      "confusion_matrix": [
+        [
+          9041,
+          1148
+        ],
+        [
+          428,
+          28582
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9548    0.8873    0.9198     10189\n           1     0.9614    0.9852    0.9732     29010\n\n    accuracy                         0.9598     39199\n   macro avg     0.9581    0.9363    0.9465     39199\nweighted avg     0.9597    0.9598    0.9593     39199\n",
+      "by_direction_recall": {
+        "BY": 0.989296172876906,
+        "FY": 0.9791197235992188,
+        "SY": 0.9924046262730882
+      }
+    },
+    "test_float": {
+      "split": "test",
+      "threshold": 0.3,
+      "accuracy": 0.956929788961039,
+      "precision": 0.9607593238529648,
+      "nfall_precision": 0.9450457951706911,
+      "min_precision": 0.9450457951706911,
+      "recall": 0.9819016932885446,
+      "f1": 0.9712154602474996,
+      "auc_roc": 0.9807252899758723,
+      "pr_auc": 0.9924562730605997,
+      "positive_support": 14587,
+      "negative_support": 5125,
+      "confusion_matrix": [
+        [
+          4540,
+          585
+        ],
+        [
+          264,
+          14323
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9450    0.8859    0.9145      5125\n           1     0.9608    0.9819    0.9712     14587\n\n    accuracy                         0.9569     19712\n   macro avg     0.9529    0.9339    0.9429     19712\nweighted avg     0.9567    0.9569    0.9565     19712\n",
+      "by_direction_recall": {
+        "BY": 0.9704225352112676,
+        "FY": 0.9899925317401046,
+        "SY": 0.9828884325804244
+      }
+    },
+    "val_video": {
+      "split": "val_video",
+      "threshold": 0.3,
+      "accuracy": 0.9580342352291552,
+      "precision": 0.9533715925394548,
+      "nfall_precision": 0.973621103117506,
+      "min_precision": 0.9533715925394548,
+      "recall": 0.9917910447761195,
+      "f1": 0.972201901975128,
+      "auc_roc": 0.9795734702284755,
+      "pr_auc": 0.9908768046677319,
+      "positive_support": 1340,
+      "negative_support": 471,
+      "confusion_matrix": [
+        [
+          406,
+          65
+        ],
+        [
+          11,
+          1329
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9736    0.8620    0.9144       471\n           1     0.9534    0.9918    0.9722      1340\n\n    accuracy                         0.9580      1811\n   macro avg     0.9635    0.9269    0.9433      1811\nweighted avg     0.9586    0.9580    0.9572      1811\n"
+    },
+    "test_video": {
+      "split": "test_video",
+      "threshold": 0.3,
+      "accuracy": 0.9538968166849616,
+      "precision": 0.9514285714285714,
+      "nfall_precision": 0.9620853080568721,
+      "min_precision": 0.9514285714285714,
+      "recall": 0.9881305637982196,
+      "f1": 0.9694323144104804,
+      "auc_roc": 0.9795039376979805,
+      "pr_auc": 0.9921433841349966,
+      "positive_support": 674,
+      "negative_support": 237,
+      "confusion_matrix": [
+        [
+          203,
+          34
+        ],
+        [
+          8,
+          666
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9621    0.8565    0.9062       237\n           1     0.9514    0.9881    0.9694       674\n\n    accuracy                         0.9539       911\n   macro avg     0.9568    0.9223    0.9378       911\nweighted avg     0.9542    0.9539    0.9530       911\n"
+    }
+  },
+  "export_paths": {
+    "fp32_export_error": "ConverterError('Could not translate MLIR to FlatBuffer.<unknown>:0: error: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/backward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): \\'tf.CudnnRNNV3\\' op is neither a custom op nor a flex op\\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/backward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): see current operation: %1:5 = \"tf.CudnnRNNV3\"(%arg0, %arg1, %arg2, %arg3, %arg4) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/backward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): Error code: ERROR_NEEDS_CUSTOM_OPS\\n<unknown>:0: error: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/forward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): \\'tf.CudnnRNNV3\\' op is neither a custom op nor a flex op\\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/forward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): see current operation: %1:5 = \"tf.CudnnRNNV3\"(%arg0, %arg1, %arg2, %arg3, %arg4) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/forward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): Error code: ERROR_NEEDS_CUSTOM_OPS\\n<unknown>:0: error: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/backward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): \\'tf.CudnnRNNV3\\' op is neither a custom op nor a flex op\\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/backward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): see current operation: %1:5 = \"tf.CudnnRNNV3\"(%arg0, %arg1, %arg2, %arg3, %arg4) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/backward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): Error code: ERROR_NEEDS_CUSTOM_OPS\\n<unknown>:0: error: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/forward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): \\'tf.CudnnRNNV3\\' op is neither a custom op nor a flex op\\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/forward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): see current operation: %1:5 = \"tf.CudnnRNNV3\"(%arg0, %arg1, %arg2, %arg3, %arg4) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/forward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): Error code: ERROR_NEEDS_CUSTOM_OPS\\n<unknown>:0: error: failed while converting: \\'main\\': \\nSome ops in the model are custom ops, See instructions to implement custom ops: https://www.tensorflow.org/lite/guide/ops_custom \\nCustom ops: CudnnRNNV3\\nDetails:\\n\\ttf.CudnnRNNV3(tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) : {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false}\\n\\ttf.CudnnRNNV3(tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) : {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false}\\n\\n<unknown>:0: note: see current operation: \\n\"func.func\"() <{arg_attrs = [{tf_saved_model.index_path = [\"pose_sequence\"]}], function_type = (tensor<?x60x43xf32>) -> tensor<?x3xf32>, res_attrs = [{tf_saved_model.index_path = [\"output_0\"]}], sym_name = \"main\"}> ({\\n^bb0(%arg0: tensor<?x60x43xf32>):\\n  \"tfl.call_once\"() <{session_init_function = \"NoOp\"}> : () -> ()\\n  %0 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<64xf32>}> : () -> tensor<64xf32>\\n  %1 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<64xf32>}> : () -> tensor<64xf32>\\n  %2 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<256xf32>}> : () -> tensor<256xf32>\\n  %3 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<64x1x3x64xf32>}> : () -> tensor<64x1x3x64xf32>\\n  %4 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<64x1x5x43xf32>}> : () -> tensor<64x1x5x43xf32>\\n  %5 = \"arith.constant\"() <{value = dense<[-0.49832198, 0.637614369, -0.386015922]> : tensor<3xf32>}> : () -> tensor<3xf32>\\n  %6 = \"arith.constant\"() <{value = dense<[-1, 128]> : tensor<2xi32>}> : () -> tensor<2xi32>\\n  %7 = \"arith.constant\"() <{value = dense<[-1, 60, 64]> : tensor<3xi32>}> : () -> tensor<3xi32>\\n  %8 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<3x256xf32>}> : () -> tensor<3x256xf32>\\n  %9 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<256x256xf32>}> : () -> tensor<256x256xf32>\\n  %10 = \"arith.constant\"() <{value = dense<1.000000e-03> : tensor<f32>}> : () -> tensor<f32>\\n  %11 = \"arith.constant\"() <{value = dense<[[0, 0], [2, 0], [0, 0]]> : tensor<3x2xi32>}> : () -> tensor<3x2xi32>\\n  %12 = \"arith.constant\"() <{value = dense<-3> : tensor<i32>}> : () -> tensor<i32>\\n  %13 = \"arith.constant\"() <{value = dense<[[0, 0], [4, 0], [0, 0]]> : tensor<3x2xi32>}> : () -> tensor<3x2xi32>\\n  %14 = \"arith.constant\"() <{value = dense<128> : tensor<i32>}> : () -> tensor<i32>\\n  %15 = \"arith.constant\"() <{value = dense<256> : tensor<i32>}> : () -> tensor<i32>\\n  %16 = \"arith.constant\"() <{value = dense<0> : tensor<1xi32>}> : () -> tensor<1xi32>\\n  %17 = \"arith.constant\"() <{value = dense<1> : tensor<i32>}> : () -> tensor<i32>\\n  %18 = \"arith.constant\"() <{value = dense<0.000000e+00> : tensor<f32>}> : () -> tensor<f32>\\n  %19 = \"arith.constant\"() <{value = dense<-1> : tensor<1xi32>}> : () -> tensor<1xi32>\\n  %20 = \"arith.constant\"() <{value = dense<[0, 1]> : tensor<2xi64>}> : () -> tensor<2xi64>\\n  %21 = \"arith.constant\"() <{value = dense<1> : tensor<1xi32>}> : () -> tensor<1xi32>\\n  %22 = \"arith.constant\"() <{value = dense<60> : tensor<i32>}> : () -> tensor<i32>\\n  %23 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<247296xf32>}> : () -> tensor<247296xf32>\\n  %24 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<247296xf32>}> : () -> tensor<247296xf32>\\n  %25 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<246528xf32>}> : () -> tensor<246528xf32>\\n  %26 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<246528xf32>}> : () -> tensor<246528xf32>\\n  %27 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<1x1x512xf32>}> : () -> tensor<1x1x512xf32>\\n  %28 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<1x1x512xf32>}> : () -> tensor<1x1x512xf32>\\n  %29 = \"tfl.var_handle\"() <{container = \"\", shared_name = \"seed_generator_6/seed_generator_state_1\"}> : () -> tensor<!tf_type.resource<tensor<2xi64>>>\\n  %30 = \"tfl.var_handle\"() <{container = \"\", shared_name = \"seed_generator_5/seed_generator_state_1\"}> : () -> tensor<!tf_type.resource<tensor<2xi64>>>\\n  %31 = \"tfl.var_handle\"() <{container = \"\", shared_name = \"seed_generator_3/seed_generator_state_1\"}> : () -> tensor<!tf_type.resource<tensor<2xi64>>>\\n  %32 = \"tfl.var_handle\"() <{container = \"\", shared_name = \"seed_generator_2/seed_generator_state_1\"}> : () -> tensor<!tf_type.resource<tensor<2xi64>>>\\n  %33 = \"tfl.read_variable\"(%31) : (tensor<!tf_type.resource<tensor<2xi64>>>) -> tensor<2xi64>\\n  %34 = \"tfl.add\"(%33, %20) <{fused_activation_function = \"NONE\"}> : (tensor<2xi64>, tensor<2xi64>) -> tensor<2xi64>\\n  \"tfl.assign_variable\"(%31, %34) : (tensor<!tf_type.resource<tensor<2xi64>>>, tensor<2xi64>) -> ()\\n  %35 = \"tfl.read_variable\"(%32) : (tensor<!tf_type.resource<tensor<2xi64>>>) -> tensor<2xi64>\\n  %36 = \"tfl.add\"(%35, %20) <{fused_activation_function = \"NONE\"}> : (tensor<2xi64>, tensor<2xi64>) -> tensor<2xi64>\\n  \"tfl.assign_variable\"(%32, %36) : (tensor<!tf_type.resource<tensor<2xi64>>>, tensor<2xi64>) -> ()\\n  %37 = \"tfl.read_variable\"(%29) : (tensor<!tf_type.resource<tensor<2xi64>>>) -> tensor<2xi64>\\n  %38 = \"tfl.add\"(%37, %20) <{fused_activation_function = \"NONE\"}> : (tensor<2xi64>, tensor<2xi64>) -> tensor<2xi64>\\n  \"tfl.assign_variable\"(%29, %38) : (tensor<!tf_type.resource<tensor<2xi64>>>, tensor<2xi64>) -> ()\\n  %39 = \"tfl.read_variable\"(%30) : (tensor<!tf_type.resource<tensor<2xi64>>>) -> tensor<2xi64>\\n  %40 = \"tfl.add\"(%39, %20) <{fused_activation_function = \"NONE\"}> : (tensor<2xi64>, tensor<2xi64>) -> tensor<2xi64>\\n  \"tfl.assign_variable\"(%30, %40) : (tensor<!tf_type.resource<tensor<2xi64>>>, tensor<2xi64>) -> ()\\n  %41 = \"tfl.pad\"(%arg0, %13) : (tensor<?x60x43xf32>, tensor<3x2xi32>) -> tensor<?x64x43xf32>\\n  %42 = \"tfl.expand_dims\"(%41, %12) : (tensor<?x64x43xf32>, tensor<i32>) -> tensor<?x1x64x43xf32>\\n  %43 = \"tfl.conv_2d\"(%42, %4, %1) <{dilation_h_factor = 1 : i32, dilation_w_factor = 1 : i32, fused_activation_function = \"RELU\", padding = \"VALID\", stride_h = 1 : i32, stride_w = 1 : i32}> : (tensor<?x1x64x43xf32>, tensor<64x1x5x43xf32>, tensor<64xf32>) -> tensor<?x1x60x64xf32>\\n  %44 = \"tfl.reshape\"(%43, %7) : (tensor<?x1x60x64xf32>, tensor<3xi32>) -> tensor<?x60x64xf32>\\n  %45 = \"tfl.pad\"(%44, %11) : (tensor<?x60x64xf32>, tensor<3x2xi32>) -> tensor<?x62x64xf32>\\n  %46 = \"tfl.expand_dims\"(%45, %12) : (tensor<?x62x64xf32>, tensor<i32>) -> tensor<?x1x62x64xf32>\\n  %47 = \"tfl.conv_2d\"(%46, %3, %0) <{dilation_h_factor = 1 : i32, dilation_w_factor = 1 : i32, fused_activation_function = \"RELU\", padding = \"VALID\", stride_h = 1 : i32, stride_w = 1 : i32}> : (tensor<?x1x62x64xf32>, tensor<64x1x3x64xf32>, tensor<64xf32>) -> tensor<?x1x60x64xf32>\\n  %48 = \"tfl.reshape\"(%47, %7) : (tensor<?x1x60x64xf32>, tensor<3xi32>) -> tensor<?x60x64xf32>\\n  %49 = \"tfl.shape\"(%48) : (tensor<?x60x64xf32>) -> tensor<3xi32>\\n  %50 = \"tfl.strided_slice\"(%49, %16, %21, %21) <{begin_mask = 0 : i32, ellipsis_mask = 0 : i32, end_mask = 0 : i32, new_axis_mask = 0 : i32, offset = false, shrink_axis_mask = 1 : i32}> : (tensor<3xi32>, tensor<1xi32>, tensor<1xi32>, tensor<1xi32>) -> tensor<i32>\\n  %51 = \"tfl.pack\"(%50, %15) <{axis = 0 : i32, values_count = 2 : i32}> : (tensor<i32>, tensor<i32>) -> tensor<2xi32>\\n  %52 = \"tfl.fill\"(%51, %18) : (tensor<2xi32>, tensor<f32>) -> tensor<?x256xf32>\\n  %53 = \"tfl.expand_dims\"(%52, %17) : (tensor<?x256xf32>, tensor<i32>) -> tensor<?x1x256xf32>\\n  %54 = \"tfl.reshape\"(%50, %21) : (tensor<i32>, tensor<1xi32>) -> tensor<1xi32>\\n  %55 = \"tfl.fill\"(%54, %22) : (tensor<1xi32>, tensor<i32>) -> tensor<?xi32>\\n  %56 = \"tfl.reverse_sequence\"(%48, %55) <{batch_dim = 0 : i32, seq_dim = 1 : i32}> : (tensor<?x60x64xf32>, tensor<?xi32>) -> tensor<?x60x64xf32>\\n  %57:5 = \"tfl.custom_tf\"(%56, %53, %18, %23, %55) ({\\n  ^bb0(%arg16: tensor<?x60x64xf32>, %arg17: tensor<?x1x256xf32>, %arg18: tensor<f32>, %arg19: tensor<247296xf32>, %arg20: tensor<?xi32>):\\n    %93:5 = \"tf.CudnnRNNV3\"(%arg16, %arg17, %arg18, %arg19, %arg20) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n    \"tfl.yield\"(%93#0, %93#1, %93#2, %93#3, %93#4) : (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) -> ()\\n  }) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n  %58 = \"tfl.reverse_sequence\"(%57#0, %55) <{batch_dim = 0 : i32, seq_dim = 1 : i32}> : (tensor<?x60x256xf32>, tensor<?xi32>) -> tensor<?x60x256xf32>\\n  %59 = \"tfl.reverse_v2\"(%58, %21) : (tensor<?x60x256xf32>, tensor<1xi32>) -> tensor<?x60x256xf32>\\n  %60 = \"tfl.reverse_v2\"(%59, %21) : (tensor<?x60x256xf32>, tensor<1xi32>) -> tensor<?x60x256xf32>\\n  %61:5 = \"tfl.custom_tf\"(%48, %53, %18, %24, %55) ({\\n  ^bb0(%arg11: tensor<?x60x64xf32>, %arg12: tensor<?x1x256xf32>, %arg13: tensor<f32>, %arg14: tensor<247296xf32>, %arg15: tensor<?xi32>):\\n    %92:5 = \"tf.CudnnRNNV3\"(%arg11, %arg12, %arg13, %arg14, %arg15) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n    \"tfl.yield\"(%92#0, %92#1, %92#2, %92#3, %92#4) : (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) -> ()\\n  }) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n  %62 = \"tfl.concatenation\"(%61#0, %60) <{axis = -1 : i32, fused_activation_function = \"NONE\"}> : (tensor<?x60x256xf32>, tensor<?x60x256xf32>) -> tensor<?x60x512xf32>\\n  %63 = \"tfl.mean\"(%62, %19) <{keep_dims = true}> : (tensor<?x60x512xf32>, tensor<1xi32>) -> tensor<?x60x1xf32>\\n  %64 = \"tfl.neg\"(%63) : (tensor<?x60x1xf32>) -> tensor<?x60x1xf32>\\n  %65 = \"tfl.squared_difference\"(%62, %63) : (tensor<?x60x512xf32>, tensor<?x60x1xf32>) -> tensor<?x60x512xf32>\\n  %66 = \"tfl.mean\"(%65, %19) <{keep_dims = true}> : (tensor<?x60x512xf32>, tensor<1xi32>) -> tensor<?x60x1xf32>\\n  %67 = \"tfl.add\"(%66, %10) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x1xf32>, tensor<f32>) -> tensor<?x60x1xf32>\\n  %68 = \"tfl.rsqrt\"(%67) : (tensor<?x60x1xf32>) -> tensor<?x60x1xf32>\\n  %69 = \"tfl.mul\"(%68, %28) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x1xf32>, tensor<1x1x512xf32>) -> tensor<?x60x512xf32>\\n  %70 = \"tfl.mul\"(%64, %69) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x1xf32>, tensor<?x60x512xf32>) -> tensor<?x60x512xf32>\\n  %71 = \"tfl.add\"(%70, %27) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x512xf32>, tensor<1x1x512xf32>) -> tensor<?x60x512xf32>\\n  %72 = \"tfl.mul\"(%62, %69) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x512xf32>, tensor<?x60x512xf32>) -> tensor<?x60x512xf32>\\n  %73 = \"tfl.add\"(%72, %71) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x512xf32>, tensor<?x60x512xf32>) -> tensor<?x60x512xf32>\\n  %74 = \"tfl.shape\"(%73) : (tensor<?x60x512xf32>) -> tensor<3xi32>\\n  %75 = \"tfl.strided_slice\"(%74, %16, %21, %21) <{begin_mask = 0 : i32, ellipsis_mask = 0 : i32, end_mask = 0 : i32, new_axis_mask = 0 : i32, offset = false, shrink_axis_mask = 1 : i32}> : (tensor<3xi32>, tensor<1xi32>, tensor<1xi32>, tensor<1xi32>) -> tensor<i32>\\n  %76 = \"tfl.pack\"(%75, %14) <{axis = 0 : i32, values_count = 2 : i32}> : (tensor<i32>, tensor<i32>) -> tensor<2xi32>\\n  %77 = \"tfl.fill\"(%76, %18) : (tensor<2xi32>, tensor<f32>) -> tensor<?x128xf32>\\n  %78 = \"tfl.expand_dims\"(%77, %17) : (tensor<?x128xf32>, tensor<i32>) -> tensor<?x1x128xf32>\\n  %79 = \"tfl.reshape\"(%75, %21) : (tensor<i32>, tensor<1xi32>) -> tensor<1xi32>\\n  %80 = \"tfl.fill\"(%79, %22) : (tensor<1xi32>, tensor<i32>) -> tensor<?xi32>\\n  %81 = \"tfl.reverse_sequence\"(%73, %80) <{batch_dim = 0 : i32, seq_dim = 1 : i32}> : (tensor<?x60x512xf32>, tensor<?xi32>) -> tensor<?x60x512xf32>\\n  %82:5 = \"tfl.custom_tf\"(%81, %78, %18, %25, %80) ({\\n  ^bb0(%arg6: tensor<?x60x512xf32>, %arg7: tensor<?x1x128xf32>, %arg8: tensor<f32>, %arg9: tensor<246528xf32>, %arg10: tensor<?xi32>):\\n    %91:5 = \"tf.CudnnRNNV3\"(%arg6, %arg7, %arg8, %arg9, %arg10) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n    \"tfl.yield\"(%91#0, %91#1, %91#2, %91#3, %91#4) : (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) -> ()\\n  }) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n  %83 = \"tfl.reshape\"(%82#1, %6) : (tensor<?x1x128xf32>, tensor<2xi32>) -> tensor<?x128xf32>\\n  %84:5 = \"tfl.custom_tf\"(%73, %78, %18, %26, %80) ({\\n  ^bb0(%arg1: tensor<?x60x512xf32>, %arg2: tensor<?x1x128xf32>, %arg3: tensor<f32>, %arg4: tensor<246528xf32>, %arg5: tensor<?xi32>):\\n    %90:5 = \"tf.CudnnRNNV3\"(%arg1, %arg2, %arg3, %arg4, %arg5) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n    \"tfl.yield\"(%90#0, %90#1, %90#2, %90#3, %90#4) : (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) -> ()\\n  }) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n  %85 = \"tfl.reshape\"(%84#1, %6) : (tensor<?x1x128xf32>, tensor<2xi32>) -> tensor<?x128xf32>\\n  %86 = \"tfl.concatenation\"(%85, %83) <{axis = -1 : i32, fused_activation_function = \"NONE\"}> : (tensor<?x128xf32>, tensor<?x128xf32>) -> tensor<?x256xf32>\\n  %87 = \"tfl.fully_connected\"(%86, %9, %2) <{fused_activation_function = \"RELU\", keep_num_dims = false, weights_format = \"DEFAULT\"}> : (tensor<?x256xf32>, tensor<256x256xf32>, tensor<256xf32>) -> tensor<?x256xf32>\\n  %88 = \"tfl.fully_connected\"(%87, %8, %5) <{fused_activation_function = \"NONE\", keep_num_dims = false, weights_format = \"DEFAULT\"}> : (tensor<?x256xf32>, tensor<3x256xf32>, tensor<3xf32>) -> tensor<?x3xf32>\\n  %89 = \"tfl.softmax\"(%88) <{beta = 1.000000e+00 : f32}> : (tensor<?x3xf32>) -> tensor<?x3xf32>\\n  \"func.return\"(%89) : (tensor<?x3xf32>) -> ()\\n}) {tf.entry_function = {control_outputs = \"\", inputs = \"serving_default_pose_sequence:0\", outputs = \"StatefulPartitionedCall_1:0\"}, tf_saved_model.exported_names = [\"serving_default\"]} : () -> ()\\n')",
+    "int8_export_error": "ConverterError('Could not translate MLIR to FlatBuffer.<unknown>:0: error: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/backward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): \\'tf.CudnnRNNV3\\' op is neither a custom op nor a flex op\\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/backward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): see current operation: %1:5 = \"tf.CudnnRNNV3\"(%arg0, %arg1, %arg2, %arg3, %arg4) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/backward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): Error code: ERROR_NEEDS_CUSTOM_OPS\\n<unknown>:0: error: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/forward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): \\'tf.CudnnRNNV3\\' op is neither a custom op nor a flex op\\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/forward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): see current operation: %1:5 = \"tf.CudnnRNNV3\"(%arg0, %arg1, %arg2, %arg3, %arg4) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_1_1/forward_gru_1_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): Error code: ERROR_NEEDS_CUSTOM_OPS\\n<unknown>:0: error: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/backward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): \\'tf.CudnnRNNV3\\' op is neither a custom op nor a flex op\\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/backward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): see current operation: %1:5 = \"tf.CudnnRNNV3\"(%arg0, %arg1, %arg2, %arg3, %arg4) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/backward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): Error code: ERROR_NEEDS_CUSTOM_OPS\\n<unknown>:0: error: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/forward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): \\'tf.CudnnRNNV3\\' op is neither a custom op nor a flex op\\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/forward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): see current operation: %1:5 = \"tf.CudnnRNNV3\"(%arg0, %arg1, %arg2, %arg3, %arg4) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n<unknown>:0: note: loc(callsite(fused[\"CudnnRNNV3:\", \"P1-v06_gru_1/bi_gru_2_1/forward_gru_2_1/CudnnRNNV3@__inference___call___509460\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper___call___509599\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): Error code: ERROR_NEEDS_CUSTOM_OPS\\n<unknown>:0: error: failed while converting: \\'main\\': \\nSome ops in the model are custom ops, See instructions to implement custom ops: https://www.tensorflow.org/lite/guide/ops_custom \\nCustom ops: CudnnRNNV3\\nDetails:\\n\\ttf.CudnnRNNV3(tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) : {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false}\\n\\ttf.CudnnRNNV3(tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) : {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false}\\n\\n<unknown>:0: note: see current operation: \\n\"func.func\"() <{arg_attrs = [{tf_saved_model.index_path = [\"pose_sequence\"]}], function_type = (tensor<?x60x43xf32>) -> tensor<?x3xf32>, res_attrs = [{tf_saved_model.index_path = [\"output_0\"]}], sym_name = \"main\"}> ({\\n^bb0(%arg0: tensor<?x60x43xf32>):\\n  \"tfl.call_once\"() <{session_init_function = \"NoOp\"}> : () -> ()\\n  %0 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<64xf32>}> : () -> tensor<64xf32>\\n  %1 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<64xf32>}> : () -> tensor<64xf32>\\n  %2 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<256xf32>}> : () -> tensor<256xf32>\\n  %3 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<64x1x3x64xf32>}> : () -> tensor<64x1x3x64xf32>\\n  %4 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<64x1x5x43xf32>}> : () -> tensor<64x1x5x43xf32>\\n  %5 = \"arith.constant\"() <{value = dense<[-0.49832198, 0.637614369, -0.386015922]> : tensor<3xf32>}> : () -> tensor<3xf32>\\n  %6 = \"arith.constant\"() <{value = dense<[-1, 128]> : tensor<2xi32>}> : () -> tensor<2xi32>\\n  %7 = \"arith.constant\"() <{value = dense<[-1, 60, 64]> : tensor<3xi32>}> : () -> tensor<3xi32>\\n  %8 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<3x256xf32>}> : () -> tensor<3x256xf32>\\n  %9 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<256x256xf32>}> : () -> tensor<256x256xf32>\\n  %10 = \"arith.constant\"() <{value = dense<1.000000e-03> : tensor<f32>}> : () -> tensor<f32>\\n  %11 = \"arith.constant\"() <{value = dense<[[0, 0], [2, 0], [0, 0]]> : tensor<3x2xi32>}> : () -> tensor<3x2xi32>\\n  %12 = \"arith.constant\"() <{value = dense<-3> : tensor<i32>}> : () -> tensor<i32>\\n  %13 = \"arith.constant\"() <{value = dense<[[0, 0], [4, 0], [0, 0]]> : tensor<3x2xi32>}> : () -> tensor<3x2xi32>\\n  %14 = \"arith.constant\"() <{value = dense<128> : tensor<i32>}> : () -> tensor<i32>\\n  %15 = \"arith.constant\"() <{value = dense<256> : tensor<i32>}> : () -> tensor<i32>\\n  %16 = \"arith.constant\"() <{value = dense<0> : tensor<1xi32>}> : () -> tensor<1xi32>\\n  %17 = \"arith.constant\"() <{value = dense<1> : tensor<i32>}> : () -> tensor<i32>\\n  %18 = \"arith.constant\"() <{value = dense<0.000000e+00> : tensor<f32>}> : () -> tensor<f32>\\n  %19 = \"arith.constant\"() <{value = dense<-1> : tensor<1xi32>}> : () -> tensor<1xi32>\\n  %20 = \"arith.constant\"() <{value = dense<[0, 1]> : tensor<2xi64>}> : () -> tensor<2xi64>\\n  %21 = \"arith.constant\"() <{value = dense<1> : tensor<1xi32>}> : () -> tensor<1xi32>\\n  %22 = \"arith.constant\"() <{value = dense<60> : tensor<i32>}> : () -> tensor<i32>\\n  %23 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<247296xf32>}> : () -> tensor<247296xf32>\\n  %24 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<247296xf32>}> : () -> tensor<247296xf32>\\n  %25 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<246528xf32>}> : () -> tensor<246528xf32>\\n  %26 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<246528xf32>}> : () -> tensor<246528xf32>\\n  %27 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<1x1x512xf32>}> : () -> tensor<1x1x512xf32>\\n  %28 = \"arith.constant\"() <{value = dense_resource<__elided__> : tensor<1x1x512xf32>}> : () -> tensor<1x1x512xf32>\\n  %29 = \"tfl.var_handle\"() <{container = \"\", shared_name = \"seed_generator_6/seed_generator_state_1\"}> : () -> tensor<!tf_type.resource<tensor<2xi64>>>\\n  %30 = \"tfl.var_handle\"() <{container = \"\", shared_name = \"seed_generator_5/seed_generator_state_1\"}> : () -> tensor<!tf_type.resource<tensor<2xi64>>>\\n  %31 = \"tfl.var_handle\"() <{container = \"\", shared_name = \"seed_generator_3/seed_generator_state_1\"}> : () -> tensor<!tf_type.resource<tensor<2xi64>>>\\n  %32 = \"tfl.var_handle\"() <{container = \"\", shared_name = \"seed_generator_2/seed_generator_state_1\"}> : () -> tensor<!tf_type.resource<tensor<2xi64>>>\\n  %33 = \"tfl.read_variable\"(%31) : (tensor<!tf_type.resource<tensor<2xi64>>>) -> tensor<2xi64>\\n  %34 = \"tfl.add\"(%33, %20) <{fused_activation_function = \"NONE\"}> : (tensor<2xi64>, tensor<2xi64>) -> tensor<2xi64>\\n  \"tfl.assign_variable\"(%31, %34) : (tensor<!tf_type.resource<tensor<2xi64>>>, tensor<2xi64>) -> ()\\n  %35 = \"tfl.read_variable\"(%32) : (tensor<!tf_type.resource<tensor<2xi64>>>) -> tensor<2xi64>\\n  %36 = \"tfl.add\"(%35, %20) <{fused_activation_function = \"NONE\"}> : (tensor<2xi64>, tensor<2xi64>) -> tensor<2xi64>\\n  \"tfl.assign_variable\"(%32, %36) : (tensor<!tf_type.resource<tensor<2xi64>>>, tensor<2xi64>) -> ()\\n  %37 = \"tfl.read_variable\"(%29) : (tensor<!tf_type.resource<tensor<2xi64>>>) -> tensor<2xi64>\\n  %38 = \"tfl.add\"(%37, %20) <{fused_activation_function = \"NONE\"}> : (tensor<2xi64>, tensor<2xi64>) -> tensor<2xi64>\\n  \"tfl.assign_variable\"(%29, %38) : (tensor<!tf_type.resource<tensor<2xi64>>>, tensor<2xi64>) -> ()\\n  %39 = \"tfl.read_variable\"(%30) : (tensor<!tf_type.resource<tensor<2xi64>>>) -> tensor<2xi64>\\n  %40 = \"tfl.add\"(%39, %20) <{fused_activation_function = \"NONE\"}> : (tensor<2xi64>, tensor<2xi64>) -> tensor<2xi64>\\n  \"tfl.assign_variable\"(%30, %40) : (tensor<!tf_type.resource<tensor<2xi64>>>, tensor<2xi64>) -> ()\\n  %41 = \"tfl.pad\"(%arg0, %13) : (tensor<?x60x43xf32>, tensor<3x2xi32>) -> tensor<?x64x43xf32>\\n  %42 = \"tfl.expand_dims\"(%41, %12) : (tensor<?x64x43xf32>, tensor<i32>) -> tensor<?x1x64x43xf32>\\n  %43 = \"tfl.conv_2d\"(%42, %4, %1) <{dilation_h_factor = 1 : i32, dilation_w_factor = 1 : i32, fused_activation_function = \"RELU\", padding = \"VALID\", stride_h = 1 : i32, stride_w = 1 : i32}> : (tensor<?x1x64x43xf32>, tensor<64x1x5x43xf32>, tensor<64xf32>) -> tensor<?x1x60x64xf32>\\n  %44 = \"tfl.reshape\"(%43, %7) : (tensor<?x1x60x64xf32>, tensor<3xi32>) -> tensor<?x60x64xf32>\\n  %45 = \"tfl.pad\"(%44, %11) : (tensor<?x60x64xf32>, tensor<3x2xi32>) -> tensor<?x62x64xf32>\\n  %46 = \"tfl.expand_dims\"(%45, %12) : (tensor<?x62x64xf32>, tensor<i32>) -> tensor<?x1x62x64xf32>\\n  %47 = \"tfl.conv_2d\"(%46, %3, %0) <{dilation_h_factor = 1 : i32, dilation_w_factor = 1 : i32, fused_activation_function = \"RELU\", padding = \"VALID\", stride_h = 1 : i32, stride_w = 1 : i32}> : (tensor<?x1x62x64xf32>, tensor<64x1x3x64xf32>, tensor<64xf32>) -> tensor<?x1x60x64xf32>\\n  %48 = \"tfl.reshape\"(%47, %7) : (tensor<?x1x60x64xf32>, tensor<3xi32>) -> tensor<?x60x64xf32>\\n  %49 = \"tfl.shape\"(%48) : (tensor<?x60x64xf32>) -> tensor<3xi32>\\n  %50 = \"tfl.strided_slice\"(%49, %16, %21, %21) <{begin_mask = 0 : i32, ellipsis_mask = 0 : i32, end_mask = 0 : i32, new_axis_mask = 0 : i32, offset = false, shrink_axis_mask = 1 : i32}> : (tensor<3xi32>, tensor<1xi32>, tensor<1xi32>, tensor<1xi32>) -> tensor<i32>\\n  %51 = \"tfl.pack\"(%50, %15) <{axis = 0 : i32, values_count = 2 : i32}> : (tensor<i32>, tensor<i32>) -> tensor<2xi32>\\n  %52 = \"tfl.fill\"(%51, %18) : (tensor<2xi32>, tensor<f32>) -> tensor<?x256xf32>\\n  %53 = \"tfl.expand_dims\"(%52, %17) : (tensor<?x256xf32>, tensor<i32>) -> tensor<?x1x256xf32>\\n  %54 = \"tfl.reshape\"(%50, %21) : (tensor<i32>, tensor<1xi32>) -> tensor<1xi32>\\n  %55 = \"tfl.fill\"(%54, %22) : (tensor<1xi32>, tensor<i32>) -> tensor<?xi32>\\n  %56 = \"tfl.reverse_sequence\"(%48, %55) <{batch_dim = 0 : i32, seq_dim = 1 : i32}> : (tensor<?x60x64xf32>, tensor<?xi32>) -> tensor<?x60x64xf32>\\n  %57:5 = \"tfl.custom_tf\"(%56, %53, %18, %23, %55) ({\\n  ^bb0(%arg16: tensor<?x60x64xf32>, %arg17: tensor<?x1x256xf32>, %arg18: tensor<f32>, %arg19: tensor<247296xf32>, %arg20: tensor<?xi32>):\\n    %93:5 = \"tf.CudnnRNNV3\"(%arg16, %arg17, %arg18, %arg19, %arg20) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n    \"tfl.yield\"(%93#0, %93#1, %93#2, %93#3, %93#4) : (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) -> ()\\n  }) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n  %58 = \"tfl.reverse_sequence\"(%57#0, %55) <{batch_dim = 0 : i32, seq_dim = 1 : i32}> : (tensor<?x60x256xf32>, tensor<?xi32>) -> tensor<?x60x256xf32>\\n  %59 = \"tfl.reverse_v2\"(%58, %21) : (tensor<?x60x256xf32>, tensor<1xi32>) -> tensor<?x60x256xf32>\\n  %60 = \"tfl.reverse_v2\"(%59, %21) : (tensor<?x60x256xf32>, tensor<1xi32>) -> tensor<?x60x256xf32>\\n  %61:5 = \"tfl.custom_tf\"(%48, %53, %18, %24, %55) ({\\n  ^bb0(%arg11: tensor<?x60x64xf32>, %arg12: tensor<?x1x256xf32>, %arg13: tensor<f32>, %arg14: tensor<247296xf32>, %arg15: tensor<?xi32>):\\n    %92:5 = \"tf.CudnnRNNV3\"(%arg11, %arg12, %arg13, %arg14, %arg15) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n    \"tfl.yield\"(%92#0, %92#1, %92#2, %92#3, %92#4) : (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) -> ()\\n  }) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x64xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<247296xf32>, tensor<?xi32>) -> (tensor<?x60x256xf32>, tensor<?x1x256xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n  %62 = \"tfl.concatenation\"(%61#0, %60) <{axis = -1 : i32, fused_activation_function = \"NONE\"}> : (tensor<?x60x256xf32>, tensor<?x60x256xf32>) -> tensor<?x60x512xf32>\\n  %63 = \"tfl.mean\"(%62, %19) <{keep_dims = true}> : (tensor<?x60x512xf32>, tensor<1xi32>) -> tensor<?x60x1xf32>\\n  %64 = \"tfl.neg\"(%63) : (tensor<?x60x1xf32>) -> tensor<?x60x1xf32>\\n  %65 = \"tfl.squared_difference\"(%62, %63) : (tensor<?x60x512xf32>, tensor<?x60x1xf32>) -> tensor<?x60x512xf32>\\n  %66 = \"tfl.mean\"(%65, %19) <{keep_dims = true}> : (tensor<?x60x512xf32>, tensor<1xi32>) -> tensor<?x60x1xf32>\\n  %67 = \"tfl.add\"(%66, %10) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x1xf32>, tensor<f32>) -> tensor<?x60x1xf32>\\n  %68 = \"tfl.rsqrt\"(%67) : (tensor<?x60x1xf32>) -> tensor<?x60x1xf32>\\n  %69 = \"tfl.mul\"(%68, %28) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x1xf32>, tensor<1x1x512xf32>) -> tensor<?x60x512xf32>\\n  %70 = \"tfl.mul\"(%64, %69) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x1xf32>, tensor<?x60x512xf32>) -> tensor<?x60x512xf32>\\n  %71 = \"tfl.add\"(%70, %27) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x512xf32>, tensor<1x1x512xf32>) -> tensor<?x60x512xf32>\\n  %72 = \"tfl.mul\"(%62, %69) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x512xf32>, tensor<?x60x512xf32>) -> tensor<?x60x512xf32>\\n  %73 = \"tfl.add\"(%72, %71) <{fused_activation_function = \"NONE\"}> : (tensor<?x60x512xf32>, tensor<?x60x512xf32>) -> tensor<?x60x512xf32>\\n  %74 = \"tfl.shape\"(%73) : (tensor<?x60x512xf32>) -> tensor<3xi32>\\n  %75 = \"tfl.strided_slice\"(%74, %16, %21, %21) <{begin_mask = 0 : i32, ellipsis_mask = 0 : i32, end_mask = 0 : i32, new_axis_mask = 0 : i32, offset = false, shrink_axis_mask = 1 : i32}> : (tensor<3xi32>, tensor<1xi32>, tensor<1xi32>, tensor<1xi32>) -> tensor<i32>\\n  %76 = \"tfl.pack\"(%75, %14) <{axis = 0 : i32, values_count = 2 : i32}> : (tensor<i32>, tensor<i32>) -> tensor<2xi32>\\n  %77 = \"tfl.fill\"(%76, %18) : (tensor<2xi32>, tensor<f32>) -> tensor<?x128xf32>\\n  %78 = \"tfl.expand_dims\"(%77, %17) : (tensor<?x128xf32>, tensor<i32>) -> tensor<?x1x128xf32>\\n  %79 = \"tfl.reshape\"(%75, %21) : (tensor<i32>, tensor<1xi32>) -> tensor<1xi32>\\n  %80 = \"tfl.fill\"(%79, %22) : (tensor<1xi32>, tensor<i32>) -> tensor<?xi32>\\n  %81 = \"tfl.reverse_sequence\"(%73, %80) <{batch_dim = 0 : i32, seq_dim = 1 : i32}> : (tensor<?x60x512xf32>, tensor<?xi32>) -> tensor<?x60x512xf32>\\n  %82:5 = \"tfl.custom_tf\"(%81, %78, %18, %25, %80) ({\\n  ^bb0(%arg6: tensor<?x60x512xf32>, %arg7: tensor<?x1x128xf32>, %arg8: tensor<f32>, %arg9: tensor<246528xf32>, %arg10: tensor<?xi32>):\\n    %91:5 = \"tf.CudnnRNNV3\"(%arg6, %arg7, %arg8, %arg9, %arg10) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n    \"tfl.yield\"(%91#0, %91#1, %91#2, %91#3, %91#4) : (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) -> ()\\n  }) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n  %83 = \"tfl.reshape\"(%82#1, %6) : (tensor<?x1x128xf32>, tensor<2xi32>) -> tensor<?x128xf32>\\n  %84:5 = \"tfl.custom_tf\"(%73, %78, %18, %26, %80) ({\\n  ^bb0(%arg1: tensor<?x60x512xf32>, %arg2: tensor<?x1x128xf32>, %arg3: tensor<f32>, %arg4: tensor<246528xf32>, %arg5: tensor<?xi32>):\\n    %90:5 = \"tf.CudnnRNNV3\"(%arg1, %arg2, %arg3, %arg4, %arg5) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n    \"tfl.yield\"(%90#0, %90#1, %90#2, %90#3, %90#4) : (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>) -> ()\\n  }) {T = f32, device = \"\", direction = \"unidirectional\", dropout = 0.000000e+00 : f32, input_mode = \"linear_input\", is_training = true, num_proj = 0 : i64, rnn_mode = \"gru\", seed = 0 : i64, seed2 = 0 : i64, time_major = false} : (tensor<?x60x512xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<246528xf32>, tensor<?xi32>) -> (tensor<?x60x128xf32>, tensor<?x1x128xf32>, tensor<f32>, tensor<*xf32>, tensor<*xi8>)\\n  %85 = \"tfl.reshape\"(%84#1, %6) : (tensor<?x1x128xf32>, tensor<2xi32>) -> tensor<?x128xf32>\\n  %86 = \"tfl.concatenation\"(%85, %83) <{axis = -1 : i32, fused_activation_function = \"NONE\"}> : (tensor<?x128xf32>, tensor<?x128xf32>) -> tensor<?x256xf32>\\n  %87 = \"tfl.fully_connected\"(%86, %9, %2) <{fused_activation_function = \"RELU\", keep_num_dims = false, weights_format = \"DEFAULT\"}> : (tensor<?x256xf32>, tensor<256x256xf32>, tensor<256xf32>) -> tensor<?x256xf32>\\n  %88 = \"tfl.fully_connected\"(%87, %8, %5) <{fused_activation_function = \"NONE\", keep_num_dims = false, weights_format = \"DEFAULT\"}> : (tensor<?x256xf32>, tensor<3x256xf32>, tensor<3xf32>) -> tensor<?x3xf32>\\n  %89 = \"tfl.softmax\"(%88) <{beta = 1.000000e+00 : f32}> : (tensor<?x3xf32>) -> tensor<?x3xf32>\\n  \"func.return\"(%89) : (tensor<?x3xf32>) -> ()\\n}) {tf.entry_function = {control_outputs = \"\", inputs = \"serving_default_pose_sequence:0\", outputs = \"StatefulPartitionedCall_1:0\"}, tf_saved_model.exported_names = [\"serving_default\"]} : () -> ()\\n')"
+  },
+  "split_sizes": {
+    "train": 119770,
+    "val": 39199,
+    "test": 19712
+  },
+  "video_counts": {
+    "train": 6344,
+    "val": 1811,
+    "test": 911
+  }
+}

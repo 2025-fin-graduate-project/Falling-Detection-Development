@@ -1,0 +1,20 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778899485.653078  136076 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 11:44:47] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 11:44:59] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 11:44:59] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 11:45:02] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 11:45:02] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 11:45:04] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 11:45:17] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 11:45:20] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 11:45:21] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778899525.248539  136076 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778899526.177314  136076 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778899527.474027  136076 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778899529.400698  136076 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778899531.916349  136244 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 12:07:30] ValMinPR: restored best weights (val_video_min_pr=0.9133)
+W0000 00:00:1778900850.858562  136076 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778900852.157887  136076 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.

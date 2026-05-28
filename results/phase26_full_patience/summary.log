@@ -1,0 +1,11 @@
+[2026-05-16 03:41:53] === Phase 26: Full patience (epochs=100, patience=15) ===
+[2026-05-16 03:41:53] GPU ready: 17MiB
+[2026-05-16 03:41:53] START P26-v01
+[OK] P26-v01 event=0.9103 video=0.9142 thr=0.550 mc=3
+  event_CM: TN=213 FP=19 FN=21 TP=600
+[2026-05-16 04:34:13] GPU ready: 17MiB
+[2026-05-16 04:34:13] START P26-v02
+[OK] P26-v02 event=0.8908 video=0.8945 thr=0.625 mc=2
+  event_CM: TN=212 FP=20 FN=26 TP=595
+[2026-05-16 05:21:25] GPU ready: 17MiB
+[2026-05-16 05:21:25] START P26-v03

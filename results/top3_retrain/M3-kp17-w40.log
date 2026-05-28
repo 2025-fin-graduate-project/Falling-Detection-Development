@@ -1,0 +1,58 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779444757.542859   40223 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[19:12:39] === M3-kp17-w40 ===
+[19:12:39]   feat=kp17(57f)  win=40  model=gru
+[19:12:39]   velocity=False  hip_center=False  exclude_boundary=False
+[19:12:39]   focal α=0.65 γ=2.0  strides fall=1/nfall=5
+[19:12:39]   pure_window=True  margin=5 frames
+[19:12:39] Loading CSVs …
+[19:13:25] Building windows …
+[19:13:36]   train=258219 (fall=111991)  val=235247 (fall=31991)  test=118434 (fall=16083)
+I0000 00:00:1779444824.862964   40223 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+[19:13:45]   params=74,338
+[19:13:45] Training …
+W0000 00:00:1779444826.549700   40223 cpu_allocator_impl.cc:82] Allocation of 2354957280 exceeds 10% of free system memory.
+W0000 00:00:1779444829.280025   40223 cpu_allocator_impl.cc:82] Allocation of 2145452640 exceeds 10% of free system memory.
+W0000 00:00:1779444830.938822   40223 cpu_allocator_impl.cc:82] Allocation of 2354957280 exceeds 10% of free system memory.
+I0000 00:00:1779444840.585917   40571 service.cc:153] XLA service 0x3029a740 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1779444840.585951   40571 service.cc:161]   StreamExecutor [0]: NVIDIA GeForce RTX 2060 SUPER, Compute Capability 7.5 (Driver: 13.0.0; Runtime: 12.9.0; Toolkit: 12.5.0; DNN: 9.22.0)
+I0000 00:00:1779444840.987593   40571 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+I0000 00:00:1779444843.187649   40571 cuda_dnn.cc:461] Loaded cuDNN version 92200
+I0000 00:00:1779444843.499833   40571 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_27815__.175
+I0000 00:00:1779444855.558592   40571 device_compiler.h:208] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+I0000 00:00:1779444862.440189   40571 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_27815__.175
+W0000 00:00:1779444873.349449   40223 cpu_allocator_impl.cc:82] Allocation of 2145452640 exceeds 10% of free system memory.
+I0000 00:00:1779444876.809342   40571 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_33493__.7
+I0000 00:00:1779444881.037661   40569 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_33493__.7
+[19:15:10]   ep  1  val_minpr=0.9190  thr=0.75  *** best
+[19:15:42]   ep  2  val_minpr=0.9362  thr=0.75  *** best
+[19:16:46]   ep  4  val_minpr=0.9386  thr=0.7  *** best
+[19:17:18]   ep  5  val_minpr=0.9363  thr=0.7  (wait 1/15)
+[19:17:50]   ep  6  val_minpr=0.9420  thr=0.725  *** best
+[19:19:58]   ep 10  val_minpr=0.9375  thr=0.675  (wait 4/15)
+[19:20:30]   ep 11  val_minpr=0.9444  thr=0.675  *** best
+[19:22:38]   ep 15  val_minpr=0.9382  thr=0.725  (wait 4/15)
+[19:23:42]   ep 17  val_minpr=0.9460  thr=0.675  *** best
+[19:25:18]   ep 20  val_minpr=0.9349  thr=0.75  (wait 3/15)
+[19:26:55]   ep 23  val_minpr=0.9466  thr=0.725  *** best
+[19:27:58]   ep 25  val_minpr=0.9419  thr=0.675  (wait 2/15)
+[19:30:39]   ep 30  val_minpr=0.9422  thr=0.725  (wait 7/15)
+[19:33:20]   ep 35  val_minpr=0.9411  thr=0.725  (wait 12/15)
+[19:34:57]   Early stop ep38
+[19:42:49] Scoring videos …
+[19:57:27] Threshold sweep …
+[19:57:28] Best thr=0.725
+[19:57:28] Val  window: minpr=0.9431  fall=0.9447/0.9431  nfall=0.9910/0.9913  FN=1820  FP=1765
+[19:57:28] Test window: minpr=0.9259  fall=0.9445/0.9259  nfall=0.9884/0.9915  FN=1191  FP=875
+[19:57:28] Postproc sweep (thr=0.725) …
+[19:57:28]   v1k1  val=0.8587(fall=0.9505/0.9913 nfall=0.9729/0.8587 FP=65 FN=11)  test=0.8745(fall=0.9557/0.9874 nfall=0.9619/0.8745 FP=29 FN=8)
+[19:57:28]   v3k2  val=0.8783(fall=0.9571/0.9905 nfall=0.9712/0.8783 FP=56 FN=12)  test=0.8874(fall=0.9600/0.9858 nfall=0.9579/0.8874 FP=26 FN=9)
+[19:57:28]   v5k3  val=0.8870(fall=0.9599/0.9889 nfall=0.9668/0.8870 FP=52 FN=14)  test=0.9004(fall=0.9643/0.9810 nfall=0.9455/0.9004 FP=23 FN=12)
+[19:57:28]   v5k4  val=0.8913(fall=0.9614/0.9881 nfall=0.9647/0.8913 FP=50 FN=15)  test=0.9004(fall=0.9642/0.9795 nfall=0.9412/0.9004 FP=23 FN=13)
+[19:57:28]   v7k4  val=0.8913(fall=0.9614/0.9889 nfall=0.9670/0.8913 FP=50 FN=14)  test=0.9004(fall=0.9642/0.9795 nfall=0.9412/0.9004 FP=23 FN=13)
+[19:57:28]   v7k5  val=0.8957(fall=0.9628/0.9865 nfall=0.9604/0.8957 FP=48 FN=17)  test=0.9004(fall=0.9641/0.9763 nfall=0.9327/0.9004 FP=23 FN=15)
+[19:57:29]   v10k6  val=0.9000(fall=0.9642/0.9833 nfall=0.9517/0.9000 FP=46 FN=21)  test=0.9048(fall=0.9655/0.9731 nfall=0.9248/0.9048 FP=22 FN=17)
+[19:57:29] Best postproc: v10k6  val_ev=0.9000  test_ev=0.9048
+[19:57:29] Gap window→event(best): +0.0431
+[19:57:29] === DONE M3-kp17-w40  test_win=0.9259  test_ev=0.9048(v10k6) ===

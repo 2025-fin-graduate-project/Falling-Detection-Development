@@ -1,0 +1,609 @@
+{
+  "buffers": [
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": false,
+      "channel_last": true,
+      "epochs": {
+        "end": 5,
+        "start": 2
+      },
+      "flags": "STAI_FLAG_INPUTS|STAI_FLAG_PREALLOCATED|STAI_FLAG_ACTIVATIONS",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 49,
+      "intq": {},
+      "is_param": false,
+      "mpool_id": 0,
+      "name": "conv_features_window_output_array",
+      "nbits": 32,
+      "offset_start": 0,
+      "qmn": {},
+      "shape": [
+        40,
+        64
+      ],
+      "shape_map": [
+        "H",
+        "CH"
+      ],
+      "size_bytes": 10240
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": true,
+      "channel_last": true,
+      "epochs": {
+        "end": 1,
+        "start": 0
+      },
+      "flags": "STAI_FLAG_WEIGHTS|STAI_FLAG_CONST|STAI_FLAG_PREALLOCATED",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 61,
+      "intq": {},
+      "is_param": true,
+      "mpool_id": 1,
+      "name": "gru_window_1_bias_array",
+      "nbits": 32,
+      "offset_start": 98304,
+      "qmn": {},
+      "shape": [
+        2,
+        192
+      ],
+      "shape_map": [
+        "CH",
+        "CH_IN"
+      ],
+      "size_bytes": 1536
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": true,
+      "channel_last": true,
+      "epochs": {
+        "end": 1,
+        "start": 0
+      },
+      "flags": "STAI_FLAG_WEIGHTS|STAI_FLAG_CONST|STAI_FLAG_PREALLOCATED",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 55,
+      "intq": {},
+      "is_param": true,
+      "mpool_id": 1,
+      "name": "gru_window_1_kernel_array",
+      "nbits": 32,
+      "offset_start": 0,
+      "qmn": {},
+      "shape": [
+        192,
+        64
+      ],
+      "shape_map": [
+        "CH",
+        "CH_IN"
+      ],
+      "size_bytes": 49152
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": false,
+      "channel_last": true,
+      "epochs": {
+        "end": 9,
+        "start": 4
+      },
+      "flags": "STAI_FLAG_PREALLOCATED|STAI_FLAG_ACTIVATIONS",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 51,
+      "intq": {},
+      "is_param": false,
+      "mpool_id": 0,
+      "name": "gru_window_1_output0_array",
+      "nbits": 32,
+      "offset_start": 11776,
+      "qmn": {},
+      "shape": [
+        40,
+        64
+      ],
+      "shape_map": [
+        "H",
+        "CH"
+      ],
+      "size_bytes": 10240
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": true,
+      "channel_last": true,
+      "epochs": {
+        "end": 1,
+        "start": 0
+      },
+      "flags": "STAI_FLAG_WEIGHTS|STAI_FLAG_CONST|STAI_FLAG_PREALLOCATED",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 58,
+      "intq": {},
+      "is_param": true,
+      "mpool_id": 1,
+      "name": "gru_window_1_recurrent_array",
+      "nbits": 32,
+      "offset_start": 49152,
+      "qmn": {},
+      "shape": [
+        192,
+        64
+      ],
+      "shape_map": [
+        "CH",
+        "CH_IN"
+      ],
+      "size_bytes": 49152
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": false,
+      "channel_last": true,
+      "epochs": {
+        "end": 6,
+        "start": 3
+      },
+      "flags": "STAI_FLAG_PREALLOCATED|STAI_FLAG_ACTIVATIONS|STAI_FLAG_SCRATCHS",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 75,
+      "intq": {},
+      "is_param": false,
+      "mpool_id": 0,
+      "name": "gru_window_1_scratch0_array",
+      "nbits": 32,
+      "offset_start": 10240,
+      "qmn": {},
+      "shape": [
+        1,
+        1,
+        384,
+        1
+      ],
+      "shape_map": [
+        "H",
+        "W",
+        "CH",
+        "CH_IN"
+      ],
+      "size_bytes": 1536
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": true,
+      "channel_last": true,
+      "epochs": {
+        "end": 1,
+        "start": 0
+      },
+      "flags": "STAI_FLAG_WEIGHTS|STAI_FLAG_CONST|STAI_FLAG_PREALLOCATED",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 70,
+      "intq": {},
+      "is_param": true,
+      "mpool_id": 1,
+      "name": "gru_window_2_bias_array",
+      "nbits": 32,
+      "offset_start": 136704,
+      "qmn": {},
+      "shape": [
+        2,
+        96
+      ],
+      "shape_map": [
+        "CH",
+        "CH_IN"
+      ],
+      "size_bytes": 768
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": true,
+      "channel_last": true,
+      "epochs": {
+        "end": 1,
+        "start": 0
+      },
+      "flags": "STAI_FLAG_WEIGHTS|STAI_FLAG_CONST|STAI_FLAG_PREALLOCATED",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 64,
+      "intq": {},
+      "is_param": true,
+      "mpool_id": 1,
+      "name": "gru_window_2_kernel_array",
+      "nbits": 32,
+      "offset_start": 99840,
+      "qmn": {},
+      "shape": [
+        96,
+        64
+      ],
+      "shape_map": [
+        "CH",
+        "CH_IN"
+      ],
+      "size_bytes": 24576
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": true,
+      "channel_last": true,
+      "epochs": {
+        "end": 11,
+        "start": 8
+      },
+      "flags": "STAI_FLAG_OUTPUTS|STAI_FLAG_PREALLOCATED|STAI_FLAG_ACTIVATIONS",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 53,
+      "intq": {},
+      "is_param": false,
+      "mpool_id": 0,
+      "name": "gru_window_2_output0_array",
+      "nbits": 32,
+      "offset_start": 768,
+      "qmn": {},
+      "shape": [
+        32
+      ],
+      "shape_map": [
+        "CH"
+      ],
+      "size_bytes": 128
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": true,
+      "channel_last": true,
+      "epochs": {
+        "end": 1,
+        "start": 0
+      },
+      "flags": "STAI_FLAG_WEIGHTS|STAI_FLAG_CONST|STAI_FLAG_PREALLOCATED",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 67,
+      "intq": {},
+      "is_param": true,
+      "mpool_id": 1,
+      "name": "gru_window_2_recurrent_array",
+      "nbits": 32,
+      "offset_start": 124416,
+      "qmn": {},
+      "shape": [
+        96,
+        32
+      ],
+      "shape_map": [
+        "CH",
+        "CH_IN"
+      ],
+      "size_bytes": 12288
+    },
+    {
+      "alignment": 4,
+      "batch": 0,
+      "channel_first": false,
+      "channel_last": true,
+      "epochs": {
+        "end": 10,
+        "start": 7
+      },
+      "flags": "STAI_FLAG_PREALLOCATED|STAI_FLAG_ACTIVATIONS|STAI_FLAG_SCRATCHS",
+      "format": "STAI_FORMAT_FLOAT",
+      "id": 80,
+      "intq": {},
+      "is_param": false,
+      "mpool_id": 0,
+      "name": "gru_window_2_scratch0_array",
+      "nbits": 32,
+      "offset_start": 0,
+      "qmn": {},
+      "shape": [
+        1,
+        1,
+        192,
+        1
+      ],
+      "shape_map": [
+        "H",
+        "W",
+        "CH",
+        "CH_IN"
+      ],
+      "size_bytes": 768
+    }
+  ],
+  "environment": {
+    "generated_model": {
+      "generated_time": "2026-05-22T12:26:49+0900",
+      "model_files": [
+        {
+          "name": "gru_window_data.h",
+          "signature": "0x45443e1a84239db14665ecf3198b9ddb"
+        },
+        {
+          "name": "gru_window_data.c",
+          "signature": "0xe0fa2509dd55d6418cb47ec7a43de206"
+        },
+        {
+          "name": "gru_window.h",
+          "signature": "0x419a45c78ede5cb851a090d89cddc9cb"
+        },
+        {
+          "name": "gru_window.c",
+          "signature": "0xc9e6fe0a7f0e9b9a357f5698d163b1b1"
+        },
+        {
+          "name": "gru_window_details.h",
+          "signature": "0x048ad58351f1b6bfe759bcc4e181776e"
+        }
+      ],
+      "name": "gru_window"
+    },
+    "network_signature": "0x3803d29f8e923aff",
+    "test_name": "",
+    "tools": [
+      {
+        "arguments": "generate --target stm32n6 --model results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_mode.keras --type keras --name gru_window --output results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen --workspace results/phase44_keras37/P37h64-compat-poc/submodels/gru_window_gen/workspace --compression lossless --verbosity 1",
+        "environment": [],
+        "input_model": {
+          "model_files": [
+            {
+              "name": "gru_window_mode.keras",
+              "signature": "0xf0a2c486ecf1a710437d300680e63770"
+            }
+          ],
+          "n_params": 34368,
+          "name": "gru_window_mode",
+          "size": 137472,
+          "type": "keras"
+        },
+        "name": "ST.EdgeAI.Core",
+        "version": "4.0.0-20500 359356bb0"
+      }
+    ]
+  },
+  "graphs": [
+    {
+      "edges": [
+        {
+          "buffer": 51,
+          "edge_kind": "EDGE_MEMORY",
+          "end": {
+            "node_id": 10,
+            "port": 0
+          },
+          "id": 0,
+          "name": "n9-p0_n10-p0",
+          "start": {
+            "node_id": 9,
+            "port": 0
+          }
+        }
+      ],
+      "id": 0,
+      "inputs": [
+        49
+      ],
+      "name": "gru_window_mode",
+      "nodes": [
+        {
+          "attributes": {
+            "activation_nl": "tanh",
+            "activation_param": "False",
+            "go_backwards": "False",
+            "n_features": "64",
+            "num_units": "64",
+            "out_nl": "tanh",
+            "out_param": "False",
+            "recurrent_nl": "sigmoid",
+            "recurrent_param": "False",
+            "reset_after": "True",
+            "return_sequences": "True",
+            "return_state": "False",
+            "stateful": "False",
+            "use_bias": "True"
+          },
+          "id": 9,
+          "inputs": [
+            49,
+            55,
+            58,
+            61
+          ],
+          "macc": 988160,
+          "mapping": "NODE_SW",
+          "name": "gru_window_1",
+          "original_nodes": [
+            "1"
+          ],
+          "outputs": [
+            51
+          ],
+          "scratchs": [
+            75
+          ],
+          "subgraph_nodes": [],
+          "sw_functions": [
+            "forward_lite_gru_gru_window_1"
+          ],
+          "type": "GRU"
+        },
+        {
+          "attributes": {
+            "activation_nl": "tanh",
+            "activation_param": "False",
+            "go_backwards": "False",
+            "n_features": "64",
+            "num_units": "32",
+            "out_nl": "tanh",
+            "out_param": "False",
+            "recurrent_nl": "sigmoid",
+            "recurrent_param": "False",
+            "reset_after": "True",
+            "return_sequences": "False",
+            "return_state": "False",
+            "stateful": "False",
+            "use_bias": "True"
+          },
+          "id": 10,
+          "inputs": [
+            51,
+            64,
+            67,
+            70
+          ],
+          "macc": 371200,
+          "mapping": "NODE_SW",
+          "name": "gru_window_2",
+          "original_nodes": [
+            "2"
+          ],
+          "outputs": [
+            53
+          ],
+          "scratchs": [
+            80
+          ],
+          "subgraph_nodes": [],
+          "sw_functions": [
+            "_STAI_GRU_WINDOW_EVENT_NODE_START_CB",
+            "forward_lite_gru_if32of32wf32",
+            "_STAI_GRU_WINDOW_EVENT_NODE_STOP_CB"
+          ],
+          "type": "GRU"
+        }
+      ],
+      "original_inputs": [
+        {
+          "c_shape_map": [],
+          "data_format": {
+            "quantizer": "NONE",
+            "scale": [],
+            "size": 32,
+            "type": "FLOAT",
+            "zero": []
+          },
+          "name": "conv_features_window",
+          "shape": [
+            null,
+            40,
+            64
+          ],
+          "shape_map": [
+            "BATCH",
+            "H",
+            "CH"
+          ]
+        }
+      ],
+      "original_outputs": [
+        {
+          "c_shape_map": [],
+          "data_format": {
+            "quantizer": "NONE",
+            "scale": [],
+            "size": 32,
+            "type": "FLOAT",
+            "zero": []
+          },
+          "name": "gru_window_2",
+          "shape": [
+            null,
+            32
+          ],
+          "shape_map": [
+            "BATCH",
+            "CH"
+          ]
+        }
+      ],
+      "outputs": [
+        53
+      ]
+    }
+  ],
+  "json_schema_version": "2.0",
+  "memory_footprint": {
+    "activations": 22016,
+    "io": [
+      0,
+      0
+    ],
+    "kernel_flash": 0,
+    "kernel_ram": 0,
+    "series": "generic",
+    "toolchain": null,
+    "toolchain_flash": 0,
+    "toolchain_ram": 0,
+    "weights": 137472
+  },
+  "memory_pools": [
+    {
+      "address": "NULL",
+      "alignment": 4,
+      "attributes": {
+        "latency": "HIGH",
+        "score": 768,
+        "throughput": "LOW"
+      },
+      "buffers": [
+        49,
+        51,
+        53,
+        75,
+        80
+      ],
+      "id": 0,
+      "name": "heap_overlay_pool",
+      "offset_start": 0,
+      "persistent": false,
+      "rights": "ACC_WRITE",
+      "size_bytes": -1,
+      "subpools": [],
+      "used_size_bytes": 22016,
+      "user_allocated": false,
+      "virtual": false
+    },
+    {
+      "address": "g_gru_window_weights_array",
+      "alignment": 0,
+      "attributes": {
+        "latency": "UNDEF",
+        "score": 0,
+        "throughput": "UNDEF"
+      },
+      "buffers": [
+        55,
+        58,
+        61,
+        64,
+        67,
+        70
+      ],
+      "id": 1,
+      "name": "weights_array",
+      "offset_start": 0,
+      "persistent": true,
+      "rights": "ACC_READ",
+      "size_bytes": -1,
+      "subpools": [],
+      "used_size_bytes": 137472,
+      "user_allocated": false,
+      "virtual": false
+    }
+  ]
+}

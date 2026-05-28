@@ -1,0 +1,23 @@
+[2026-05-16 15:44:35] === Phase 33: CE × val_video_min_pr + LSTM×CE 탐색 ===
+[2026-05-16 15:44:35] 기준: P27-vm0(GRU focal+vm 0.9241) / P30-lstm(LSTM focal+vl 0.9181)
+[2026-05-16 15:44:35] GPU ready: 17MiB
+[2026-05-16 15:44:35] START P33-gce-vm42
+[OK] P33-gce-vm42 event=0.8875 video=0.8912
+  CM: TN=213 FP=19 FN=27 TP=594  fall_pr=0.9690 nfall_pr=0.8875 fall_rc=0.9565
+[2026-05-16 16:44:38] GPU ready: 17MiB
+[2026-05-16 16:44:38] START P33-gce-vm1
+[OK] P33-gce-vm1 event=0.8782 video=0.8819
+  CM: TN=209 FP=23 FN=29 TP=592  fall_pr=0.9626 nfall_pr=0.8782 fall_rc=0.9533
+[2026-05-16 17:13:59] GPU ready: 17MiB
+[2026-05-16 17:13:59] START P33-gce-vm0
+[OK] P33-gce-vm0 event=0.9038 video=0.9076
+  CM: TN=216 FP=16 FN=23 TP=598  fall_pr=0.9739 nfall_pr=0.9038 fall_rc=0.9630
+[2026-05-16 17:59:21] GPU ready: 17MiB
+[2026-05-16 17:59:21] START P33-lce-vl42
+[OK] P33-lce-vl42 event=0.8912 video=0.8950
+  CM: TN=213 FP=19 FN=26 TP=595  fall_pr=0.9691 nfall_pr=0.8912 fall_rc=0.9581
+[2026-05-16 18:08:29] GPU ready: 17MiB
+[2026-05-16 18:08:29] START P33-lce-vl1
+[OK] P33-lce-vl1 event=0.8800 video=0.8800
+  CM: TN=220 FP=12 FN=30 TP=591  fall_pr=0.9801 nfall_pr=0.8800 fall_rc=0.9517
+[2026-05-16 18:15:14] === Phase 33 done ===

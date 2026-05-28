@@ -211,9 +211,12 @@ def run_stedgeai_pipeline(
     target: str = "stm32n6",
     threshold: float = 0.5,
     keep_compat_keras: bool = False,
+    model_name: str = "model.keras",
 ) -> dict:
     """전체 파이프라인: compat .keras 생성 → analyze → validate → 정리."""
-    keras_path = exp_dir / "model.keras"
+    keras_path = exp_dir / model_name
+    if not keras_path.exists():
+        keras_path = exp_dir / "model.keras"
     if not keras_path.exists():
         return {"error": "model.keras not found"}
 
@@ -268,6 +271,8 @@ def main() -> None:
     parser.add_argument("--target", default="stm32n6")
     parser.add_argument("--keep-compat", action="store_true",
                         help="compat .keras 파일 삭제하지 않음")
+    parser.add_argument("--model", default="model.keras",
+                        help="사용할 모델 파일명 (기본: model.keras)")
     args = parser.parse_args()
 
     exp_dir = Path(args.exp_dir)
@@ -281,6 +286,7 @@ def main() -> None:
         target=args.target,
         threshold=args.threshold,
         keep_compat_keras=args.keep_compat,
+        model_name=args.model,
     )
 
     # metrics.json 에 stedgeai 결과 추가

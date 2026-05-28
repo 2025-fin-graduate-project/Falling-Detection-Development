@@ -1,0 +1,144 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1779450514.275567   74543 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-22 20:48:35] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_ema/train.csv
+[2026-05-22 20:48:47] train rows=1,208,593 videos=6,022 features=27 data_scope=all
+[2026-05-22 20:48:47] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_ema/val.csv
+[2026-05-22 20:48:51] val rows=345,348 videos=1,720 features=27 data_scope=all
+[2026-05-22 20:48:51] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_ema/test.csv
+[2026-05-22 20:48:52] test rows=173,653 videos=864 features=27 data_scope=all
+[2026-05-22 20:49:01] train windows=153,339 positive=56,331 videos=6,022
+[2026-05-22 20:49:04] val windows=71,606 positive=15,589 videos=1,720
+[2026-05-22 20:49:05] test windows=35,988 positive=7,892 videos=864
+I0000 00:00:1779450548.331750   74543 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+[2026-05-22 20:49:09] model Model: "EMA-kp7-w40_gru"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ pose_sequence (InputLayer)      │ (None, 40, 27)         │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ gru_1 (GRU)                     │ (None, 40, 128)        │        60,288 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ ln_1 (LayerNormalization)       │ (None, 40, 128)        │           256 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ gru_2 (GRU)                     │ (None, 64)             │        37,248 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ head_dense (Dense)              │ (None, 64)             │         4,160 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ head_drop (Dropout)             │ (None, 64)             │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ classifier (Dense)              │ (None, 2)              │           130 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 102,082 (398.76 KB)
+ Trainable params: 102,082 (398.76 KB)
+ Non-trainable params: 0 (0.00 B)
+
+I0000 00:00:1779450553.921053   74644 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-22 20:49:29] epoch 1/100 accuracy=0.7527 loss=0.0559 val_accuracy=0.8739 val_loss=0.0377 learning_rate=0.0010
+[2026-05-22 20:49:44] epoch 2/100 accuracy=0.8050 loss=0.0482 val_accuracy=0.8905 val_loss=0.0406 learning_rate=0.0010
+[2026-05-22 20:49:58] epoch 3/100 accuracy=0.8160 loss=0.0463 val_accuracy=0.8951 val_loss=0.0443 learning_rate=0.0010
+[2026-05-22 20:50:12] epoch 4/100 accuracy=0.8237 loss=0.0448 val_accuracy=0.9012 val_loss=0.0344 learning_rate=0.0010
+[2026-05-22 20:50:26] epoch 5/100 accuracy=0.8305 loss=0.0433 val_accuracy=0.9046 val_loss=0.0342 learning_rate=0.0010
+[2026-05-22 20:50:40] epoch 6/100 accuracy=0.8360 loss=0.0420 val_accuracy=0.8997 val_loss=0.0333 learning_rate=0.0010
+[2026-05-22 20:50:55] epoch 7/100 accuracy=0.8408 loss=0.0411 val_accuracy=0.8894 val_loss=0.0294 learning_rate=0.0010
+[2026-05-22 20:51:09] epoch 8/100 accuracy=0.8421 loss=0.0404 val_accuracy=0.8965 val_loss=0.0292 learning_rate=0.0010
+[2026-05-22 20:51:23] epoch 9/100 accuracy=0.8455 loss=0.0397 val_accuracy=0.9012 val_loss=0.0291 learning_rate=0.0010
+[2026-05-22 20:51:37] epoch 10/100 accuracy=0.8482 loss=0.0393 val_accuracy=0.8905 val_loss=0.0300 learning_rate=0.0010
+[2026-05-22 20:51:52] epoch 11/100 accuracy=0.8484 loss=0.0390 val_accuracy=0.8994 val_loss=0.0290 learning_rate=0.0010
+[2026-05-22 20:52:06] epoch 12/100 accuracy=0.8507 loss=0.0384 val_accuracy=0.8860 val_loss=0.0327 learning_rate=0.0010
+[2026-05-22 20:52:20] epoch 13/100 accuracy=0.8572 loss=0.0370 val_accuracy=0.8852 val_loss=0.0301 learning_rate=0.0005
+[2026-05-22 20:52:34] epoch 14/100 accuracy=0.8583 loss=0.0369 val_accuracy=0.8888 val_loss=0.0294 learning_rate=0.0005
+[2026-05-22 20:52:49] epoch 15/100 accuracy=0.8591 loss=0.0366 val_accuracy=0.8937 val_loss=0.0328 learning_rate=0.0005
+[2026-05-22 20:53:03] epoch 16/100 accuracy=0.8624 loss=0.0357 val_accuracy=0.9013 val_loss=0.0295 learning_rate=0.0003
+[2026-05-22 20:53:17] epoch 17/100 accuracy=0.8631 loss=0.0355 val_accuracy=0.8849 val_loss=0.0306 learning_rate=0.0003
+[2026-05-22 20:53:32] epoch 18/100 accuracy=0.8642 loss=0.0353 val_accuracy=0.8894 val_loss=0.0307 learning_rate=0.0003
+[2026-05-22 20:53:46] epoch 19/100 accuracy=0.8640 loss=0.0351 val_accuracy=0.8868 val_loss=0.0315 learning_rate=0.0001
+[2026-05-22 20:54:01] epoch 20/100 accuracy=0.8648 loss=0.0349 val_accuracy=0.8913 val_loss=0.0296 learning_rate=0.0001
+[2026-05-22 20:54:15] epoch 21/100 accuracy=0.8658 loss=0.0348 val_accuracy=0.8860 val_loss=0.0314 learning_rate=0.0001
+[2026-05-22 20:54:29] epoch 22/100 accuracy=0.8681 loss=0.0345 val_accuracy=0.8943 val_loss=0.0308 learning_rate=0.0001
+[2026-05-22 20:54:44] epoch 23/100 accuracy=0.8672 loss=0.0344 val_accuracy=0.8941 val_loss=0.0312 learning_rate=0.0001
+[2026-05-22 20:54:58] epoch 24/100 accuracy=0.8670 loss=0.0345 val_accuracy=0.8918 val_loss=0.0309 learning_rate=0.0001
+[2026-05-22 20:55:12] epoch 25/100 accuracy=0.8679 loss=0.0344 val_accuracy=0.8891 val_loss=0.0301 learning_rate=0.0000
+[2026-05-22 20:55:27] epoch 26/100 accuracy=0.8682 loss=0.0343 val_accuracy=0.8902 val_loss=0.0293 learning_rate=0.0000
+[2026-05-22 20:55:52] video-level val: videos=1720 f1=0.9070 fall_recall=0.9095 nfall_recall=0.8410 fall_prec=0.9045 nfall_prec=0.8489 min_pr=0.8410 min_consecutive=5
+[2026-05-22 20:55:53] event-level val: videos=1720 f1=0.8998 fall_recall=0.8965 nfall_recall=0.8410 fall_prec=0.9032 nfall_prec=0.8308 min_pr=0.8308 tolerance_windows=2
+[2026-05-22 20:55:53] video-level test: videos=864 f1=0.8895 fall_recall=0.8844 nfall_recall=0.8435 fall_prec=0.8947 nfall_prec=0.8291 min_pr=0.8291 min_consecutive=5
+[2026-05-22 20:55:54] event-level test: videos=864 f1=0.8743 fall_recall=0.8574 nfall_recall=0.8435 fall_prec=0.8918 nfall_prec=0.7973 min_pr=0.7973 tolerance_windows=2
+[2026-05-22 20:55:54] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8489    0.8410    0.8450       648
+           1     0.9045    0.9095    0.9070      1072
+
+    accuracy                         0.8837      1720
+   macro avg     0.8767    0.8753    0.8760      1720
+weighted avg     0.8835    0.8837    0.8836      1720
+
+[2026-05-22 20:55:54] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8291    0.8435    0.8362       345
+           1     0.8947    0.8844    0.8895       519
+
+    accuracy                         0.8681       864
+   macro avg     0.8619    0.8639    0.8629       864
+weighted avg     0.8685    0.8681    0.8682       864
+
+[2026-05-22 20:56:04] tflite export subprocess exit=0
+[2026-05-22 20:56:04]   [tflite] [EMA-kp7-w40]
+[2026-05-22 20:56:04]   [tflite]   Loading model.keras ...
+[2026-05-22 20:56:04]   [tflite]     rebuilding with unroll=True for TFLite compatibility
+[2026-05-22 20:56:04]   [tflite] Saved artifact at '/tmp/tmp05o9ogu0'. The following endpoints are available:
+[2026-05-22 20:56:04]   [tflite] 
+[2026-05-22 20:56:04]   [tflite] * Endpoint 'serve'
+[2026-05-22 20:56:04]   [tflite]   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+[2026-05-22 20:56:04]   [tflite] Output Type:
+[2026-05-22 20:56:04]   [tflite]   TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+[2026-05-22 20:56:04]   [tflite] Captures:
+[2026-05-22 20:56:04]   [tflite]   139134929699088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929702160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929699280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929701584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929702352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929701968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929702544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929703504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929701392: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929702928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929703888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929704080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929701776: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929704656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]     fp32 OK (671 KB)
+[2026-05-22 20:56:04]   [tflite] Saved artifact at '/tmp/tmp_qqmfhjo'. The following endpoints are available:
+[2026-05-22 20:56:04]   [tflite] 
+[2026-05-22 20:56:04]   [tflite] * Endpoint 'serve'
+[2026-05-22 20:56:04]   [tflite]   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+[2026-05-22 20:56:04]   [tflite] Output Type:
+[2026-05-22 20:56:04]   [tflite]   TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+[2026-05-22 20:56:04]   [tflite] Captures:
+[2026-05-22 20:56:04]   [tflite]   139134929699088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929702160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929699280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929701584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929702352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929701968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929702544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929703504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929701392: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929702928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929703888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929704080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929701776: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]   139134929704656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-22 20:56:04]   [tflite]     int8 OK (1201 KB)
+[2026-05-22 20:56:04]   [tflite] 
+[2026-05-22 20:56:04]   [tflite] Done.
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/interpreter.py:457: UserWarning:     Warning: tf.lite.Interpreter is deprecated and is scheduled for deletion in
+    TF 2.20. Please use the LiteRT interpreter from the ai_edge_litert package.
+    See the [migration guide](https://ai.google.dev/edge/litert/migration)
+    for details.
+    
+  warnings.warn(_INTERPRETER_DELETION_WARNING)
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[2026-05-22 20:56:05] done EMA-kp7-w40 val_f1=0.7182 (video=0.9070) test_f1=0.7128 (video=0.8895) test_min_pr=0.8291 threshold=0.350 min_consecutive=5

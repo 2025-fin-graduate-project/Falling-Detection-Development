@@ -1,0 +1,133 @@
+ST Edge AI Core v4.0.0-20500 359356bb0
+Created date          : 2026-05-22 12:25:12
+Parameters            : generate --target stm32n6 --model results/phase44_keras37/P37h64-compat-poc/submodels/conv_submodel.keras --type keras --name conv_submodel --output results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen --workspace results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/workspace --compression lossless --verbosity 1
+
+Exec/report summary (generate)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+model file         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_submodel.keras   
+type               :   keras                                                                                                                                    
+c_name             :   conv_submodel                                                                                                                            
+compression        :   lossless                                                                                                                                 
+options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                                                                           
+optimization       :   balanced                                                                                                                                 
+target/series      :   stm32n6                                                                                                                                  
+workspace dir      :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/workspace    
+output dir         :   /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen              
+model_fmt          :   float                                                                                                                                    
+model_name         :   conv_submodel                                                                                                                            
+model_hash         :   0xdd2c82bf808a5ac853845c923a7e9030                                                                                                       
+params #           :   35,008 items (136.75 KiB)                                                                                                                
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_layer', f32(1x40x45), 7.03 KBytes, activations                                                                                    
+output 1/1         :   'conv1d_1', f32(1x40x64), 10.00 KBytes, activations                                                                                      
+macc               :   1,400,448                                                                                                                                
+weights (ro)       :   140,032 B (136.75 KiB) (1 segment)                                                                                                       
+activations (rw)   :   14,288 B (13.95 KiB) (1 segment) *                                                                                                       
+ram (total)        :   14,288 B (13.95 KiB) = 14,288 + 0 + 0                                                                                                    
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers are allocated in the activations buffer
+
+Model name - conv_submodel
+------ ---------------------------------- ----------------- --------------- --------- ----------------- --- -------- ----------------- -------------------------------- 
+m_id   layer (type,original)              oshape            param/size           macc      connected to   | c_size   c_macc            c_type                           
+------ ---------------------------------- ----------------- --------------- --------- ----------------- --- -------- ----------------- -------------------------------- 
+0      input_layer (Input, InputLayer)    [b:1,h:40,c:45]                                                 |                            
+------ ---------------------------------- ----------------- --------------- --------- ----------------- --- -------- ----------------- -------------------------------- 
+1      conv1d_conv2d (Conv2D, Conv1D)     [b:1,h:40,c:64]   14,464/57,856     576,064       input_layer   |          +2,560(+0.4%)     Conv2D_/Nonlinearity_[0, 1]      
+       conv1d (Nonlinearity, Conv1D)      [b:1,h:40,c:64]                       2,560     conv1d_conv2d   |          -2,560(-100.0%)   
+------ ---------------------------------- ----------------- --------------- --------- ----------------- --- -------- ----------------- -------------------------------- 
+2      conv1d_1_conv2d (Conv2D, Conv1D)   [b:1,h:40,c:64]   20,544/82,176     819,264            conv1d   |          +2,560(+0.3%)     Conv2D_/Nonlinearity_[o][2, 3]   
+       conv1d_1 (Nonlinearity, Conv1D)    [b:1,h:40,c:64]                       2,560   conv1d_1_conv2d   |          -2,560(-100.0%)   
+------ ---------------------------------- ----------------- --------------- --------- ----------------- --- -------- ----------------- -------------------------------- 
+model/c-model: macc=1,400,448/1,400,448  weights=140,032/140,032  activations=--/14,288 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : conv_submodel
+c-name                : conv_submodel
+c-node #              : 4
+c-array #             : 11
+activations size      : 14288 (1 segment)
+weights size          : 140032 (1 segment)
+macc                  : 1400448
+inputs                : ['input_layer_output']
+outputs               : ['conv1d_1_output']
+
+C-Arrays (11)
+------ -------------------------- ------------- ------------------------- ------------- --------- 
+c_id   name (*_array)             item/size     domain/mem-pool           c-type        comment   
+------ -------------------------- ------------- ------------------------- ------------- --------- 
+0      conv1d_1_conv2d_bias       64/256        weights/weights           const float             
+1      conv1d_1_conv2d_output     2560/10240    activations/**default**   float                   
+2      conv1d_1_conv2d_scratch0   320/1280      activations/**default**   float                   
+3      conv1d_1_conv2d_weights    20480/81920   weights/weights           const float             
+4      conv1d_1_output            2560/10240    activations/**default**   float         /output   
+5      conv1d_conv2d_bias         64/256        weights/weights           const float             
+6      conv1d_conv2d_output       2560/10240    activations/**default**   float                   
+7      conv1d_conv2d_scratch0     225/900       activations/**default**   float                   
+8      conv1d_conv2d_weights      14400/57600   weights/weights           const float             
+9      conv1d_output              2560/10240    activations/**default**   float                   
+10     input_layer_output         1800/7200     activations/**default**   float         /input    
+------ -------------------------- ------------- ------------------------- ------------- --------- 
+
+C-Layers (4)
+------ ----------------- ---- --------------- -------- ------- ----------------------------- -------------------- 
+c_id   name (*_layer)    id   layer_type      macc     rom     tensors                       shape (array id)     
+------ ----------------- ---- --------------- -------- ------- ----------------------------- -------------------- 
+0      conv1d_conv2d     1    Conv2D          576064   57856   I: input_layer_output         f32(1x40x45) (10)    
+                                                               S: conv1d_conv2d_scratch0                          
+                                                               W: conv1d_conv2d_weights      f32(64x5x1x45) (8)   
+                                                               W: conv1d_conv2d_bias         f32(64) (5)          
+                                                               O: conv1d_conv2d_output       f32(1x40x64) (6)     
+------ ----------------- ---- --------------- -------- ------- ----------------------------- -------------------- 
+1      conv1d            1    Nonlinearity    2560     0       I: conv1d_conv2d_output       f32(1x40x64) (6)     
+                                                               O: conv1d_output              f32(1x40x64) (9)     
+------ ----------------- ---- --------------- -------- ------- ----------------------------- -------------------- 
+2      conv1d_1_conv2d   2    Conv2D          819264   82176   I: conv1d_output              f32(1x40x64) (9)     
+                                                               S: conv1d_1_conv2d_scratch0                        
+                                                               W: conv1d_1_conv2d_weights    f32(64x5x1x64) (3)   
+                                                               W: conv1d_1_conv2d_bias       f32(64) (0)          
+                                                               O: conv1d_1_conv2d_output     f32(1x40x64) (1)     
+------ ----------------- ---- --------------- -------- ------- ----------------------------- -------------------- 
+3      conv1d_1          2    Nonlinearity    2560     0       I: conv1d_1_conv2d_output     f32(1x40x64) (1)     
+                                                               O: conv1d_1_output            f32(1x40x64) (4)     
+------ ----------------- ---- --------------- -------- ------- ----------------------------- -------------------- 
+
+
+
+Number of operations per c-layer
+------- ------ --------------------------- ----------- -------------- 
+c_id    m_id   name (type)                         #op           type 
+------- ------ --------------------------- ----------- -------------- 
+0       1      conv1d_conv2d (Conv2D)          576,064   smul_f32_f32 
+1       1      conv1d (Nonlinearity)             2,560     op_f32_f32 
+2       2      conv1d_1_conv2d (Conv2D)        819,264   smul_f32_f32 
+3       2      conv1d_1 (Nonlinearity)           2,560     op_f32_f32 
+------- ------ --------------------------- ----------- -------------- 
+total                                        1,400,448 
+
+Number of operation types
+---------------- ----------- ----------- 
+operation type             #           % 
+---------------- ----------- ----------- 
+smul_f32_f32       1,395,328       99.6% 
+op_f32_f32             5,120        0.4% 
+
+Complexity report (model)
+------ ----------------- ------------------------- ------------------------- -------- 
+m_id   name              c_macc                    c_rom                     c_id     
+------ ----------------- ------------------------- ------------------------- -------- 
+1      conv1d_conv2d     |||||||||||       41.3%   |||||||||||       41.3%   [0, 1]   
+2      conv1d_1_conv2d   ||||||||||||||||  58.7%   ||||||||||||||||  58.7%   [2, 3]   
+------ ----------------- ------------------------- ------------------------- -------- 
+macc=1,400,448 weights=140,032 act=14,288 ram_io=0
+
+Generated files (5)
+----------------------------------------------------------------------------------------------------------------------------------------------------- 
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/conv_submodel_data.h      
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/conv_submodel_data.c      
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/conv_submodel.h           
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/conv_submodel.c           
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/conv_submodel_details.h   

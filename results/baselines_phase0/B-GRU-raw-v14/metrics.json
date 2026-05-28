@@ -1,0 +1,307 @@
+{
+  "experiment_id": "B-GRU-raw-v14",
+  "model_type": "tcn",
+  "preprocessing": "raw",
+  "feature_set": "kp12",
+  "data_scope": "no_by",
+  "threshold_selection": {
+    "threshold": 0.49999999999999994,
+    "sweep": [
+      {
+        "threshold": 0.05,
+        "precision": 0.4725727188205605,
+        "nfall_precision": 0.9911858509712961,
+        "recall": 0.9915282577193179,
+        "f1": 0.6400777160127368,
+        "accuracy": 0.63550737839315
+      },
+      {
+        "threshold": 0.1,
+        "precision": 0.5084848484848485,
+        "nfall_precision": 0.9840415019762846,
+        "recall": 0.9819975476535503,
+        "f1": 0.6700258594463037,
+        "accuracy": 0.6838404080889051
+      },
+      {
+        "threshold": 0.15,
+        "precision": 0.5387570481442469,
+        "nfall_precision": 0.9755881832655228,
+        "recall": 0.9692341990859435,
+        "f1": 0.692552767821585,
+        "accuracy": 0.718710147567863
+      },
+      {
+        "threshold": 0.2,
+        "precision": 0.5668104878858281,
+        "nfall_precision": 0.9651050080775444,
+        "recall": 0.9518448333519117,
+        "f1": 0.7105175569978366,
+        "accuracy": 0.7464747677172527
+      },
+      {
+        "threshold": 0.25,
+        "precision": 0.5914388641661369,
+        "nfall_precision": 0.9549969897652016,
+        "recall": 0.9333407646862111,
+        "f1": 0.7240574195780007,
+        "accuracy": 0.7674621971215158
+      },
+      {
+        "threshold": 0.3,
+        "precision": 0.6179314496406938,
+        "nfall_precision": 0.9463812652325951,
+        "recall": 0.9153940474863449,
+        "f1": 0.7378091237842815,
+        "accuracy": 0.7873383129896155
+      },
+      {
+        "threshold": 0.35,
+        "precision": 0.6477098311656838,
+        "nfall_precision": 0.9367449887163148,
+        "recall": 0.8937688106119719,
+        "f1": 0.7511007025761124,
+        "accuracy": 0.8063763891419202
+      },
+      {
+        "threshold": 0.39999999999999997,
+        "precision": 0.6828135368281354,
+        "nfall_precision": 0.9223478395539725,
+        "recall": 0.8602719875153272,
+        "f1": 0.76133869336819,
+        "accuracy": 0.8237019493532519
+      },
+      {
+        "threshold": 0.44999999999999996,
+        "precision": 0.739528994682198,
+        "nfall_precision": 0.9049651444017641,
+        "recall": 0.8138446104113254,
+        "f1": 0.7749091198556531,
+        "accuracy": 0.8454545454545455
+      },
+      {
+        "threshold": 0.49999999999999994,
+        "precision": 0.7974734890189489,
+        "nfall_precision": 0.8889272712778679,
+        "recall": 0.7670270872812396,
+        "f1": 0.7819540327850223,
+        "accuracy": 0.8601748952450355
+      },
+      {
+        "threshold": 0.5499999999999999,
+        "precision": 0.8312488095993905,
+        "nfall_precision": 0.876108229643067,
+        "recall": 0.7297402742169212,
+        "f1": 0.7771940759208145,
+        "accuracy": 0.8632355620331572
+      },
+      {
+        "threshold": 0.6,
+        "precision": 0.857201674329239,
+        "nfall_precision": 0.8648212912667114,
+        "recall": 0.6962434511202764,
+        "f1": 0.7683838228509918,
+        "accuracy": 0.8627983239205684
+      },
+      {
+        "threshold": 0.65,
+        "precision": 0.87915718376037,
+        "nfall_precision": 0.8554120526303036,
+        "recall": 0.6674283803366403,
+        "f1": 0.7587998605962678,
+        "accuracy": 0.8613044270358899
+      },
+      {
+        "threshold": 0.7,
+        "precision": 0.898593983190637,
+        "nfall_precision": 0.8457743305106857,
+        "recall": 0.6376100769145023,
+        "f1": 0.7459329051608907,
+        "accuracy": 0.8580251411914739
+      },
+      {
+        "threshold": 0.75,
+        "precision": 0.9150935481164527,
+        "nfall_precision": 0.8362849363524237,
+        "recall": 0.6079032437855312,
+        "f1": 0.7305180670439704,
+        "accuracy": 0.8533977044999089
+      },
+      {
+        "threshold": 0.7999999999999999,
+        "precision": 0.9320519761775853,
+        "nfall_precision": 0.8262189554419284,
+        "recall": 0.5756883290603054,
+        "f1": 0.7117557883131201,
+        "accuracy": 0.847586081253416
+      },
+      {
+        "threshold": 0.85,
+        "precision": 0.9481270837419101,
+        "nfall_precision": 0.814888570661416,
+        "recall": 0.538903132315238,
+        "f1": 0.6872068230277185,
+        "accuracy": 0.8396429222080525
+      },
+      {
+        "threshold": 0.9,
+        "precision": 0.9599440077527727,
+        "nfall_precision": 0.8020524965462799,
+        "recall": 0.49687883179132764,
+        "f1": 0.6548165558779243,
+        "accuracy": 0.8287666241574058
+      },
+      {
+        "threshold": 0.95,
+        "precision": 0.9742397587333501,
+        "nfall_precision": 0.7828986618938037,
+        "recall": 0.43211459146137554,
+        "f1": 0.5986872586872587,
+        "accuracy": 0.8106394607396611
+      }
+    ]
+  },
+  "metrics": {
+    "train_float": {
+      "split": "train",
+      "threshold": 0.49999999999999994,
+      "accuracy": 0.8603197424557346,
+      "precision": 0.9091512055211974,
+      "recall": 0.7983785911058638,
+      "f1": 0.8501718213058419,
+      "auc_roc": 0.9483184799435259,
+      "pr_auc": 0.9512202570791247,
+      "positive_support": 63525,
+      "negative_support": 64453,
+      "confusion_matrix": [
+        [
+          59385,
+          5068
+        ],
+        [
+          12808,
+          50717
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.8226    0.9214    0.8692     64453\n           1     0.9092    0.7984    0.8502     63525\n\n    accuracy                         0.8603    127978\n   macro avg     0.8659    0.8599    0.8597    127978\nweighted avg     0.8656    0.8603    0.8597    127978\n",
+      "by_direction_recall": {
+        "FY": 0.7891093781603254,
+        "SY": 0.8200546562959848
+      }
+    },
+    "val_float": {
+      "split": "val",
+      "threshold": 0.49999999999999994,
+      "accuracy": 0.8601748952450355,
+      "precision": 0.7974734890189489,
+      "recall": 0.7670270872812396,
+      "f1": 0.7819540327850223,
+      "auc_roc": 0.9291101392688387,
+      "pr_auc": 0.8839080188201274,
+      "positive_support": 17942,
+      "negative_support": 36948,
+      "confusion_matrix": [
+        [
+          33453,
+          3495
+        ],
+        [
+          4180,
+          13762
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.8889    0.9054    0.8971     36948\n           1     0.7975    0.7670    0.7820     17942\n\n    accuracy                         0.8602     54890\n   macro avg     0.8432    0.8362    0.8395     54890\nweighted avg     0.8590    0.8602    0.8595     54890\n",
+      "by_direction_recall": {
+        "FY": 0.7582768248903071,
+        "SY": 0.7873127427408915
+      }
+    },
+    "test_float": {
+      "split": "test",
+      "threshold": 0.49999999999999994,
+      "accuracy": 0.8419830151702112,
+      "precision": 0.7558810474922326,
+      "recall": 0.7597590898951595,
+      "f1": 0.7578151073534319,
+      "auc_roc": 0.9169351473930085,
+      "pr_auc": 0.865664733581568,
+      "positive_support": 8966,
+      "negative_support": 18588,
+      "confusion_matrix": [
+        [
+          16388,
+          2200
+        ],
+        [
+          2154,
+          6812
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.8838    0.8816    0.8827     18588\n           1     0.7559    0.7598    0.7578      8966\n\n    accuracy                         0.8420     27554\n   macro avg     0.8199    0.8207    0.8203     27554\nweighted avg     0.8422    0.8420    0.8421     27554\n",
+      "by_direction_recall": {
+        "FY": 0.750843915769169,
+        "SY": 0.7799635701275045
+      }
+    },
+    "val_video": {
+      "split": "val_video",
+      "threshold": 0.49999999999999994,
+      "accuracy": 0.8990536277602523,
+      "precision": 0.8932584269662921,
+      "recall": 0.9244186046511628,
+      "f1": 0.9085714285714286,
+      "auc_roc": 0.9642867882919006,
+      "pr_auc": 0.9665741006207551,
+      "positive_support": 1376,
+      "negative_support": 1160,
+      "confusion_matrix": [
+        [
+          1008,
+          152
+        ],
+        [
+          104,
+          1272
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9065    0.8690    0.8873      1160\n           1     0.8933    0.9244    0.9086      1376\n\n    accuracy                         0.8991      2536\n   macro avg     0.8999    0.8967    0.8979      2536\nweighted avg     0.8993    0.8991    0.8989      2536\n"
+    },
+    "test_video": {
+      "split": "test_video",
+      "threshold": 0.49999999999999994,
+      "accuracy": 0.8727415553809897,
+      "precision": 0.8470906630581867,
+      "recall": 0.9274074074074075,
+      "f1": 0.8854314002828855,
+      "auc_roc": 0.956251703208225,
+      "pr_auc": 0.9590575926378287,
+      "positive_support": 675,
+      "negative_support": 598,
+      "confusion_matrix": [
+        [
+          485,
+          113
+        ],
+        [
+          49,
+          626
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9082    0.8110    0.8569       598\n           1     0.8471    0.9274    0.8854       675\n\n    accuracy                         0.8727      1273\n   macro avg     0.8777    0.8692    0.8712      1273\nweighted avg     0.8758    0.8727    0.8720      1273\n"
+    }
+  },
+  "export_paths": {
+    "model_fp32_tflite": "/home/min/Workspace/Graduate-Project/Falling-Model-Development/results/baselines_phase0/B-GRU-raw-v14/model_fp32.tflite",
+    "int8_export_error": "RuntimeError('tensorflow/lite/kernels/read_variable.cc:67 variable != nullptr was not true.Node number 49 (READ_VARIABLE) failed to invoke.')"
+  },
+  "split_sizes": {
+    "train": 127978,
+    "val": 54890,
+    "test": 27554
+  },
+  "video_counts": {
+    "train": 8882,
+    "val": 2536,
+    "test": 1273
+  }
+}

@@ -1,0 +1,27 @@
+[2026-05-16 14:56:37] === Phase 32: GRU × val_loss 심화 탐색 ===
+[2026-05-16 14:56:37] 기준: P27-vm0(GRU val_vm 0.9241) / P30-gru(GRU val_loss 0.9087)
+[2026-05-16 14:56:37] GPU ready: 17MiB
+[2026-05-16 14:56:37] START P32-ce-42
+[OK] P32-ce-42 event=0.9138 video=0.9138
+  CM: TN=212 FP=20 FN=17 TP=604  fall_pr=0.9679 nfall_pr=0.9258 fall_rc=0.9726
+[2026-05-16 15:03:28] GPU ready: 17MiB
+[2026-05-16 15:03:28] START P32-ce-1
+[OK] P32-ce-1 event=0.8941 video=0.8979
+  CM: TN=211 FP=21 FN=25 TP=596  fall_pr=0.9660 nfall_pr=0.8941 fall_rc=0.9597
+[2026-05-16 15:11:14] GPU ready: 17MiB
+[2026-05-16 15:11:14] START P32-fl-1
+[OK] P32-fl-1 event=0.9110 video=0.9149
+  CM: TN=215 FP=17 FN=21 TP=600  fall_pr=0.9724 nfall_pr=0.9110 fall_rc=0.9662
+[2026-05-16 15:19:10] GPU ready: 17MiB
+[2026-05-16 15:19:10] START P32-fl-2
+[OK] P32-fl-2 event=0.8903 video=0.8979
+  CM: TN=211 FP=21 FN=26 TP=595  fall_pr=0.9659 nfall_pr=0.8903 fall_rc=0.9581
+[2026-05-16 15:25:52] GPU ready: 17MiB
+[2026-05-16 15:25:52] START P32-fl-3
+[OK] P32-fl-3 event=0.8921 video=0.8996
+  CM: TN=215 FP=17 FN=26 TP=595  fall_pr=0.9722 nfall_pr=0.8921 fall_rc=0.9581
+[2026-05-16 15:32:32] GPU ready: 17MiB
+[2026-05-16 15:32:32] START P32-256-42
+[OK] P32-256-42 event=0.8966 video=0.8966
+  CM: TN=208 FP=24 FN=19 TP=602  fall_pr=0.9617 nfall_pr=0.9163 fall_rc=0.9694
+[2026-05-16 15:42:32] === Phase 32 done ===

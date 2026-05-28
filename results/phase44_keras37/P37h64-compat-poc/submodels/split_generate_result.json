@@ -1,0 +1,36 @@
+{
+  "conv_generate": {
+    "ok": true,
+    "returncode": 0,
+    "stdout_tail": "pat-poc/submodels/conv_gen/conv_submodel.h\n\nPASS:  74%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d  | 127/171 [00:03<00:00, 76.60it/s]\n                                                       \n /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/conv_submodel.c\n\nPASS:  74%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d  | 127/171 [00:03<00:00, 76.60it/s]\n                                                       \n /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/conv_submodel_details.h\n\nPASS:  74%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d  | 127/171 [00:03<00:00, 76.60it/s]\n                                                       \nCreating txt report file /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase44_keras37/P37h64-compat-poc/submodels/conv_gen/conv_submodel_generate_report.txt\n\nPASS:  74%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d  | 127/171 [00:03<00:00, 76.60it/s]\n                                                       \nelapsed time (GENERATE): 6.901s\n",
+    "stderr_tail": "",
+    "macc": 1400448,
+    "weights_kib": 136.75
+  },
+  "gru_stateful_generate": {
+    "ok": false,
+    "returncode": 255,
+    "stdout_tail": "ST Edge AI Core v4.0.0-20500 359356bb0\n\nPASS:   0%|          | 0/171 [00:00<?, ?it/s]\n                                             \nINTERNAL ERROR: 'GRU' object has no attribute 'get_input_shape_at'\n",
+    "stderr_tail": ""
+  },
+  "numerical_max_error": 0.0,
+  "numerical_ok": true,
+  "full_model_generate": {
+    "ok": true,
+    "macc": 2760992,
+    "weights_kib": 275.38,
+    "activations_kib": 21.5
+  },
+  "full_model_allocate_states": {
+    "ok": true,
+    "macc": 2760992,
+    "weights_kib": 275.38
+  },
+  "gru_window_generate": {
+    "ok": true,
+    "macc": 1359360,
+    "weights_kib": 134.25,
+    "activations_kib": 21.5
+  },
+  "notes": "STedgeAI 4.0 bug: stateful GRU submodel fails with 'GRU object has no attribute get_input_shape_at'. Workaround: generate full model with --allocate-states, or generate non-stateful GRU window-mode + manage GRU state manually in C code. Numerical split (max_err=0.00) confirmed correct."
+}

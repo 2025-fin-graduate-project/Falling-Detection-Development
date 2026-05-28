@@ -1,0 +1,15 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778828716.353001    3552 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+threshold=0.525  min_consecutive=3  feature_set=kp7  target_steps=40
+loading model ...
+I0000 00:00:1778828718.133758    3552 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6073 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+loading val split: dataset/splits_v2_filtered/val.csv
+  predicting 74251 windows ...
+I0000 00:00:1778828727.223542    3620 cuda_dnn.cc:461] Loaded cuDNN version 92200
+  val: total_videos=1811  FP=50  FN=65  [from metrics.json min_pr=0.8848]
+loading test split: dataset/splits_v2_filtered/test.csv
+  predicting 37351 windows ...
+  test: total_videos=911  FP=19  FN=28  [from metrics.json min_pr=0.9187]
+hard_negative_windows: 815 windows from 50 val FP videos
+done. outputs in /home/min/Workspace/Graduate-Project/Falling-Model-Development/results/phase10_error_analysis/P9O-v01

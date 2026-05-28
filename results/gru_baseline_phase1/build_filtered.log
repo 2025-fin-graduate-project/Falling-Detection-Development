@@ -1,0 +1,16 @@
+Source : /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2
+Output : /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered
+
+[train]
+  Loading train.csv ... 1,274,014 rows, 6,344 videos
+    → /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/train.csv  (normal=1,177,257  falling=96,757  fallen=422,135)
+
+[val]
+  Loading val.csv ... 363,918 rows, 1,811 videos
+    → /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/val.csv  (normal=336,309  falling=27,609  fallen=119,966)
+
+[test]
+  Loading test.csv ... 182,782 rows, 911 videos
+    → /home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/test.csv  (normal=168,903  falling=13,879  fallen=60,493)
+
+Done.

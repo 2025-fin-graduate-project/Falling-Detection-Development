@@ -1,0 +1,307 @@
+{
+  "experiment_id": "B-GRU-raw-v8",
+  "model_type": "gru",
+  "preprocessing": "raw",
+  "feature_set": "kp12",
+  "data_scope": "no_by",
+  "threshold_selection": {
+    "threshold": 0.5499999999999999,
+    "sweep": [
+      {
+        "threshold": 0.05,
+        "precision": 0.48964771750880015,
+        "nfall_precision": 0.9853277337727925,
+        "recall": 0.9846170995429718,
+        "f1": 0.6540419466503767,
+        "accuracy": 0.6595190380761523
+      },
+      {
+        "threshold": 0.1,
+        "precision": 0.5170413990007138,
+        "nfall_precision": 0.9738079563622684,
+        "recall": 0.9689555233530264,
+        "f1": 0.6742815033161386,
+        "accuracy": 0.694006194206595
+      },
+      {
+        "threshold": 0.15,
+        "precision": 0.5451998089476198,
+        "nfall_precision": 0.9650840962316373,
+        "recall": 0.9542971798015829,
+        "f1": 0.6939428941982289,
+        "accuracy": 0.7248496993987976
+      },
+      {
+        "threshold": 0.2,
+        "precision": 0.5706264375591936,
+        "nfall_precision": 0.9576719576719577,
+        "recall": 0.9402519228625571,
+        "f1": 0.7102260767061003,
+        "accuracy": 0.7492075059209328
+      },
+      {
+        "threshold": 0.25,
+        "precision": 0.5979195261142816,
+        "nfall_precision": 0.9489780914571386,
+        "recall": 0.9226396165421915,
+        "f1": 0.7256070833698606,
+        "accuracy": 0.7719074512661687
+      },
+      {
+        "threshold": 0.3,
+        "precision": 0.6247163352436632,
+        "nfall_precision": 0.9411581461354747,
+        "recall": 0.9052502508081596,
+        "f1": 0.7392640131084863,
+        "accuracy": 0.7912734560029149
+      },
+      {
+        "threshold": 0.35,
+        "precision": 0.6544014520254104,
+        "nfall_precision": 0.9321978595666928,
+        "recall": 0.884182365399621,
+        "f1": 0.7521335103356723,
+        "accuracy": 0.8095099289488067
+      },
+      {
+        "threshold": 0.39999999999999997,
+        "precision": 0.6858765145079805,
+        "nfall_precision": 0.9200258278756572,
+        "recall": 0.8550328837364842,
+        "f1": 0.7611699620432162,
+        "accuracy": 0.824612862087812
+      },
+      {
+        "threshold": 0.44999999999999996,
+        "precision": 0.7263762143067413,
+        "nfall_precision": 0.9090935435261389,
+        "recall": 0.8251588451677628,
+        "f1": 0.7726228994885711,
+        "accuracy": 0.8412461286208781
+      },
+      {
+        "threshold": 0.49999999999999994,
+        "precision": 0.7595896997542473,
+        "nfall_precision": 0.8970474400088466,
+        "recall": 0.7924423141232861,
+        "f1": 0.7756683033278778,
+        "accuracy": 0.8501730734195664
+      },
+      {
+        "threshold": 0.5499999999999999,
+        "precision": 0.7937089365660794,
+        "nfall_precision": 0.8861531930699637,
+        "recall": 0.7608404860104782,
+        "f1": 0.776927235992146,
+        "accuracy": 0.8571871014756787
+      },
+      {
+        "threshold": 0.6,
+        "precision": 0.8220801203686289,
+        "nfall_precision": 0.8759855158067748,
+        "recall": 0.7308549771485899,
+        "f1": 0.7737880978373115,
+        "accuracy": 0.8603206412825651
+      },
+      {
+        "threshold": 0.65,
+        "precision": 0.8468384074941452,
+        "nfall_precision": 0.8676680435598949,
+        "recall": 0.7053840151599599,
+        "f1": 0.7696658254021346,
+        "accuracy": 0.8619967207141556
+      },
+      {
+        "threshold": 0.7,
+        "precision": 0.8658423932352732,
+        "nfall_precision": 0.8589558272288508,
+        "recall": 0.6791327611191618,
+        "f1": 0.7612056848352334,
+        "accuracy": 0.8607214428857716
+      },
+      {
+        "threshold": 0.75,
+        "precision": 0.8852981338188439,
+        "nfall_precision": 0.8496211757936127,
+        "recall": 0.6504291606286925,
+        "f1": 0.7499036113610076,
+        "accuracy": 0.8581891054836946
+      },
+      {
+        "threshold": 0.7999999999999999,
+        "precision": 0.9066189041765041,
+        "nfall_precision": 0.8402609899781726,
+        "recall": 0.6206665923531379,
+        "f1": 0.7368734491315136,
+        "accuracy": 0.8551102204408818
+      },
+      {
+        "threshold": 0.85,
+        "precision": 0.9256577785625993,
+        "nfall_precision": 0.8288035993021761,
+        "recall": 0.5843272767807379,
+        "f1": 0.7164138308049747,
+        "accuracy": 0.8487884860630351
+      },
+      {
+        "threshold": 0.9,
+        "precision": 0.9482658399534973,
+        "nfall_precision": 0.817043618739903,
+        "recall": 0.5455356147586669,
+        "f1": 0.6926125106142089,
+        "accuracy": 0.8417198032428493
+      },
+      {
+        "threshold": 0.95,
+        "precision": 0.9659639877031181,
+        "nfall_precision": 0.8002708488052073,
+        "recall": 0.4903578196410657,
+        "f1": 0.6504990757855823,
+        "accuracy": 0.8277646201493897
+      }
+    ]
+  },
+  "metrics": {
+    "train_float": {
+      "split": "train",
+      "threshold": 0.5499999999999999,
+      "accuracy": 0.8735954617199831,
+      "precision": 0.9200944032366823,
+      "recall": 0.8162298307752853,
+      "f1": 0.8650555977277088,
+      "auc_roc": 0.9600944308539555,
+      "pr_auc": 0.9620463574195383,
+      "positive_support": 63525,
+      "negative_support": 64453,
+      "confusion_matrix": [
+        [
+          59950,
+          4503
+        ],
+        [
+          11674,
+          51851
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.8370    0.9301    0.8811     64453\n           1     0.9201    0.8162    0.8651     63525\n\n    accuracy                         0.8736    127978\n   macro avg     0.8786    0.8732    0.8731    127978\nweighted avg     0.8783    0.8736    0.8731    127978\n",
+      "by_direction_recall": {
+        "FY": 0.8047958289322875,
+        "SY": 0.8429682573050242
+      }
+    },
+    "val_float": {
+      "split": "val",
+      "threshold": 0.5499999999999999,
+      "accuracy": 0.8571871014756787,
+      "precision": 0.7937089365660794,
+      "recall": 0.7608404860104782,
+      "f1": 0.776927235992146,
+      "auc_roc": 0.9264325465282882,
+      "pr_auc": 0.882005551597182,
+      "positive_support": 17942,
+      "negative_support": 36948,
+      "confusion_matrix": [
+        [
+          33400,
+          3548
+        ],
+        [
+          4291,
+          13651
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.8862    0.9040    0.8950     36948\n           1     0.7937    0.7608    0.7769     17942\n\n    accuracy                         0.8572     54890\n   macro avg     0.8399    0.8324    0.8360     54890\nweighted avg     0.8559    0.8572    0.8564     54890\n",
+      "by_direction_recall": {
+        "FY": 0.7534104507379338,
+        "SY": 0.7780654706861476
+      }
+    },
+    "test_float": {
+      "split": "test",
+      "threshold": 0.5499999999999999,
+      "accuracy": 0.8457937141612833,
+      "precision": 0.7681637293916999,
+      "recall": 0.7535132723622574,
+      "f1": 0.7607679747761951,
+      "auc_roc": 0.9149717999533516,
+      "pr_auc": 0.8659277872454236,
+      "positive_support": 8966,
+      "negative_support": 18588,
+      "confusion_matrix": [
+        [
+          16549,
+          2039
+        ],
+        [
+          2210,
+          6756
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.8822    0.8903    0.8862     18588\n           1     0.7682    0.7535    0.7608      8966\n\n    accuracy                         0.8458     27554\n   macro avg     0.8252    0.8219    0.8235     27554\nweighted avg     0.8451    0.8458    0.8454     27554\n",
+      "by_direction_recall": {
+        "FY": 0.7452178106413759,
+        "SY": 0.7723132969034608
+      }
+    },
+    "val_video": {
+      "split": "val_video",
+      "threshold": 0.5499999999999999,
+      "accuracy": 0.8927444794952681,
+      "precision": 0.8865546218487395,
+      "recall": 0.9200581395348837,
+      "f1": 0.9029957203994294,
+      "auc_roc": 0.9628874924819566,
+      "pr_auc": 0.9651676678322771,
+      "positive_support": 1376,
+      "negative_support": 1160,
+      "confusion_matrix": [
+        [
+          998,
+          162
+        ],
+        [
+          110,
+          1266
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9007    0.8603    0.8801      1160\n           1     0.8866    0.9201    0.9030      1376\n\n    accuracy                         0.8927      2536\n   macro avg     0.8936    0.8902    0.8915      2536\nweighted avg     0.8930    0.8927    0.8925      2536\n"
+    },
+    "test_video": {
+      "split": "test_video",
+      "threshold": 0.5499999999999999,
+      "accuracy": 0.8813825608798115,
+      "precision": 0.8608815426997245,
+      "recall": 0.9259259259259259,
+      "f1": 0.8922198429693077,
+      "auc_roc": 0.9531896444939923,
+      "pr_auc": 0.955321550932996,
+      "positive_support": 675,
+      "negative_support": 598,
+      "confusion_matrix": [
+        [
+          497,
+          101
+        ],
+        [
+          50,
+          625
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           0     0.9086    0.8311    0.8681       598\n           1     0.8609    0.9259    0.8922       675\n\n    accuracy                         0.8814      1273\n   macro avg     0.8847    0.8785    0.8802      1273\nweighted avg     0.8833    0.8814    0.8809      1273\n"
+    }
+  },
+  "export_paths": {
+    "fp32_export_error": "ValueError('Input 0 of node B-GRU-raw-v8_gru_1/gru_1_1/AssignVariableOp was passed int64 from B-GRU-raw-v8_gru_1/gru_1_1/ReadVariableOp/resource:0 incompatible with expected resource.')",
+    "int8_export_error": "ValueError('Input 0 of node B-GRU-raw-v8_gru_1/gru_1_1/AssignVariableOp was passed int64 from B-GRU-raw-v8_gru_1/gru_1_1/ReadVariableOp/resource:0 incompatible with expected resource.')"
+  },
+  "split_sizes": {
+    "train": 127978,
+    "val": 54890,
+    "test": 27554
+  },
+  "video_counts": {
+    "train": 8882,
+    "val": 2536,
+    "test": 1273
+  }
+}

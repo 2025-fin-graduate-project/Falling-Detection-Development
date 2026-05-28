@@ -1,0 +1,661 @@
+[2026-05-16 17:25:35] === Phase 34: Augmentation × Focal Alpha 탐색 ===
+[2026-05-16 17:25:35] 기준: P27-vm0(GRU focal α=0.25 + val_vm + seed=42) = 0.9241
+[2026-05-16 17:25:35] 목표: FN 18→≤16 (FP 여유 충분: 현재 FP=13)
+[2026-05-16 17:25:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:26:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:27:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:28:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:29:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:30:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:31:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:32:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:33:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:34:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:35:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:36:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:37:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:38:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:39:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:40:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:41:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:42:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:43:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:44:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:45:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:46:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:47:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:48:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:49:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:50:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:51:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:52:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:53:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:54:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:55:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:56:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:57:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:58:35] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 17:59:35] GPU ready: 17MiB
+[2026-05-16 17:59:35] START P34-a35
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778921976.441321  257617 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 17:59:37] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 17:59:49] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 17:59:49] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 17:59:53] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 17:59:53] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 17:59:55] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 18:00:08] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 18:00:12] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 18:00:13] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778922017.794051  257617 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 708 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778922018.800872  257617 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778922029.977995  257617 bfc_allocator.cc:502] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.42GiB (rounded to 1525608192)requested by op _EagerConst
+If the cause is memory fragmentation maybe the environment variable 'TF_GPU_ALLOCATOR=cuda_malloc_async' will improve the situation. 
+Current allocation summary follows.
+Current allocation summary follows.
+I0000 00:00:1778922029.982466  257617 bfc_allocator.cc:1049] BFCAllocator dump for GPU_0_bfc
+I0000 00:00:1778922029.982469  257617 bfc_allocator.cc:1056] Bin (256): 	Total Chunks: 38, Chunks in use: 38. 9.5KiB allocated for chunks. 9.5KiB in use in bin. 2.4KiB client-requested in use in bin.
+I0000 00:00:1778922029.982473  257617 bfc_allocator.cc:1056] Bin (512): 	Total Chunks: 3, Chunks in use: 3. 1.5KiB allocated for chunks. 1.5KiB in use in bin. 1.5KiB client-requested in use in bin.
+I0000 00:00:1778922029.982475  257617 bfc_allocator.cc:1056] Bin (1024): 	Total Chunks: 2, Chunks in use: 2. 2.8KiB allocated for chunks. 2.8KiB in use in bin. 2.5KiB client-requested in use in bin.
+I0000 00:00:1778922029.982478  257617 bfc_allocator.cc:1056] Bin (2048): 	Total Chunks: 1, Chunks in use: 1. 3.0KiB allocated for chunks. 3.0KiB in use in bin. 3.0KiB client-requested in use in bin.
+I0000 00:00:1778922029.982480  257617 bfc_allocator.cc:1056] Bin (4096): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982483  257617 bfc_allocator.cc:1056] Bin (8192): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982484  257617 bfc_allocator.cc:1056] Bin (16384): 	Total Chunks: 1, Chunks in use: 1. 16.0KiB allocated for chunks. 16.0KiB in use in bin. 16.0KiB client-requested in use in bin.
+I0000 00:00:1778922029.982487  257617 bfc_allocator.cc:1056] Bin (32768): 	Total Chunks: 3, Chunks in use: 2. 117.2KiB allocated for chunks. 81.8KiB in use in bin. 81.8KiB client-requested in use in bin.
+I0000 00:00:1778922029.982489  257617 bfc_allocator.cc:1056] Bin (65536): 	Total Chunks: 3, Chunks in use: 3. 258.5KiB allocated for chunks. 258.5KiB in use in bin. 240.0KiB client-requested in use in bin.
+I0000 00:00:1778922029.982492  257617 bfc_allocator.cc:1056] Bin (131072): 	Total Chunks: 2, Chunks in use: 1. 368.0KiB allocated for chunks. 192.0KiB in use in bin. 192.0KiB client-requested in use in bin.
+I0000 00:00:1778922029.982494  257617 bfc_allocator.cc:1056] Bin (262144): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982496  257617 bfc_allocator.cc:1056] Bin (524288): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982498  257617 bfc_allocator.cc:1056] Bin (1048576): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982500  257617 bfc_allocator.cc:1056] Bin (2097152): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982502  257617 bfc_allocator.cc:1056] Bin (4194304): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982504  257617 bfc_allocator.cc:1056] Bin (8388608): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982506  257617 bfc_allocator.cc:1056] Bin (16777216): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982508  257617 bfc_allocator.cc:1056] Bin (33554432): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982510  257617 bfc_allocator.cc:1056] Bin (67108864): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982512  257617 bfc_allocator.cc:1056] Bin (134217728): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982514  257617 bfc_allocator.cc:1056] Bin (268435456): 	Total Chunks: 1, Chunks in use: 0. 707.62MiB allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922029.982516  257617 bfc_allocator.cc:1072] Bin for 1.42GiB was 256.00MiB, Chunk State: 
+I0000 00:00:1778922029.982518  257617 bfc_allocator.cc:1078]   Size: 707.62MiB | Requested Size: 0B | in_use: 0 | bin_num: 20, prev:   Size: 96.0KiB | Requested Size: 96.0KiB | in_use: 1 | bin_num: -1
+I0000 00:00:1778922029.982522  257617 bfc_allocator.cc:1085] Next region of size 742785024
+I0000 00:00:1778922029.982525  257617 bfc_allocator.cc:1105] InUse at 768b12000000 of size 1280 next 1
+I0000 00:00:1778922029.982527  257617 bfc_allocator.cc:1105] InUse at 768b12000500 of size 256 next 2
+I0000 00:00:1778922029.982529  257617 bfc_allocator.cc:1105] InUse at 768b12000600 of size 256 next 3
+I0000 00:00:1778922029.982530  257617 bfc_allocator.cc:1105] InUse at 768b12000700 of size 256 next 4
+I0000 00:00:1778922029.982531  257617 bfc_allocator.cc:1105] InUse at 768b12000800 of size 256 next 5
+I0000 00:00:1778922029.982533  257617 bfc_allocator.cc:1105] InUse at 768b12000900 of size 256 next 7
+I0000 00:00:1778922029.982534  257617 bfc_allocator.cc:1105] InUse at 768b12000a00 of size 256 next 8
+I0000 00:00:1778922029.982536  257617 bfc_allocator.cc:1105] InUse at 768b12000b00 of size 256 next 6
+I0000 00:00:1778922029.982537  257617 bfc_allocator.cc:1105] InUse at 768b12000c00 of size 256 next 9
+I0000 00:00:1778922029.982538  257617 bfc_allocator.cc:1105] InUse at 768b12000d00 of size 256 next 12
+I0000 00:00:1778922029.982540  257617 bfc_allocator.cc:1105] InUse at 768b12000e00 of size 256 next 13
+I0000 00:00:1778922029.982541  257617 bfc_allocator.cc:1105] InUse at 768b12000f00 of size 256 next 14
+I0000 00:00:1778922029.982543  257617 bfc_allocator.cc:1105] InUse at 768b12001000 of size 68096 next 10
+I0000 00:00:1778922029.982545  257617 bfc_allocator.cc:1105] InUse at 768b12011a00 of size 34560 next 11
+I0000 00:00:1778922029.982547  257617 bfc_allocator.cc:1105] InUse at 768b1201a100 of size 256 next 15
+I0000 00:00:1778922029.982548  257617 bfc_allocator.cc:1105] InUse at 768b1201a200 of size 256 next 17
+I0000 00:00:1778922029.982550  257617 bfc_allocator.cc:1105] InUse at 768b1201a300 of size 256 next 16
+I0000 00:00:1778922029.982551  257617 bfc_allocator.cc:1105] InUse at 768b1201a400 of size 256 next 18
+I0000 00:00:1778922029.982552  257617 bfc_allocator.cc:1105] InUse at 768b1201a500 of size 256 next 21
+I0000 00:00:1778922029.982554  257617 bfc_allocator.cc:1105] InUse at 768b1201a600 of size 256 next 22
+I0000 00:00:1778922029.982555  257617 bfc_allocator.cc:1105] InUse at 768b1201a700 of size 256 next 23
+I0000 00:00:1778922029.982557  257617 bfc_allocator.cc:1105] InUse at 768b1201a800 of size 256 next 24
+I0000 00:00:1778922029.982558  257617 bfc_allocator.cc:1105] InUse at 768b1201a900 of size 256 next 25
+I0000 00:00:1778922029.982559  257617 bfc_allocator.cc:1105] InUse at 768b1201aa00 of size 256 next 28
+I0000 00:00:1778922029.982562  257617 bfc_allocator.cc:1105] InUse at 768b1201ab00 of size 3072 next 26
+I0000 00:00:1778922029.982566  257617 bfc_allocator.cc:1105] InUse at 768b1201b700 of size 512 next 33
+I0000 00:00:1778922029.982567  257617 bfc_allocator.cc:1105] InUse at 768b1201b900 of size 512 next 27
+I0000 00:00:1778922029.982569  257617 bfc_allocator.cc:1105] InUse at 768b1201bb00 of size 256 next 31
+I0000 00:00:1778922029.982570  257617 bfc_allocator.cc:1105] InUse at 768b1201bc00 of size 256 next 34
+I0000 00:00:1778922029.982572  257617 bfc_allocator.cc:1105] InUse at 768b1201bd00 of size 256 next 35
+I0000 00:00:1778922029.982573  257617 bfc_allocator.cc:1105] InUse at 768b1201be00 of size 1536 next 39
+I0000 00:00:1778922029.982575  257617 bfc_allocator.cc:1105] InUse at 768b1201c400 of size 256 next 37
+I0000 00:00:1778922029.982576  257617 bfc_allocator.cc:1105] InUse at 768b1201c500 of size 256 next 38
+I0000 00:00:1778922029.982577  257617 bfc_allocator.cc:1105] InUse at 768b1201c600 of size 256 next 41
+I0000 00:00:1778922029.982579  257617 bfc_allocator.cc:1105] InUse at 768b1201c700 of size 256 next 42
+I0000 00:00:1778922029.982580  257617 bfc_allocator.cc:1105] InUse at 768b1201c800 of size 256 next 43
+I0000 00:00:1778922029.982582  257617 bfc_allocator.cc:1105] InUse at 768b1201c900 of size 256 next 36
+I0000 00:00:1778922029.982583  257617 bfc_allocator.cc:1105] InUse at 768b1201ca00 of size 256 next 44
+I0000 00:00:1778922029.982584  257617 bfc_allocator.cc:1105] InUse at 768b1201cb00 of size 256 next 47
+I0000 00:00:1778922029.982586  257617 bfc_allocator.cc:1105] InUse at 768b1201cc00 of size 256 next 48
+I0000 00:00:1778922029.982587  257617 bfc_allocator.cc:1105] InUse at 768b1201cd00 of size 256 next 46
+I0000 00:00:1778922029.982589  257617 bfc_allocator.cc:1105] InUse at 768b1201ce00 of size 256 next 49
+I0000 00:00:1778922029.982590  257617 bfc_allocator.cc:1105] InUse at 768b1201cf00 of size 256 next 52
+I0000 00:00:1778922029.982592  257617 bfc_allocator.cc:1105] InUse at 768b1201d000 of size 256 next 53
+I0000 00:00:1778922029.982593  257617 bfc_allocator.cc:1105] InUse at 768b1201d100 of size 256 next 50
+I0000 00:00:1778922029.982594  257617 bfc_allocator.cc:1105] InUse at 768b1201d200 of size 512 next 51
+I0000 00:00:1778922029.982596  257617 bfc_allocator.cc:1105] Free  at 768b1201d400 of size 36352 next 19
+I0000 00:00:1778922029.982597  257617 bfc_allocator.cc:1105] InUse at 768b12026200 of size 49152 next 20
+I0000 00:00:1778922029.982599  257617 bfc_allocator.cc:1105] InUse at 768b12032200 of size 16384 next 45
+I0000 00:00:1778922029.982601  257617 bfc_allocator.cc:1105] Free  at 768b12036200 of size 180224 next 30
+I0000 00:00:1778922029.982603  257617 bfc_allocator.cc:1105] InUse at 768b12062200 of size 98304 next 29
+I0000 00:00:1778922029.982604  257617 bfc_allocator.cc:1105] InUse at 768b1207a200 of size 196608 next 32
+I0000 00:00:1778922029.982606  257617 bfc_allocator.cc:1105] InUse at 768b120aa200 of size 98304 next 40
+I0000 00:00:1778922029.982607  257617 bfc_allocator.cc:1105] Free  at 768b120c2200 of size 741989888 next 18446744073709551615
+I0000 00:00:1778922029.982609  257617 bfc_allocator.cc:1110]      Summary of in-use Chunks by size: 
+I0000 00:00:1778922029.982611  257617 bfc_allocator.cc:1113] 38 Chunks of size 256 totalling 9.5KiB
+I0000 00:00:1778922029.982614  257617 bfc_allocator.cc:1113] 3 Chunks of size 512 totalling 1.5KiB
+I0000 00:00:1778922029.982615  257617 bfc_allocator.cc:1113] 1 Chunks of size 1280 totalling 1.2KiB
+I0000 00:00:1778922029.982617  257617 bfc_allocator.cc:1113] 1 Chunks of size 1536 totalling 1.5KiB
+I0000 00:00:1778922029.982619  257617 bfc_allocator.cc:1113] 1 Chunks of size 3072 totalling 3.0KiB
+I0000 00:00:1778922029.982621  257617 bfc_allocator.cc:1113] 1 Chunks of size 16384 totalling 16.0KiB
+I0000 00:00:1778922029.982623  257617 bfc_allocator.cc:1113] 1 Chunks of size 34560 totalling 33.8KiB
+I0000 00:00:1778922029.982624  257617 bfc_allocator.cc:1113] 1 Chunks of size 49152 totalling 48.0KiB
+I0000 00:00:1778922029.982626  257617 bfc_allocator.cc:1113] 1 Chunks of size 68096 totalling 66.5KiB
+I0000 00:00:1778922029.982628  257617 bfc_allocator.cc:1113] 2 Chunks of size 98304 totalling 192.0KiB
+I0000 00:00:1778922029.982630  257617 bfc_allocator.cc:1113] 1 Chunks of size 196608 totalling 192.0KiB
+I0000 00:00:1778922029.982631  257617 bfc_allocator.cc:1117] Sum Total of in-use chunks: 565.0KiB
+I0000 00:00:1778922029.982633  257617 bfc_allocator.cc:1119] Total size in pool: 708.38MiB memory_limit_: 708.38MiB available size: 0B curr_region_allocation_bytes_: 1.38GiB
+I0000 00:00:1778922029.982635  257617 bfc_allocator.cc:1128] Stats: 
+Limit:                       708.38MiB
+InUse:                        565.0KiB
+MaxInUse:                     827.8KiB
+NumAllocs:                         139
+MaxAllocSize:                 192.0KiB
+Reserved:                           0B
+PeakReserved:                       0B
+LargestFreeBlock:                   0B
+
+W0000 00:00:1778922029.982640  257617 bfc_allocator.cc:513] *___________________________________________________________________________________________________
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 1780, in <module>
+    main()
+    ~~~~^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 1631, in main
+    history = train_model(model, x, y, y_eval, groups, config)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 1085, in train_model
+    make_tf_dataset(x["train"], y["train"], config.batch_size, True, config.noise_std, config.feat_mask_prob, config.time_mask_max, config.hflip_prob),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 740, in make_tf_dataset
+    ds = tf.data.Dataset.from_tensor_slices((x, y))
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/data/ops/dataset_ops.py", line 827, in from_tensor_slices
+    return from_tensor_slices_op._from_tensor_slices(tensors, name)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/data/ops/from_tensor_slices_op.py", line 25, in _from_tensor_slices
+    return _TensorSliceDataset(tensors, name=name)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/data/ops/from_tensor_slices_op.py", line 33, in __init__
+    element = structure.normalize_element(element)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/data/util/structure.py", line 134, in normalize_element
+    ops.convert_to_tensor(t, name="component_%d" % i, dtype=dtype))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/profiler/trace.py", line 183, in wrapped
+    return func(*args, **kwargs)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/ops.py", line 757, in convert_to_tensor
+    return tensor_conversion_registry.convert(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        value, dtype, name, as_ref, preferred_dtype, accepted_result_types
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/tensor_conversion_registry.py", line 234, in convert
+    ret = conversion_func(value, dtype=dtype, name=name, as_ref=as_ref)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_tensor_conversion.py", line 29, in _constant_tensor_conversion_function
+    return constant_op.constant(v, dtype=dtype, name=name)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/ops/weak_tensor_ops.py", line 142, in wrapper
+    return op(*args, **kwargs)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_op.py", line 276, in constant
+    return _constant_impl(value, dtype, shape, name, verify_shape=False,
+                          allow_broadcast=True)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_op.py", line 288, in _constant_impl
+    return _constant_eager_impl(ctx, value, dtype, shape, verify_shape)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_op.py", line 301, in _constant_eager_impl
+    t = convert_to_eager_tensor(value, ctx, dtype)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_op.py", line 108, in convert_to_eager_tensor
+    return ops.EagerTensor(value, ctx.device_name, dtype)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tensorflow.python.framework.errors_impl.InternalError: Failed copying input tensor from /job:localhost/replica:0/task:0/device:CPU:0 to /job:localhost/replica:0/task:0/device:GPU:0 in order to run _EagerConst: Dst tensor is not initialized.
+[2026-05-16 18:00:30] FAIL P34-a35 (exit 1)
+[2026-05-16 18:00:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:01:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:02:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:03:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:04:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:05:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:06:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:07:30] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:08:30] GPU ready: 17MiB
+[2026-05-16 18:08:30] START P34-a40
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778922511.579362  261531 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 18:08:32] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 18:08:45] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 18:08:45] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 18:08:48] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 18:08:48] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 18:08:50] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 18:09:03] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 18:09:06] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 18:09:08] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778922551.178692  261531 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 734 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778922552.080506  261531 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778922563.202988  261531 bfc_allocator.cc:502] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.42GiB (rounded to 1525608192)requested by op _EagerConst
+If the cause is memory fragmentation maybe the environment variable 'TF_GPU_ALLOCATOR=cuda_malloc_async' will improve the situation. 
+Current allocation summary follows.
+Current allocation summary follows.
+I0000 00:00:1778922563.203024  261531 bfc_allocator.cc:1049] BFCAllocator dump for GPU_0_bfc
+I0000 00:00:1778922563.203026  261531 bfc_allocator.cc:1056] Bin (256): 	Total Chunks: 38, Chunks in use: 38. 9.5KiB allocated for chunks. 9.5KiB in use in bin. 2.4KiB client-requested in use in bin.
+I0000 00:00:1778922563.203030  261531 bfc_allocator.cc:1056] Bin (512): 	Total Chunks: 3, Chunks in use: 3. 1.5KiB allocated for chunks. 1.5KiB in use in bin. 1.5KiB client-requested in use in bin.
+I0000 00:00:1778922563.203032  261531 bfc_allocator.cc:1056] Bin (1024): 	Total Chunks: 2, Chunks in use: 2. 2.8KiB allocated for chunks. 2.8KiB in use in bin. 2.5KiB client-requested in use in bin.
+I0000 00:00:1778922563.203034  261531 bfc_allocator.cc:1056] Bin (2048): 	Total Chunks: 1, Chunks in use: 1. 3.0KiB allocated for chunks. 3.0KiB in use in bin. 3.0KiB client-requested in use in bin.
+I0000 00:00:1778922563.203036  261531 bfc_allocator.cc:1056] Bin (4096): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203038  261531 bfc_allocator.cc:1056] Bin (8192): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203039  261531 bfc_allocator.cc:1056] Bin (16384): 	Total Chunks: 1, Chunks in use: 1. 16.0KiB allocated for chunks. 16.0KiB in use in bin. 16.0KiB client-requested in use in bin.
+I0000 00:00:1778922563.203041  261531 bfc_allocator.cc:1056] Bin (32768): 	Total Chunks: 3, Chunks in use: 2. 117.2KiB allocated for chunks. 81.8KiB in use in bin. 81.8KiB client-requested in use in bin.
+I0000 00:00:1778922563.203043  261531 bfc_allocator.cc:1056] Bin (65536): 	Total Chunks: 3, Chunks in use: 3. 258.5KiB allocated for chunks. 258.5KiB in use in bin. 240.0KiB client-requested in use in bin.
+I0000 00:00:1778922563.203045  261531 bfc_allocator.cc:1056] Bin (131072): 	Total Chunks: 2, Chunks in use: 1. 368.0KiB allocated for chunks. 192.0KiB in use in bin. 192.0KiB client-requested in use in bin.
+I0000 00:00:1778922563.203047  261531 bfc_allocator.cc:1056] Bin (262144): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203049  261531 bfc_allocator.cc:1056] Bin (524288): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203050  261531 bfc_allocator.cc:1056] Bin (1048576): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203052  261531 bfc_allocator.cc:1056] Bin (2097152): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203054  261531 bfc_allocator.cc:1056] Bin (4194304): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203055  261531 bfc_allocator.cc:1056] Bin (8388608): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203057  261531 bfc_allocator.cc:1056] Bin (16777216): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203058  261531 bfc_allocator.cc:1056] Bin (33554432): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203060  261531 bfc_allocator.cc:1056] Bin (67108864): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203062  261531 bfc_allocator.cc:1056] Bin (134217728): 	Total Chunks: 0, Chunks in use: 0. 0B allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203063  261531 bfc_allocator.cc:1056] Bin (268435456): 	Total Chunks: 1, Chunks in use: 0. 733.62MiB allocated for chunks. 0B in use in bin. 0B client-requested in use in bin.
+I0000 00:00:1778922563.203065  261531 bfc_allocator.cc:1072] Bin for 1.42GiB was 256.00MiB, Chunk State: 
+I0000 00:00:1778922563.203067  261531 bfc_allocator.cc:1078]   Size: 733.62MiB | Requested Size: 0B | in_use: 0 | bin_num: 20, prev:   Size: 96.0KiB | Requested Size: 96.0KiB | in_use: 1 | bin_num: -1
+I0000 00:00:1778922563.203071  261531 bfc_allocator.cc:1085] Next region of size 770048000
+I0000 00:00:1778922563.203073  261531 bfc_allocator.cc:1105] InUse at 744f56000000 of size 1280 next 1
+I0000 00:00:1778922563.203075  261531 bfc_allocator.cc:1105] InUse at 744f56000500 of size 256 next 2
+I0000 00:00:1778922563.203076  261531 bfc_allocator.cc:1105] InUse at 744f56000600 of size 256 next 3
+I0000 00:00:1778922563.203078  261531 bfc_allocator.cc:1105] InUse at 744f56000700 of size 256 next 4
+I0000 00:00:1778922563.203079  261531 bfc_allocator.cc:1105] InUse at 744f56000800 of size 256 next 5
+I0000 00:00:1778922563.203080  261531 bfc_allocator.cc:1105] InUse at 744f56000900 of size 256 next 7
+I0000 00:00:1778922563.203081  261531 bfc_allocator.cc:1105] InUse at 744f56000a00 of size 256 next 8
+I0000 00:00:1778922563.203082  261531 bfc_allocator.cc:1105] InUse at 744f56000b00 of size 256 next 6
+I0000 00:00:1778922563.203084  261531 bfc_allocator.cc:1105] InUse at 744f56000c00 of size 256 next 9
+I0000 00:00:1778922563.203085  261531 bfc_allocator.cc:1105] InUse at 744f56000d00 of size 256 next 12
+I0000 00:00:1778922563.203086  261531 bfc_allocator.cc:1105] InUse at 744f56000e00 of size 256 next 13
+I0000 00:00:1778922563.203087  261531 bfc_allocator.cc:1105] InUse at 744f56000f00 of size 256 next 14
+I0000 00:00:1778922563.203088  261531 bfc_allocator.cc:1105] InUse at 744f56001000 of size 68096 next 10
+I0000 00:00:1778922563.203090  261531 bfc_allocator.cc:1105] InUse at 744f56011a00 of size 34560 next 11
+I0000 00:00:1778922563.203091  261531 bfc_allocator.cc:1105] InUse at 744f5601a100 of size 256 next 15
+I0000 00:00:1778922563.203092  261531 bfc_allocator.cc:1105] InUse at 744f5601a200 of size 256 next 17
+I0000 00:00:1778922563.203093  261531 bfc_allocator.cc:1105] InUse at 744f5601a300 of size 256 next 16
+I0000 00:00:1778922563.203095  261531 bfc_allocator.cc:1105] InUse at 744f5601a400 of size 256 next 18
+I0000 00:00:1778922563.203096  261531 bfc_allocator.cc:1105] InUse at 744f5601a500 of size 256 next 21
+I0000 00:00:1778922563.203097  261531 bfc_allocator.cc:1105] InUse at 744f5601a600 of size 256 next 22
+I0000 00:00:1778922563.203098  261531 bfc_allocator.cc:1105] InUse at 744f5601a700 of size 256 next 23
+I0000 00:00:1778922563.203100  261531 bfc_allocator.cc:1105] InUse at 744f5601a800 of size 256 next 24
+I0000 00:00:1778922563.203101  261531 bfc_allocator.cc:1105] InUse at 744f5601a900 of size 256 next 25
+I0000 00:00:1778922563.203102  261531 bfc_allocator.cc:1105] InUse at 744f5601aa00 of size 256 next 28
+I0000 00:00:1778922563.203104  261531 bfc_allocator.cc:1105] InUse at 744f5601ab00 of size 3072 next 26
+I0000 00:00:1778922563.203105  261531 bfc_allocator.cc:1105] InUse at 744f5601b700 of size 512 next 33
+I0000 00:00:1778922563.203106  261531 bfc_allocator.cc:1105] InUse at 744f5601b900 of size 512 next 27
+I0000 00:00:1778922563.203107  261531 bfc_allocator.cc:1105] InUse at 744f5601bb00 of size 256 next 31
+I0000 00:00:1778922563.203108  261531 bfc_allocator.cc:1105] InUse at 744f5601bc00 of size 256 next 34
+I0000 00:00:1778922563.203110  261531 bfc_allocator.cc:1105] InUse at 744f5601bd00 of size 256 next 35
+I0000 00:00:1778922563.203111  261531 bfc_allocator.cc:1105] InUse at 744f5601be00 of size 1536 next 39
+I0000 00:00:1778922563.203112  261531 bfc_allocator.cc:1105] InUse at 744f5601c400 of size 256 next 37
+I0000 00:00:1778922563.203113  261531 bfc_allocator.cc:1105] InUse at 744f5601c500 of size 256 next 38
+I0000 00:00:1778922563.203115  261531 bfc_allocator.cc:1105] InUse at 744f5601c600 of size 256 next 41
+I0000 00:00:1778922563.203116  261531 bfc_allocator.cc:1105] InUse at 744f5601c700 of size 256 next 42
+I0000 00:00:1778922563.203117  261531 bfc_allocator.cc:1105] InUse at 744f5601c800 of size 256 next 43
+I0000 00:00:1778922563.203118  261531 bfc_allocator.cc:1105] InUse at 744f5601c900 of size 256 next 36
+I0000 00:00:1778922563.203119  261531 bfc_allocator.cc:1105] InUse at 744f5601ca00 of size 256 next 44
+I0000 00:00:1778922563.203120  261531 bfc_allocator.cc:1105] InUse at 744f5601cb00 of size 256 next 47
+I0000 00:00:1778922563.203122  261531 bfc_allocator.cc:1105] InUse at 744f5601cc00 of size 256 next 48
+I0000 00:00:1778922563.203123  261531 bfc_allocator.cc:1105] InUse at 744f5601cd00 of size 256 next 46
+I0000 00:00:1778922563.203124  261531 bfc_allocator.cc:1105] InUse at 744f5601ce00 of size 256 next 49
+I0000 00:00:1778922563.203125  261531 bfc_allocator.cc:1105] InUse at 744f5601cf00 of size 256 next 52
+I0000 00:00:1778922563.203126  261531 bfc_allocator.cc:1105] InUse at 744f5601d000 of size 256 next 53
+I0000 00:00:1778922563.203128  261531 bfc_allocator.cc:1105] InUse at 744f5601d100 of size 256 next 50
+I0000 00:00:1778922563.203129  261531 bfc_allocator.cc:1105] InUse at 744f5601d200 of size 512 next 51
+I0000 00:00:1778922563.203130  261531 bfc_allocator.cc:1105] Free  at 744f5601d400 of size 36352 next 19
+I0000 00:00:1778922563.203132  261531 bfc_allocator.cc:1105] InUse at 744f56026200 of size 49152 next 20
+I0000 00:00:1778922563.203133  261531 bfc_allocator.cc:1105] InUse at 744f56032200 of size 16384 next 45
+I0000 00:00:1778922563.203134  261531 bfc_allocator.cc:1105] Free  at 744f56036200 of size 180224 next 30
+I0000 00:00:1778922563.203136  261531 bfc_allocator.cc:1105] InUse at 744f56062200 of size 98304 next 29
+I0000 00:00:1778922563.203137  261531 bfc_allocator.cc:1105] InUse at 744f5607a200 of size 196608 next 32
+I0000 00:00:1778922563.203138  261531 bfc_allocator.cc:1105] InUse at 744f560aa200 of size 98304 next 40
+I0000 00:00:1778922563.203139  261531 bfc_allocator.cc:1105] Free  at 744f560c2200 of size 769252864 next 18446744073709551615
+I0000 00:00:1778922563.203141  261531 bfc_allocator.cc:1110]      Summary of in-use Chunks by size: 
+I0000 00:00:1778922563.203142  261531 bfc_allocator.cc:1113] 38 Chunks of size 256 totalling 9.5KiB
+I0000 00:00:1778922563.203145  261531 bfc_allocator.cc:1113] 3 Chunks of size 512 totalling 1.5KiB
+I0000 00:00:1778922563.203146  261531 bfc_allocator.cc:1113] 1 Chunks of size 1280 totalling 1.2KiB
+I0000 00:00:1778922563.203148  261531 bfc_allocator.cc:1113] 1 Chunks of size 1536 totalling 1.5KiB
+I0000 00:00:1778922563.203149  261531 bfc_allocator.cc:1113] 1 Chunks of size 3072 totalling 3.0KiB
+I0000 00:00:1778922563.203151  261531 bfc_allocator.cc:1113] 1 Chunks of size 16384 totalling 16.0KiB
+I0000 00:00:1778922563.203152  261531 bfc_allocator.cc:1113] 1 Chunks of size 34560 totalling 33.8KiB
+I0000 00:00:1778922563.203154  261531 bfc_allocator.cc:1113] 1 Chunks of size 49152 totalling 48.0KiB
+I0000 00:00:1778922563.203155  261531 bfc_allocator.cc:1113] 1 Chunks of size 68096 totalling 66.5KiB
+I0000 00:00:1778922563.203156  261531 bfc_allocator.cc:1113] 2 Chunks of size 98304 totalling 192.0KiB
+I0000 00:00:1778922563.203158  261531 bfc_allocator.cc:1113] 1 Chunks of size 196608 totalling 192.0KiB
+I0000 00:00:1778922563.203160  261531 bfc_allocator.cc:1117] Sum Total of in-use chunks: 565.0KiB
+I0000 00:00:1778922563.203161  261531 bfc_allocator.cc:1119] Total size in pool: 734.38MiB memory_limit_: 734.38MiB available size: 0B curr_region_allocation_bytes_: 1.43GiB
+I0000 00:00:1778922563.203163  261531 bfc_allocator.cc:1128] Stats: 
+Limit:                       734.38MiB
+InUse:                        565.0KiB
+MaxInUse:                     827.8KiB
+NumAllocs:                         139
+MaxAllocSize:                 192.0KiB
+Reserved:                           0B
+PeakReserved:                       0B
+LargestFreeBlock:                   0B
+
+W0000 00:00:1778922563.203168  261531 bfc_allocator.cc:513] *___________________________________________________________________________________________________
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 1780, in <module>
+    main()
+    ~~~~^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 1631, in main
+    history = train_model(model, x, y, y_eval, groups, config)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 1085, in train_model
+    make_tf_dataset(x["train"], y["train"], config.batch_size, True, config.noise_std, config.feat_mask_prob, config.time_mask_max, config.hflip_prob),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/train_baseline.py", line 740, in make_tf_dataset
+    ds = tf.data.Dataset.from_tensor_slices((x, y))
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/data/ops/dataset_ops.py", line 827, in from_tensor_slices
+    return from_tensor_slices_op._from_tensor_slices(tensors, name)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/data/ops/from_tensor_slices_op.py", line 25, in _from_tensor_slices
+    return _TensorSliceDataset(tensors, name=name)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/data/ops/from_tensor_slices_op.py", line 33, in __init__
+    element = structure.normalize_element(element)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/data/util/structure.py", line 134, in normalize_element
+    ops.convert_to_tensor(t, name="component_%d" % i, dtype=dtype))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/profiler/trace.py", line 183, in wrapped
+    return func(*args, **kwargs)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/ops.py", line 757, in convert_to_tensor
+    return tensor_conversion_registry.convert(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        value, dtype, name, as_ref, preferred_dtype, accepted_result_types
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/tensor_conversion_registry.py", line 234, in convert
+    ret = conversion_func(value, dtype=dtype, name=name, as_ref=as_ref)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_tensor_conversion.py", line 29, in _constant_tensor_conversion_function
+    return constant_op.constant(v, dtype=dtype, name=name)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/ops/weak_tensor_ops.py", line 142, in wrapper
+    return op(*args, **kwargs)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_op.py", line 276, in constant
+    return _constant_impl(value, dtype, shape, name, verify_shape=False,
+                          allow_broadcast=True)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_op.py", line 288, in _constant_impl
+    return _constant_eager_impl(ctx, value, dtype, shape, verify_shape)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_op.py", line 301, in _constant_eager_impl
+    t = convert_to_eager_tensor(value, ctx, dtype)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/python/framework/constant_op.py", line 108, in convert_to_eager_tensor
+    return ops.EagerTensor(value, ctx.device_name, dtype)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tensorflow.python.framework.errors_impl.InternalError: Failed copying input tensor from /job:localhost/replica:0/task:0/device:CPU:0 to /job:localhost/replica:0/task:0/device:GPU:0 in order to run _EagerConst: Dst tensor is not initialized.
+[2026-05-16 18:09:24] FAIL P34-a40 (exit 1)
+[2026-05-16 18:09:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:10:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:11:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:12:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:13:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:14:24] GPU busy: 6760MiB — waiting 60s
+[2026-05-16 18:15:24] GPU ready: 17MiB
+[2026-05-16 18:15:24] START P34-a45
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778922924.812611  264360 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 18:15:26] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 18:15:38] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 18:15:38] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 18:15:41] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 18:15:41] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 18:15:43] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 18:15:57] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 18:16:00] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 18:16:01] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778922964.710446  264360 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778922965.645564  264360 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778922966.967169  264360 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778922968.925825  264360 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778922971.479619  264456 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 18:51:06] ValMinPR: restored best weights (val_video_min_pr=0.9156)
+W0000 00:00:1778925066.805966  264360 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778925068.140901  264360 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+[2026-05-16 18:52:20] video-level val: videos=1714 f1=0.9682 fall_recall=0.9678 nfall_recall=0.9175 fall_prec=0.9685 nfall_prec=0.9156 min_pr=0.9156 min_consecutive=3
+[2026-05-16 18:52:21] event-level val: videos=1714 f1=0.9682 fall_recall=0.9678 nfall_recall=0.9175 fall_prec=0.9685 nfall_prec=0.9156 min_pr=0.9156 tolerance_windows=2
+[2026-05-16 18:52:21] video-level test: videos=853 f1=0.9667 fall_recall=0.9597 nfall_recall=0.9310 fall_prec=0.9739 nfall_prec=0.8963 min_pr=0.8963 min_consecutive=3
+[2026-05-16 18:52:21] event-level test: videos=853 f1=0.9659 fall_recall=0.9581 nfall_recall=0.9310 fall_prec=0.9738 nfall_prec=0.8926 min_pr=0.8926 tolerance_windows=2
+[2026-05-16 18:52:22] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9156    0.9175    0.9166       473
+           1     0.9685    0.9678    0.9682      1241
+
+    accuracy                         0.9539      1714
+   macro avg     0.9421    0.9427    0.9424      1714
+weighted avg     0.9539    0.9539    0.9539      1714
+
+[2026-05-16 18:52:22] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8963    0.9310    0.9133       232
+           1     0.9739    0.9597    0.9667       621
+
+    accuracy                         0.9519       853
+   macro avg     0.9351    0.9454    0.9400       853
+weighted avg     0.9528    0.9519    0.9522       853
+
+[2026-05-16 18:52:22] done P34-a45 val_f1=0.8868 (video=0.9682) test_f1=0.8788 (video=0.9667) test_min_pr=0.8963 threshold=0.575 min_consecutive=3
+[OK] P34-a45 event=0.8926 video=0.8963
+  CM: TN=216 FP=16 FN=26 TP=595  fall_pr=0.9738 nfall_pr=0.8926 fall_rc=0.9581
+[2026-05-16 18:52:23] GPU ready: 17MiB
+[2026-05-16 18:52:23] START P34-fm10
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778925143.951531  271789 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 18:52:25] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 18:52:37] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 18:52:37] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 18:52:41] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 18:52:41] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 18:52:42] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 18:52:55] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 18:52:58] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 18:53:00] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778925183.318514  271789 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778925184.247818  271789 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778925185.590358  271789 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778925187.581210  271789 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778925190.109110  271974 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 19:43:42] ValMinPR: restored best weights (val_video_min_pr=0.9112)
+W0000 00:00:1778928222.778165  271789 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778928224.123458  271789 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+[2026-05-16 19:44:57] video-level val: videos=1714 f1=0.9662 fall_recall=0.9662 nfall_recall=0.9112 fall_prec=0.9662 nfall_prec=0.9112 min_pr=0.9112 min_consecutive=7
+[2026-05-16 19:44:57] event-level val: videos=1714 f1=0.9657 fall_recall=0.9654 nfall_recall=0.9112 fall_prec=0.9661 nfall_prec=0.9093 min_pr=0.9093 tolerance_windows=2
+[2026-05-16 19:44:57] video-level test: videos=853 f1=0.9667 fall_recall=0.9597 nfall_recall=0.9310 fall_prec=0.9739 nfall_prec=0.8963 min_pr=0.8963 min_consecutive=7
+[2026-05-16 19:44:58] event-level test: videos=853 f1=0.9667 fall_recall=0.9597 nfall_recall=0.9310 fall_prec=0.9739 nfall_prec=0.8963 min_pr=0.8963 tolerance_windows=2
+[2026-05-16 19:44:58] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9112    0.9112    0.9112       473
+           1     0.9662    0.9662    0.9662      1241
+
+    accuracy                         0.9510      1714
+   macro avg     0.9387    0.9387    0.9387      1714
+weighted avg     0.9510    0.9510    0.9510      1714
+
+[2026-05-16 19:44:58] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8963    0.9310    0.9133       232
+           1     0.9739    0.9597    0.9667       621
+
+    accuracy                         0.9519       853
+   macro avg     0.9351    0.9454    0.9400       853
+weighted avg     0.9528    0.9519    0.9522       853
+
+[2026-05-16 19:44:58] done P34-fm10 val_f1=0.9043 (video=0.9662) test_f1=0.9026 (video=0.9667) test_min_pr=0.8963 threshold=0.475 min_consecutive=7
+[OK] P34-fm10 event=0.8963 video=0.8963
+  CM: TN=216 FP=16 FN=25 TP=596  fall_pr=0.9739 nfall_pr=0.8963 fall_rc=0.9597
+[2026-05-16 19:44:59] GPU ready: 17MiB
+[2026-05-16 19:44:59] START P34-fm20
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778928300.207916  283811 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 19:45:01] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 19:45:13] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 19:45:13] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 19:45:17] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 19:45:17] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 19:45:18] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 19:45:32] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 19:45:35] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 19:45:36] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778928339.784258  283811 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778928340.708089  283811 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778928342.048080  283811 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778928344.014541  283811 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778928346.547696  283993 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 20:14:35] ValMinPR: restored best weights (val_video_min_pr=0.9078)
+W0000 00:00:1778930076.583061  283811 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778930077.945119  283811 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+[2026-05-16 20:15:51] video-level val: videos=1714 f1=0.9661 fall_recall=0.9645 nfall_recall=0.9154 fall_prec=0.9677 nfall_prec=0.9078 min_pr=0.9078 min_consecutive=7
+[2026-05-16 20:15:51] event-level val: videos=1714 f1=0.9653 fall_recall=0.9629 nfall_recall=0.9154 fall_prec=0.9676 nfall_prec=0.9040 min_pr=0.9040 tolerance_windows=2
+[2026-05-16 20:15:52] video-level test: videos=853 f1=0.9593 fall_recall=0.9485 nfall_recall=0.9224 fall_prec=0.9703 nfall_prec=0.8699 min_pr=0.8699 min_consecutive=7
+[2026-05-16 20:15:52] event-level test: videos=853 f1=0.9593 fall_recall=0.9485 nfall_recall=0.9224 fall_prec=0.9703 nfall_prec=0.8699 min_pr=0.8699 tolerance_windows=2
+[2026-05-16 20:15:52] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9078    0.9154    0.9116       473
+           1     0.9677    0.9645    0.9661      1241
+
+    accuracy                         0.9510      1714
+   macro avg     0.9377    0.9400    0.9388      1714
+weighted avg     0.9511    0.9510    0.9511      1714
+
+[2026-05-16 20:15:52] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8699    0.9224    0.8954       232
+           1     0.9703    0.9485    0.9593       621
+
+    accuracy                         0.9414       853
+   macro avg     0.9201    0.9354    0.9273       853
+weighted avg     0.9430    0.9414    0.9419       853
+
+[2026-05-16 20:15:52] done P34-fm20 val_f1=0.8949 (video=0.9661) test_f1=0.8978 (video=0.9593) test_min_pr=0.8699 threshold=0.450 min_consecutive=7
+[OK] P34-fm20 event=0.8699 video=0.8699
+  CM: TN=214 FP=18 FN=32 TP=589  fall_pr=0.9703 nfall_pr=0.8699 fall_rc=0.9485
+[2026-05-16 20:15:53] GPU ready: 17MiB
+[2026-05-16 20:15:53] START P34-tm3
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778930154.550623  313817 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 20:15:55] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 20:16:08] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 20:16:08] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 20:16:11] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 20:16:11] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 20:16:13] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 20:16:26] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 20:16:29] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 20:16:30] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778930194.574737  313817 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778930195.508543  313817 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778930196.828981  313817 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778930199.135856  313817 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778930201.555395  314335 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 21:28:49] ValMinPR: restored best weights (val_video_min_pr=0.9221)
+W0000 00:00:1778934530.734627  313817 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778934532.143721  313817 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+[2026-05-16 21:30:05] video-level val: videos=1714 f1=0.9710 fall_recall=0.9702 nfall_recall=0.9260 fall_prec=0.9718 nfall_prec=0.9221 min_pr=0.9221 min_consecutive=4
+[2026-05-16 21:30:06] event-level val: videos=1714 f1=0.9710 fall_recall=0.9702 nfall_recall=0.9260 fall_prec=0.9718 nfall_prec=0.9221 min_pr=0.9221 tolerance_windows=2
+[2026-05-16 21:30:06] video-level test: videos=853 f1=0.9612 fall_recall=0.9565 nfall_recall=0.9095 fall_prec=0.9659 nfall_prec=0.8866 min_pr=0.8866 min_consecutive=4
+[2026-05-16 21:30:07] event-level test: videos=853 f1=0.9603 fall_recall=0.9549 nfall_recall=0.9095 fall_prec=0.9658 nfall_prec=0.8828 min_pr=0.8828 tolerance_windows=2
+[2026-05-16 21:30:07] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9221    0.9260    0.9241       473
+           1     0.9718    0.9702    0.9710      1241
+
+    accuracy                         0.9580      1714
+   macro avg     0.9469    0.9481    0.9475      1714
+weighted avg     0.9581    0.9580    0.9580      1714
+
+[2026-05-16 21:30:07] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8866    0.9095    0.8979       232
+           1     0.9659    0.9565    0.9612       621
+
+    accuracy                         0.9437       853
+   macro avg     0.9262    0.9330    0.9295       853
+weighted avg     0.9443    0.9437    0.9440       853
+
+[2026-05-16 21:30:07] done P34-tm3 val_f1=0.8923 (video=0.9710) test_f1=0.8835 (video=0.9612) test_min_pr=0.8866 threshold=0.550 min_consecutive=4
+[OK] P34-tm3 event=0.8828 video=0.8866
+  CM: TN=211 FP=21 FN=28 TP=593  fall_pr=0.9658 nfall_pr=0.8828 fall_rc=0.9549
+[2026-05-16 21:30:08] GPU ready: 17MiB
+[2026-05-16 21:30:08] START P34-tm5
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778934609.117005  386291 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 21:30:10] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 21:30:22] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 21:30:22] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 21:30:26] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 21:30:26] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 21:30:27] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 21:30:40] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 21:30:43] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 21:30:45] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778934648.897703  386291 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778934649.830759  386291 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778934651.178620  386291 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778934653.294128  386291 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778934655.830121  386911 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 22:06:19] ValMinPR: restored best weights (val_video_min_pr=0.9218)
+W0000 00:00:1778936780.654495  386291 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778936781.990973  386291 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+[2026-05-16 22:07:34] video-level val: videos=1714 f1=0.9702 fall_recall=0.9702 nfall_recall=0.9218 fall_prec=0.9702 nfall_prec=0.9218 min_pr=0.9218 min_consecutive=3
+[2026-05-16 22:07:35] event-level val: videos=1714 f1=0.9698 fall_recall=0.9694 nfall_recall=0.9218 fall_prec=0.9702 nfall_prec=0.9198 min_pr=0.9198 tolerance_windows=2
+[2026-05-16 22:07:35] video-level test: videos=853 f1=0.9637 fall_recall=0.9614 nfall_recall=0.9095 fall_prec=0.9660 nfall_prec=0.8979 min_pr=0.8979 min_consecutive=3
+[2026-05-16 22:07:35] event-level test: videos=853 f1=0.9628 fall_recall=0.9597 nfall_recall=0.9095 fall_prec=0.9660 nfall_prec=0.8941 min_pr=0.8941 tolerance_windows=2
+[2026-05-16 22:07:36] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9218    0.9218    0.9218       473
+           1     0.9702    0.9702    0.9702      1241
+
+    accuracy                         0.9568      1714
+   macro avg     0.9460    0.9460    0.9460      1714
+weighted avg     0.9568    0.9568    0.9568      1714
+
+[2026-05-16 22:07:36] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8979    0.9095    0.9036       232
+           1     0.9660    0.9614    0.9637       621
+
+    accuracy                         0.9472       853
+   macro avg     0.9319    0.9354    0.9337       853
+weighted avg     0.9475    0.9472    0.9474       853
+
+[2026-05-16 22:07:36] done P34-tm5 val_f1=0.8835 (video=0.9702) test_f1=0.8749 (video=0.9637) test_min_pr=0.8979 threshold=0.550 min_consecutive=3
+[OK] P34-tm5 event=0.8941 video=0.8979
+  CM: TN=211 FP=21 FN=25 TP=596  fall_pr=0.9660 nfall_pr=0.8941 fall_rc=0.9597
+[2026-05-16 22:07:37] GPU ready: 17MiB
+[2026-05-16 22:07:37] START P34-a35-fm10
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778936857.897073  432376 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 22:07:39] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/train.csv
+[2026-05-16 22:07:51] train rows=1,211,093 videos=6,039 features=27 data_scope=all
+[2026-05-16 22:07:51] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/val.csv
+[2026-05-16 22:07:54] val rows=344,292 videos=1,714 features=27 data_scope=all
+[2026-05-16 22:07:54] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered/test.csv
+[2026-05-16 22:07:56] test rows=172,209 videos=853 features=27 data_scope=all
+[2026-05-16 22:08:09] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 22:08:12] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 22:08:14] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778936897.861701  432376 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778936898.783169  432376 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778936900.101525  432376 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+W0000 00:00:1778936902.074068  432376 cpu_allocator_impl.cc:82] Allocation of 1525608000 exceeds 10% of free system memory.
+I0000 00:00:1778936904.584602  432673 cuda_dnn.cc:461] Loaded cuDNN version 92200
