@@ -1,0 +1,14 @@
+[06:29:24] === event MinPR v2: standard filtered, epochs=100 ===
+[06:29:24] TRAIN → E-kp7-w40-s42
+[06:42:12] DONE E-kp7-w40-s42
+[06:42:12] TRAIN → E-kp7-w40-s0
+[07:04:04] DONE E-kp7-w40-s0
+[07:04:04] TRAIN → E-kp12-w40-s42
+[07:23:06] DONE E-kp12-w40-s42
+[07:23:06] TRAIN → E-kp7-w30-s42
+[07:51:17] DONE E-kp7-w30-s42
+[07:51:17] TRAIN → E-kp12-w30-s42
+[08:08:14] DONE E-kp12-w30-s42
+[08:08:14] === 전체 완료 ===
+[08:08:14] 
+[08:08:14] === 결과 요약 (event MinPR) ===

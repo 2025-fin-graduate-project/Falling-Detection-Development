@@ -1,0 +1,46 @@
+[03:19:52] === Conv+GRU event-level MinPR 실험 시작 ===
+[03:19:52] 목표: event-level MinPR > 0.91  (기준: P27-vm0=0.9280)
+[03:19:52] -- A: P27-vm0 재현 + seed --
+[03:19:52] TRAIN → A-kp7-w40-s42
+[03:30:17] DONE A-kp7-w40-s42
+[03:30:17] TRAIN → A-kp7-w40-s0
+[03:45:50] DONE A-kp7-w40-s0
+[03:45:50] TRAIN → A-kp7-w40-s1
+[03:53:21] DONE A-kp7-w40-s1
+[03:53:21] TRAIN → A-kp7-w40-s2
+[04:12:36] DONE A-kp7-w40-s2
+[04:12:36] -- B: kp12 (더 많은 feature) --
+[04:12:36] TRAIN → B-kp12-w40-s42
+[04:22:36] === Conv+GRU event-level MinPR 실험 시작 ===
+[04:22:36] 목표: event-level MinPR > 0.91  (기준: P27-vm0=0.9280)
+[04:22:36] -- A: P27-vm0 재현 + seed --
+[04:22:36] TRAIN → A-kp7-w40-s42
+[04:29:59] DONE A-kp7-w40-s42
+[04:29:59] TRAIN → A-kp7-w40-s0
+[04:40:13] DONE A-kp7-w40-s0
+[04:40:13] TRAIN → A-kp7-w40-s1
+[04:47:08] DONE A-kp7-w40-s1
+[04:47:08] TRAIN → A-kp7-w40-s2
+[05:02:54] DONE A-kp7-w40-s2
+[05:02:54] -- B: kp12 (더 많은 feature) --
+[05:02:54] TRAIN → B-kp12-w40-s42
+[05:10:43] DONE B-kp12-w40-s42
+[05:10:43] TRAIN → B-kp12-w30-s42
+[05:20:55] DONE B-kp12-w30-s42
+[05:20:55] TRAIN → B-kp12-w50-s42
+[05:30:46] DONE B-kp12-w50-s42
+[05:30:46] TRAIN → B-kp12-w40-s0
+[05:40:14] DONE B-kp12-w40-s0
+[05:40:14] -- C: kp7 window 변형 --
+[05:40:14] TRAIN → C-kp7-w30-s42
+[05:46:38] DONE C-kp7-w30-s42
+[05:46:38] TRAIN → C-kp7-w50-s42
+[05:56:38] DONE C-kp7-w50-s42
+[05:56:38] -- D: standard splits_v2_filtered 비교 --
+[05:56:38] TRAIN → D-kp7-w40-s42
+[06:07:07] DONE D-kp7-w40-s42
+[06:07:07] TRAIN → D-kp12-w40-s42
+[06:11:55] DONE D-kp12-w40-s42
+[06:11:55] === 전체 완료 ===
+[06:11:55] 
+[06:11:55] === 결과 요약 (event-level MinPR) ===

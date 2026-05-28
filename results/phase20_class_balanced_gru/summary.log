@@ -1,0 +1,39 @@
+[2026-05-16 00:54:44] === Phase 20: class-balanced GRU, event-level threshold selection ===
+[2026-05-16 00:54:44] GPU busy: used=6760MiB; waiting 60s
+[2026-05-16 00:55:45] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 00:56:45] GPU busy: used=6751MiB; waiting 60s
+[2026-05-16 00:57:45] GPU busy: used=6762MiB; waiting 60s
+[2026-05-16 00:58:45] GPU busy: used=6760MiB; waiting 60s
+[2026-05-16 00:59:45] GPU busy: used=6760MiB; waiting 60s
+[2026-05-16 01:00:45] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:01:45] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:01:50] === Phase 20: class-balanced GRU, event-level threshold selection ===
+[2026-05-16 01:01:50] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:02:51] GPU busy: used=6762MiB; waiting 60s
+[2026-05-16 01:03:51] GPU ready: used=547MiB <= 2200MiB
+[2026-05-16 01:03:51] START P20-v01
+[OK] P20-v01 test_event_min_pr=0.9121 test_video_min_pr=0.9160 thr=0.525 mc=2 thr_eval=event
+  event_CM=[[218, 14], [21, 600]] video_CM=[[218, 14], [20, 601]]
+[2026-05-16 01:09:14] GPU ready: used=547MiB <= 2200MiB
+[2026-05-16 01:09:14] START P20-v02
+[OK] P20-v02 test_event_min_pr=0.8934 test_video_min_pr=0.8971 thr=0.450 mc=3 thr_eval=event
+  event_CM=[[218, 14], [26, 595]] video_CM=[[218, 14], [25, 596]]
+[2026-05-16 01:14:33] GPU ready: used=546MiB <= 2200MiB
+[2026-05-16 01:14:33] START P20-v03
+[OK] P20-v03 test_event_min_pr=0.9142 test_video_min_pr=0.9181 thr=0.500 mc=3 thr_eval=event
+  event_CM=[[213, 19], [20, 601]] video_CM=[[213, 19], [19, 602]]
+[2026-05-16 01:21:06] GPU ready: used=546MiB <= 2200MiB
+[2026-05-16 01:21:06] START P20-v04
+[OK] P20-v04 test_event_min_pr=0.8966 test_video_min_pr=0.8966 thr=0.500 mc=4 thr_eval=event
+  event_CM=[[208, 24], [24, 597]] video_CM=[[208, 24], [23, 598]]
+[2026-05-16 01:25:03] === Phase 20 summary ===
+[2026-05-16 01:25:03] === Phase 20 summary ===
+id,event_min_pr,video_min_pr,event_precision,event_recall,event_nfall_precision,event_nfall_recall,threshold,min_consecutive,flag
+P20-v01,0.9121,0.9160,0.9772,0.9662,0.9121,0.9397,0.525,2,
+  event_CM: TN=218 FP=14 FN=21 TP=600
+P20-v02,0.8934,0.8971,0.9770,0.9581,0.8934,0.9397,0.450,3,
+  event_CM: TN=218 FP=14 FN=26 TP=595
+P20-v03,0.9142,0.9181,0.9694,0.9678,0.9142,0.9181,0.500,3,
+  event_CM: TN=213 FP=19 FN=20 TP=601
+P20-v04,0.8966,0.8966,0.9614,0.9614,0.8966,0.8966,0.500,4,
+  event_CM: TN=208 FP=24 FN=24 TP=597

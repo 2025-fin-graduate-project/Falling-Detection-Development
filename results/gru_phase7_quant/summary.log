@@ -1,0 +1,1553 @@
+[2026-05-15 10:23:53] === Part A: TFLite INT8 재수출 ===
+[2026-05-15 10:23:53] REEXPORT P5-v02 (results/gru_phase5_compact)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778808234.120389 3278967 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P5-v02]
+  Loading model.keras ...
+E0000 00:00:1778808236.027337 3278967 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778808236.027359 3278967 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778808236.027366 3278967 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778808236.027375 3278967 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778808236.027377 3278967 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808236.027379 3278967 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808236.027446 3278967 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778808236.027460 3278967 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778808236.027462 3278967 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 159, in <module>
+    main()
+    ~~~~^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 153, in main
+    reexport(exp_dir, args.representative_samples)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 43, in reexport
+    model = tf.keras.models.load_model(str(keras_path))
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return saving_lib.load_model(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        filepath,
+        ^^^^^^^^^
+    ...<2 lines>...
+        safe_mode=safe_mode,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 365, in load_model
+    return _load_model_from_fileobj(
+        f, custom_objects, compile, safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 442, in _load_model_from_fileobj
+    model = _model_from_config(
+        config_json, custom_objects, compile, safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 431, in _model_from_config
+    model = deserialize_keras_object(
+        config_dict, custom_objects, safe_mode=safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 749, in deserialize_keras_object
+    instance.compile_from_config(compile_config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/trainers/trainer.py", line 980, in compile_from_config
+    config = serialization_lib.deserialize_keras_object(config)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 610, in deserialize_keras_object
+    key: deserialize_keras_object(
+         ~~~~~~~~~~~~~~~~~~~~~~~~^
+        value, custom_objects=custom_objects, safe_mode=safe_mode
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 709, in deserialize_keras_object
+    cls = _retrieve_class_or_fn(
+        class_name,
+    ...<4 lines>...
+        custom_objects=custom_objects,
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 834, in _retrieve_class_or_fn
+    raise TypeError(
+    ...<5 lines>...
+    )
+TypeError: Could not locate class 'SparseFocalLoss'. Make sure custom classes and functions are decorated with `@keras.saving.register_keras_serializable()`. If they are already decorated, make sure they are all imported so that the decorator is run before trying to load them. Full object config: {'module': None, 'class_name': 'SparseFocalLoss', 'config': {'name': 'sparse_focal_loss', 'reduction': 'sum_over_batch_size', 'alpha': 0.25, 'gamma': 2.0}, 'registered_name': 'SparseFocalLoss'}
+[2026-05-15 10:23:56] FAIL  P5-v02 — model_int8.tflite not produced
+[2026-05-15 10:23:56] REEXPORT P5-v01 (results/gru_phase5_compact)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778808237.036219 3279045 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P5-v01]
+  Loading model.keras ...
+E0000 00:00:1778808238.994492 3279045 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778808238.994510 3279045 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778808238.994518 3279045 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778808238.994528 3279045 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778808238.994530 3279045 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808238.994533 3279045 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808238.994600 3279045 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778808238.994614 3279045 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778808238.994617 3279045 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+Saved artifact at '/tmp/tmpnqld4pa5'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  133222233176208: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859344: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859152: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231858384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231860496: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231860304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231860688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231858960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859920: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231862032: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231861072: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231861456: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231860880: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231862416: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231862224: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231863184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231858768: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231862608: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231863568: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231863760: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231861840: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231864336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778808241.801898 3279045 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778808241.801912 3279045 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778808241.802173 3279045 reader.cc:83] Reading SavedModel from: /tmp/tmpnqld4pa5
+I0000 00:00:1778808241.804590 3279045 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778808241.804597 3279045 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpnqld4pa5
+I0000 00:00:1778808241.856272 3279045 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778808241.862119 3279045 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778808241.990092 3279045 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpnqld4pa5
+I0000 00:00:1778808242.080535 3279045 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 278371 microseconds.
+I0000 00:00:1778808242.234802 3279045 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+    fp32 OK (805 KB)
+Saved artifact at '/tmp/tmpyp951ilv'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  133222233176208: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859344: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859152: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231858384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231860496: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231860304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231860688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231858960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231859920: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231862032: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231861072: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231861456: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231860880: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231862416: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231862224: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231863184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231858768: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231862608: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231863568: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231863760: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231861840: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  133222231864336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778808246.053178 3279045 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778808246.053189 3279045 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778808246.053297 3279045 reader.cc:83] Reading SavedModel from: /tmp/tmpyp951ilv
+I0000 00:00:1778808246.056038 3279045 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778808246.056048 3279045 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpyp951ilv
+I0000 00:00:1778808246.100068 3279045 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778808246.203089 3279045 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpyp951ilv
+I0000 00:00:1778808246.276870 3279045 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 223581 microseconds.
+fully_quantize: 0, inference_type: 6, input_inference_type: INT8, output_inference_type: INT8
+W0000 00:00:1778808248.590949 3279045 flatbuffer_export.cc:3851] Skipping runtime version metadata in the model. This will be generated by the exporter.
+    int8 OK (1219 KB)
+    metrics.json updated
+
+Done.
+[2026-05-15 10:24:09] OK    P5-v01 → 1220 KB INT8
+[2026-05-15 10:24:09] REEXPORT P4-v05 (results/gru_phase4_uni_kp)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778808250.116363 3279363 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P4-v05]
+  Loading model.keras ...
+E0000 00:00:1778808252.007595 3279363 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778808252.007614 3279363 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778808252.007620 3279363 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778808252.007628 3279363 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778808252.007630 3279363 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808252.007632 3279363 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808252.007703 3279363 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778808252.007717 3279363 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778808252.007719 3279363 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+Saved artifact at '/tmp/tmpbhsuk_ut'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 21), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  136088213560912: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213562064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213561872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213562256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213561104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213562448: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563216: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563024: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563408: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213561680: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213562640: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213564752: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213564176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213565136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213564944: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213565904: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213561488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213565328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213566288: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213566480: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213564560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213567056: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778808254.614048 3279363 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778808254.614061 3279363 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778808254.614407 3279363 reader.cc:83] Reading SavedModel from: /tmp/tmpbhsuk_ut
+I0000 00:00:1778808254.616721 3279363 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778808254.616728 3279363 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpbhsuk_ut
+I0000 00:00:1778808254.657463 3279363 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778808254.661584 3279363 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778808254.766266 3279363 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpbhsuk_ut
+I0000 00:00:1778808254.844584 3279363 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 230184 microseconds.
+I0000 00:00:1778808254.949168 3279363 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+    fp32 OK (1956 KB)
+Saved artifact at '/tmp/tmp35pfovn2'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 21), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  136088213560912: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213562064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213561872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213562256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213561104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213562448: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563216: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563024: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563408: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213561680: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213562640: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213564752: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213564176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213563600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213565136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213564944: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213565904: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213561488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213565328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213566288: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213566480: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213564560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136088213567056: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778808258.479850 3279363 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778808258.479860 3279363 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778808258.479955 3279363 reader.cc:83] Reading SavedModel from: /tmp/tmp35pfovn2
+I0000 00:00:1778808258.482447 3279363 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778808258.482455 3279363 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmp35pfovn2
+I0000 00:00:1778808258.520736 3279363 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778808258.622638 3279363 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmp35pfovn2
+I0000 00:00:1778808258.698450 3279363 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 218504 microseconds.
+fully_quantize: 0, inference_type: 6, input_inference_type: INT8, output_inference_type: INT8
+W0000 00:00:1778808261.929090 3279363 flatbuffer_export.cc:3851] Skipping runtime version metadata in the model. This will be generated by the exporter.
+    int8 OK (2254 KB)
+    metrics.json updated
+
+Done.
+[2026-05-15 10:24:23] OK    P4-v05 → 2256 KB INT8
+[2026-05-15 10:24:23] REEXPORT P4-v02 (results/gru_phase4_uni_kp)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778808263.421514 3279564 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P4-v02]
+  Loading model.keras ...
+E0000 00:00:1778808265.215806 3279564 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778808265.215824 3279564 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778808265.215830 3279564 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778808265.215839 3279564 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778808265.215840 3279564 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808265.215843 3279564 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808265.215902 3279564 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778808265.215917 3279564 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778808265.215919 3279564 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 159, in <module>
+    main()
+    ~~~~^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 153, in main
+    reexport(exp_dir, args.representative_samples)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 43, in reexport
+    model = tf.keras.models.load_model(str(keras_path))
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return saving_lib.load_model(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        filepath,
+        ^^^^^^^^^
+    ...<2 lines>...
+        safe_mode=safe_mode,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 365, in load_model
+    return _load_model_from_fileobj(
+        f, custom_objects, compile, safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 442, in _load_model_from_fileobj
+    model = _model_from_config(
+        config_json, custom_objects, compile, safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 431, in _model_from_config
+    model = deserialize_keras_object(
+        config_dict, custom_objects, safe_mode=safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 749, in deserialize_keras_object
+    instance.compile_from_config(compile_config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/trainers/trainer.py", line 980, in compile_from_config
+    config = serialization_lib.deserialize_keras_object(config)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 610, in deserialize_keras_object
+    key: deserialize_keras_object(
+         ~~~~~~~~~~~~~~~~~~~~~~~~^
+        value, custom_objects=custom_objects, safe_mode=safe_mode
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 709, in deserialize_keras_object
+    cls = _retrieve_class_or_fn(
+        class_name,
+    ...<4 lines>...
+        custom_objects=custom_objects,
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 834, in _retrieve_class_or_fn
+    raise TypeError(
+    ...<5 lines>...
+    )
+TypeError: Could not locate class 'SparseFocalLoss'. Make sure custom classes and functions are decorated with `@keras.saving.register_keras_serializable()`. If they are already decorated, make sure they are all imported so that the decorator is run before trying to load them. Full object config: {'module': None, 'class_name': 'SparseFocalLoss', 'config': {'name': 'sparse_focal_loss', 'reduction': 'sum_over_batch_size', 'alpha': 0.25, 'gamma': 2.0}, 'registered_name': 'SparseFocalLoss'}
+[2026-05-15 10:24:25] FAIL  P4-v02 — model_int8.tflite not produced
+[2026-05-15 10:24:25] REEXPORT P4-v03 (results/gru_phase4_uni_kp)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778808266.086201 3279674 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P4-v03]
+  Loading model.keras ...
+E0000 00:00:1778808267.974599 3279674 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778808267.974618 3279674 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778808267.974625 3279674 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778808267.974633 3279674 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778808267.974635 3279674 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808267.974637 3279674 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808267.974703 3279674 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778808267.974718 3279674 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778808267.974719 3279674 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+Saved artifact at '/tmp/tmpvu2f64si'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  128493260470416: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063132816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063132624: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063131856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133200: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133776: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063134160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063132432: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133392: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063135504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063134544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063134928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063134352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063135888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063135696: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063136656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063132240: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063136080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063137040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063137232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063135312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063137808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778808270.499956 3279674 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778808270.499968 3279674 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778808270.500200 3279674 reader.cc:83] Reading SavedModel from: /tmp/tmpvu2f64si
+I0000 00:00:1778808270.502499 3279674 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778808270.502505 3279674 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpvu2f64si
+I0000 00:00:1778808270.543997 3279674 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778808270.547778 3279674 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778808270.649031 3279674 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpvu2f64si
+I0000 00:00:1778808270.721616 3279674 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 221424 microseconds.
+I0000 00:00:1778808270.821618 3279674 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+    fp32 OK (1964 KB)
+Saved artifact at '/tmp/tmpc_9ikggh'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  128493260470416: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063132816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063132624: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063131856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133200: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133776: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063134160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063132432: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063133392: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063135504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063134544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063134928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063134352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063135888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063135696: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063136656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063132240: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063136080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063137040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063137232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063135312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128494063137808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778808274.402618 3279674 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778808274.402631 3279674 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778808274.402746 3279674 reader.cc:83] Reading SavedModel from: /tmp/tmpc_9ikggh
+I0000 00:00:1778808274.405135 3279674 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778808274.405140 3279674 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpc_9ikggh
+I0000 00:00:1778808274.452907 3279674 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778808274.561773 3279674 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpc_9ikggh
+I0000 00:00:1778808274.642953 3279674 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 240217 microseconds.
+fully_quantize: 0, inference_type: 6, input_inference_type: INT8, output_inference_type: INT8
+W0000 00:00:1778808277.851788 3279674 flatbuffer_export.cc:3851] Skipping runtime version metadata in the model. This will be generated by the exporter.
+    int8 OK (2255 KB)
+    metrics.json updated
+
+Done.
+[2026-05-15 10:24:39] OK    P4-v03 → 2256 KB INT8
+[2026-05-15 10:24:39] REEXPORT P4-v04 (results/gru_phase4_uni_kp)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778808279.384942 3279901 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P4-v04]
+  Loading model.keras ...
+E0000 00:00:1778808281.276105 3279901 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778808281.276127 3279901 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778808281.276134 3279901 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778808281.276143 3279901 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778808281.276145 3279901 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808281.276148 3279901 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808281.276222 3279901 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778808281.276239 3279901 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778808281.276241 3279901 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 159, in <module>
+    main()
+    ~~~~^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 153, in main
+    reexport(exp_dir, args.representative_samples)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 43, in reexport
+    model = tf.keras.models.load_model(str(keras_path))
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return saving_lib.load_model(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        filepath,
+        ^^^^^^^^^
+    ...<2 lines>...
+        safe_mode=safe_mode,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 365, in load_model
+    return _load_model_from_fileobj(
+        f, custom_objects, compile, safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 442, in _load_model_from_fileobj
+    model = _model_from_config(
+        config_json, custom_objects, compile, safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 431, in _model_from_config
+    model = deserialize_keras_object(
+        config_dict, custom_objects, safe_mode=safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 749, in deserialize_keras_object
+    instance.compile_from_config(compile_config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/trainers/trainer.py", line 980, in compile_from_config
+    config = serialization_lib.deserialize_keras_object(config)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 610, in deserialize_keras_object
+    key: deserialize_keras_object(
+         ~~~~~~~~~~~~~~~~~~~~~~~~^
+        value, custom_objects=custom_objects, safe_mode=safe_mode
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 709, in deserialize_keras_object
+    cls = _retrieve_class_or_fn(
+        class_name,
+    ...<4 lines>...
+        custom_objects=custom_objects,
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 834, in _retrieve_class_or_fn
+    raise TypeError(
+    ...<5 lines>...
+    )
+TypeError: Could not locate class 'SparseFocalLoss'. Make sure custom classes and functions are decorated with `@keras.saving.register_keras_serializable()`. If they are already decorated, make sure they are all imported so that the decorator is run before trying to load them. Full object config: {'module': None, 'class_name': 'SparseFocalLoss', 'config': {'name': 'sparse_focal_loss', 'reduction': 'sum_over_batch_size', 'alpha': 0.25, 'gamma': 2.0}, 'registered_name': 'SparseFocalLoss'}
+[2026-05-15 10:24:41] FAIL  P4-v04 — model_int8.tflite not produced
+[2026-05-15 10:24:41] REEXPORT P3-v07 (results/gru_phase3_2s)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778808282.267804 3279988 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P3-v07]
+  Loading model.keras ...
+E0000 00:00:1778808284.207785 3279988 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778808284.207806 3279988 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778808284.207814 3279988 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778808284.207825 3279988 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778808284.207827 3279988 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808284.207830 3279988 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778808284.207914 3279988 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778808284.207931 3279988 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778808284.207934 3279988 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+Traceback (most recent call last):
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 159, in <module>
+    main()
+    ~~~~^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 153, in main
+    reexport(exp_dir, args.representative_samples)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/scripts/util/reexport_tflite.py", line 43, in reexport
+    model = tf.keras.models.load_model(str(keras_path))
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_api.py", line 189, in load_model
+    return saving_lib.load_model(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        filepath,
+        ^^^^^^^^^
+    ...<2 lines>...
+        safe_mode=safe_mode,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 365, in load_model
+    return _load_model_from_fileobj(
+        f, custom_objects, compile, safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 442, in _load_model_from_fileobj
+    model = _model_from_config(
+        config_json, custom_objects, compile, safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/saving_lib.py", line 431, in _model_from_config
+    model = deserialize_keras_object(
+        config_dict, custom_objects, safe_mode=safe_mode
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 749, in deserialize_keras_object
+    instance.compile_from_config(compile_config)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/trainers/trainer.py", line 980, in compile_from_config
+    config = serialization_lib.deserialize_keras_object(config)
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 610, in deserialize_keras_object
+    key: deserialize_keras_object(
+         ~~~~~~~~~~~~~~~~~~~~~~~~^
+        value, custom_objects=custom_objects, safe_mode=safe_mode
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 709, in deserialize_keras_object
+    cls = _retrieve_class_or_fn(
+        class_name,
+    ...<4 lines>...
+        custom_objects=custom_objects,
+    )
+  File "/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/keras/src/saving/serialization_lib.py", line 834, in _retrieve_class_or_fn
+    raise TypeError(
+    ...<5 lines>...
+    )
+TypeError: Could not locate class 'SparseFocalLoss'. Make sure custom classes and functions are decorated with `@keras.saving.register_keras_serializable()`. If they are already decorated, make sure they are all imported so that the decorator is run before trying to load them. Full object config: {'module': None, 'class_name': 'SparseFocalLoss', 'config': {'name': 'sparse_focal_loss', 'reduction': 'sum_over_batch_size', 'alpha': 0.25, 'gamma': 2.0}, 'registered_name': 'SparseFocalLoss'}
+[2026-05-15 10:24:44] FAIL  P3-v07 — model_int8.tflite not produced
+[2026-05-15 10:24:44] === Part A complete ===
+[2026-05-15 10:24:44] --- Part A Size/MinP summary ---
+ID       Units      FS       W    MinP    INT8_KB   Deploy?
+------------------------------------------------------------
+P5-v02   [128, 64]  kp7      40   0.9495     0.0 KB  MISSING  int8_MinP=  -   
+P5-v01   [128, 64]  kp7      40   0.9353  1219.6 KB  OVER  int8_MinP=  -   
+P4-v05   [256, 128] minimal  40   0.9513  2254.0 KB  OVER  int8_MinP=  -   
+P4-v02   [256, 128] kp12     40   0.9469     0.0 KB  MISSING  int8_MinP=  -   
+P4-v03   [256, 128] kp7      40   0.9468  2255.9 KB  OVER  int8_MinP=  -   
+P4-v04   [256, 128] kp7      40   0.9459     0.0 KB  MISSING  int8_MinP=  -   
+P3-v07   [256, 128] kp12     30   0.9404     0.0 KB  MISSING  int8_MinP=  -   
+[2026-05-15 10:24:44] === Part B: 신규 학습 ===
+[2026-05-15 10:24:44] START Q7-v01
+[2026-05-15 10:26:01] FAIL  Q7-v01
+[2026-05-15 10:26:01] START Q7-v02
+[2026-05-15 10:27:12] FAIL  Q7-v02
+[2026-05-15 10:27:12] START Q7-v03
+[2026-05-15 10:28:27] FAIL  Q7-v03
+[2026-05-15 10:28:27] === Part B complete ===
+[2026-05-15 10:28:27] === Phase 7 Final Summary ===
+
+[Part A — Existing models reexported]
+ID       Units      FS       W    Float_MinP  INT8_MinP  INT8_KB   Deploy?
+----------------------------------------------------------------------
+P5-v02   128,64     kp7      40   0.9495         -           0.0 KB  ? MISS
+P5-v01   128,64     kp7      40   0.9353         -        1219.6 KB  ✗ OVER
+P4-v05   256,128    minimal  40   0.9513         -        2254.0 KB  ✗ OVER
+P4-v02   256,128    kp12     40   0.9469         -           0.0 KB  ? MISS
+P4-v03   256,128    kp7      40   0.9468         -        2255.9 KB  ✗ OVER
+P4-v04   256,128    kp7      40   0.9459         -           0.0 KB  ? MISS
+P3-v07   256,128    kp12     30   0.9404         -           0.0 KB  ? MISS
+
+[Part B — New experiments]
+Q7-v01   128,64     kp12     40   0.0000         -           0.0 KB  ? MISS
+Q7-v02   128,64     kp7      30   0.0000         -           0.0 KB  ? MISS
+Q7-v03   128,64     kp12     30   0.0000         -           0.0 KB  ? MISS
+[2026-05-15 10:28:27] Done. See results/gru_phase7_quant/summary.log
+[2026-05-15 10:42:39] === Part A: TFLite INT8 재수출 ===
+[2026-05-15 10:42:39] REEXPORT P5-v02 (results/gru_phase5_compact)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778809359.529556 3291571 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P5-v02]
+  Loading model.keras ...
+E0000 00:00:1778809361.210612 3291571 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778809361.210631 3291571 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778809361.210638 3291571 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778809361.210647 3291571 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778809361.210649 3291571 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809361.210651 3291571 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809361.210726 3291571 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778809361.210742 3291571 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778809361.210743 3291571 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+    unidirectional → converting without unroll (compact graph)
+Saved artifact at '/tmp/tmplhsuslk5'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  139268159135504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159136080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159135888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159136464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159135312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159135696: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159137232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159137040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159136272: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159134160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159137808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159139344: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138768: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159137616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159139536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138192: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159140304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138576: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159140688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159140880: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159140112: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159141840: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778809361.867497 3291571 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809361.867507 3291571 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809361.867733 3291571 reader.cc:83] Reading SavedModel from: /tmp/tmplhsuslk5
+I0000 00:00:1778809361.868592 3291571 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809361.868596 3291571 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmplhsuslk5
+I0000 00:00:1778809361.878401 3291571 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778809361.880104 3291571 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809361.924426 3291571 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmplhsuslk5
+I0000 00:00:1778809361.941404 3291571 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 73674 microseconds.
+I0000 00:00:1778809361.962182 3291571 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+loc(callsite(fused["TensorListReserve:", "P5-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P5-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    fp32 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+Saved artifact at '/tmp/tmpmfn104yi'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  139268159135504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159136080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159135888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159136464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159135312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159135696: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159137232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159137040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159136272: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159134160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159137808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159139344: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138768: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159137616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159139536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138192: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159140304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159138576: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159140688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159140880: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159140112: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139268159141840: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778809362.532515 3291571 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809362.532524 3291571 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809362.532616 3291571 reader.cc:83] Reading SavedModel from: /tmp/tmpmfn104yi
+I0000 00:00:1778809362.533512 3291571 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809362.533521 3291571 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpmfn104yi
+I0000 00:00:1778809362.545489 3291571 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809362.589314 3291571 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpmfn104yi
+I0000 00:00:1778809362.607497 3291571 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 74885 microseconds.
+loc(callsite(fused["TensorListReserve:", "P5-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P5-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    int8 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+    metrics.json updated
+
+Done.
+[2026-05-15 10:42:43] FAIL  P5-v02 — model_int8.tflite not produced
+[2026-05-15 10:42:43] REEXPORT P5-v01 (results/gru_phase5_compact)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778809363.433334 3291708 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P5-v01]
+  Loading model.keras ...
+E0000 00:00:1778809365.205784 3291708 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778809365.205803 3291708 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778809365.205810 3291708 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778809365.205821 3291708 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778809365.205823 3291708 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809365.205825 3291708 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809365.205884 3291708 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778809365.205898 3291708 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778809365.205900 3291708 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+    unidirectional → converting without unroll (compact graph)
+Saved artifact at '/tmp/tmpdt81cirw'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  124183244398352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244398928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244398736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244399312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244398160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244398544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244400080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244399888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244399120: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244397008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244400656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244402192: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244400464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244402384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244403152: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401424: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244403536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244403728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244402960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244404688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778809365.858511 3291708 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809365.858521 3291708 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809365.858761 3291708 reader.cc:83] Reading SavedModel from: /tmp/tmpdt81cirw
+I0000 00:00:1778809365.859654 3291708 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809365.859664 3291708 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpdt81cirw
+I0000 00:00:1778809365.867989 3291708 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778809365.869487 3291708 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809365.913788 3291708 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpdt81cirw
+I0000 00:00:1778809365.931665 3291708 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 72910 microseconds.
+I0000 00:00:1778809365.953988 3291708 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+loc(callsite(fused["TensorListReserve:", "P5-v01_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P5-v01_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    fp32 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v01_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v01_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+Saved artifact at '/tmp/tmp990we18q'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  124183244398352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244398928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244398736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244399312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244398160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244398544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244400080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244399888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244399120: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244397008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244400656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244402192: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244400464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244402384: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244403152: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401808: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244401424: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244403536: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244403728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244402960: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  124183244404688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778809366.532295 3291708 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809366.532303 3291708 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809366.532397 3291708 reader.cc:83] Reading SavedModel from: /tmp/tmp990we18q
+I0000 00:00:1778809366.533215 3291708 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809366.533221 3291708 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmp990we18q
+I0000 00:00:1778809366.543718 3291708 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809366.587686 3291708 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmp990we18q
+I0000 00:00:1778809366.604376 3291708 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 71983 microseconds.
+loc(callsite(fused["TensorListReserve:", "P5-v01_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P5-v01_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    int8 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v01_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P5-v01_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+    metrics.json updated
+
+Done.
+[2026-05-15 10:42:47] FAIL  P5-v01 — model_int8.tflite not produced
+[2026-05-15 10:42:47] REEXPORT P4-v05 (results/gru_phase4_uni_kp)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778809367.399709 3291843 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P4-v05]
+  Loading model.keras ...
+E0000 00:00:1778809369.089841 3291843 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778809369.089860 3291843 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778809369.089867 3291843 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778809369.089876 3291843 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778809369.089877 3291843 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809369.089880 3291843 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809369.089947 3291843 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778809369.089961 3291843 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778809369.089963 3291843 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+    unidirectional → converting without unroll (compact graph)
+Saved artifact at '/tmp/tmpspvj6hkm'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 21), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  136250924523280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924523856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924523664: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924524240: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924523088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924523472: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924525008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924524816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924524048: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924521936: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924525584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924527120: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924526160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924526544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924525392: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924527312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924525968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924528080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924526736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924526352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924528464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924528656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924527888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924529616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778809369.769007 3291843 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809369.769016 3291843 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809369.769240 3291843 reader.cc:83] Reading SavedModel from: /tmp/tmpspvj6hkm
+I0000 00:00:1778809369.770246 3291843 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809369.770252 3291843 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpspvj6hkm
+I0000 00:00:1778809369.778271 3291843 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778809369.779707 3291843 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809369.825576 3291843 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpspvj6hkm
+I0000 00:00:1778809369.843502 3291843 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 74268 microseconds.
+I0000 00:00:1778809369.865667 3291843 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+loc(callsite(fused["TensorListReserve:", "P4-v05_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P4-v05_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    fp32 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v05_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v05_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+Saved artifact at '/tmp/tmpb8n37d8i'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 21), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  136250924523280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924523856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924523664: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924524240: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924523088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924523472: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924525008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924524816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924524048: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924521936: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924525584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924527120: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924526160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924526544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924525392: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924527312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924525968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924528080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924526736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924526352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924528464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924528656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924527888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136250924529616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778809370.439596 3291843 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809370.439604 3291843 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809370.439701 3291843 reader.cc:83] Reading SavedModel from: /tmp/tmpb8n37d8i
+I0000 00:00:1778809370.440496 3291843 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809370.440500 3291843 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpb8n37d8i
+I0000 00:00:1778809370.450874 3291843 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809370.496806 3291843 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpb8n37d8i
+I0000 00:00:1778809370.514122 3291843 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 74426 microseconds.
+loc(callsite(fused["TensorListReserve:", "P4-v05_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P4-v05_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    int8 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v05_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v05_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+    metrics.json updated
+
+Done.
+[2026-05-15 10:42:51] FAIL  P4-v05 — model_int8.tflite not produced
+[2026-05-15 10:42:51] REEXPORT P4-v02 (results/gru_phase4_uni_kp)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778809371.367149 3291978 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P4-v02]
+  Loading model.keras ...
+E0000 00:00:1778809373.106748 3291978 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778809373.106769 3291978 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778809373.106776 3291978 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778809373.106786 3291978 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778809373.106788 3291978 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809373.106790 3291978 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809373.106847 3291978 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778809373.106861 3291978 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778809373.106863 3291978 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+    unidirectional → converting without unroll (compact graph)
+Saved artifact at '/tmp/tmpnd_vp39u'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 45), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  128732231130896: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131472: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231130704: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231132624: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231132432: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131664: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231129552: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133200: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231134736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133776: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231134160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231134928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231135696: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231134352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231136080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231136272: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231135504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231137232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778809373.784285 3291978 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809373.784295 3291978 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809373.784523 3291978 reader.cc:83] Reading SavedModel from: /tmp/tmpnd_vp39u
+I0000 00:00:1778809373.785423 3291978 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809373.785428 3291978 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpnd_vp39u
+I0000 00:00:1778809373.793724 3291978 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778809373.795222 3291978 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809373.841351 3291978 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpnd_vp39u
+I0000 00:00:1778809373.858695 3291978 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 74177 microseconds.
+I0000 00:00:1778809373.880791 3291978 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+loc(callsite(fused["TensorListReserve:", "P4-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P4-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    fp32 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+Saved artifact at '/tmp/tmpvj_frx7g'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 45), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  128732231130896: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131472: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231130704: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231132624: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231132432: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231131664: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231129552: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133200: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231134736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133776: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231134160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231134928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231135696: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231134352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231133968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231136080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231136272: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231135504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  128732231137232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778809374.457044 3291978 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809374.457053 3291978 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809374.457142 3291978 reader.cc:83] Reading SavedModel from: /tmp/tmpvj_frx7g
+I0000 00:00:1778809374.457947 3291978 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809374.457952 3291978 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpvj_frx7g
+I0000 00:00:1778809374.468488 3291978 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809374.513439 3291978 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpvj_frx7g
+I0000 00:00:1778809374.530365 3291978 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 73226 microseconds.
+loc(callsite(fused["TensorListReserve:", "P4-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P4-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    int8 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v02_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+    metrics.json updated
+
+Done.
+[2026-05-15 10:42:55] FAIL  P4-v02 — model_int8.tflite not produced
+[2026-05-15 10:42:55] REEXPORT P4-v03 (results/gru_phase4_uni_kp)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778809375.344092 3292112 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P4-v03]
+  Loading model.keras ...
+E0000 00:00:1778809377.237414 3292112 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778809377.237437 3292112 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778809377.237445 3292112 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778809377.237456 3292112 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778809377.237457 3292112 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809377.237460 3292112 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809377.237569 3292112 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778809377.237584 3292112 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778809377.237586 3292112 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+    unidirectional → converting without unroll (compact graph)
+Saved artifact at '/tmp/tmpt9c_uk2a'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  131869066731280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066731856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066731664: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066732240: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066731088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066731472: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066733008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066732816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066732048: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066729936: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066733584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066735120: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066734160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066734544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066733392: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066735312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066733968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066736080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066734736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066734352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066736464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066736656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066735888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066737616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778809377.976504 3292112 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809377.976518 3292112 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809377.976764 3292112 reader.cc:83] Reading SavedModel from: /tmp/tmpt9c_uk2a
+I0000 00:00:1778809377.977639 3292112 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809377.977644 3292112 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpt9c_uk2a
+I0000 00:00:1778809377.986868 3292112 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778809377.988522 3292112 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809378.037103 3292112 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpt9c_uk2a
+I0000 00:00:1778809378.055618 3292112 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 78862 microseconds.
+I0000 00:00:1778809378.077420 3292112 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+loc(callsite(fused["TensorListReserve:", "P4-v03_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P4-v03_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    fp32 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v03_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v03_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+Saved artifact at '/tmp/tmpzo01ph6b'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  131869066731280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066731856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066731664: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066732240: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066731088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066731472: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066733008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066732816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066732048: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066729936: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066733584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066735120: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066734160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066734544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066733392: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066735312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066733968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066736080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066734736: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066734352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066736464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066736656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066735888: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  131869066737616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778809378.676678 3292112 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809378.676688 3292112 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809378.676784 3292112 reader.cc:83] Reading SavedModel from: /tmp/tmpzo01ph6b
+I0000 00:00:1778809378.677709 3292112 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809378.677717 3292112 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpzo01ph6b
+I0000 00:00:1778809378.689270 3292112 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809378.735881 3292112 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpzo01ph6b
+I0000 00:00:1778809378.753569 3292112 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 76793 microseconds.
+loc(callsite(fused["TensorListReserve:", "P4-v03_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P4-v03_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    int8 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v03_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v03_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+    metrics.json updated
+
+Done.
+[2026-05-15 10:42:59] FAIL  P4-v03 — model_int8.tflite not produced
+[2026-05-15 10:42:59] REEXPORT P4-v04 (results/gru_phase4_uni_kp)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778809379.715133 3292350 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P4-v04]
+  Loading model.keras ...
+E0000 00:00:1778809381.404021 3292350 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778809381.404040 3292350 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778809381.404046 3292350 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778809381.404055 3292350 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778809381.404056 3292350 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809381.404059 3292350 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809381.404118 3292350 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778809381.404132 3292350 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778809381.404134 3292350 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+    unidirectional → converting without unroll (compact graph)
+Saved artifact at '/tmp/tmp0rqsegb6'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  132114514976528: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514977104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514976912: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514977488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514976336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514976720: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514978256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514978064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514977296: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514975184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514978832: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514980368: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979408: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514978640: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514980560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979216: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514981328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979984: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514981712: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514981904: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514981136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514982864: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778809382.068486 3292350 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809382.068497 3292350 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809382.068725 3292350 reader.cc:83] Reading SavedModel from: /tmp/tmp0rqsegb6
+I0000 00:00:1778809382.069632 3292350 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809382.069637 3292350 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmp0rqsegb6
+I0000 00:00:1778809382.079028 3292350 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778809382.080428 3292350 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809382.125922 3292350 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmp0rqsegb6
+I0000 00:00:1778809382.142917 3292350 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 74196 microseconds.
+I0000 00:00:1778809382.163849 3292350 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+loc(callsite(fused["TensorListReserve:", "P4-v04_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P4-v04_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    fp32 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v04_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v04_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+Saved artifact at '/tmp/tmp016q5c0h'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 27), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  132114514976528: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514977104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514976912: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514977488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514976336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514976720: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514978256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514978064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514977296: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514975184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514978832: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514980368: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979408: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514978640: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514980560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979216: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514981328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979984: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514979600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514981712: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514981904: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514981136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  132114514982864: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778809382.733196 3292350 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809382.733204 3292350 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809382.733296 3292350 reader.cc:83] Reading SavedModel from: /tmp/tmp016q5c0h
+I0000 00:00:1778809382.734193 3292350 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809382.734202 3292350 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmp016q5c0h
+I0000 00:00:1778809382.745249 3292350 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809382.790760 3292350 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmp016q5c0h
+I0000 00:00:1778809382.807868 3292350 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 74576 microseconds.
+loc(callsite(fused["TensorListReserve:", "P4-v04_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P4-v04_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    int8 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v04_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P4-v04_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+    metrics.json updated
+
+Done.
+[2026-05-15 10:43:03] FAIL  P4-v04 — model_int8.tflite not produced
+[2026-05-15 10:43:03] REEXPORT P3-v07 (results/gru_phase3_2s)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778809383.623140 3292480 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[P3-v07]
+  Loading model.keras ...
+E0000 00:00:1778809385.321834 3292480 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+I0000 00:00:1778809385.321853 3292480 cuda_diagnostics.cc:160] env: CUDA_VISIBLE_DEVICES=""
+I0000 00:00:1778809385.321860 3292480 cuda_diagnostics.cc:163] CUDA_VISIBLE_DEVICES is set to an empty string - this hides all GPUs from CUDA
+I0000 00:00:1778809385.321870 3292480 cuda_diagnostics.cc:171] verbose logging is disabled. Rerun with verbose logging (usually --v=1 or --vmodule=cuda_diagnostics=1) to get more diagnostic output from this module
+I0000 00:00:1778809385.321872 3292480 cuda_diagnostics.cc:176] retrieving CUDA diagnostic information for host: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809385.321875 3292480 cuda_diagnostics.cc:183] hostname: min-B550M-Phantom-Gaming-4
+I0000 00:00:1778809385.321941 3292480 cuda_diagnostics.cc:190] libcuda reported version is: 580.142.0
+I0000 00:00:1778809385.321955 3292480 cuda_diagnostics.cc:194] kernel reported version is: 580.142.0
+I0000 00:00:1778809385.321957 3292480 cuda_diagnostics.cc:284] kernel version seems to match DSO: 580.142.0
+    unidirectional → converting without unroll (compact graph)
+Saved artifact at '/tmp/tmpm8cb0huj'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 30, 45), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  140630106185488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106186064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106185872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106186448: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106185296: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106185680: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106187216: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106187024: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106186256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106184144: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106187792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106189328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188368: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188752: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106187600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106189520: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106190288: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188944: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106190672: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106190864: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106190096: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106191824: TensorSpec(shape=(), dtype=tf.resource, name=None)
+W0000 00:00:1778809386.019047 3292480 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809386.019058 3292480 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809386.019284 3292480 reader.cc:83] Reading SavedModel from: /tmp/tmpm8cb0huj
+I0000 00:00:1778809386.020155 3292480 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809386.020162 3292480 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpm8cb0huj
+I0000 00:00:1778809386.030436 3292480 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778809386.032009 3292480 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809386.079036 3292480 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpm8cb0huj
+I0000 00:00:1778809386.098038 3292480 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 78761 microseconds.
+I0000 00:00:1778809386.121048 3292480 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+loc(callsite(fused["TensorListReserve:", "P3-v07_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P3-v07_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    fp32 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P3-v07_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P3-v07_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_1268"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_1375"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+Saved artifact at '/tmp/tmpf7u9oohy'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 30, 45), dtype=tf.float32, name='pose_sequence')
+Output Type:
+  TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+Captures:
+  140630106185488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106186064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106185872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106186448: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106185296: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106185680: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106187216: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106187024: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106186256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106184144: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106187792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106189328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188368: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188752: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106187600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106189520: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106190288: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188944: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106188560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106190672: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106190864: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106190096: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  140630106191824: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+W0000 00:00:1778809386.715428 3292480 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778809386.715437 3292480 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778809386.715529 3292480 reader.cc:83] Reading SavedModel from: /tmp/tmpf7u9oohy
+I0000 00:00:1778809386.716452 3292480 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778809386.716460 3292480 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpf7u9oohy
+I0000 00:00:1778809386.728242 3292480 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778809386.773449 3292480 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpf7u9oohy
+I0000 00:00:1778809386.790332 3292480 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 74808 microseconds.
+loc(callsite(fused["TensorListReserve:", "P3-v07_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+loc(callsite(fused["TensorListReserve:", "P3-v07_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): error: failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+    int8 FAIL: <unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P3-v07_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: loc(callsite(fused["TensorListReserve:", "P3-v07_gru_1/gru_1_1/TensorArrayV2_1@__inference_function_4602"] at callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal
+<unknown>:0: note: loc(callsite(fused["StatefulPartitionedCall:", "StatefulPartitionedCall@__inference_signature_wrapper_4709"] at fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"])): called from
+<unknown>:0: note: loc(fused["StatefulPartitionedCall:", "StatefulPartitionedCall_1"]): called from
+<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\n converter._experimental_lower_tensor_list_ops = False
+
+    metrics.json updated
+
+Done.
+[2026-05-15 10:43:07] FAIL  P3-v07 — model_int8.tflite not produced
+[2026-05-15 10:43:07] === Part A complete ===
+[2026-05-15 10:43:07] --- Part A Size/MinP summary ---
+ID       Units      FS       W    MinP    INT8_KB   Deploy?
+------------------------------------------------------------
+P5-v02   [128, 64]  kp7      40   0.9495     0.0 KB  MISSING  int8_MinP=  -   
+P5-v01   [128, 64]  kp7      40   0.9353     0.0 KB  MISSING  int8_MinP=  -   
+P4-v05   [256, 128] minimal  40   0.9513     0.0 KB  MISSING  int8_MinP=  -   
+P4-v02   [256, 128] kp12     40   0.9469     0.0 KB  MISSING  int8_MinP=  -   
+P4-v03   [256, 128] kp7      40   0.9468     0.0 KB  MISSING  int8_MinP=  -   
+P4-v04   [256, 128] kp7      40   0.9459     0.0 KB  MISSING  int8_MinP=  -   
+P3-v07   [256, 128] kp12     30   0.9404     0.0 KB  MISSING  int8_MinP=  -   
+[2026-05-15 10:43:07] === Part B: 신규 학습 ===
+[2026-05-15 10:43:07] START Q7-v01
+[2026-05-15 11:06:39] OK    Q7-v01
+[2026-05-15 11:06:39] START Q7-v02
+[2026-05-15 11:27:38] OK    Q7-v02
+[2026-05-15 11:27:38] START Q7-v03
+[2026-05-15 11:50:54] OK    Q7-v03
+[2026-05-15 11:50:54] === Part B complete ===
+[2026-05-15 11:50:54] === Phase 7 Final Summary ===
+
+[Part A — Existing models reexported]
+ID       Units      FS       W    Float_MinP  INT8_MinP  INT8_KB   Deploy?
+----------------------------------------------------------------------
+P5-v02   128,64     kp7      40   0.9495         -           0.0 KB  ? MISS
+P5-v01   128,64     kp7      40   0.9353         -        1219.6 KB  ✗ OVER
+P4-v05   256,128    minimal  40   0.9513         -           0.0 KB  ? MISS
+P4-v02   256,128    kp12     40   0.9469         -           0.0 KB  ? MISS
+P4-v03   256,128    kp7      40   0.9468         -           0.0 KB  ? MISS
+P4-v04   256,128    kp7      40   0.9459         -           0.0 KB  ? MISS
+P3-v07   256,128    kp12     30   0.9404         -           0.0 KB  ? MISS
+
+[Part B — New experiments]
+Q7-v01   128,64     kp12     40   0.9042       0.9231     1226.7 KB  ✗ OVER
+Q7-v02   128,64     kp7      30   0.9341       0.9193      958.1 KB  ✗ OVER
+Q7-v03   128,64     kp12     30   0.9386       0.9038      963.8 KB  ✗ OVER
+[2026-05-15 11:50:54] Done. See results/gru_phase7_quant/summary.log

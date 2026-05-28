@@ -1,0 +1,48 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778734990.309033 2509991 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 14:03:11] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/train.csv
+[2026-05-14 14:03:22] train rows=1,274,014 videos=6,344 features=43 data_scope=all
+[2026-05-14 14:03:22] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/val.csv
+[2026-05-14 14:03:25] val rows=363,918 videos=1,811 features=43 data_scope=all
+[2026-05-14 14:03:25] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2/test.csv
+[2026-05-14 14:03:27] test rows=182,782 videos=911 features=43 data_scope=all
+[2026-05-14 14:03:35] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 14:03:37] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 14:03:38] test windows=19,712 positive=7,332 videos=911
+I0000 00:00:1778735022.115429 2509991 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6065 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778735023.301053 2509991 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778735024.167838 2509991 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778735026.311642 2509991 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+I0000 00:00:1778735029.190945 2510274 cuda_dnn.cc:461] Loaded cuDNN version 92200
+W0000 00:00:1778735516.572127 2509991 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+W0000 00:00:1778735517.425030 2509991 cpu_allocator_impl.cc:82] Allocation of 971617680 exceeds 10% of free system memory.
+[2026-05-14 14:12:19] video-level val: videos=1811 f1=0.9258 recall=0.9576 fall_prec=0.8960 nfall_prec=0.9200 min_prec=0.8960 min_consecutive=3
+[2026-05-14 14:12:19] video-level test: videos=911 f1=0.9026 recall=0.9367 fall_prec=0.8709 nfall_prec=0.8796 min_prec=0.8709 min_consecutive=3
+[2026-05-14 14:12:19] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9200    0.8142    0.8638       678
+           1     0.8960    0.9576    0.9258      1133
+
+    accuracy                         0.9039      1811
+   macro avg     0.9080    0.8859    0.8948      1811
+weighted avg     0.9050    0.9039    0.9026      1811
+
+[2026-05-14 14:12:19] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8796    0.7690    0.8206       342
+           1     0.8709    0.9367    0.9026       569
+
+    accuracy                         0.8738       911
+   macro avg     0.8753    0.8529    0.8616       911
+weighted avg     0.8742    0.8738    0.8718       911
+
+I0000 00:00:1778735540.224014 2509991 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778735540.224139 2509991 single_machine.cc:376] Starting new session
+I0000 00:00:1778735540.229145 2509991 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6065 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+I0000 00:00:1778735540.568047 2509991 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778735540.568190 2509991 single_machine.cc:376] Starting new session
+I0000 00:00:1778735540.573226 2509991 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6065 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+[2026-05-14 14:12:20] done P1-v03 val_f1=0.7860 (video=0.9258) test_f1=0.7750 (video=0.9026) test_min_prec=0.8709 threshold=0.450 min_consecutive=3

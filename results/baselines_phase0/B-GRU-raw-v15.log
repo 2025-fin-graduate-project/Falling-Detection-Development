@@ -1,0 +1,38 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778717977.030684 2339454 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 09:19:38] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train_filtered.csv
+[2026-05-14 09:20:01] train rows=1,783,893 videos=8,882 features=45 data_scope=no_by
+[2026-05-14 09:20:01] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val_filtered.csv
+[2026-05-14 09:20:07] val rows=509,932 videos=2,536 features=45 data_scope=no_by
+[2026-05-14 09:20:07] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test_filtered.csv
+[2026-05-14 09:20:10] test rows=255,682 videos=1,273 features=45 data_scope=no_by
+[2026-05-14 09:20:20] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 09:20:23] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 09:20:24] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778718029.486429 2339454 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778718030.306029 2339454 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+W0000 00:00:1778718032.295308 2339454 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+W0000 00:00:1778718875.747110 2339454 cpu_allocator_impl.cc:82] Allocation of 1382162400 exceeds 10% of free system memory.
+[2026-05-14 09:34:52] video-level val: videos=2536 f1=0.9124 recall=0.9164 precision=0.9085
+[2026-05-14 09:34:52] video-level test: videos=1273 f1=0.9095 recall=0.9230 precision=0.8964
+W0000 00:00:1778718894.396885 2339454 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778718894.396896 2339454 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778718894.397074 2339454 reader.cc:83] Reading SavedModel from: /tmp/tmpkjhdckk0
+I0000 00:00:1778718894.400000 2339454 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778718894.400006 2339454 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpkjhdckk0
+I0000 00:00:1778718894.417175 2339454 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778718894.420983 2339454 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778718894.498562 2339454 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpkjhdckk0
+I0000 00:00:1778718894.521567 2339454 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 124499 microseconds.
+I0000 00:00:1778718894.549780 2339454 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+W0000 00:00:1778718895.870100 2339454 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778718895.870111 2339454 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778718895.870204 2339454 reader.cc:83] Reading SavedModel from: /tmp/tmprxb6ivw5
+I0000 00:00:1778718895.872452 2339454 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778718895.872458 2339454 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmprxb6ivw5
+I0000 00:00:1778718895.892186 2339454 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778718895.969696 2339454 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmprxb6ivw5
+I0000 00:00:1778718895.992796 2339454 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 122596 microseconds.
+[2026-05-14 09:34:56] done B-GRU-raw-v15 val_f1=0.7911 (video=0.9124) test_f1=0.7846 (video=0.9095) threshold=0.500

@@ -1,0 +1,7 @@
+{
+  "export": {
+    "fp32_export_error": "ValueError('Input 0 of node P1-v04_gru_1/bi_gru_1_1/forward_gru_1_1/AssignVariableOp was passed int64 from P1-v04_gru_1/bi_gru_1_1/forward_gru_1_1/ReadVariableOp/resource:0 incompatible with expected resource.')",
+    "int8_export_error": "ValueError('Input 0 of node P1-v04_gru_1/bi_gru_1_1/forward_gru_1_1/AssignVariableOp was passed int64 from P1-v04_gru_1/bi_gru_1_1/forward_gru_1_1/ReadVariableOp/resource:0 incompatible with expected resource.')"
+  },
+  "runtime": {}
+}

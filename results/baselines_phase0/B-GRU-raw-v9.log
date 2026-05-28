@@ -1,0 +1,30 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778705022.846989 2224886 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 05:43:44] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-14 05:44:06] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-14 05:44:06] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-14 05:44:12] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-14 05:44:12] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-14 05:44:14] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-14 05:44:24] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 05:44:28] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 05:44:29] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778705074.170254 2224886 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778705074.934645 2224886 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778705076.325278 2224886 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778705076.800979 2224886 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778705153.423963 2224886 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778707694.179972 2224886 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+[2026-05-14 06:28:54] video-level val: videos=2536 f1=0.9049 recall=0.9302 precision=0.8809
+[2026-05-14 06:28:54] video-level test: videos=1273 f1=0.8922 recall=0.9259 precision=0.8609
+I0000 00:00:1778707735.450157 2224886 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778707735.450237 2224886 single_machine.cc:376] Starting new session
+W0000 00:00:1778707735.452699 2224886 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+I0000 00:00:1778707735.968977 2224886 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778707735.969054 2224886 single_machine.cc:376] Starting new session
+W0000 00:00:1778707735.970404 2224886 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-14 06:28:56] done B-GRU-raw-v9 val_f1=0.7754 (video=0.9049) test_f1=0.7612 (video=0.8922) threshold=0.550

@@ -1,0 +1,80 @@
+[2026-05-15 16:04:01] === Phase 10: generating FP/FN error timeline report for P9O-v01 ===
+[2026-05-15 16:04:05] FAIL Phase 10 report (exit 1) — aborting
+[2026-05-15 16:04:30] === Phase 10: generating FP/FN error timeline report for P9O-v01 ===
+[2026-05-15 16:04:32] FAIL Phase 10 report (exit 1) — aborting
+[2026-05-15 16:05:15] === Phase 10: generating FP/FN error timeline report for P9O-v01 ===
+[2026-05-15 16:05:42] Phase 10 report done. Val FP videos: 50
+[2026-05-15 16:05:42] === P11-v01: base + val_video_min_pr checkpointing ===
+[2026-05-15 16:05:42] START P11-v01
+[2026-05-15 16:07:20] === Phase 10: generating FP/FN error timeline report for P9O-v01 ===
+[2026-05-15 16:07:20] SKIP Phase 10 report — already exists at results/phase10_error_analysis/P9O-v01
+[2026-05-15 16:07:20] Phase 10 report done. Val FP videos: 50
+[2026-05-15 16:07:20] === P11-v01: MinPR checkpointing only ===
+[2026-05-15 16:07:20] START P11-v01
+[2026-05-15 16:08:54] === Phase 10: generating FP/FN error timeline report for P9O-v01 ===
+[2026-05-15 16:08:54] SKIP Phase 10 report — already exists at results/phase10_error_analysis/P9O-v01
+[2026-05-15 16:08:55] Phase 10 report done. Val FP videos: 50
+[2026-05-15 16:08:55] === P11-v01: MinPR checkpointing only ===
+[2026-05-15 16:08:55] START P11-v01
+[2026-05-15 16:40:53] OK    P11-v01  test_min_pr=0.8694
+[2026-05-15 16:40:53] === P11-v02: + val FP hard-negative stride=1 ===
+[2026-05-15 16:40:53] START P11-v02
+[2026-05-15 17:23:17] OK    P11-v02  test_min_pr=0.8939
+[2026-05-15 17:23:17] === P11-v03: + wider consecutive sweep ===
+[2026-05-15 17:23:17] START P11-v03
+[2026-05-15 18:26:44] OK    P11-v03  test_min_pr=0.8612
+[2026-05-15 18:26:44] === P11-v04: + focal alpha=0.10 (90% weight on non-fall) ===
+[2026-05-15 18:26:44] START P11-v04
+[2026-05-15 19:32:19] OK    P11-v04  test_min_pr=0.8880
+[2026-05-15 19:32:19] === P11-v05: + global negative stride=1 (all non-fall windows) ===
+[2026-05-15 19:32:19] START P11-v05
+[2026-05-15 20:30:33] OK    P11-v05  test_min_pr=0.9061
+[2026-05-15 20:30:33] === P11-v06: kp12 + hard-negative stride=1 ===
+[2026-05-15 20:30:33] SKIP  P11-v06 — already complete
+[2026-05-15 20:30:33] === P11-v07: GRU(256,128) + hard-negative stride=1 ===
+[2026-05-15 20:30:33] SKIP  P11-v07 — already complete
+[2026-05-15 20:30:33] === Phase 11 summary ===
+[2026-05-15 20:30:33] === Phase 11 summary ===
+ID           test_MinPR  test_FP test_NFP  test_FR test_NFR  val_MinPR  PASS?
+P11-v01          0.8694   0.9531   0.9342   0.9775   0.8694     0.9021       
+P11-v02          0.8939   0.9612   0.9087   0.9670   0.8939     0.9042       
+P11-v03          0.8612   0.9495   0.8866   0.9595   0.8612     0.8958       
+P11-v04          0.8880   0.9652   0.8880   0.9580   0.9061     0.9002       
+P11-v05          0.9061   0.9655   0.9098   0.9670   0.9061     0.9004       
+P11-v06          0.0000      nan      nan      nan      nan     0.0000       
+P11-v07          0.0000      nan      nan      nan      nan     0.0000       
+[2026-05-15 20:32:36] === Phase 10: generating FP/FN error timeline report for P9O-v01 ===
+[2026-05-15 20:32:36] SKIP Phase 10 report — already exists at results/phase10_error_analysis/P9O-v01
+[2026-05-15 20:32:36] Phase 10 report done. Val FP videos: 50
+[2026-05-15 20:32:36] === P11-v01: val_video_min_pr 체크포인팅만 ===
+[2026-05-15 20:32:36] SKIP  P11-v01 — already complete
+[2026-05-15 20:32:36] === P11-v02: val_video_min_pr + hard-neg ===
+[2026-05-15 20:32:36] SKIP  P11-v02 — already complete
+[2026-05-15 20:32:37] === P11-v03: val_video_min_pr + hard-neg + wider sweep ===
+[2026-05-15 20:32:37] SKIP  P11-v03 — already complete
+[2026-05-15 20:32:37] === P11-v04: val_loss + hard-neg (hard-neg 단독 효과) ===
+[2026-05-15 20:32:37] SKIP  P11-v04 — already complete
+[2026-05-15 20:32:37] === P11-v05: val_loss + hard-neg + focal alpha=0.10 ===
+[2026-05-15 20:32:37] SKIP  P11-v05 — already complete
+[2026-05-15 20:32:37] === P11-v06: val_loss + hard-neg + 전체 neg stride=1 ===
+[2026-05-15 20:32:37] SKIP  P11-v06 — already complete
+[2026-05-15 20:32:37] === P11-v07: val_video_min_pr + hard-neg + thr_floor=0.50 ===
+[2026-05-15 20:32:37] SKIP  P11-v07 — already complete
+[2026-05-15 20:32:37] === P11-v08: val_loss + hard-neg + kp12 ===
+[2026-05-15 20:32:37] START P11-v08
+[2026-05-15 20:41:27] OK    P11-v08  test_min_pr=0.8735
+[2026-05-15 20:41:27] === P11-v09: val_loss + hard-neg + GRU(256,128) ===
+[2026-05-15 20:41:27] START P11-v09
+[2026-05-15 20:51:13] OK    P11-v09  test_min_pr=0.8694
+[2026-05-15 20:51:13] === Phase 11 summary ===
+[2026-05-15 20:51:13] === Phase 11 summary ===
+ID           test_MinPR  test_FP test_NFP  test_FR test_NFR  val_MinPR  PASS?
+P11-v01          0.8694   0.9531   0.9342   0.9775   0.8694     0.9021       
+P11-v02          0.8939   0.9612   0.9087   0.9670   0.8939     0.9042       
+P11-v03          0.8612   0.9495   0.8866   0.9595   0.8612     0.8958       
+P11-v04          0.8880   0.9652   0.8880   0.9580   0.9061     0.9002       
+P11-v05          0.9061   0.9655   0.9098   0.9670   0.9061     0.9004       
+P11-v06          0.0000      nan      nan      nan      nan     0.0000       
+P11-v07          0.0000      nan      nan      nan      nan     0.0000       
+P11-v08          0.8735   0.9544   0.9264   0.9745   0.8735     0.8917       
+P11-v09          0.8694   0.9523   0.8875   0.9595   0.8694     0.8958       

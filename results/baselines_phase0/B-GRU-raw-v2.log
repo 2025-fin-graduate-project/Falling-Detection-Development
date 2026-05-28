@@ -1,0 +1,97 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778684127.337450 1995038 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1778684127.374146 1995038 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778684128.215262 1995038 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[2026-05-13 23:55:28] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-13 23:55:51] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-13 23:55:51] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-13 23:55:56] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-13 23:55:56] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-13 23:55:59] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-13 23:56:08] train windows=92,167 positive=63,525 videos=8,882
+[2026-05-13 23:56:12] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-13 23:56:13] test windows=27,554 positive=8,966 videos=1,273
+E0000 00:00:1778684177.324012 1995038 cuda_executor.cc:1737] INTERNAL: CUDA Runtime error: Failed call to cudaGetRuntimeVersion: Error loading CUDA libraries. GPU will not be used.: Error loading CUDA libraries. GPU will not be used.
+W0000 00:00:1778684177.324307 1996189 cuda_executor.cc:1755] Failed to determine cuDNN version (Note that this is expected if the application doesn't link the cuDNN plugin): INTERNAL: cuDNN error: CUDNN_STATUS_INTERNAL_ERROR
+W0000 00:00:1778684177.344859 1995038 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+[2026-05-13 23:56:17] model Model: "B-GRU-raw-v2_gru"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ pose_sequence (InputLayer)      │ (None, 60, 43)         │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv_pre_1 (Conv1D)             │ (None, 60, 64)         │        13,760 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv_pre_bn_1                   │ (None, 60, 64)         │           256 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv_pre_relu_1 (ReLU)          │ (None, 60, 64)         │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv_pre_2 (Conv1D)             │ (None, 60, 64)         │        12,288 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv_pre_bn_2                   │ (None, 60, 64)         │           256 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv_pre_relu_2 (ReLU)          │ (None, 60, 64)         │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv_pre_drop (Dropout)         │ (None, 60, 64)         │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ gru_1 (GRU)                     │ (None, 60, 128)        │        74,496 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ ln_1 (LayerNormalization)       │ (None, 60, 128)        │           256 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ gru_2 (GRU)                     │ (None, 64)             │        37,248 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ head_dense (Dense)              │ (None, 64)             │         4,160 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ head_drop (Dropout)             │ (None, 64)             │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ classifier (Dense)              │ (None, 2)              │           130 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 142,850 (558.01 KB)
+ Trainable params: 142,594 (557.01 KB)
+ Non-trainable params: 256 (1.00 KB)
+
+W0000 00:00:1778684177.901001 1995038 cpu_allocator_impl.cc:82] Allocation of 951163440 exceeds 10% of free system memory.
+W0000 00:00:1778684178.981848 1995038 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+W0000 00:00:1778684179.450591 1995038 cpu_allocator_impl.cc:82] Allocation of 951163440 exceeds 10% of free system memory.
+W0000 00:00:1778684235.918957 1995038 cpu_allocator_impl.cc:82] Allocation of 566464800 exceeds 10% of free system memory.
+[2026-05-13 23:57:26] epoch 1/100 accuracy=0.5069 loss=0.0548 val_accuracy=0.7987 val_loss=0.0502 learning_rate=0.0010
+[2026-05-13 23:58:29] epoch 2/100 accuracy=0.6472 loss=0.0452 val_accuracy=0.8109 val_loss=0.0481 learning_rate=0.0010
+[2026-05-13 23:59:32] epoch 3/100 accuracy=0.6727 loss=0.0424 val_accuracy=0.8228 val_loss=0.0449 learning_rate=0.0010
+[2026-05-14 00:00:36] epoch 4/100 accuracy=0.6870 loss=0.0407 val_accuracy=0.8345 val_loss=0.0420 learning_rate=0.0010
+[2026-05-14 00:01:41] epoch 5/100 accuracy=0.6996 loss=0.0395 val_accuracy=0.8306 val_loss=0.0379 learning_rate=0.0010
+[2026-05-14 00:02:45] epoch 6/100 accuracy=0.7021 loss=0.0385 val_accuracy=0.8154 val_loss=0.0394 learning_rate=0.0010
+[2026-05-14 00:03:49] epoch 7/100 accuracy=0.7090 loss=0.0381 val_accuracy=0.8197 val_loss=0.0379 learning_rate=0.0010
+[2026-05-14 00:04:53] epoch 8/100 accuracy=0.7181 loss=0.0373 val_accuracy=0.8424 val_loss=0.0429 learning_rate=0.0010
+[2026-05-14 00:05:57] epoch 9/100 accuracy=0.7298 loss=0.0352 val_accuracy=0.8440 val_loss=0.0369 learning_rate=0.0005
+[2026-05-14 00:07:01] epoch 10/100 accuracy=0.7366 loss=0.0345 val_accuracy=0.8432 val_loss=0.0362 learning_rate=0.0005
+[2026-05-14 00:08:05] epoch 11/100 accuracy=0.7385 loss=0.0341 val_accuracy=0.8535 val_loss=0.0395 learning_rate=0.0005
+[2026-05-14 00:09:08] epoch 12/100 accuracy=0.7427 loss=0.0337 val_accuracy=0.8505 val_loss=0.0396 learning_rate=0.0005
+[2026-05-14 00:10:12] epoch 13/100 accuracy=0.7399 loss=0.0333 val_accuracy=0.8475 val_loss=0.0388 learning_rate=0.0005
+[2026-05-14 00:11:17] epoch 14/100 accuracy=0.7519 loss=0.0324 val_accuracy=0.8527 val_loss=0.0377 learning_rate=0.0003
+[2026-05-14 00:12:20] epoch 15/100 accuracy=0.7531 loss=0.0321 val_accuracy=0.8558 val_loss=0.0372 learning_rate=0.0003
+[2026-05-14 00:13:25] epoch 16/100 accuracy=0.7556 loss=0.0317 val_accuracy=0.8573 val_loss=0.0397 learning_rate=0.0003
+[2026-05-14 00:14:30] epoch 17/100 accuracy=0.7602 loss=0.0314 val_accuracy=0.8565 val_loss=0.0386 learning_rate=0.0001
+[2026-05-14 00:15:35] epoch 18/100 accuracy=0.7646 loss=0.0308 val_accuracy=0.8560 val_loss=0.0405 learning_rate=0.0001
+[2026-05-14 00:16:40] epoch 19/100 accuracy=0.7645 loss=0.0310 val_accuracy=0.8571 val_loss=0.0401 learning_rate=0.0001
+[2026-05-14 00:17:44] epoch 20/100 accuracy=0.7680 loss=0.0304 val_accuracy=0.8564 val_loss=0.0387 learning_rate=0.0001
+[2026-05-14 00:18:49] epoch 21/100 accuracy=0.7652 loss=0.0304 val_accuracy=0.8587 val_loss=0.0408 learning_rate=0.0001
+[2026-05-14 00:19:55] epoch 22/100 accuracy=0.7662 loss=0.0305 val_accuracy=0.8569 val_loss=0.0401 learning_rate=0.0001
+[2026-05-14 00:21:01] epoch 23/100 accuracy=0.7666 loss=0.0303 val_accuracy=0.8582 val_loss=0.0399 learning_rate=0.0000
+[2026-05-14 00:22:09] epoch 24/100 accuracy=0.7669 loss=0.0303 val_accuracy=0.8592 val_loss=0.0406 learning_rate=0.0000
+[2026-05-14 00:23:14] epoch 25/100 accuracy=0.7700 loss=0.0300 val_accuracy=0.8584 val_loss=0.0413 learning_rate=0.0000
+W0000 00:00:1778685795.850627 1995038 cpu_allocator_impl.cc:82] Allocation of 951163440 exceeds 10% of free system memory.
+[2026-05-14 00:23:50] video-level val: videos=2536 f1=0.9048 recall=0.9324 precision=0.8788
+[2026-05-14 00:23:50] video-level test: videos=1273 f1=0.8875 recall=0.9289 precision=0.8496
+E0000 00:00:1778685831.089184 1995038 cuda_executor.cc:1737] INTERNAL: CUDA Runtime error: Failed call to cudaGetRuntimeVersion: Error loading CUDA libraries. GPU will not be used.: Error loading CUDA libraries. GPU will not be used.
+W0000 00:00:1778685831.089221 1996189 cuda_executor.cc:1755] Failed to determine cuDNN version (Note that this is expected if the application doesn't link the cuDNN plugin): INTERNAL: cuDNN error: CUDNN_STATUS_INTERNAL_ERROR
+I0000 00:00:1778685831.092499 1995038 devices.cc:67] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 1
+I0000 00:00:1778685831.092567 1995038 single_machine.cc:376] Starting new session
+E0000 00:00:1778685831.092804 1995038 cuda_executor.cc:1737] INTERNAL: CUDA Runtime error: Failed call to cudaGetRuntimeVersion: Error loading CUDA libraries. GPU will not be used.: Error loading CUDA libraries. GPU will not be used.
+W0000 00:00:1778685831.092819 1996189 cuda_executor.cc:1755] Failed to determine cuDNN version (Note that this is expected if the application doesn't link the cuDNN plugin): INTERNAL: cuDNN error: CUDNN_STATUS_INTERNAL_ERROR
+W0000 00:00:1778685831.094907 1995038 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...

@@ -1,0 +1,52 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778754216.821638 2725911 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 19:23:38] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/train.csv
+[2026-05-14 19:23:51] train rows=1,274,014 videos=6,344 features=45 data_scope=all
+[2026-05-14 19:23:51] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/val.csv
+[2026-05-14 19:23:55] val rows=363,918 videos=1,811 features=45 data_scope=all
+[2026-05-14 19:23:55] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/test.csv
+[2026-05-14 19:23:56] test rows=182,782 videos=911 features=45 data_scope=all
+[2026-05-14 19:24:04] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 19:24:06] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 19:24:07] test windows=19,712 positive=7,332 videos=911
+I0000 00:00:1778754251.436237 2725911 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6066 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778754252.670750 2725911 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+W0000 00:00:1778754253.590224 2725911 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+W0000 00:00:1778754255.793683 2725911 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+I0000 00:00:1778754259.455953 2726237 service.cc:153] XLA service 0x6ffb34045e20 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1778754259.455970 2726237 service.cc:161]   StreamExecutor [0]: NVIDIA GeForce RTX 2060 SUPER, Compute Capability 7.5 (Driver: 13.0.0; Runtime: 12.9.0; Toolkit: 12.5.0; DNN: 9.22.0)
+I0000 00:00:1778754259.553875 2726237 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+I0000 00:00:1778754260.059995 2726237 cuda_dnn.cc:461] Loaded cuDNN version 92200
+I0000 00:00:1778754260.221093 2726237 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_8748__.86
+I0000 00:00:1778754267.883331 2726237 device_compiler.h:208] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+I0000 00:00:1778754279.720828 2726235 dot_merger.cc:481] Merging Dots in computation: a_inference_one_step_on_data_8748__.86
+W0000 00:00:1778754512.310521 2725911 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+W0000 00:00:1778754513.224626 2725911 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+[2026-05-14 19:28:53] video-level val: videos=1811 f1=0.9299 recall=0.9603 fall_prec=0.9014 nfall_prec=0.9255 min_prec=0.9014 min_consecutive=1
+[2026-05-14 19:28:53] video-level test: videos=911 f1=0.9237 recall=0.9578 fall_prec=0.8920 nfall_prec=0.9200 min_prec=0.8920 min_consecutive=1
+[2026-05-14 19:28:54] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9255    0.8245    0.8721       678
+           1     0.9014    0.9603    0.9299      1133
+
+    accuracy                         0.9094      1811
+   macro avg     0.9135    0.8924    0.9010      1811
+weighted avg     0.9104    0.9094    0.9083      1811
+
+[2026-05-14 19:28:54] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9200    0.8070    0.8598       342
+           1     0.8920    0.9578    0.9237       569
+
+    accuracy                         0.9012       911
+   macro avg     0.9060    0.8824    0.8918       911
+weighted avg     0.9025    0.9012    0.8997       911
+
+[2026-05-14 19:28:54] tflite export subprocess exit=0
+[2026-05-14 19:28:54]   [tflite] P2-v05: no metrics.json, skip
+[2026-05-14 19:28:54]   [tflite] 
+[2026-05-14 19:28:54]   [tflite] Done.
+[2026-05-14 19:28:54] done P2-v05 val_f1=0.8060 (video=0.9299) test_f1=0.8102 (video=0.9237) test_min_prec=0.8920 threshold=0.250 min_consecutive=1

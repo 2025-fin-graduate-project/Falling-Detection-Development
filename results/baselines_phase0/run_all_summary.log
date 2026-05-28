@@ -1,0 +1,57 @@
+[2026-05-14 01:33:55] Waiting for B-GRU-raw-v4 to complete...
+[2026-05-14 02:17:25] B-GRU-raw-v4 done — proceeding
+[2026-05-14 02:17:25] START B-GRU-raw-v5
+[2026-05-14 02:44:23] OK    B-GRU-raw-v5
+[2026-05-14 02:44:23] START B-GRU-raw-v6
+[2026-05-14 03:42:29] OK    B-GRU-raw-v6
+[2026-05-14 03:42:29] START B-GRU-raw-v7
+[2026-05-14 04:22:33] OK    B-GRU-raw-v7
+[2026-05-14 04:22:33] START B-GRU-raw-v8
+[2026-05-14 05:43:42] OK    B-GRU-raw-v8
+[2026-05-14 05:43:42] START B-GRU-raw-v9
+[2026-05-14 06:28:56] OK    B-GRU-raw-v9
+[2026-05-14 06:28:56] START B-GRU-raw-v10
+[2026-05-14 07:07:59] OK    B-GRU-raw-v10
+[2026-05-14 07:07:59] START B-GRU-raw-v11
+[2026-05-14 07:40:40] OK    B-GRU-raw-v11
+[2026-05-14 07:40:40] START B-GRU-raw-v12
+[2026-05-14 08:22:02] OK    B-GRU-raw-v12
+[2026-05-14 08:22:02] START B-GRU-raw-v13
+[2026-05-14 09:04:57] OK    B-GRU-raw-v13
+[2026-05-14 09:04:57] START B-GRU-raw-v14
+[2026-05-14 09:19:36] OK    B-GRU-raw-v14
+[2026-05-14 09:19:36] START B-GRU-raw-v15
+[2026-05-14 09:34:57] OK    B-GRU-raw-v15
+[2026-05-14 09:34:57] START B-GRU-raw-v16
+[2026-05-14 09:41:03] Waiting for B-GRU-raw-v20 to complete...
+[2026-05-14 10:03:40] Waiting for B-GRU-raw-v25 to complete...
+[2026-05-14 10:03:59] OK    B-GRU-raw-v16
+[2026-05-14 10:03:59] START B-GRU-raw-v17
+[2026-05-14 11:14:47] OK    B-GRU-raw-v17
+[2026-05-14 11:14:47] START B-GRU-raw-v18
+[2026-05-14 11:58:35] OK    B-GRU-raw-v18
+[2026-05-14 11:58:35] START B-GRU-raw-v19
+[2026-05-14 12:33:12] OK    B-GRU-raw-v19
+[2026-05-14 12:33:12] START B-GRU-raw-v20
+[2026-05-14 12:49:17] FAIL  B-GRU-raw-v20 (see results/baselines_phase0/B-GRU-raw-v20.log)
+[2026-05-14 12:49:17] All experiments complete. Collecting results...
+
+=== RESULTS SUMMARY ===
+B-GRU-raw-v4  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v5  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v6  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v7  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v8  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v9  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v10  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v11  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v12  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v13  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v14  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v15  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v16  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v17  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v18  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v19  test_F1=0.0000  test_Rec=0.0000  test_FallPrec=0.0000  val_F1=0.0000
+B-GRU-raw-v20  NOT DONE
+[2026-05-14 12:49:18] Done. See results/baselines_phase0/run_all_summary.log

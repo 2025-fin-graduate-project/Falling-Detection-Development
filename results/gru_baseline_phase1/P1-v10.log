@@ -1,0 +1,46 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778743273.366753 2601665 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 16:21:14] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/train.csv
+[2026-05-14 16:21:28] train rows=1,274,014 videos=6,344 features=45 data_scope=all
+[2026-05-14 16:21:28] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/val.csv
+[2026-05-14 16:21:32] val rows=363,918 videos=1,811 features=45 data_scope=all
+[2026-05-14 16:21:32] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered/test.csv
+[2026-05-14 16:21:33] test rows=182,782 videos=911 features=45 data_scope=all
+[2026-05-14 16:21:41] train windows=94,149 positive=51,271 videos=6,344
+[2026-05-14 16:21:43] val windows=39,199 positive=14,992 videos=1,811
+[2026-05-14 16:21:44] test windows=19,712 positive=7,332 videos=911
+I0000 00:00:1778743308.432847 2601665 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6065 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778743309.697066 2601665 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+W0000 00:00:1778743310.608880 2601665 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+W0000 00:00:1778743312.826839 2601665 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+I0000 00:00:1778743316.089611 2602093 cuda_dnn.cc:461] Loaded cuDNN version 92200
+W0000 00:00:1778744108.192031 2601665 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+W0000 00:00:1778744109.092490 2601665 cpu_allocator_impl.cc:82] Allocation of 1016809200 exceeds 10% of free system memory.
+[2026-05-14 16:35:38] video-level val: videos=1811 f1=0.9349 recall=0.9691 fall_prec=0.9030 nfall_prec=0.9412 min_prec=0.9030 min_consecutive=1
+[2026-05-14 16:35:39] video-level test: videos=911 f1=0.9220 recall=0.9561 fall_prec=0.8903 nfall_prec=0.9167 min_prec=0.8903 min_consecutive=1
+[2026-05-14 16:35:39] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9412    0.8260    0.8798       678
+           1     0.9030    0.9691    0.9349      1133
+
+    accuracy                         0.9155      1811
+   macro avg     0.9221    0.8975    0.9073      1811
+weighted avg     0.9173    0.9155    0.9143      1811
+
+[2026-05-14 16:35:39] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9167    0.8041    0.8567       342
+           1     0.8903    0.9561    0.9220       569
+
+    accuracy                         0.8990       911
+   macro avg     0.9035    0.8801    0.8894       911
+weighted avg     0.9002    0.8990    0.8975       911
+
+[2026-05-14 16:35:39] tflite export subprocess exit=0
+[2026-05-14 16:35:39]   [tflite] P1-v10: no metrics.json, skip
+[2026-05-14 16:35:39]   [tflite] 
+[2026-05-14 16:35:39]   [tflite] Done.
+[2026-05-14 16:35:39] done P1-v10 val_f1=0.8209 (video=0.9349) test_f1=0.8220 (video=0.9220) test_min_prec=0.8903 threshold=0.400 min_consecutive=1

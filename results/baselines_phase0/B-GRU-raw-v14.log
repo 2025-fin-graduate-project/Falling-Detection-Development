@@ -1,0 +1,38 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778717097.771532 2331353 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-14 09:04:59] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/train.csv
+[2026-05-14 09:05:21] train rows=1,783,893 videos=8,882 features=43 data_scope=no_by
+[2026-05-14 09:05:21] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/val.csv
+[2026-05-14 09:05:27] val rows=509,932 videos=2,536 features=43 data_scope=no_by
+[2026-05-14 09:05:27] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/test.csv
+[2026-05-14 09:05:29] test rows=255,682 videos=1,273 features=43 data_scope=no_by
+[2026-05-14 09:05:39] train windows=127,978 positive=63,525 videos=8,882
+[2026-05-14 09:05:43] val windows=54,890 positive=17,942 videos=2,536
+[2026-05-14 09:05:44] test windows=27,554 positive=8,966 videos=1,273
+W0000 00:00:1778717149.150217 2331353 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1778717149.942887 2331353 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778717151.847053 2331353 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+W0000 00:00:1778717955.075101 2331353 cpu_allocator_impl.cc:82] Allocation of 1320732960 exceeds 10% of free system memory.
+[2026-05-14 09:19:31] video-level val: videos=2536 f1=0.9086 recall=0.9244 precision=0.8933
+[2026-05-14 09:19:32] video-level test: videos=1273 f1=0.8854 recall=0.9274 precision=0.8471
+W0000 00:00:1778717973.635088 2331353 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778717973.635103 2331353 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778717973.635324 2331353 reader.cc:83] Reading SavedModel from: /tmp/tmp40zntybx
+I0000 00:00:1778717973.638325 2331353 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778717973.638333 2331353 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmp40zntybx
+I0000 00:00:1778717973.655470 2331353 mlir_graph_optimization_pass.cc:437] MLIR V1 optimization pass is not enabled
+I0000 00:00:1778717973.659270 2331353 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778717973.739487 2331353 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmp40zntybx
+I0000 00:00:1778717973.762928 2331353 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 127609 microseconds.
+I0000 00:00:1778717973.812829 2331353 dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+W0000 00:00:1778717975.187061 2331353 tf_tfl_flatbuffer_helpers.cc:364] Ignored output_format.
+W0000 00:00:1778717975.187072 2331353 tf_tfl_flatbuffer_helpers.cc:367] Ignored drop_control_dependency.
+I0000 00:00:1778717975.187162 2331353 reader.cc:83] Reading SavedModel from: /tmp/tmpw4qxdpa7
+I0000 00:00:1778717975.189352 2331353 reader.cc:52] Reading meta graph with tags { serve }
+I0000 00:00:1778717975.189358 2331353 reader.cc:147] Reading SavedModel debug info (if present) from: /tmp/tmpw4qxdpa7
+I0000 00:00:1778717975.208863 2331353 loader.cc:236] Restoring SavedModel bundle.
+I0000 00:00:1778717975.287843 2331353 loader.cc:220] Running initialization op on SavedModel bundle at path: /tmp/tmpw4qxdpa7
+I0000 00:00:1778717975.310518 2331353 loader.cc:471] SavedModel load for tags { serve }; Status: success: OK. Took 123360 microseconds.
+[2026-05-14 09:19:35] done B-GRU-raw-v14 val_f1=0.7820 (video=0.9086) test_f1=0.7578 (video=0.8854) threshold=0.500

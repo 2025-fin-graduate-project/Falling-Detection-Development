@@ -1,0 +1,21 @@
+[
+  {
+    "experiment_id":"B-TCN-D",
+    "model_type":"tcn",
+    "preprocessing":"filtered",
+    "feature_set":"kp12",
+    "val_f1":0.9,
+    "val_recall":1.0,
+    "test_accuracy":0.611328125,
+    "test_precision":0.3586956522,
+    "test_recall":0.8181818182,
+    "test_f1":0.4987405542,
+    "test_auc_roc":0.7394897593,
+    "test_pr_auc":0.3453266756,
+    "int8_test_f1":0.7843137255,
+    "int8_delta_f1":-0.2855731713,
+    "int8_size_kb":152.68,
+    "int8_export_error":null,
+    "metrics_path":"results\/baselines_phase0\/B-TCN-D\/metrics.json"
+  }
+]

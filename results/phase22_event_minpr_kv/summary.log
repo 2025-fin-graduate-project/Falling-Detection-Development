@@ -1,0 +1,127 @@
+[2026-05-16 01:37:10] === Phase 22: kp7kv + val_event_min_pr checkpoint ===
+[2026-05-16 01:37:10] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:38:10] GPU busy: used=6760MiB; waiting 60s
+[2026-05-16 01:39:10] GPU busy: used=6760MiB; waiting 60s
+[2026-05-16 01:40:10] GPU busy: used=6760MiB; waiting 60s
+[2026-05-16 01:41:10] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:42:10] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:43:10] GPU busy: used=6762MiB; waiting 60s
+[2026-05-16 01:44:10] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:45:10] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:46:10] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:47:10] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:48:10] GPU busy: used=6761MiB; waiting 60s
+[2026-05-16 01:49:10] GPU ready: used=547MiB <= 2200MiB
+[2026-05-16 01:49:10] START P22-v01
+[2026-05-16 02:22:14] === Phase 22: kp7kv (class_balanced_filtered) + val_event_min_pr checkpoint ===
+[2026-05-16 02:22:14] === Phase 22: kp7kv (class_balanced_filtered) + val_event_min_pr checkpoint ===
+[2026-05-16 02:22:14] Dataset ready: dataset/splits_v2_class_balanced_filtered_kv
+[2026-05-16 02:22:14] Dataset ready: dataset/splits_v2_class_balanced_filtered_kv
+[2026-05-16 02:22:14] GPU ready: used=17MiB <= 2200MiB
+[2026-05-16 02:22:14] GPU ready: used=17MiB <= 2200MiB
+[2026-05-16 02:22:14] START P22-v01
+[2026-05-16 02:22:14] START P22-v01
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778865735.369869   12656 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 02:22:17] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/train.csv
+[2026-05-16 02:22:31] train rows=1,211,093 videos=6,039 features=37 data_scope=all
+[2026-05-16 02:22:31] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/val.csv
+[2026-05-16 02:22:35] val rows=344,292 videos=1,714 features=37 data_scope=all
+[2026-05-16 02:22:35] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/test.csv
+[2026-05-16 02:22:37] test rows=172,209 videos=853 features=37 data_scope=all
+[2026-05-16 02:22:52] train windows=353,150 positive=213,662 videos=6,039
+[2026-05-16 02:22:55] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 02:22:57] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778865781.745758   12656 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778865782.776950   12656 cpu_allocator_impl.cc:82] Allocation of 2090648000 exceeds 10% of free system memory.
+W0000 00:00:1778865784.573495   12656 cpu_allocator_impl.cc:82] Allocation of 2090648000 exceeds 10% of free system memory.
+W0000 00:00:1778865786.909543   12656 cpu_allocator_impl.cc:82] Allocation of 2090648000 exceeds 10% of free system memory.
+I0000 00:00:1778865789.908888   17014 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 02:51:54] ValMinPR: restored best weights (val_event_min_pr=0.9239)
+W0000 00:00:1778867515.586122   12656 cpu_allocator_impl.cc:82] Allocation of 2090648000 exceeds 10% of free system memory.
+W0000 00:00:1778867517.386224   12656 cpu_allocator_impl.cc:82] Allocation of 2090648000 exceeds 10% of free system memory.
+[2026-05-16 02:53:11] video-level val: videos=1714 f1=0.9714 fall_recall=0.9718 nfall_recall=0.9239 fall_prec=0.9710 nfall_prec=0.9258 min_pr=0.9239 min_consecutive=2
+[2026-05-16 02:53:11] event-level val: videos=1714 f1=0.9714 fall_recall=0.9718 nfall_recall=0.9239 fall_prec=0.9710 nfall_prec=0.9258 min_pr=0.9239 tolerance_windows=2
+[2026-05-16 02:53:12] video-level test: videos=853 f1=0.9659 fall_recall=0.9581 nfall_recall=0.9310 fall_prec=0.9738 nfall_prec=0.8926 min_pr=0.8926 min_consecutive=2
+[2026-05-16 02:53:12] event-level test: videos=853 f1=0.9651 fall_recall=0.9565 nfall_recall=0.9310 fall_prec=0.9738 nfall_prec=0.8889 min_pr=0.8889 tolerance_windows=2
+[2026-05-16 02:53:12] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9258    0.9239    0.9249       473
+           1     0.9710    0.9718    0.9714      1241
+
+    accuracy                         0.9586      1714
+   macro avg     0.9484    0.9478    0.9481      1714
+weighted avg     0.9586    0.9586    0.9586      1714
+
+[2026-05-16 02:53:12] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.8926    0.9310    0.9114       232
+           1     0.9738    0.9581    0.9659       621
+
+    accuracy                         0.9508       853
+   macro avg     0.9332    0.9446    0.9387       853
+weighted avg     0.9517    0.9508    0.9511       853
+
+[2026-05-16 02:53:12] done P22-v01 val_f1=0.8846 (video=0.9714) test_f1=0.8731 (video=0.9659) test_min_pr=0.8926 threshold=0.550 min_consecutive=2
+[OK] P22-v01 test_event_min_pr=0.8889 test_video_min_pr=0.8926 thr=0.550 mc=2 thr_eval=event
+  event_CM=[[216, 16], [27, 594]] video_CM=[[216, 16], [26, 595]]
+[OK] P22-v01 test_event_min_pr=0.8889 test_video_min_pr=0.8926 thr=0.550 mc=2 thr_eval=event
+  event_CM=[[216, 16], [27, 594]] video_CM=[[216, 16], [26, 595]]
+[2026-05-16 02:53:13] GPU ready: used=17MiB <= 2200MiB
+[2026-05-16 02:53:13] GPU ready: used=17MiB <= 2200MiB
+[2026-05-16 02:53:13] START P22-v02
+[2026-05-16 02:53:13] START P22-v02
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778867594.373372   24432 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 02:53:15] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/train.csv
+[2026-05-16 02:53:29] train rows=1,211,093 videos=6,039 features=37 data_scope=all
+[2026-05-16 02:53:29] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/val.csv
+[2026-05-16 02:53:33] val rows=344,292 videos=1,714 features=37 data_scope=all
+[2026-05-16 02:53:33] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_class_balanced_filtered_kv/test.csv
+[2026-05-16 02:53:35] test rows=172,209 videos=853 features=37 data_scope=all
+[2026-05-16 02:53:52] train windows=492,449 positive=213,662 videos=6,039
+[2026-05-16 02:53:56] val windows=70,274 positive=30,106 videos=1,714
+[2026-05-16 02:53:57] test windows=34,973 positive=15,069 videos=853
+I0000 00:00:1778867642.673425   24432 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6623 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778867643.846393   24432 cpu_allocator_impl.cc:82] Allocation of 2915298080 exceeds 10% of free system memory.
+W0000 00:00:1778867646.411482   24432 cpu_allocator_impl.cc:82] Allocation of 2915298080 exceeds 10% of free system memory.
+W0000 00:00:1778867649.102565   24432 cpu_allocator_impl.cc:82] Allocation of 2915298080 exceeds 10% of free system memory.
+I0000 00:00:1778867652.176013   24616 cuda_dnn.cc:461] Loaded cuDNN version 92200
+[2026-05-16 03:13:13] ValMinPR: restored best weights (val_event_min_pr=0.9175)
+W0000 00:00:1778868794.367187   24432 cpu_allocator_impl.cc:82] Allocation of 2915298080 exceeds 10% of free system memory.
+W0000 00:00:1778868796.828183   24432 cpu_allocator_impl.cc:82] Allocation of 2915298080 exceeds 10% of free system memory.
+[2026-05-16 03:14:32] video-level val: videos=1714 f1=0.9727 fall_recall=0.9766 nfall_recall=0.9175 fall_prec=0.9688 nfall_prec=0.9374 min_pr=0.9175 min_consecutive=3
+[2026-05-16 03:14:32] event-level val: videos=1714 f1=0.9723 fall_recall=0.9758 nfall_recall=0.9175 fall_prec=0.9688 nfall_prec=0.9353 min_pr=0.9175 tolerance_windows=2
+[2026-05-16 03:14:32] video-level test: videos=853 f1=0.9637 fall_recall=0.9630 nfall_recall=0.9052 fall_prec=0.9645 nfall_prec=0.9013 min_pr=0.9013 min_consecutive=3
+[2026-05-16 03:14:33] event-level test: videos=853 f1=0.9629 fall_recall=0.9614 nfall_recall=0.9052 fall_prec=0.9645 nfall_prec=0.8974 min_pr=0.8974 tolerance_windows=2
+[2026-05-16 03:14:33] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9374    0.9175    0.9274       473
+           1     0.9688    0.9766    0.9727      1241
+
+    accuracy                         0.9603      1714
+   macro avg     0.9531    0.9471    0.9500      1714
+weighted avg     0.9601    0.9603    0.9602      1714
+
+[2026-05-16 03:14:33] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.9013    0.9052    0.9032       232
+           1     0.9645    0.9630    0.9637       621
+
+    accuracy                         0.9472       853
+   macro avg     0.9329    0.9341    0.9335       853
+weighted avg     0.9473    0.9472    0.9473       853
+
+[2026-05-16 03:14:33] done P22-v02 val_f1=0.8901 (video=0.9727) test_f1=0.8801 (video=0.9637) test_min_pr=0.9013 threshold=0.525 min_consecutive=3
+[OK] P22-v02 test_event_min_pr=0.8974 test_video_min_pr=0.9013 thr=0.525 mc=3 thr_eval=event
+  event_CM=[[210, 22], [24, 597]] video_CM=[[210, 22], [23, 598]]
+[OK] P22-v02 test_event_min_pr=0.8974 test_video_min_pr=0.9013 thr=0.525 mc=3 thr_eval=event
+  event_CM=[[210, 22], [24, 597]] video_CM=[[210, 22], [23, 598]]
+[2026-05-16 03:14:34] === Phase 22 done ===
+[2026-05-16 03:14:34] === Phase 22 done ===

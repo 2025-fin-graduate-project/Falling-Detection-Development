@@ -1,0 +1,119 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1778857923.344580  338343 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[2026-05-16 00:12:05] loading train split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered_rel/train.csv
+[2026-05-16 00:12:24] train rows=1,274,014 videos=6,344 features=35 data_scope=all
+[2026-05-16 00:12:24] loading val split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered_rel/val.csv
+[2026-05-16 00:12:30] val rows=363,918 videos=1,811 features=35 data_scope=all
+[2026-05-16 00:12:30] loading test split=/home/min/Workspace/Graduate-Project/Falling-Model-Development/dataset/splits_v2_filtered_rel/test.csv
+[2026-05-16 00:12:33] test rows=182,782 videos=911 features=35 data_scope=all
+[2026-05-16 00:12:46] train windows=286,382 positive=53,167 videos=6,344
+[2026-05-16 00:12:49] val windows=74,251 positive=7,846 videos=1,811
+[2026-05-16 00:12:51] test windows=37,351 positive=3,857 videos=911
+I0000 00:00:1778857979.184585  338343 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 6096 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 2060 SUPER, pci bus id: 0000:05:00.0, compute capability: 7.5
+W0000 00:00:1778857980.093459  338343 cpu_allocator_impl.cc:82] Allocation of 1603739200 exceeds 10% of free system memory.
+W0000 00:00:1778857981.448014  338343 cpu_allocator_impl.cc:82] Allocation of 1603739200 exceeds 10% of free system memory.
+W0000 00:00:1778857983.612983  338343 cpu_allocator_impl.cc:82] Allocation of 1603739200 exceeds 10% of free system memory.
+I0000 00:00:1778857986.145746  339068 cuda_dnn.cc:461] Loaded cuDNN version 92200
+W0000 00:00:1778858180.742926  338343 cpu_allocator_impl.cc:82] Allocation of 1603739200 exceeds 10% of free system memory.
+W0000 00:00:1778858182.157764  338343 cpu_allocator_impl.cc:82] Allocation of 1603739200 exceeds 10% of free system memory.
+[2026-05-16 00:17:44] video-level val: videos=1811 f1=0.8128 fall_recall=0.8110 nfall_recall=0.6841 fall_prec=0.8146 nfall_prec=0.6790 min_pr=0.6790 min_consecutive=2
+[2026-05-16 00:17:45] video-level test: videos=911 f1=0.8030 fall_recall=0.8154 nfall_recall=0.6135 fall_prec=0.7910 nfall_prec=0.6494 min_pr=0.6135 min_consecutive=2
+[2026-05-16 00:17:45] === VAL VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.6790    0.6841    0.6816       668
+           1     0.8146    0.8110    0.8128      1143
+
+    accuracy                         0.7642      1811
+   macro avg     0.7468    0.7476    0.7472      1811
+weighted avg     0.7646    0.7642    0.7644      1811
+
+[2026-05-16 00:17:45] === TEST VIDEO-LEVEL REPORT ===
+              precision    recall  f1-score   support
+
+           0     0.6494    0.6135    0.6309       326
+           1     0.7910    0.8154    0.8030       585
+
+    accuracy                         0.7431       911
+   macro avg     0.7202    0.7144    0.7170       911
+weighted avg     0.7403    0.7431    0.7414       911
+
+[2026-05-16 00:17:56] tflite export subprocess exit=0
+[2026-05-16 00:17:56]   [tflite] [P17H-v03]
+[2026-05-16 00:17:56]   [tflite]   Loading model.keras ...
+[2026-05-16 00:17:56]   [tflite]     rebuilding with unroll=True for TFLite compatibility
+[2026-05-16 00:17:56]   [tflite] Saved artifact at '/tmp/tmp_6ay7773'. The following endpoints are available:
+[2026-05-16 00:17:56]   [tflite] 
+[2026-05-16 00:17:56]   [tflite] * Endpoint 'serve'
+[2026-05-16 00:17:56]   [tflite]   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 35), dtype=tf.float32, name='pose_sequence')
+[2026-05-16 00:17:56]   [tflite] Output Type:
+[2026-05-16 00:17:56]   [tflite]   TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+[2026-05-16 00:17:56]   [tflite] Captures:
+[2026-05-16 00:17:56]   [tflite]   140060390790672: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390791440: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390791248: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390791632: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390789712: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390791824: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390792208: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390792016: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390790864: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390792400: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390793168: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390794512: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390793552: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390793936: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390793360: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390794896: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390794704: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390795664: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390792592: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390795088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390796048: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390796240: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390794320: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390796816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]     fp32 OK (819 KB)
+[2026-05-16 00:17:56]   [tflite] Saved artifact at '/tmp/tmpn8glanzo'. The following endpoints are available:
+[2026-05-16 00:17:56]   [tflite] 
+[2026-05-16 00:17:56]   [tflite] * Endpoint 'serve'
+[2026-05-16 00:17:56]   [tflite]   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 40, 35), dtype=tf.float32, name='pose_sequence')
+[2026-05-16 00:17:56]   [tflite] Output Type:
+[2026-05-16 00:17:56]   [tflite]   TensorSpec(shape=(None, 2), dtype=tf.float32, name=None)
+[2026-05-16 00:17:56]   [tflite] Captures:
+[2026-05-16 00:17:56]   [tflite]   140060390790672: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390791440: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390791248: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390791632: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390789712: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390791824: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390792208: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390792016: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390790864: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390792400: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390793168: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390794512: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390793552: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390793936: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390793360: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390794896: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390794704: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390795664: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390792592: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390795088: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390796048: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390796240: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390794320: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]   140060390796816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+[2026-05-16 00:17:56]   [tflite]     int8 OK (1250 KB)
+[2026-05-16 00:17:56]   [tflite] 
+[2026-05-16 00:17:56]   [tflite] Done.
+/home/min/Workspace/Graduate-Project/Falling-Model-Development/.venv/lib/python3.13/site-packages/tensorflow/lite/python/interpreter.py:457: UserWarning:     Warning: tf.lite.Interpreter is deprecated and is scheduled for deletion in
+    TF 2.20. Please use the LiteRT interpreter from the ai_edge_litert package.
+    See the [migration guide](https://ai.google.dev/edge/litert/migration)
+    for details.
+    
+  warnings.warn(_INTERPRETER_DELETION_WARNING)
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[2026-05-16 00:17:57] done P17H-v03 val_f1=0.5939 (video=0.8128) test_f1=0.5891 (video=0.8030) test_min_pr=0.6135 threshold=0.500 min_consecutive=2
